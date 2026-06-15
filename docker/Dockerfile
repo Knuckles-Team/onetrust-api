@@ -59,6 +59,4 @@ RUN apt-get update \
     && echo 'eval "$(starship init bash)"' >> /root/.bashrc \
     && uv pip install --system --upgrade --verbose --no-cache --break-system-packages --prerelease=allow onetrust-api[all]>=0.1.1
 
-COPY starship.toml /root/.config/starship.toml
-
 CMD ["onetrust-mcp"]
