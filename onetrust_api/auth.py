@@ -1,47 +1,95 @@
-#!/usr/bin/python
-# coding: utf-8
+"""OneTrust Authentication Module.
+
+Authentication priority:
+
+1. **OIDC Delegation** — If ``ENABLE_DELEGATION`` is active, exchanges the
+   IdP-issued user token for a downstream OneTrust access token via RFC 8693
+   Token Exchange using the shared ``delegated_auth`` helper.
+2. **Fixed Credentials** — Falls back to a pre-minted bearer token
+   (``ONETRUST_TOKEN``) or an OAuth2 client-credentials pair
+   (``ONETRUST_CLIENT_ID`` / ``ONETRUST_CLIENT_SECRET``).
+
+See ``docs/guides/oauth_sso.md`` in agent-utilities for full details.
+"""
 
 import os
-import requests
-import urllib3
+import threading
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+from agent_utilities.base_utilities import get_logger, to_boolean
+from agent_utilities.core.exceptions import AuthError, UnauthorizedError
 
-from agent_utilities.exceptions import AuthError, UnauthorizedError
+local = threading.local()
+from onetrust_api.api_client import Api
 
-# TODO: Import your API wrapper class here
-# from onetrust_api.api_client import OnetrustApiClient
-
-_client = None
+logger = get_logger(__name__)
 
 
-def get_client():
-    """Get or create a singleton API client instance."""
-    global _client
-    if _client is None:
-        base_url = os.getenv("ONETRUST_URL", "http://localhost:8080")
-        token = os.getenv("ONETRUST_TOKEN", "")
-        verify = os.getenv("ONETRUST_API_VERIFY", "True").lower() in ("true", "1", "yes")
+def get_client(
+    instance: str | None = os.getenv("ONETRUST_URL", None),
+    token: str | None = os.getenv("ONETRUST_TOKEN", None),
+    client_id: str | None = os.getenv("ONETRUST_CLIENT_ID", None),
+    client_secret: str | None = os.getenv("ONETRUST_CLIENT_SECRET", None),
+    region: str = os.getenv("ONETRUST_REGION", "us"),
+    consent_url: str | None = os.getenv("ONETRUST_CONSENT_URL", None),
+    worker_url: str | None = os.getenv("ONETRUST_WORKER_URL", None),
+    verify: bool = to_boolean(string=os.getenv("ONETRUST_SSL_VERIFY", "True")),
+    config: dict | None = None,
+) -> Api:
+    """Factory function to create the OneTrust :class:`Api` client.
 
+    Supports OIDC delegation, a fixed bearer token, and the OAuth2
+    client-credentials flow. Uses the shared ``delegated_auth`` helper from
+    agent-utilities.
+    """
+    from agent_utilities.mcp.delegated_auth import (
+        get_delegated_token,
+        get_user_identity,
+        is_delegation_enabled,
+    )
+
+    common = dict(
+        region=region,
+        consent_url=consent_url,
+        worker_url=worker_url,
+        verify=verify,
+    )
+
+    # --- Path 1: OIDC Delegation (RFC 8693 Token Exchange) ---
+    if is_delegation_enabled(config):
         try:
-            # TODO: Uncomment and configure once the API wrapper class is created
-            # _client = OnetrustApiClient(
-            #     base_url=base_url,
-            #     token=token,
-            #     verify=verify,
-            # )
+            delegated_token = get_delegated_token(
+                config=config,
+                audience=(config or {}).get("audience", instance or region),
+                scopes=(config or {}).get("delegated_scopes", "api"),
+                verify=verify,
+            )
+            identity = get_user_identity()
+            logger.info(
+                "Using OIDC delegated token for OneTrust API",
+                extra={"user_email": identity.get("email"), "instance": instance},
+            )
+            return Api(url=instance, token=delegated_token, **common)
+        except Exception as e:
+            logger.error(
+                "OIDC delegation failed for OneTrust",
+                extra={"error_type": type(e).__name__, "error_message": str(e)},
+            )
+            raise RuntimeError(f"Token exchange failed: {str(e)}") from e
 
-            # Placeholder until API wrapper is implemented
-            if _client is None:
-                session = requests.Session()
-                session.headers.update({"Authorization": f"Bearer {token}"})
-                session.verify = verify
-                _client = type("Client", (), {"session": session, "base_url": base_url})()
-        except (AuthError, UnauthorizedError) as e:
-            raise RuntimeError(
-                f"AUTHENTICATION ERROR: The credentials provided are not valid for '{base_url}'. "
-                f"Please check your ONETRUST_TOKEN and ONETRUST_URL environment variables. "
-                f"Error details: {str(e)}"
-            ) from e
-
-    return _client
+    # --- Path 2: Fixed Credentials (token or client-credentials) ---
+    logger.info("Using fixed credentials for OneTrust API")
+    try:
+        return Api(
+            url=instance,
+            token=token,
+            client_id=client_id,
+            client_secret=client_secret,
+            **common,
+        )
+    except (AuthError, UnauthorizedError) as e:
+        raise RuntimeError(
+            "AUTHENTICATION ERROR: The OneTrust credentials provided are not valid. "
+            "Check ONETRUST_URL/ONETRUST_REGION and ONETRUST_TOKEN (or "
+            "ONETRUST_CLIENT_ID/ONETRUST_CLIENT_SECRET). "
+            f"Error details: {str(e)}"
+        ) from e

@@ -1,23 +1,21 @@
 #!/usr/bin/python
 # coding: utf-8
 
+import logging
 import os
 import sys
-import logging
-from typing import Optional, List, Dict, Union, Any
+from typing import Any
 
-from dotenv import load_dotenv, find_dotenv
-from fastmcp import FastMCP
-from pydantic import Field
 from agent_utilities.base_utilities import to_boolean
-from agent_utilities.mcp_utilities import create_mcp_server, config
-from agent_utilities.utilities import get_logger
-from onetrust_api.auth import get_client
+from agent_utilities.mcp_utilities import create_mcp_server
+from dotenv import find_dotenv, load_dotenv
+from fastmcp import FastMCP
+from fastmcp.utilities.logging import get_logger
 
 __version__ = "0.1.0"
 
 # Redirect logging to stderr to prevent MCP stdout corruption
-logger = get_logger(name="MCP_Server")
+logger = get_logger(name="onetrust_mcp")
 logger.setLevel(logging.INFO)
 
 
@@ -40,15 +38,21 @@ def get_mcp_instance() -> tuple[Any, Any, Any, Any]:
         instructions="OneTrust Api MCP Server",
     )
 
-    # TODO: Register tool groups here with env-var toggles.
-    # Pattern: if to_boolean(os.getenv("TOOL_TAG_NAME", "True")): register_tools(mcp)
+    # Each domain is a consolidated, action-routed tool gated by a {TAG}TOOL env var
+    # (default True). TOOL_REGISTRY is generated from the vendored OpenAPI specs.
+    from onetrust_api.mcp import TOOL_REGISTRY
+
+    registered_tags = []
+    for tag, env_var, register_fn in TOOL_REGISTRY:
+        if to_boolean(os.getenv(env_var, "True")):
+            register_fn(mcp)
+            registered_tags.append(tag)
 
     register_prompts(mcp)
 
     for mw in middlewares:
         mcp.add_middleware(mw)
 
-    registered_tags = []
     return mcp, args, middlewares, registered_tags
 
 
