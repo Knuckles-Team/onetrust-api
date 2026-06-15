@@ -1,0 +1,4 @@
+include LICENSE
+include README.md
+include requirements.txt
+recursive-include onetrust_api *.md *.json *.yaml *.yml *.py

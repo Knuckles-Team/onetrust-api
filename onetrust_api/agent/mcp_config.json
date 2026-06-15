@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "onetrust": {
+      "command": "onetrust-mcp",
+      "env": {
+        "ONETRUST_URL": "${ONETRUST_URL:-http://localhost:8080}",
+        "ONETRUST_TOKEN": "${ONETRUST_TOKEN}"
+      }
+    }
+  }
+}
