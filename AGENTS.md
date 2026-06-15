@@ -1,5 +1,28 @@
 # AGENTS.md
 
+> Claude Code loads this file via `CLAUDE.md` (`@AGENTS.md` import) — the two stay
+> in sync. Edit **this** file, not `CLAUDE.md`.
+
+## OneTrust-Specific Notes (READ FIRST)
+
+This package achieves **100% OneTrust API coverage by code generation**, not by
+hand. The single source of truth is the vendored OpenAPI specs under
+`onetrust_api/specs/*.json`.
+
+- **Do not hand-edit generated files.** These are emitted by
+  `scripts/generate_from_openapi.py` and will be overwritten:
+  `onetrust_api/api/api_client_<domain>.py`, `onetrust_api/api_client.py`,
+  `onetrust_api/api/_operation_manifest.py`, `onetrust_api/mcp/mcp_<domain>.py`,
+  and `onetrust_api/mcp/__init__.py`. Change the **generator** instead, then
+  re-run it and `ruff format .`.
+- **Hand-authored core** (safe to edit): `onetrust_api/api/api_client_base.py`
+  (auth, pagination, retry, URL resolution), `onetrust_api/auth.py`,
+  `onetrust_api/onetrust_models.py`, `onetrust_api/mcp/mcp_custom_api.py`.
+- **Refresh flow** when OneTrust changes a spec: re-download specs →
+  `python scripts/generate_from_openapi.py` → `ruff format .` →
+  `pytest` (the coverage keystone in `tests/test_onetrust_coverage.py` proves
+  spec operations == client methods == MCP actions).
+
 ## Tech Stack & Architecture
 - Language/Version: Python 3.10+
 - Core Libraries: `agent-utilities`, `fastmcp`, `pydantic-ai`

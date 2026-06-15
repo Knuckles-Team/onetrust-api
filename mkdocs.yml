@@ -1,0 +1,64 @@
+site_name: "onetrust-api"
+site_description: "Python OneTrust API + MCP Server + A2A Agent — 100% API coverage"
+site_url: "https://knuckles-team.github.io/onetrust-api/"
+repo_name: "Knuckles-Team/onetrust-api"
+repo_url: "https://github.com/Knuckles-Team/onetrust-api"
+edit_uri: "edit/main/docs/"
+copyright: "Copyright &copy; Knuckles-Team — MIT licensed"
+
+theme:
+  name: material
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/shield-lock-outline
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+plugins:
+  - search
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - tables
+  - toc
+
+nav:
+  - Home: index.md
+  - Overview: overview.md
+  - Installation: installation.md
+  - Usage (API / CLI / MCP): usage.md
+  - Deployment: deployment.md
