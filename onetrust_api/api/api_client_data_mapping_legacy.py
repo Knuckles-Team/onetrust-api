@@ -9,48 +9,49 @@ class OneTrustDataMappingLegacy(OneTrustApiBase):
     def list_all_data_classifications_using_get(self, **kwargs) -> Response:
         """Get List of Data Classifications"""
         return self._call(
-            http='GET',
-            url_template='https://customer.my.onetrust.com/api/inventory/v2/data-classifications',
+            http="GET",
+            url_template="https://customer.my.onetrust.com/api/inventory/v2/data-classifications",
             path_params=[],
-            query_params=['page', 'size'],
+            query_params=["page", "size"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def list_all_data_elements_using_get(self, **kwargs) -> Response:
         """Get List of Data Elements"""
         return self._call(
-            http='GET',
-            url_template='https://customer.my.onetrust.com/api/inventory/v2/data-elements',
+            http="GET",
+            url_template="https://customer.my.onetrust.com/api/inventory/v2/data-elements",
             path_params=[],
-            query_params=['page', 'size'],
+            query_params=["page", "size"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def get_schema_using_get_1(self, **kwargs) -> Response:
         """Get Inventory Schema"""
         return self._call(
-            http='GET',
-            url_template='https://customer.my.onetrust.com/api/inventory/v2/schemas/{type}',
-            path_params=['type'],
-            query_params=['showAll'],
+            http="GET",
+            url_template="https://customer.my.onetrust.com/api/inventory/v2/schemas/{type}",
+            path_params=["type"],
+            query_params=["showAll"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def get_inventory_v2_schemas_attributes_attribute_id_values_value_id(self, **kwargs) -> Response:
+    def get_inventory_v2_schemas_attributes_attribute_id_values_value_id(
+        self, **kwargs
+    ) -> Response:
         """Get Attribute Options"""
         return self._call(
-            http='GET',
-            url_template='https://customer.my.onetrust.com/api/inventory/v2/schemas/attributes/{attributeId}/values/{valueId}',
-            path_params=['attributeId', 'valueId'],
+            http="GET",
+            url_template="https://customer.my.onetrust.com/api/inventory/v2/schemas/attributes/{attributeId}/values/{valueId}",
+            path_params=["attributeId", "valueId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

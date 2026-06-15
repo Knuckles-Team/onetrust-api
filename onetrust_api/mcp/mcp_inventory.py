@@ -41,14 +41,24 @@ def register_inventory_tools(mcp: FastMCP):
             return client.list_all_inventory_relationships_using_post(**kwargs)
         elif action == "update_inventory_relations_using_entity_type_name_1":
             return client.update_inventory_relations_using_entity_type_name_1(**kwargs)
-        elif action == "link_or_unlink_inventory_relationships_using_relationship_using_put_1":
-            return client.link_or_unlink_inventory_relationships_using_relationship_using_put_1(**kwargs)
+        elif (
+            action
+            == "link_or_unlink_inventory_relationships_using_relationship_using_put_1"
+        ):
+            return client.link_or_unlink_inventory_relationships_using_relationship_using_put_1(
+                **kwargs
+            )
         elif action == "get_personal_data_for_relationships_using_post_1":
             return client.get_personal_data_for_relationships_using_post_1(**kwargs)
         elif action == "update_inventory_relations_using_entity_type_name":
             return client.update_inventory_relations_using_entity_type_name(**kwargs)
-        elif action == "link_or_unlink_inventory_relationships_using_relationship_using_put":
-            return client.link_or_unlink_inventory_relationships_using_relationship_using_put(**kwargs)
+        elif (
+            action
+            == "link_or_unlink_inventory_relationships_using_relationship_using_put"
+        ):
+            return client.link_or_unlink_inventory_relationships_using_relationship_using_put(
+                **kwargs
+            )
         elif action == "get_personal_data_for_relationships_using_post":
             return client.get_personal_data_for_relationships_using_post(**kwargs)
         elif action == "create_inventory_relations_using_post":
@@ -56,12 +66,19 @@ def register_inventory_tools(mcp: FastMCP):
         elif action == "add_relationship_between_entities_using_post":
             return client.add_relationship_between_entities_using_post(**kwargs)
         elif action == "get_inventory_relationship_using_relationship_type_name_1":
-            return client.get_inventory_relationship_using_relationship_type_name_1(**kwargs)
+            return client.get_inventory_relationship_using_relationship_type_name_1(
+                **kwargs
+            )
         elif action == "delete_inventory_relations_using_relationship_type_name_1":
-            return client.delete_inventory_relations_using_relationship_type_name_1(**kwargs)
+            return client.delete_inventory_relations_using_relationship_type_name_1(
+                **kwargs
+            )
         elif action == "get_inventory_relationship_using_relationship_type_name":
-            return client.get_inventory_relationship_using_relationship_type_name(**kwargs)
+            return client.get_inventory_relationship_using_relationship_type_name(
+                **kwargs
+            )
         elif action == "delete_inventory_relations_using_relationship_type_name":
-            return client.delete_inventory_relations_using_relationship_type_name(**kwargs)
+            return client.delete_inventory_relations_using_relationship_type_name(
+                **kwargs
+            )
         raise ValueError(f"Unknown action: {action}")
-

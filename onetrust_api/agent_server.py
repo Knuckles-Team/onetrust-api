@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# coding: utf-8
 import logging
 import os
 import sys
@@ -31,10 +30,14 @@ def agent_server():
     global DEFAULT_AGENT_NAME, DEFAULT_AGENT_DESCRIPTION, DEFAULT_AGENT_SYSTEM_PROMPT
     initialize_workspace()
     meta = load_identity()
-    DEFAULT_AGENT_NAME = os.getenv("DEFAULT_AGENT_NAME", meta.get("name", "OneTrust Api"))
+    DEFAULT_AGENT_NAME = os.getenv(
+        "DEFAULT_AGENT_NAME", meta.get("name", "OneTrust Api")
+    )
     DEFAULT_AGENT_DESCRIPTION = os.getenv(
         "AGENT_DESCRIPTION",
-        meta.get("description", "AI agent for OneTrust privacy and compliance management."),
+        meta.get(
+            "description", "AI agent for OneTrust privacy and compliance management."
+        ),
     )
     DEFAULT_AGENT_SYSTEM_PROMPT = os.getenv(
         "AGENT_SYSTEM_PROMPT",

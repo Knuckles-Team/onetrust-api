@@ -46,4 +46,3 @@ def register_data_discovery_worker_tools(mcp: FastMCP):
         elif action == "update_job_status_using_put":
             return client.update_job_status_using_put(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

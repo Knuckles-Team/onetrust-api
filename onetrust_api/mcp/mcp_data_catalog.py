@@ -86,4 +86,3 @@ def register_data_catalog_tools(mcp: FastMCP):
         elif action == "external_search_using_continuationtoken":
             return client.external_search_using_continuationtoken(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

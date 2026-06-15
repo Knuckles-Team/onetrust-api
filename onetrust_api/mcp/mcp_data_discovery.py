@@ -90,4 +90,3 @@ def register_data_discovery_tools(mcp: FastMCP):
         elif action == "delete_detector":
             return client.delete_detector(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

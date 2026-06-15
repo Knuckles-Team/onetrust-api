@@ -9,36 +9,35 @@ class OneTrustComplianceAutomation(OneTrustApiBase):
     def find_all_initiatives_by_filter_using_post(self, **kwargs) -> Response:
         """Get List of Initiatives"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/compliance-wr/v1/initiatives/search',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/compliance-wr/v1/initiatives/search",
             path_params=[],
-            query_params=['page', 'size', 'sort'],
+            query_params=["page", "size", "sort"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_initiative_using_get(self, **kwargs) -> Response:
         """Get Initiative"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/compliance-wr/v1/initiatives/{initiativeId}',
-            path_params=['initiativeId'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/compliance-wr/v1/initiatives/{initiativeId}",
+            path_params=["initiativeId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_initiative_using_put(self, **kwargs) -> Response:
         """Update Initiative"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/compliance-wr/v1/initiatives/{initiativeId}',
-            path_params=['initiativeId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/compliance-wr/v1/initiatives/{initiativeId}",
+            path_params=["initiativeId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

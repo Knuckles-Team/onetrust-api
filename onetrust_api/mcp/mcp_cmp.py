@@ -48,4 +48,3 @@ def register_cmp_tools(mcp: FastMCP):
         elif action == "get_vendors":
             return client.get_vendors(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

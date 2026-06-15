@@ -52,4 +52,3 @@ def register_incidents_tools(mcp: FastMCP):
         elif action == "create_inventory_links":
             return client.create_inventory_links(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

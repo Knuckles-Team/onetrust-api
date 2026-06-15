@@ -110,4 +110,3 @@ def register_access_management_tools(mcp: FastMCP):
         elif action == "user_activity":
             return client.user_activity(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

@@ -42,4 +42,3 @@ def register_documents_tools(mcp: FastMCP):
         elif action == "file_location":
             return client.file_location(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

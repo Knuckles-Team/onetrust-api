@@ -48,4 +48,3 @@ def register_esg_tools(mcp: FastMCP):
         elif action == "fetch_metrics_details":
             return client.fetch_metrics_details(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

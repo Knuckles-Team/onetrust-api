@@ -9,156 +9,167 @@ class OneTrustInventory(OneTrustApiBase):
     def list_all_inventory_relationships_using_post(self, **kwargs) -> Response:
         """Get List of Relationships"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/inventory/{inventoryId}/pages',
-            path_params=['inventoryId'],
-            query_params=['page', 'size', 'sort'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/inventory/{inventoryId}/pages",
+            path_params=["inventoryId"],
+            query_params=["page", "size", "sort"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_inventory_relations_using_entity_type_name_1(self, **kwargs) -> Response:
         """Update Relationship by Type Name"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/names/{entityTypeName}',
-            path_params=['entityTypeName', 'contextualLinkId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/names/{entityTypeName}",
+            path_params=["entityTypeName", "contextualLinkId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def link_or_unlink_inventory_relationships_using_relationship_using_put_1(self, **kwargs) -> Response:
+    def link_or_unlink_inventory_relationships_using_relationship_using_put_1(
+        self, **kwargs
+    ) -> Response:
         """Link or Unlink Personal Data to Relationship by Type Name"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/names/{entityTypeName}/data-elements',
-            path_params=['entityTypeName', 'contextualLinkId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/names/{entityTypeName}/data-elements",
+            path_params=["entityTypeName", "contextualLinkId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_personal_data_for_relationships_using_post_1(self, **kwargs) -> Response:
         """Get Personal Data for Relationship by Type Name"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/names/{entityTypeName}/data-elements/pages',
-            path_params=['contextualLinkId', 'entityTypeName'],
-            query_params=['page', 'size', 'sort'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/names/{entityTypeName}/data-elements/pages",
+            path_params=["contextualLinkId", "entityTypeName"],
+            query_params=["page", "size", "sort"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_inventory_relations_using_entity_type_name(self, **kwargs) -> Response:
         """Update Relationship by Type ID"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/{entityTypeId}',
-            path_params=['entityTypeId', 'contextualLinkId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/{entityTypeId}",
+            path_params=["entityTypeId", "contextualLinkId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def link_or_unlink_inventory_relationships_using_relationship_using_put(self, **kwargs) -> Response:
+    def link_or_unlink_inventory_relationships_using_relationship_using_put(
+        self, **kwargs
+    ) -> Response:
         """Link or Unlink Personal Data to Relationship by Type ID"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/{entityTypeId}/data-elements',
-            path_params=['entityTypeId', 'contextualLinkId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/{entityTypeId}/data-elements",
+            path_params=["entityTypeId", "contextualLinkId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_personal_data_for_relationships_using_post(self, **kwargs) -> Response:
         """Get Personal Data for Relationship by Type ID"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/{entityTypeId}/data-elements/pages',
-            path_params=['contextualLinkId', 'entityTypeId'],
-            query_params=['page', 'size', 'sort'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/{entityTypeId}/data-elements/pages",
+            path_params=["contextualLinkId", "entityTypeId"],
+            query_params=["page", "size", "sort"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_inventory_relations_using_post(self, **kwargs) -> Response:
         """Create Relationship"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory-linking/v1/inventories/relations',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory-linking/v1/inventories/relations",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def add_relationship_between_entities_using_post(self, **kwargs) -> Response:
         """Create Relationship"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory-linking/v1/relationship',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory-linking/v1/relationship",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def get_inventory_relationship_using_relationship_type_name_1(self, **kwargs) -> Response:
+    def get_inventory_relationship_using_relationship_type_name_1(
+        self, **kwargs
+    ) -> Response:
         """Get Relationship by Type Name"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/inventory-linking/v1/relationship-types/names/{relationshipTypeName}/relationship/{relationshipId}',
-            path_params=['relationshipTypeName', 'relationshipId'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/inventory-linking/v1/relationship-types/names/{relationshipTypeName}/relationship/{relationshipId}",
+            path_params=["relationshipTypeName", "relationshipId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def delete_inventory_relations_using_relationship_type_name_1(self, **kwargs) -> Response:
+    def delete_inventory_relations_using_relationship_type_name_1(
+        self, **kwargs
+    ) -> Response:
         """Delete Relationship by Type Name"""
         return self._call(
-            http='DELETE',
-            url_template='https://__HOSTNAME__/api/inventory-linking/v1/relationship-types/names/{relationshipTypeName}/relationship/{relationshipId}',
-            path_params=['relationshipTypeName', 'relationshipId'],
+            http="DELETE",
+            url_template="https://__HOSTNAME__/api/inventory-linking/v1/relationship-types/names/{relationshipTypeName}/relationship/{relationshipId}",
+            path_params=["relationshipTypeName", "relationshipId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def get_inventory_relationship_using_relationship_type_name(self, **kwargs) -> Response:
+    def get_inventory_relationship_using_relationship_type_name(
+        self, **kwargs
+    ) -> Response:
         """Get Relationship by Type ID"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/inventory-linking/v1/relationship-types/{relationshipTypeId}/relationship/{relationshipId}',
-            path_params=['relationshipTypeId', 'relationshipId'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/inventory-linking/v1/relationship-types/{relationshipTypeId}/relationship/{relationshipId}",
+            path_params=["relationshipTypeId", "relationshipId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def delete_inventory_relations_using_relationship_type_name(self, **kwargs) -> Response:
+    def delete_inventory_relations_using_relationship_type_name(
+        self, **kwargs
+    ) -> Response:
         """Delete Relationship by Type ID"""
         return self._call(
-            http='DELETE',
-            url_template='https://__HOSTNAME__/api/inventory-linking/v1/relationship-types/{relationshipTypeId}/relationship/{relationshipId}',
-            path_params=['relationshipTypeId', 'relationshipId'],
+            http="DELETE",
+            url_template="https://__HOSTNAME__/api/inventory-linking/v1/relationship-types/{relationshipTypeId}/relationship/{relationshipId}",
+            path_params=["relationshipTypeId", "relationshipId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

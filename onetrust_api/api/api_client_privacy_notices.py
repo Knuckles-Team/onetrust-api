@@ -9,36 +9,37 @@ class OneTrustPrivacyNotices(OneTrustApiBase):
     def get_privacy_notices_using_get(self, **kwargs) -> Response:
         """Get List of Privacy Notices"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/privacynotice/v2/privacynotices',
+            http="GET",
+            url_template="https://__HOSTNAME__/api/privacynotice/v2/privacynotices",
             path_params=[],
-            query_params=['page', 'size'],
+            query_params=["page", "size"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
-    def get_privacy_notice_version_by_published_date_using_get(self, **kwargs) -> Response:
+    def get_privacy_notice_version_by_published_date_using_get(
+        self, **kwargs
+    ) -> Response:
         """Get Privacy Notice Version"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/privacynotice/v2/privacynotices/{id}',
-            path_params=['id'],
-            query_params=['date'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/privacynotice/v2/privacynotices/{id}",
+            path_params=["id"],
+            query_params=["date"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_privacy_notice_versions_using_get(self, **kwargs) -> Response:
         """Get List of Privacy Notice Versions"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/privacynotice/v2/privacynotices/{privacyNoticeId}/versions',
-            path_params=['privacyNoticeId'],
-            query_params=['page', 'size'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/privacynotice/v2/privacynotices/{privacyNoticeId}/versions",
+            path_params=["privacyNoticeId"],
+            query_params=["page", "size"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
-

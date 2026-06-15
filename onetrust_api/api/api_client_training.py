@@ -9,60 +9,59 @@ class OneTrustTraining(OneTrustApiBase):
     def list_of_courses_using_get(self, **kwargs) -> Response:
         """Get List of Courses"""
         return self._call(
-            http='GET',
-            url_template='https://customer.my.onetrust.com/api/awareness-training/v1/courses',
+            http="GET",
+            url_template="https://customer.my.onetrust.com/api/awareness-training/v1/courses",
             path_params=[],
-            query_params=['searchText', 'page', 'size'],
+            query_params=["searchText", "page", "size"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def enroll_users_to_course_using_post(self, **kwargs) -> Response:
         """Enroll Users to Course"""
         return self._call(
-            http='POST',
-            url_template='https://customer.my.onetrust.com/api/awareness-training/v2/enrollments',
+            http="POST",
+            url_template="https://customer.my.onetrust.com/api/awareness-training/v2/enrollments",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_status_of_enrollment_using_get(self, **kwargs) -> Response:
         """Get User's Enrollment Status"""
         return self._call(
-            http='GET',
-            url_template='https://customer.my.onetrust.com/api/awareness-training/v1/enrollment-assignees/{enrollmentAssigneeId}/enrollment-progress',
-            path_params=['enrollmentAssigneeId'],
+            http="GET",
+            url_template="https://customer.my.onetrust.com/api/awareness-training/v1/enrollment-assignees/{enrollmentAssigneeId}/enrollment-progress",
+            path_params=["enrollmentAssigneeId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def un_enroll_user_using_delete(self, **kwargs) -> Response:
         """Unenroll User from Course"""
         return self._call(
-            http='DELETE',
-            url_template='https://customer.my.onetrust.com/api/awareness-training/v1/enrollments/enrollment-assignees/{enrollmentAssigneeId}',
-            path_params=['enrollmentAssigneeId'],
+            http="DELETE",
+            url_template="https://customer.my.onetrust.com/api/awareness-training/v1/enrollments/enrollment-assignees/{enrollmentAssigneeId}",
+            path_params=["enrollmentAssigneeId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_enrollment_details_using_post(self, **kwargs) -> Response:
         """Get Enrollment Details"""
         return self._call(
-            http='POST',
-            url_template='https://customer.my.onetrust.com/api/awareness-training/v1/enrollments/assignments',
+            http="POST",
+            url_template="https://customer.my.onetrust.com/api/awareness-training/v1/enrollments/assignments",
             path_params=[],
-            query_params=['page', 'size'],
+            query_params=["page", "size"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

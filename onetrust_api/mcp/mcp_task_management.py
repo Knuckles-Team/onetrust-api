@@ -44,4 +44,3 @@ def register_task_management_tools(mcp: FastMCP):
         elif action == "update_task_using_put":
             return client.update_task_using_put(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

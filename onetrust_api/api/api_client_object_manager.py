@@ -9,456 +9,475 @@ class OneTrustObjectManager(OneTrustApiBase):
     def create_project_using_post(self, **kwargs) -> Response:
         """Create Project Object"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def find_project_basic_details_by_query_criteria_using_post(self, **kwargs) -> Response:
+    def find_project_basic_details_by_query_criteria_using_post(
+        self, **kwargs
+    ) -> Response:
         """Get Basic Project Object Details"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects/basic-details/search',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects/basic-details/search",
             path_params=[],
-            query_params=['page', 'size', 'sort'],
+            query_params=["page", "size", "sort"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def find_projects_by_list_criteria_using_post(self, **kwargs) -> Response:
         """Get Project Object Details"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects/search',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects/search",
             path_params=[],
-            query_params=['page', 'size', 'sort'],
+            query_params=["page", "size", "sort"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_project_using_get(self, **kwargs) -> Response:
         """Get Project Object"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects/{entityId}',
-            path_params=['entityId'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects/{entityId}",
+            path_params=["entityId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_project_using_put(self, **kwargs) -> Response:
         """Modify Project Object"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects/{entityId}',
-            path_params=['entityId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects/{entityId}",
+            path_params=["entityId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def delete_project_using_delete(self, **kwargs) -> Response:
         """Delete Project Object"""
         return self._call(
-            http='DELETE',
-            url_template='https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects/{entityId}',
-            path_params=['entityId'],
+            http="DELETE",
+            url_template="https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects/{entityId}",
+            path_params=["entityId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_model_using_post(self, **kwargs) -> Response:
         """Create Model Object"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def find_model_basic_details_by_query_criteria_using_post(self, **kwargs) -> Response:
+    def find_model_basic_details_by_query_criteria_using_post(
+        self, **kwargs
+    ) -> Response:
         """Get Basic Model Object Details"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models/basic-details/search',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models/basic-details/search",
             path_params=[],
-            query_params=['page', 'size', 'sort'],
+            query_params=["page", "size", "sort"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def find_models_by_list_criteria_using_post(self, **kwargs) -> Response:
         """Get Model Object Details"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models/search',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models/search",
             path_params=[],
-            query_params=['page', 'size', 'sort'],
+            query_params=["page", "size", "sort"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_model_using_get(self, **kwargs) -> Response:
         """Get Model Object"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models/{entityId}',
-            path_params=['entityId'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models/{entityId}",
+            path_params=["entityId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_model_using_put(self, **kwargs) -> Response:
         """Modify Model Object"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models/{entityId}',
-            path_params=['entityId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models/{entityId}",
+            path_params=["entityId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def delete_model_using_delete(self, **kwargs) -> Response:
         """Delete Model Object"""
         return self._call(
-            http='DELETE',
-            url_template='https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models/{entityId}',
-            path_params=['entityId'],
+            http="DELETE",
+            url_template="https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models/{entityId}",
+            path_params=["entityId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def add_entity_using_entity_type_id_or_entity_type_name_using_post_x(self, **kwargs) -> Response:
+    def add_entity_using_entity_type_id_or_entity_type_name_using_post_x(
+        self, **kwargs
+    ) -> Response:
         """Create Object"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entities',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entities",
             path_params=[],
-            query_params=['entityTypeIdentifier', 'entityTypeName'],
+            query_params=["entityTypeIdentifier", "entityTypeName"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def find_all_by_type_id_and_criteria_using_post_x(self, **kwargs) -> Response:
         """Get Full Object Details"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entities/search',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entities/search",
             path_params=[],
-            query_params=['page', 'size', 'sort', 'entityTypeId', 'entityTypeName'],
+            query_params=["page", "size", "sort", "entityTypeId", "entityTypeName"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def get_entity_information_using_entity_type_id_or_entity_type_name_using_get_x(self, **kwargs) -> Response:
+    def get_entity_information_using_entity_type_id_or_entity_type_name_using_get_x(
+        self, **kwargs
+    ) -> Response:
         """Get Object"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entities/{entityId}',
-            path_params=['entityId'],
-            query_params=['entityTypeIdentifier', 'entityTypeName'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entities/{entityId}",
+            path_params=["entityId"],
+            query_params=["entityTypeIdentifier", "entityTypeName"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def delete_using_entity_type_id_or_entity_type_name_using_delete_x(self, **kwargs) -> Response:
+    def delete_using_entity_type_id_or_entity_type_name_using_delete_x(
+        self, **kwargs
+    ) -> Response:
         """Delete Object"""
         return self._call(
-            http='DELETE',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entities/{entityId}',
-            path_params=['entityId'],
-            query_params=['entityTypeIdentifier', 'entityTypeName'],
+            http="DELETE",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entities/{entityId}",
+            path_params=["entityId"],
+            query_params=["entityTypeIdentifier", "entityTypeName"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def update_using_entity_type_id_or_entity_type_name_using_patch_x(self, **kwargs) -> Response:
+    def update_using_entity_type_id_or_entity_type_name_using_patch_x(
+        self, **kwargs
+    ) -> Response:
         """Modify Object"""
         return self._call(
-            http='PATCH',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entities/{entityId}',
-            path_params=['entityId'],
-            query_params=['entityTypeIdentifier', 'entityTypeName'],
+            http="PATCH",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entities/{entityId}",
+            path_params=["entityId"],
+            query_params=["entityTypeIdentifier", "entityTypeName"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def find_entity_basic_details_by_type_and_criteria_using_post_x(self, **kwargs) -> Response:
+    def find_entity_basic_details_by_type_and_criteria_using_post_x(
+        self, **kwargs
+    ) -> Response:
         """Get Basic Object Details"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entity-basic-details/search',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entity-basic-details/search",
             path_params=[],
-            query_params=['entityTypeId', 'page', 'size', 'sort'],
+            query_params=["entityTypeId", "page", "size", "sort"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_custom_link_type_using_post(self, **kwargs) -> Response:
         """Create Relationship Type between Objects"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entity-link-types',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entity-link-types",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def find_all_by_link_type_and_criteria_using_post(self, **kwargs) -> Response:
         """Get List of Relationship Link Types"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entity-link-types/search',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entity-link-types/search",
             path_params=[],
-            query_params=['page', 'size', 'sort'],
+            query_params=["page", "size", "sort"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_link_type_using_get(self, **kwargs) -> Response:
         """Get Relationship Type"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entity-link-types/{entityLinkTypeId}',
-            path_params=['entityLinkTypeId'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entity-link-types/{entityLinkTypeId}",
+            path_params=["entityLinkTypeId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_entity_type_information_using_get_1_x(self, **kwargs) -> Response:
         """Get Object Type by Name"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entity-types/names/{entityTypeName}',
-            path_params=['entityTypeName'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entity-types/names/{entityTypeName}",
+            path_params=["entityTypeName"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_custom_entity_type_using_patch_1(self, **kwargs) -> Response:
         """Modify Custom Object Type by Name"""
         return self._call(
-            http='PATCH',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entity-types/names/{entityTypeName}',
-            path_params=['entityTypeName'],
+            http="PATCH",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entity-types/names/{entityTypeName}",
+            path_params=["entityTypeName"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def enabled_custom_entity_type_using_put_1(self, **kwargs) -> Response:
         """Enable Custom Object Type by Name"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entity-types/names/{entityTypeName}/enable',
-            path_params=['entityTypeName'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entity-types/names/{entityTypeName}/enable",
+            path_params=["entityTypeName"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def find_all_by_type_and_criteria_using_post(self, **kwargs) -> Response:
         """Get List of Object Types"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entity-types/search',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entity-types/search",
             path_params=[],
-            query_params=['page', 'size', 'sort'],
+            query_params=["page", "size", "sort"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_entity_type_information_using_get(self, **kwargs) -> Response:
         """Get Object Type by ID"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entity-types/{entityTypeId}',
-            path_params=['entityTypeId'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entity-types/{entityTypeId}",
+            path_params=["entityTypeId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_custom_entity_type_using_patch(self, **kwargs) -> Response:
         """Modify Custom Object Type by ID"""
         return self._call(
-            http='PATCH',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entity-types/{entityTypeId}',
-            path_params=['entityTypeId'],
+            http="PATCH",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entity-types/{entityTypeId}",
+            path_params=["entityTypeId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def enabled_custom_entity_type_using_put(self, **kwargs) -> Response:
         """Enable Custom Object Type by ID"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/entity-types/{entityTypeId}/enable',
-            path_params=['entityTypeId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/entity-types/{entityTypeId}/enable",
+            path_params=["entityTypeId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def create_link_record_between_entities_using_link_type_id_using_post_x(self, **kwargs) -> Response:
+    def create_link_record_between_entities_using_link_type_id_using_post_x(
+        self, **kwargs
+    ) -> Response:
         """Create Relationship Record between Objects"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/links',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/links",
             path_params=[],
-            query_params=['linkTypeId'],
+            query_params=["linkTypeId"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def get_link_record_information_using_link_type_id_using_get_x(self, **kwargs) -> Response:
+    def get_link_record_information_using_link_type_id_using_get_x(
+        self, **kwargs
+    ) -> Response:
         """Get Relationship Record"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/links/{linkId}',
-            path_params=['linkId'],
-            query_params=['linkTypeId'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/links/{linkId}",
+            path_params=["linkId"],
+            query_params=["linkTypeId"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def delete_link_record_by_id_and_type_using_link_type_id_using_delete_x(self, **kwargs) -> Response:
+    def delete_link_record_by_id_and_type_using_link_type_id_using_delete_x(
+        self, **kwargs
+    ) -> Response:
         """Remove Relationship Record"""
         return self._call(
-            http='DELETE',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/links/{linkId}',
-            path_params=['linkId'],
-            query_params=['linkTypeId'],
+            http="DELETE",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/links/{linkId}",
+            path_params=["linkId"],
+            query_params=["linkTypeId"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def add_options_using_post_x(self, **kwargs) -> Response:
         """Add Options to Attribute"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/schema-attribute-options',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/schema-attribute-options",
             path_params=[],
-            query_params=['attributeId'],
+            query_params=["attributeId"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def add_attribute_using_post_x(self, **kwargs) -> Response:
         """Add Attribute to Schema"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/schema-attributes',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/schema-attributes",
             path_params=[],
-            query_params=['schemaName'],
+            query_params=["schemaName"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def disable_attribute_using_put_x(self, **kwargs) -> Response:
         """Disable Attribute"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/schema-attributes/{attributeId}/disable',
-            path_params=['attributeId'],
-            query_params=['schemaId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/schema-attributes/{attributeId}/disable",
+            path_params=["attributeId"],
+            query_params=["schemaId"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def enable_attribute_using_put_x(self, **kwargs) -> Response:
         """Enable Attribute"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/schema-attributes/{attributeId}/enable',
-            path_params=['attributeId'],
-            query_params=['schemaId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/schema-attributes/{attributeId}/enable",
+            path_params=["attributeId"],
+            query_params=["schemaId"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_task_using_post_1_x(self, **kwargs) -> Response:
         """Create Task"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/tasks',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/tasks",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def find_task_using_get_1_x(self, **kwargs) -> Response:
         """Get Task"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/tasks/{taskId}',
-            path_params=['taskId'],
-            query_params=['includePermissionsMetadata', 'excludeInactiveTask'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/tasks/{taskId}",
+            path_params=["taskId"],
+            query_params=["includePermissionsMetadata", "excludeInactiveTask"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_task_using_put_1_x(self, **kwargs) -> Response:
         """Update Task"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/custom-entity/v1/tasks/{taskId}',
-            path_params=['taskId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/custom-entity/v1/tasks/{taskId}",
+            path_params=["taskId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

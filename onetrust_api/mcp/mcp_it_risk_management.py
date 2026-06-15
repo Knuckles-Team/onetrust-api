@@ -37,16 +37,28 @@ def register_it_risk_management_tools(mcp: FastMCP):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "find_all_control_implementations_attributes_and_options_by_using_post":
-            return client.find_all_control_implementations_attributes_and_options_by_using_post(**kwargs)
+        if (
+            action
+            == "find_all_control_implementations_attributes_and_options_by_using_post"
+        ):
+            return client.find_all_control_implementations_attributes_and_options_by_using_post(
+                **kwargs
+            )
         elif action == "find_all_control_implementations_using_post":
             return client.find_all_control_implementations_using_post(**kwargs)
         elif action == "get_control_implementation_details_using_get":
             return client.get_control_implementation_details_using_get(**kwargs)
         elif action == "update_control_implementation_by_implementation_id_using_put":
-            return client.update_control_implementation_by_implementation_id_using_put(**kwargs)
-        elif action == "remove_control_implementation_by_entity_and_implementation_id_using_delete":
-            return client.remove_control_implementation_by_entity_and_implementation_id_using_delete(**kwargs)
+            return client.update_control_implementation_by_implementation_id_using_put(
+                **kwargs
+            )
+        elif (
+            action
+            == "remove_control_implementation_by_entity_and_implementation_id_using_delete"
+        ):
+            return client.remove_control_implementation_by_entity_and_implementation_id_using_delete(
+                **kwargs
+            )
         elif action == "add_attachments_to_implementation_using_post":
             return client.add_attachments_to_implementation_using_post(**kwargs)
         elif action == "add_control_using_post":
@@ -152,4 +164,3 @@ def register_it_risk_management_tools(mcp: FastMCP):
         elif action == "create_stand_alone_risk_using_post":
             return client.create_stand_alone_risk_using_post(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

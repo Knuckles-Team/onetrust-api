@@ -40,8 +40,9 @@ def register_privacy_notices_tools(mcp: FastMCP):
         if action == "get_privacy_notices_using_get":
             return client.get_privacy_notices_using_get(**kwargs)
         elif action == "get_privacy_notice_version_by_published_date_using_get":
-            return client.get_privacy_notice_version_by_published_date_using_get(**kwargs)
+            return client.get_privacy_notice_version_by_published_date_using_get(
+                **kwargs
+            )
         elif action == "get_privacy_notice_versions_using_get":
             return client.get_privacy_notice_versions_using_get(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

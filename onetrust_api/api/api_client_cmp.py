@@ -9,60 +9,59 @@ class OneTrustCmp(OneTrustApiBase):
     def get_banner(self, **kwargs) -> Response:
         """Get Banner Data"""
         return self._call(
-            http='GET',
-            url_template='https://mobile-data.onetrust.io/cfw/cmp/v1/banner',
+            http="GET",
+            url_template="https://mobile-data.onetrust.io/cfw/cmp/v1/banner",
             path_params=[],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_preferences(self, **kwargs) -> Response:
         """Get Preference Center Data"""
         return self._call(
-            http='GET',
-            url_template='https://mobile-data.onetrust.io/cfw/cmp/v1/preferences',
+            http="GET",
+            url_template="https://mobile-data.onetrust.io/cfw/cmp/v1/preferences",
             path_params=[],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def post_log_consent(self, **kwargs) -> Response:
         """Log Consent"""
         return self._call(
-            http='POST',
-            url_template='https://mobile-data.onetrust.io/cfw/cmp/v1/save-log-consent',
+            http="POST",
+            url_template="https://mobile-data.onetrust.io/cfw/cmp/v1/save-log-consent",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_ucpurposes(self, **kwargs) -> Response:
         """Get Universal Consent Purposes"""
         return self._call(
-            http='GET',
-            url_template='https://mobile-data.onetrust.io/cfw/cmp/v1/uc-purposes',
+            http="GET",
+            url_template="https://mobile-data.onetrust.io/cfw/cmp/v1/uc-purposes",
             path_params=[],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_vendors(self, **kwargs) -> Response:
         """Get IAB and Google Vendors"""
         return self._call(
-            http='GET',
-            url_template='https://mobile-data.onetrust.io/cfw/cmp/v1/vendors',
+            http="GET",
+            url_template="https://mobile-data.onetrust.io/cfw/cmp/v1/vendors",
             path_params=[],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

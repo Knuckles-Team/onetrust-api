@@ -9,7 +9,7 @@ OPERATIONS = [
         "action": "organization_tree_structure_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/access/v1/external/organizations",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createOrganizationUsingPOST",
@@ -18,7 +18,7 @@ OPERATIONS = [
         "action": "create_organization_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/access/v1/external/organizations",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateOrganizationUsingPUT",
@@ -27,7 +27,7 @@ OPERATIONS = [
         "action": "update_organization_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/access/v1/external/organizations/{externalId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteOrganizationPOST",
@@ -36,7 +36,7 @@ OPERATIONS = [
         "action": "delete_organization_post",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/access/v1/external/organizations/{externalId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "loginHistory",
@@ -45,7 +45,7 @@ OPERATIONS = [
         "action": "login_history",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/access/v1/login-history",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "GetOAuthToken",
@@ -54,7 +54,7 @@ OPERATIONS = [
         "action": "get_oauth_token",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/access/v1/oauth/token",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "retrieveUserGroupsUsingGET",
@@ -63,7 +63,7 @@ OPERATIONS = [
         "action": "retrieve_user_groups_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/access/v1/user-groups",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createUserGroupUsingPOST",
@@ -72,7 +72,7 @@ OPERATIONS = [
         "action": "create_user_group_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/access/v1/user-groups",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateUserGroupUsingPUT",
@@ -81,7 +81,7 @@ OPERATIONS = [
         "action": "update_user_group_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/access/v1/user-groups/{userGroupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteUserGroupUsingDELETE",
@@ -90,7 +90,7 @@ OPERATIONS = [
         "action": "delete_user_group_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/access/v1/user-groups/{userGroupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "retrieveMembersUsingGET",
@@ -99,7 +99,7 @@ OPERATIONS = [
         "action": "retrieve_members_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/access/v1/user-groups/{userGroupId}/members",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "addMembersUsingPOST",
@@ -108,7 +108,7 @@ OPERATIONS = [
         "action": "add_members_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/access/v1/user-groups/{userGroupId}/members",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "removeMembersUsingDELETE",
@@ -117,7 +117,7 @@ OPERATIONS = [
         "action": "remove_members_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/access/v1/user-groups/{userGroupId}/members",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllUserGroupWithFiltersV2",
@@ -126,7 +126,7 @@ OPERATIONS = [
         "action": "get_all_user_group_with_filters_v2",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/access/v2/user-groups",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createUserGroupV2",
@@ -135,7 +135,7 @@ OPERATIONS = [
         "action": "create_user_group_v2",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/access/v2/user-groups",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getUserGroupByIdV2",
@@ -144,7 +144,7 @@ OPERATIONS = [
         "action": "get_user_group_by_id_v2",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/access/v2/user-groups/{groupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateUserGroupByIdV2",
@@ -153,7 +153,7 @@ OPERATIONS = [
         "action": "update_user_group_by_id_v2",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/access/v2/user-groups/{groupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteUserGroupByIdV2",
@@ -162,7 +162,7 @@ OPERATIONS = [
         "action": "delete_user_group_by_id_v2",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/access/v2/user-groups/{groupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAccessLevelsForUserGroupByIdV2",
@@ -171,7 +171,7 @@ OPERATIONS = [
         "action": "get_access_levels_for_user_group_by_id_v2",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/access/v2/user-groups/{groupId}/access-levels",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateAccessLevelForUserGroupByIdV2",
@@ -180,7 +180,7 @@ OPERATIONS = [
         "action": "update_access_level_for_user_group_by_id_v2",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/access/v2/user-groups/{groupId}/access-levels",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addAccessLevelsForUserGroupByIdV2",
@@ -189,7 +189,7 @@ OPERATIONS = [
         "action": "add_access_levels_for_user_group_by_id_v2",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/access/v2/user-groups/{groupId}/access-levels",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "removeAccessLevelForUserGroupByIdV2",
@@ -198,7 +198,7 @@ OPERATIONS = [
         "action": "remove_access_level_for_user_group_by_id_v2",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/access/v2/user-groups/{groupId}/access-levels",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getMembersFromAUserGroupByIdV2",
@@ -207,7 +207,7 @@ OPERATIONS = [
         "action": "get_members_from_auser_group_by_id_v2",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/access/v2/user-groups/{groupId}/members",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "addMultipleMembersForUserGroupByIdV2",
@@ -216,7 +216,7 @@ OPERATIONS = [
         "action": "add_multiple_members_for_user_group_by_id_v2",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/access/v2/user-groups/{groupId}/members",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "removeMultipleMembersForUserGroupByIdV2",
@@ -225,7 +225,7 @@ OPERATIONS = [
         "action": "remove_multiple_members_for_user_group_by_id_v2",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/access/v2/user-groups/{groupId}/members",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addAMemberForUserGroupByIdV2",
@@ -234,7 +234,7 @@ OPERATIONS = [
         "action": "add_amember_for_user_group_by_id_v2",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/access/v2/user-groups/{groupId}/members/{memberId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "removeAMemberForUserGroupByIdV2",
@@ -243,7 +243,7 @@ OPERATIONS = [
         "action": "remove_amember_for_user_group_by_id_v2",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/access/v2/user-groups/{groupId}/members/{memberId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllUserDetailsV2",
@@ -252,7 +252,7 @@ OPERATIONS = [
         "action": "get_all_user_details_v2",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/access/v2/users",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createUserV2",
@@ -261,7 +261,7 @@ OPERATIONS = [
         "action": "create_user_v2",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/access/v2/users",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getUserV2",
@@ -270,7 +270,7 @@ OPERATIONS = [
         "action": "get_user_v2",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/access/v2/users/{userId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateUserV2",
@@ -279,7 +279,7 @@ OPERATIONS = [
         "action": "update_user_v2",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/access/v2/users/{userId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getUserAccessLevelsV2",
@@ -288,7 +288,7 @@ OPERATIONS = [
         "action": "get_user_access_levels_v2",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/access/v2/users/{userId}/access-levels",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addUserAccessLevelV2",
@@ -297,7 +297,7 @@ OPERATIONS = [
         "action": "add_user_access_level_v2",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/access/v2/users/{userId}/access-levels",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "removeUserAccessLevelV2",
@@ -306,7 +306,7 @@ OPERATIONS = [
         "action": "remove_user_access_level_v2",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/access/v2/users/{userId}/access-levels",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "setUserDefaultOrganizationV2",
@@ -315,7 +315,7 @@ OPERATIONS = [
         "action": "set_user_default_organization_v2",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/access/v2/users/{userId}/default-organization",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "userActivity",
@@ -324,7 +324,7 @@ OPERATIONS = [
         "action": "user_activity",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/audit/v1/users/{userId}/activities",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "assignStageByName",
@@ -333,7 +333,7 @@ OPERATIONS = [
         "action": "assign_stage_by_name",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/assignments/entities/{entityId}/types/{type}/stage",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addEntityUsingEntityTypeIdOrEntityTypeNameUsingPOST",
@@ -342,7 +342,7 @@ OPERATIONS = [
         "action": "add_entity_using_entity_type_id_or_entity_type_name_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/entities",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findAllByTypeIdAndCriteriaUsingPOST",
@@ -351,7 +351,7 @@ OPERATIONS = [
         "action": "find_all_by_type_id_and_criteria_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/entities/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getEntityInformationUsingEntityTypeIdOrEntityTypeNameUsingGET",
@@ -360,7 +360,7 @@ OPERATIONS = [
         "action": "get_entity_information_using_entity_type_id_or_entity_type_name_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/entities/{entityId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteUsingEntityTypeIdOrEntityTypeNameUsingDELETE",
@@ -369,7 +369,7 @@ OPERATIONS = [
         "action": "delete_using_entity_type_id_or_entity_type_name_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/entities/{entityId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateUsingEntityTypeIdOrEntityTypeNameUsingPATCH",
@@ -378,7 +378,7 @@ OPERATIONS = [
         "action": "update_using_entity_type_id_or_entity_type_name_using_patch",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/entities/{entityId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findEntityBasicDetailsByTypeAndCriteriaUsingPOST",
@@ -387,7 +387,7 @@ OPERATIONS = [
         "action": "find_entity_basic_details_by_type_and_criteria_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/entity-basic-details/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findAllByTypeAndCriteriaUsingPOST_1",
@@ -396,7 +396,7 @@ OPERATIONS = [
         "action": "find_all_by_type_and_criteria_using_post_1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/entity-types/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getEntityTypeInformationUsingGET_1",
@@ -405,7 +405,7 @@ OPERATIONS = [
         "action": "get_entity_type_information_using_get_1",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/entity-types/{entityTypeId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getRelatedEntitiesForAnEntityUsingPOST",
@@ -414,7 +414,7 @@ OPERATIONS = [
         "action": "get_related_entities_for_an_entity_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/linked-entity-types/entity-types/names/{entityTypeName}/entities/{entityId}/links/pages",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createLinkRecordBetweenEntitiesUsingLinkTypeIdUsingPOST",
@@ -423,7 +423,7 @@ OPERATIONS = [
         "action": "create_link_record_between_entities_using_link_type_id_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/links",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getLinkRecordInformationUsingLinkTypeIdUsingGET",
@@ -432,7 +432,7 @@ OPERATIONS = [
         "action": "get_link_record_information_using_link_type_id_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/links/{linkId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteLinkRecordByIdAndTypeUsingLinkTypeIdUsingDELETE",
@@ -441,7 +441,7 @@ OPERATIONS = [
         "action": "delete_link_record_by_id_and_type_using_link_type_id_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/links/{linkId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addOptionsUsingPOST",
@@ -450,7 +450,7 @@ OPERATIONS = [
         "action": "add_options_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/schema-attribute-options",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addAttributeUsingPOST",
@@ -459,7 +459,7 @@ OPERATIONS = [
         "action": "add_attribute_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/schema-attributes",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "disableAttributeUsingPUT",
@@ -468,7 +468,7 @@ OPERATIONS = [
         "action": "disable_attribute_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/schema-attributes/{attributeId}/disable",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "enableAttributeUsingPUT",
@@ -477,7 +477,7 @@ OPERATIONS = [
         "action": "enable_attribute_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/schema-attributes/{attributeId}/enable",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createTaskUsingPOST_1",
@@ -486,7 +486,7 @@ OPERATIONS = [
         "action": "create_task_using_post_1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/tasks",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findTaskUsingGET_1",
@@ -495,7 +495,7 @@ OPERATIONS = [
         "action": "find_task_using_get_1",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/tasks/{taskId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateTaskUsingPUT_1",
@@ -504,7 +504,7 @@ OPERATIONS = [
         "action": "update_task_using_put_1",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/ai-governance/v1/tasks/{taskId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "reviewAssessmentUsingPOST",
@@ -513,7 +513,7 @@ OPERATIONS = [
         "action": "review_assessment_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/assessment/v1/assessments/{assessmentId}/review",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getTagsUsingGET",
@@ -522,7 +522,7 @@ OPERATIONS = [
         "action": "get_tags_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessment-tags",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllAssessmentBasicDetailsUsingGET",
@@ -531,7 +531,7 @@ OPERATIONS = [
         "action": "get_all_assessment_basic_details_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createAssessmentUsingPOST_1",
@@ -540,7 +540,7 @@ OPERATIONS = [
         "action": "create_assessment_using_post_1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAssessmentDeleteLogsUsingGET",
@@ -549,7 +549,7 @@ OPERATIONS = [
         "action": "get_assessment_delete_logs_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/activities/types/assessmentdelete",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "archiveAssessmentsUsingPUT",
@@ -558,7 +558,7 @@ OPERATIONS = [
         "action": "archive_assessments_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/archive",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addManualAssessmentLinksUsingPOST",
@@ -567,7 +567,7 @@ OPERATIONS = [
         "action": "add_manual_assessment_links_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/assessment-links",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAssessmentResultsUsingGET",
@@ -576,7 +576,7 @@ OPERATIONS = [
         "action": "get_assessment_results_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/assessment-results",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createBulkAssessmentUsingPOST",
@@ -585,7 +585,7 @@ OPERATIONS = [
         "action": "create_bulk_assessment_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/bulk",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getLinkedAssessmentsInformationUsingGET",
@@ -594,7 +594,7 @@ OPERATIONS = [
         "action": "get_linked_assessments_information_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/reference-objects/{id}/assessments",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "unarchiveAssessmentsUsingPUT",
@@ -603,7 +603,7 @@ OPERATIONS = [
         "action": "unarchive_assessments_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/un-archive",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "exportAssessmentUsingGET",
@@ -612,7 +612,7 @@ OPERATIONS = [
         "action": "export_assessment_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/{assessmentId}/export",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateBasicAssessmentDetailsUsingPATCH",
@@ -621,7 +621,7 @@ OPERATIONS = [
         "action": "update_basic_assessment_details_using_patch",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/{assessmentId}/metadata",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updatePrimaryRecordUsingPUT",
@@ -630,7 +630,7 @@ OPERATIONS = [
         "action": "update_primary_record_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/{assessmentId}/primary-records",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "reassignAssessmentUsingPUT",
@@ -639,7 +639,7 @@ OPERATIONS = [
         "action": "reassign_assessment_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/{assessmentId}/reassign",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "submitResponsesUsingPOST",
@@ -648,7 +648,7 @@ OPERATIONS = [
         "action": "submit_responses_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/{assessmentId}/responses",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createAssessmentRiskUsingPOST",
@@ -657,7 +657,7 @@ OPERATIONS = [
         "action": "create_assessment_risk_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/{assessmentId}/risks",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "softDeleteAssessmentUsingPUT",
@@ -666,7 +666,7 @@ OPERATIONS = [
         "action": "soft_delete_assessment_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/{assessmentId}/soft-delete",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "submitAssessmentUsingPOST",
@@ -675,7 +675,7 @@ OPERATIONS = [
         "action": "submit_assessment_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/{assessmentId}/submit",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addOrUpdateTagsUsingPUT",
@@ -684,7 +684,7 @@ OPERATIONS = [
         "action": "add_or_update_tags_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/{assessmentId}/tags",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createTaskUsingPOST",
@@ -693,7 +693,7 @@ OPERATIONS = [
         "action": "create_task_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/{assessmentId}/tasks",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getWorkflowDetailsForAssessmentUsingGET",
@@ -702,7 +702,7 @@ OPERATIONS = [
         "action": "get_workflow_details_for_assessment_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/{assessmentId}/workflows",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "reassessAssessmentUsingPOST",
@@ -711,7 +711,7 @@ OPERATIONS = [
         "action": "reassess_assessment_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/{id}/reassess",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "reopenAssessmentUsingPOST",
@@ -720,7 +720,7 @@ OPERATIONS = [
         "action": "reopen_assessment_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/{id}/reopen",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "sendBackAssessmentToInProgressUsingPOST",
@@ -729,7 +729,7 @@ OPERATIONS = [
         "action": "send_back_assessment_to_in_progress_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/assessment/v2/assessments/{id}/send-back",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createAssessmentUsingPOST",
@@ -738,7 +738,7 @@ OPERATIONS = [
         "action": "create_assessment_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/assessment/v3/assessments",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAssessmentsUsingPOST",
@@ -747,7 +747,7 @@ OPERATIONS = [
         "action": "get_assessments_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/assessment/v3/assessments/list",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "approveAssessmentUsingPOST",
@@ -756,7 +756,7 @@ OPERATIONS = [
         "action": "approve_assessment_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/assessment/v3/assessments/{assessmentId}/approve",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllBasicTemplateDetailsUsingGET",
@@ -765,7 +765,7 @@ OPERATIONS = [
         "action": "get_all_basic_template_details_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/template/v1/published-template-metadata",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "importTemplateByIdUsingPOST",
@@ -774,7 +774,7 @@ OPERATIONS = [
         "action": "import_template_by_id_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/template/v2/templates/import",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteTemplateVersionsUsingDELETE",
@@ -783,7 +783,7 @@ OPERATIONS = [
         "action": "delete_template_versions_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/template/v2/templates/root-version/{rootVersionId}/templates",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "exportTemplateWithBusinessKeysUsingGET",
@@ -792,7 +792,7 @@ OPERATIONS = [
         "action": "export_template_with_business_keys_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/template/v2/templates/{templateId}/export",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteScopeUsingDELETE",
@@ -801,7 +801,7 @@ OPERATIONS = [
         "action": "delete_scope_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/audit-management/v1/audit-scopes/{scopeId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAuditWorkpaperListViewUsingPOST",
@@ -810,7 +810,7 @@ OPERATIONS = [
         "action": "get_audit_workpaper_list_view_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/audit-management/v1/audit-workpapers/pages",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "editWorkpaperDetailsUsingPOST",
@@ -819,7 +819,7 @@ OPERATIONS = [
         "action": "edit_workpaper_details_using_post",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/audit-management/v1/audit-workpapers/{workpaperId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getWorkpaperResultUsingGET",
@@ -828,7 +828,7 @@ OPERATIONS = [
         "action": "get_workpaper_result_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/audit-management/v1/audit-workpapers/{workpaperId}/attribute-details",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getWorkpaperBasicDetailInformationUsingGET",
@@ -837,7 +837,7 @@ OPERATIONS = [
         "action": "get_workpaper_basic_detail_information_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/audit-management/v1/audit-workpapers/{workpaperId}/control-details",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "validateAndCreateAuditUsingPOST",
@@ -846,7 +846,7 @@ OPERATIONS = [
         "action": "validate_and_create_audit_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/audit-management/v1/audits",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAuditListPageUsingPOST",
@@ -855,7 +855,7 @@ OPERATIONS = [
         "action": "get_audit_list_page_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/audit-management/v1/audits/pages",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAuditDetailUsingGET",
@@ -864,7 +864,7 @@ OPERATIONS = [
         "action": "get_audit_detail_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/audit-management/v1/audits/{auditId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "validateAndUpdateAuditUsingPUT",
@@ -873,7 +873,7 @@ OPERATIONS = [
         "action": "validate_and_update_audit_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/audit-management/v1/audits/{auditId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteAuditUsingDELETE",
@@ -882,7 +882,7 @@ OPERATIONS = [
         "action": "delete_audit_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/audit-management/v1/audits/{auditId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "validateAndReassignScopesUsingPUT",
@@ -891,7 +891,7 @@ OPERATIONS = [
         "action": "validate_and_reassign_scopes_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/audit-management/v1/audits/{auditId}/reassign-scopes",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getExportRunsGET",
@@ -900,7 +900,7 @@ OPERATIONS = [
         "action": "get_export_runs_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/ot-insights/v1/bulk-export-jobs",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "startExportRunPost",
@@ -909,7 +909,7 @@ OPERATIONS = [
         "action": "start_export_run_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/ot-insights/v1/bulk-export-jobs",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getCreditsInformationGET",
@@ -918,7 +918,7 @@ OPERATIONS = [
         "action": "get_credits_information_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/ot-insights/v1/bulk-export-jobs/credits",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getExportRunDetailsGet",
@@ -927,7 +927,7 @@ OPERATIONS = [
         "action": "get_export_run_details_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/ot-insights/v1/bulk-export-jobs/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "cancelBulkExportDELETE",
@@ -936,7 +936,7 @@ OPERATIONS = [
         "action": "cancel_bulk_export_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/ot-insights/v1/bulk-export-jobs/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAttachmentDownloadCommandsGET",
@@ -945,7 +945,7 @@ OPERATIONS = [
         "action": "get_attachment_download_commands_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/ot-insights/v1/bulk-export-jobs/{id}/download",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getPaginatedAttachmentDownloadCommandsGET",
@@ -954,7 +954,7 @@ OPERATIONS = [
         "action": "get_paginated_attachment_download_commands_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/ot-insights/v1/bulk-export-jobs/{id}/download/pages",
-        "paginate": "cursor"
+        "paginate": "cursor",
     },
     {
         "operation_id": "get_Banner",
@@ -963,7 +963,7 @@ OPERATIONS = [
         "action": "get_banner",
         "http": "GET",
         "path": "https://mobile-data.onetrust.io/cfw/cmp/v1/banner",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "get_Preferences",
@@ -972,7 +972,7 @@ OPERATIONS = [
         "action": "get_preferences",
         "http": "GET",
         "path": "https://mobile-data.onetrust.io/cfw/cmp/v1/preferences",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "post_LogConsent",
@@ -981,7 +981,7 @@ OPERATIONS = [
         "action": "post_log_consent",
         "http": "POST",
         "path": "https://mobile-data.onetrust.io/cfw/cmp/v1/save-log-consent",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "get_UCPurposes",
@@ -990,7 +990,7 @@ OPERATIONS = [
         "action": "get_ucpurposes",
         "http": "GET",
         "path": "https://mobile-data.onetrust.io/cfw/cmp/v1/uc-purposes",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "get_Vendors",
@@ -999,7 +999,7 @@ OPERATIONS = [
         "action": "get_vendors",
         "http": "GET",
         "path": "https://mobile-data.onetrust.io/cfw/cmp/v1/vendors",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findAllInitiativesByFilterUsingPOST",
@@ -1008,7 +1008,7 @@ OPERATIONS = [
         "action": "find_all_initiatives_by_filter_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/compliance-wr/v1/initiatives/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getInitiativeUsingGET",
@@ -1017,7 +1017,7 @@ OPERATIONS = [
         "action": "get_initiative_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/compliance-wr/v1/initiatives/{initiativeId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateInitiativeUsingPUT",
@@ -1026,7 +1026,7 @@ OPERATIONS = [
         "action": "update_initiative_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/compliance-wr/v1/initiatives/{initiativeId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getRealtimePreferences",
@@ -1035,7 +1035,7 @@ OPERATIONS = [
         "action": "get_realtime_preferences",
         "http": "GET",
         "path": "https://consent-api.onetrust.com/v2/preferences",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createConsentReceiptUsingPOST",
@@ -1044,7 +1044,7 @@ OPERATIONS = [
         "action": "create_consent_receipt_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/request/v1/consentreceipts",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createBulkConsentReceiptUsingPOST",
@@ -1053,7 +1053,7 @@ OPERATIONS = [
         "action": "create_bulk_consent_receipt_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/request/v1/consentreceipts/bulk",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createIdentifiedConsentReceiptUsingPOST",
@@ -1062,7 +1062,7 @@ OPERATIONS = [
         "action": "create_identified_consent_receipt_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/request/v1/consentreceipts/identified",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createApplication",
@@ -1071,7 +1071,7 @@ OPERATIONS = [
         "action": "create_application",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/cmp/v1/application",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "scanApplication",
@@ -1080,7 +1080,7 @@ OPERATIONS = [
         "action": "scan_application",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/cmp/v1/application/{id}/scan",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getApplications",
@@ -1089,7 +1089,7 @@ OPERATIONS = [
         "action": "get_applications",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/applications",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getApplicationBrandingAttributeList",
@@ -1098,7 +1098,7 @@ OPERATIONS = [
         "action": "get_application_branding_attribute_list",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/applications/{id}/branding-attributes",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateApplicationBrandingAttributesForPublicApi",
@@ -1107,7 +1107,7 @@ OPERATIONS = [
         "action": "update_application_branding_attributes_for_public_api",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/cmp/v1/applications/{id}/branding-attributes",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "publishAppScript",
@@ -1116,7 +1116,7 @@ OPERATIONS = [
         "action": "publish_app_script",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/cmp/v1/applications/{id}/publish",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAppScriptDetails",
@@ -1125,7 +1125,7 @@ OPERATIONS = [
         "action": "get_app_script_details",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/applications/{id}/script-details",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getCategorizedCookies",
@@ -1134,7 +1134,7 @@ OPERATIONS = [
         "action": "get_categorized_cookies",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/cmp/v1/cookies/categorized",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "publishScriptToSite",
@@ -1143,7 +1143,7 @@ OPERATIONS = [
         "action": "publish_script_to_site",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/cmp/v1/domains/publish",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getScriptForWebsite",
@@ -1152,7 +1152,7 @@ OPERATIONS = [
         "action": "get_script_for_website",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/domains/scripts",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteDomain",
@@ -1161,7 +1161,7 @@ OPERATIONS = [
         "action": "delete_domain",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/cmp/v1/domains/{domainId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createDomainGroup",
@@ -1170,7 +1170,7 @@ OPERATIONS = [
         "action": "create_domain_group",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/cmp/v1/domains/{domainId}/domaingroup",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getScriptDetails",
@@ -1179,7 +1179,7 @@ OPERATIONS = [
         "action": "get_script_details",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/domains/{domainId}/script-details",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "downloadScriptFile",
@@ -1188,7 +1188,7 @@ OPERATIONS = [
         "action": "download_script_file",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/domains/{domainId}/scripts",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getBrandingAttributeList",
@@ -1197,7 +1197,7 @@ OPERATIONS = [
         "action": "get_branding_attribute_list",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/domains/{id}/branding-attributes",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateBrandingAttributesForPublicApi",
@@ -1206,7 +1206,7 @@ OPERATIONS = [
         "action": "update_branding_attributes_for_public_api",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/cmp/v1/domains/{id}/branding-attributes",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getGeoRuleGroups",
@@ -1215,7 +1215,7 @@ OPERATIONS = [
         "action": "get_geo_rule_groups",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/georulegroups",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getGeoRuleGroupDetails",
@@ -1224,7 +1224,7 @@ OPERATIONS = [
         "action": "get_geo_rule_group_details",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/georulegroups/{geoRuleGroupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "assignEntitiesToGeoRuleGroup",
@@ -1233,7 +1233,7 @@ OPERATIONS = [
         "action": "assign_entities_to_geo_rule_group",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/cmp/v1/georulegroups/{geoRuleGroupId}/assign",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getTemplates",
@@ -1242,7 +1242,7 @@ OPERATIONS = [
         "action": "get_templates",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/templates",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getTemplateDetails",
@@ -1251,7 +1251,7 @@ OPERATIONS = [
         "action": "get_template_details",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/templates/{templateId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDomainsScannedBySort",
@@ -1260,7 +1260,7 @@ OPERATIONS = [
         "action": "get_domains_scanned_by_sort",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "addScans",
@@ -1269,7 +1269,7 @@ OPERATIONS = [
         "action": "add_scans",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "archiveScans",
@@ -1278,7 +1278,7 @@ OPERATIONS = [
         "action": "archive_scans",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans/archive",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "bulkEditCookies",
@@ -1287,7 +1287,7 @@ OPERATIONS = [
         "action": "bulk_edit_cookies",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans/cookies",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "bulkAddCookies",
@@ -1296,7 +1296,7 @@ OPERATIONS = [
         "action": "bulk_add_cookies",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans/cookies",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "bulkDeleteCookies",
@@ -1305,7 +1305,7 @@ OPERATIONS = [
         "action": "bulk_delete_cookies",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans/cookies",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "scheduleScans",
@@ -1314,7 +1314,7 @@ OPERATIONS = [
         "action": "schedule_scans",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans/domains/schedule",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "bulkCancelDomainSchedule",
@@ -1323,7 +1323,7 @@ OPERATIONS = [
         "action": "bulk_cancel_domain_schedule",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans/domains/schedule/cancel",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDomainScans",
@@ -1332,7 +1332,7 @@ OPERATIONS = [
         "action": "get_domain_scans",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans/domains/{domainId}/scans",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getScanDeltaDetails",
@@ -1341,7 +1341,7 @@ OPERATIONS = [
         "action": "get_scan_delta_details",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans/domains/{domainId}/scans/{scanId}/scandelta",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDetailedScanResultInformation",
@@ -1350,7 +1350,7 @@ OPERATIONS = [
         "action": "get_detailed_scan_result_information",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans/domains/{domainId}/scans/{scanId}/scanresults",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getScanResultSummary",
@@ -1359,7 +1359,7 @@ OPERATIONS = [
         "action": "get_scan_result_summary",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans/domains/{domainId}/scans/{scanId}/summary",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getCookiesByFilter",
@@ -1368,7 +1368,7 @@ OPERATIONS = [
         "action": "get_cookies_by_filter",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans/languages/{language}/cookies/filter",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "checkScansStatus",
@@ -1377,7 +1377,7 @@ OPERATIONS = [
         "action": "check_scans_status",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans/status",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "cancelScan",
@@ -1386,7 +1386,7 @@ OPERATIONS = [
         "action": "cancel_scan",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans/{scanId}/cancel",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "recategorizeCookiesByScan",
@@ -1395,7 +1395,7 @@ OPERATIONS = [
         "action": "recategorize_cookies_by_scan",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/cmp/v1/webscans/{scanId}/recategorize",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "downloadToLocalUsingGet",
@@ -1404,7 +1404,7 @@ OPERATIONS = [
         "action": "download_to_local_using_get",
         "http": "GET",
         "path": "https://customer.my.onetrust.com/api/cookiemanager/v1/script-integration/{domainId}/downloadscriptv2",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "requestBulkAddDomainUsingPOST",
@@ -1413,7 +1413,7 @@ OPERATIONS = [
         "action": "request_bulk_add_domain_using_post",
         "http": "POST",
         "path": "https://customer.my.onetrust.com/api/cookiemanager/v2/websites",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDomainsScannedBySortUsingGET",
@@ -1422,7 +1422,7 @@ OPERATIONS = [
         "action": "get_domains_scanned_by_sort_using_get",
         "http": "GET",
         "path": "https://customer.my.onetrust.com/api/cookiemanager/v2/websites",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getScriptForWebsiteUsingGET",
@@ -1431,7 +1431,7 @@ OPERATIONS = [
         "action": "get_script_for_website_using_get",
         "http": "GET",
         "path": "https://customer.my.onetrust.com/api/cookiemanager/v2/websites/scripts",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "publishToSiteUsingPUT",
@@ -1440,7 +1440,7 @@ OPERATIONS = [
         "action": "publish_to_site_using_put",
         "http": "PUT",
         "path": "https://customer.my.onetrust.com/api/cookiemanager/v2/websites/publish",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createNewCookie",
@@ -1449,7 +1449,7 @@ OPERATIONS = [
         "action": "create_new_cookie",
         "http": "POST",
         "path": "https://customer.my.onetrust.com/api/cookiemanager/v1/cookies",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateCookie",
@@ -1458,7 +1458,7 @@ OPERATIONS = [
         "action": "update_cookie",
         "http": "PUT",
         "path": "https://customer.my.onetrust.com/api/cookiemanager/v1/cookies",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getCategorizedCookiesUsingGET",
@@ -1467,7 +1467,7 @@ OPERATIONS = [
         "action": "get_categorized_cookies_using_get",
         "http": "POST",
         "path": "https://customer.my.onetrust.com/api/cookiemanager/v2/categorize",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getCategorizedCookiesWithCookieIdsUsingGET",
@@ -1476,7 +1476,7 @@ OPERATIONS = [
         "action": "get_categorized_cookies_with_cookie_ids_using_get",
         "http": "POST",
         "path": "https://customer.my.onetrust.com/api/cookiemanager/v2/categorizewithids",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createDomainGroupUsingPOST",
@@ -1485,7 +1485,7 @@ OPERATIONS = [
         "action": "create_domain_group_using_post",
         "http": "POST",
         "path": "https://customer.my.onetrust.com/api/cookiemanager/v1/domains/{domainId}/domaingroup",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getCookieReportsUsingPOST",
@@ -1494,7 +1494,7 @@ OPERATIONS = [
         "action": "get_cookie_reports_using_post",
         "http": "POST",
         "path": "https://customer.my.onetrust.com/api/cookiemanager/v2/cookie-reports/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "domaindata",
@@ -1503,7 +1503,7 @@ OPERATIONS = [
         "action": "domaindata",
         "http": "GET",
         "path": "https://cookies-data.onetrust.io/bannersdk/domaindata",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getPreferencesUsingGET",
@@ -1512,7 +1512,7 @@ OPERATIONS = [
         "action": "get_preferences_using_get",
         "http": "GET",
         "path": "https://consent-api.onetrust.com/v1/preferences",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllGlossariesNames",
@@ -1521,7 +1521,7 @@ OPERATIONS = [
         "action": "get_all_glossaries_names",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/glossary/v1/glossaries/all/names",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllGlossariesByNames",
@@ -1530,7 +1530,7 @@ OPERATIONS = [
         "action": "get_all_glossaries_by_names",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/glossary/v1/glossaries/name/{glossaryName}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "retrieveAllTagsName",
@@ -1539,7 +1539,7 @@ OPERATIONS = [
         "action": "retrieve_all_tags_name",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/glossary/v1/tag-names",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getTagDetailsWithAssociatedTerms",
@@ -1548,7 +1548,7 @@ OPERATIONS = [
         "action": "get_tag_details_with_associated_terms",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/glossary/v1/tags/{name}/details",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "retrieveAllTerms",
@@ -1557,7 +1557,7 @@ OPERATIONS = [
         "action": "retrieve_all_terms",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/glossary/v1/terms",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getTermAttributeByName",
@@ -1566,7 +1566,7 @@ OPERATIONS = [
         "action": "get_term_attribute_by_name",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/glossary/v1/terms/attribute-details/{name}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllTermAttributeNames",
@@ -1575,7 +1575,7 @@ OPERATIONS = [
         "action": "get_all_term_attribute_names",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/glossary/v1/terms/attribute-names",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "retrieveTermsByName",
@@ -1584,7 +1584,7 @@ OPERATIONS = [
         "action": "retrieve_terms_by_name",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/glossary/v1/terms/name/{termName}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "retrieveTermsName",
@@ -1593,7 +1593,7 @@ OPERATIONS = [
         "action": "retrieve_terms_name",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/glossary/v1/terms/names",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createTagV2",
@@ -1602,7 +1602,7 @@ OPERATIONS = [
         "action": "create_tag_v2",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/glossary/v2/tags",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createTermUsingPOST",
@@ -1611,7 +1611,7 @@ OPERATIONS = [
         "action": "create_term_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/glossary/v2/terms",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createOrUpsertDataAssetV1",
@@ -1620,7 +1620,7 @@ OPERATIONS = [
         "action": "create_or_upsert_data_asset_v1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/data-governance/v1/data-assets",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataAssetV1",
@@ -1629,7 +1629,7 @@ OPERATIONS = [
         "action": "get_data_asset_v1",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/data-governance/v1/data-assets/{dataAssetId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteDataAssetV1",
@@ -1638,7 +1638,7 @@ OPERATIONS = [
         "action": "delete_data_asset_v1",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/data-governance/v1/data-assets/{dataAssetId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateDataAssetV1",
@@ -1647,7 +1647,7 @@ OPERATIONS = [
         "action": "update_data_asset_v1",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/data-governance/v1/data-assets/{dataAssetId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createDataAssetTagAssociationsV1",
@@ -1656,7 +1656,7 @@ OPERATIONS = [
         "action": "create_data_asset_tag_associations_v1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/data-governance/v1/data-assets/{dataAssetId}/tags",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteDataAssetTagAssociationsV1",
@@ -1665,7 +1665,7 @@ OPERATIONS = [
         "action": "delete_data_asset_tag_associations_v1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/data-governance/v1/data-assets/{dataAssetId}/tags/deleteTagAssociations",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createDataAssetTermAssociationsV1",
@@ -1674,7 +1674,7 @@ OPERATIONS = [
         "action": "create_data_asset_term_associations_v1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/data-governance/v1/data-assets/{dataAssetId}/terms",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteDataAssetTermAssociationsV1",
@@ -1683,7 +1683,7 @@ OPERATIONS = [
         "action": "delete_data_asset_term_associations_v1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/data-governance/v1/data-assets/{dataAssetId}/terms/deleteTermAssociations",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataAssetAttributeByName",
@@ -1692,7 +1692,7 @@ OPERATIONS = [
         "action": "get_data_asset_attribute_by_name",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/metadata-catalog/v1/metadata/attribute-details/{name}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllDataAssetAttributeNames",
@@ -1701,7 +1701,7 @@ OPERATIONS = [
         "action": "get_all_data_asset_attribute_names",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/metadata-catalog/v1/metadata/attribute-names",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "externalSearch",
@@ -1710,7 +1710,7 @@ OPERATIONS = [
         "action": "external_search",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/data-governance/v1/catalog/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "get_v1-field-details",
@@ -1719,7 +1719,7 @@ OPERATIONS = [
         "action": "get_v1_field_details",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/data-governance/v1/field-details",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "externalSearch-using-continuationtoken",
@@ -1728,7 +1728,7 @@ OPERATIONS = [
         "action": "external_search_using_continuationtoken",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/data-governance/v2/catalog/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getCredentials",
@@ -1737,7 +1737,7 @@ OPERATIONS = [
         "action": "get_credentials",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/credentials",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "updateCredential",
@@ -1746,7 +1746,7 @@ OPERATIONS = [
         "action": "update_credential",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/credentials",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createCredential",
@@ -1755,7 +1755,7 @@ OPERATIONS = [
         "action": "create_credential",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/credentials",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getCredentialById",
@@ -1764,7 +1764,7 @@ OPERATIONS = [
         "action": "get_credential_by_id",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/credentials/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteCredential",
@@ -1773,7 +1773,7 @@ OPERATIONS = [
         "action": "delete_credential",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/credentials/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createJobUsingPOST",
@@ -1782,7 +1782,7 @@ OPERATIONS = [
         "action": "create_job_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/scan-job",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getScanJobsByDataSourceUsingGET_1",
@@ -1791,7 +1791,7 @@ OPERATIONS = [
         "action": "get_scan_jobs_by_data_source_using_get_1",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/scan-job/datasource/{dataSourceId}",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getJobByIdUsingGET",
@@ -1800,7 +1800,7 @@ OPERATIONS = [
         "action": "get_job_by_id_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/scan-job/{jobId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "cancelJobUsingPATCH",
@@ -1809,7 +1809,7 @@ OPERATIONS = [
         "action": "cancel_job_using_patch",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/scan-job/{jobId}/cancel",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllUsingGET_2",
@@ -1818,7 +1818,7 @@ OPERATIONS = [
         "action": "get_all_using_get_2",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/scan-profiles",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "updateV2UsingPUT",
@@ -1827,7 +1827,7 @@ OPERATIONS = [
         "action": "update_v2_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/scan-profiles",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createV2UsingPOST",
@@ -1836,7 +1836,7 @@ OPERATIONS = [
         "action": "create_v2_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/scan-profiles",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getScanProfileUsingGET_1",
@@ -1845,7 +1845,7 @@ OPERATIONS = [
         "action": "get_scan_profile_using_get_1",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/scan-profiles/{scanProfileId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteScanProfileUsingDELETE_1",
@@ -1854,7 +1854,7 @@ OPERATIONS = [
         "action": "delete_scan_profile_using_delete_1",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/scan-profiles/{scanProfileId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getJobUsingGET_1",
@@ -1863,7 +1863,7 @@ OPERATIONS = [
         "action": "get_job_using_get_1",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/scanners/{scannerId}/jobs/{jobId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "cancelScanJob",
@@ -1872,7 +1872,7 @@ OPERATIONS = [
         "action": "cancel_scan_job",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v2/scanners/{scannerId}/jobs/{jobId}/cancel",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDockerRepositoryTagsUsingGET",
@@ -1881,7 +1881,7 @@ OPERATIONS = [
         "action": "get_docker_repository_tags_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v3/docker-repository-tags",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllUsingGET_1",
@@ -1890,7 +1890,7 @@ OPERATIONS = [
         "action": "get_all_using_get_1",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v3/system",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "upsertSourceSystemV3UsingPUT",
@@ -1899,7 +1899,7 @@ OPERATIONS = [
         "action": "upsert_source_system_v3_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v3/system",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataSourceByIdUsingGET_1",
@@ -1908,7 +1908,7 @@ OPERATIONS = [
         "action": "get_data_source_by_id_using_get_1",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v3/system/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteSystemUsingDELETE_1",
@@ -1917,7 +1917,7 @@ OPERATIONS = [
         "action": "delete_system_using_delete_1",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/discovery-scan-config/v3/system/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "listDetectors",
@@ -1926,7 +1926,7 @@ OPERATIONS = [
         "action": "list_detectors",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/label-manager/v2/custom-classifiers",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createDetector",
@@ -1935,7 +1935,7 @@ OPERATIONS = [
         "action": "create_detector",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/label-manager/v2/custom-classifiers",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDetectorByClassifierName",
@@ -1944,7 +1944,7 @@ OPERATIONS = [
         "action": "get_detector_by_classifier_name",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/label-manager/v2/custom-classifiers/{classifierName}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateDetector",
@@ -1953,7 +1953,7 @@ OPERATIONS = [
         "action": "update_detector",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/label-manager/v2/custom-classifiers/{classifierName}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteDetector",
@@ -1962,7 +1962,7 @@ OPERATIONS = [
         "action": "delete_detector",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/label-manager/v2/custom-classifiers/{classifierName}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getEligibleJobsUsingGET",
@@ -1971,7 +1971,7 @@ OPERATIONS = [
         "action": "get_eligible_jobs_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__:8080/api/data-discovery-bridge/v1/jobs",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "catalogDataUsingPOST",
@@ -1980,7 +1980,7 @@ OPERATIONS = [
         "action": "catalog_data_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__:8080/api/data-discovery-bridge/v1/jobs/{jobId}/catalog-data",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "classifyDataUsingPOST",
@@ -1989,7 +1989,7 @@ OPERATIONS = [
         "action": "classify_data_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__:8080/api/data-discovery-bridge/v1/jobs/{jobId}/classify-data",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateJobStatusUsingPUT",
@@ -1998,7 +1998,7 @@ OPERATIONS = [
         "action": "update_job_status_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__:8080/api/data-discovery-bridge/v1/jobs/{jobId}/status",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataCategoriesByPartialNameUsingGET",
@@ -2007,7 +2007,7 @@ OPERATIONS = [
         "action": "get_data_categories_by_partial_name_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/inventory/v2/data-categories",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createDataCategoryUsingPOST",
@@ -2016,7 +2016,7 @@ OPERATIONS = [
         "action": "create_data_category_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory/v2/data-categories",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataCategoryUsingGET",
@@ -2025,7 +2025,7 @@ OPERATIONS = [
         "action": "get_data_category_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/inventory/v2/data-categories/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteDataCategoryUsingDELETE",
@@ -2034,7 +2034,7 @@ OPERATIONS = [
         "action": "delete_data_category_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/inventory/v2/data-categories/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createDataClassificationUsingPOST",
@@ -2043,7 +2043,7 @@ OPERATIONS = [
         "action": "create_data_classification_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory/v2/data-classifications",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataClassificationUsingGET",
@@ -2052,7 +2052,7 @@ OPERATIONS = [
         "action": "get_data_classification_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/inventory/v2/data-classifications/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteDataClassificationUsingDELETE",
@@ -2061,7 +2061,7 @@ OPERATIONS = [
         "action": "delete_data_classification_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/inventory/v2/data-classifications/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createDataElementUsingPOST",
@@ -2070,7 +2070,7 @@ OPERATIONS = [
         "action": "create_data_element_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory/v2/data-elements",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataElementUsingGET",
@@ -2079,7 +2079,7 @@ OPERATIONS = [
         "action": "get_data_element_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/inventory/v2/data-elements/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteDataElementUsingDELETE",
@@ -2088,7 +2088,7 @@ OPERATIONS = [
         "action": "delete_data_element_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/inventory/v2/data-elements/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataSubjectsByPartialNameUsingGET",
@@ -2097,7 +2097,7 @@ OPERATIONS = [
         "action": "get_data_subjects_by_partial_name_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/inventory/v2/data-subjects",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createDataSubjectUsingPOST",
@@ -2106,7 +2106,7 @@ OPERATIONS = [
         "action": "create_data_subject_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory/v2/data-subjects",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataSubjectUsingGET",
@@ -2115,7 +2115,7 @@ OPERATIONS = [
         "action": "get_data_subject_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/inventory/v2/data-subjects/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteDataSubjectUsingDELETE",
@@ -2124,7 +2124,7 @@ OPERATIONS = [
         "action": "delete_data_subject_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/inventory/v2/data-subjects/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateInventoryAssociationUsingPUT",
@@ -2133,7 +2133,7 @@ OPERATIONS = [
         "action": "update_inventory_association_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{id}/associations/{associationId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateRelationsUsingPUT",
@@ -2142,7 +2142,7 @@ OPERATIONS = [
         "action": "update_relations_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{id}/relations",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createRelationsUsingPOST",
@@ -2151,7 +2151,7 @@ OPERATIONS = [
         "action": "create_relations_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{id}/relations",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteRelationsUsingDELETE",
@@ -2160,7 +2160,7 @@ OPERATIONS = [
         "action": "delete_relations_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{id}/relations",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getInventoryRelationsByIdUsingGET",
@@ -2169,7 +2169,7 @@ OPERATIONS = [
         "action": "get_inventory_relations_by_id_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{id}/relations/{inventoryType}",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "setInventoryAsParentInventoryUsingPUT",
@@ -2178,7 +2178,7 @@ OPERATIONS = [
         "action": "set_inventory_as_parent_inventory_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{inventoryId}/set-as-parent",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "unsetInventoryAsParentInventoryUsingPUT",
@@ -2187,7 +2187,7 @@ OPERATIONS = [
         "action": "unset_inventory_as_parent_inventory_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{inventoryId}/unset-as-parent",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "linkAssetInventoryToParentAssetIdUsingPOST",
@@ -2196,7 +2196,7 @@ OPERATIONS = [
         "action": "link_asset_inventory_to_parent_asset_id_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{parentInventoryId}/link-assets",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "linkLegalEntityInventoryToParentLegalEntityIdUsingPOST",
@@ -2205,7 +2205,7 @@ OPERATIONS = [
         "action": "link_legal_entity_inventory_to_parent_legal_entity_id_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{parentInventoryId}/link-legal-entities",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "linkProcessingActivityInventoryToParentProcessingActivityIdUsingPOST",
@@ -2214,7 +2214,7 @@ OPERATIONS = [
         "action": "link_processing_activity_inventory_to_parent_processing_activity_id_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{parentInventoryId}/link-processing-activities",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "linkVendorInventoryToParentVendorIdUsingPOST",
@@ -2223,7 +2223,7 @@ OPERATIONS = [
         "action": "link_vendor_inventory_to_parent_vendor_id_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{parentInventoryId}/link-vendors",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getListOfInventoriesUsingGET",
@@ -2232,7 +2232,7 @@ OPERATIONS = [
         "action": "get_list_of_inventories_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createInventoryUsingPOST",
@@ -2241,7 +2241,7 @@ OPERATIONS = [
         "action": "create_inventory_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "upsertInventoryUsingPUT",
@@ -2250,7 +2250,7 @@ OPERATIONS = [
         "action": "upsert_inventory_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/business-key",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getListOfInventoriesByFilterCriteriaUsingPOST",
@@ -2259,7 +2259,7 @@ OPERATIONS = [
         "action": "get_list_of_inventories_by_filter_criteria_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/criteria",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getInventoryByExternalIdUsingGET",
@@ -2268,7 +2268,7 @@ OPERATIONS = [
         "action": "get_inventory_by_external_id_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/reference/{externalId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getInventoryByIdUsingGET",
@@ -2277,7 +2277,7 @@ OPERATIONS = [
         "action": "get_inventory_by_id_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateInventoryUsingPUT",
@@ -2286,7 +2286,7 @@ OPERATIONS = [
         "action": "update_inventory_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteInventoryUsingDELETE",
@@ -2295,7 +2295,7 @@ OPERATIONS = [
         "action": "delete_inventory_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "copyInventoryUsingPOST",
@@ -2304,7 +2304,7 @@ OPERATIONS = [
         "action": "copy_inventory_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/{id}/copy",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateInventoryStatusByIdUsingPUT",
@@ -2313,7 +2313,7 @@ OPERATIONS = [
         "action": "update_inventory_status_by_id_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/{id}/status",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addControlsToInventoryUsingPOST",
@@ -2322,7 +2322,7 @@ OPERATIONS = [
         "action": "add_controls_to_inventory_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories/{type}/{inventoryId}/control-implementations",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateAdvancedAttributesForPersonalDataAssociationUsingPUT",
@@ -2331,7 +2331,7 @@ OPERATIONS = [
         "action": "update_advanced_attributes_for_personal_data_association_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventories-personal-data/{personalDataAssociationId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getHierarchyForInventoryIdUsingGET",
@@ -2340,7 +2340,7 @@ OPERATIONS = [
         "action": "get_hierarchy_for_inventory_id_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventory-hierarchies/{rootInventoryId}",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "unlinkChildInventoryFromHierarchyUsingDELETE",
@@ -2349,7 +2349,7 @@ OPERATIONS = [
         "action": "unlink_child_inventory_from_hierarchy_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/inventory/v2/inventory-hierarchies/{rootInventoryId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllSchemasUsingGET",
@@ -2358,7 +2358,7 @@ OPERATIONS = [
         "action": "get_all_schemas_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/inventory/v2/schemas",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getSchemaDetailsUsingFieldName",
@@ -2367,7 +2367,7 @@ OPERATIONS = [
         "action": "get_schema_details_using_field_name",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/inventory/v2/schemas/{schemaName}/attributes/{fieldName}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "listAllDataClassificationsUsingGET",
@@ -2376,7 +2376,7 @@ OPERATIONS = [
         "action": "list_all_data_classifications_using_get",
         "http": "GET",
         "path": "https://customer.my.onetrust.com/api/inventory/v2/data-classifications",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "listAllDataElementsUsingGET",
@@ -2385,7 +2385,7 @@ OPERATIONS = [
         "action": "list_all_data_elements_using_get",
         "http": "GET",
         "path": "https://customer.my.onetrust.com/api/inventory/v2/data-elements",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getSchemaUsingGET_1",
@@ -2394,7 +2394,7 @@ OPERATIONS = [
         "action": "get_schema_using_get_1",
         "http": "GET",
         "path": "https://customer.my.onetrust.com/api/inventory/v2/schemas/{type}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "get_inventory_v2_schemas_attributes_attribute_id_values_value_id",
@@ -2403,7 +2403,7 @@ OPERATIONS = [
         "action": "get_inventory_v2_schemas_attributes_attribute_id_values_value_id",
         "http": "GET",
         "path": "https://customer.my.onetrust.com/api/inventory/v2/schemas/attributes/{attributeId}/values/{valueId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "fileUpload",
@@ -2412,7 +2412,7 @@ OPERATIONS = [
         "action": "file_upload",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/document/v2/attachments",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "fileLocation",
@@ -2421,7 +2421,7 @@ OPERATIONS = [
         "action": "file_location",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/document/v3/attachments/{attachmentId}/content",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllGroupAndAttachmentDetailsUsingGET",
@@ -2430,7 +2430,7 @@ OPERATIONS = [
         "action": "get_all_group_and_attachment_details_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/datasubject/v2/datadiscovery/groups/{groupId}/requestqueues/{requestQueueRefId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllGroupByRequestUsingGET",
@@ -2439,7 +2439,7 @@ OPERATIONS = [
         "action": "get_all_group_by_request_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/datasubject/v2/datadiscovery/requestqueues/{requestQueueRefId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "dataDiscoveryUpdatesUsingPOST",
@@ -2448,7 +2448,7 @@ OPERATIONS = [
         "action": "data_discovery_updates_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/datasubject/v2/datadiscovery/requestqueues/{requestQueueRefId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createRequestQueueFromMessageUsingPOST",
@@ -2457,7 +2457,7 @@ OPERATIONS = [
         "action": "create_request_queue_from_message_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "bulkDeleteUsingPUT",
@@ -2466,7 +2466,7 @@ OPERATIONS = [
         "action": "bulk_delete_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/bulkdelete/{language}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDeletionCertificateUsingGET",
@@ -2475,7 +2475,7 @@ OPERATIONS = [
         "action": "get_deletion_certificate_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/delete-certificate/{requestRefId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getRequestHistoryByIdUsingGET",
@@ -2484,7 +2484,7 @@ OPERATIONS = [
         "action": "get_request_history_by_id_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/id/{requestQueueId}/requesthistory",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "shareResultsSummaryUsingPOST",
@@ -2493,7 +2493,7 @@ OPERATIONS = [
         "action": "share_results_summary_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/results-summary/share/{requestQueueRefId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "searchForRequestUsingPOST",
@@ -2502,7 +2502,7 @@ OPERATIONS = [
         "action": "search_for_request_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/search/{language}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getRequestCreationLogsUsingGET",
@@ -2511,7 +2511,7 @@ OPERATIONS = [
         "action": "get_request_creation_logs_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/status/{requestTraceId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllRequestQueuesV2UsingGET",
@@ -2520,7 +2520,7 @@ OPERATIONS = [
         "action": "get_all_request_queues_v2_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{language}",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "addCommentsUsingPUT",
@@ -2529,7 +2529,7 @@ OPERATIONS = [
         "action": "add_comments_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/comments",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateCustomFieldsUsingPUT",
@@ -2538,7 +2538,7 @@ OPERATIONS = [
         "action": "update_custom_fields_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/customfields/{language}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getRequestByIdUsingGET",
@@ -2547,7 +2547,7 @@ OPERATIONS = [
         "action": "get_request_by_id_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/language/{language}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "linkRequestsUsingPUT",
@@ -2556,7 +2556,7 @@ OPERATIONS = [
         "action": "link_requests_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/linkrequest",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "moveStatusByRequestRefIdUsingPUT",
@@ -2565,7 +2565,7 @@ OPERATIONS = [
         "action": "move_status_by_request_ref_id_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/movestages/{language}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "pauseOrResumeDeadlineUsingPUT",
@@ -2574,7 +2574,7 @@ OPERATIONS = [
         "action": "pause_or_resume_deadline_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/pausedeadline",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getRequestHistory",
@@ -2583,7 +2583,7 @@ OPERATIONS = [
         "action": "get_request_history",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/requesthistory",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getAllSubTaskByRefIdUsingGET",
@@ -2592,7 +2592,7 @@ OPERATIONS = [
         "action": "get_all_sub_task_by_ref_id_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/subtasks",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createSubTaskUsingPOST",
@@ -2601,7 +2601,7 @@ OPERATIONS = [
         "action": "create_sub_task_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/subtasks",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createSubTaskFromTemplateUsingPOST",
@@ -2610,7 +2610,7 @@ OPERATIONS = [
         "action": "create_sub_task_from_template_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/subtasks/template",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllV2VerificationMethodsUsingGET",
@@ -2619,7 +2619,7 @@ OPERATIONS = [
         "action": "get_all_v2_verification_methods_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/verificationmethods",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "updateV2VerificationMethodUsingPUT",
@@ -2628,7 +2628,7 @@ OPERATIONS = [
         "action": "update_v2_verification_method_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/verificationmethods",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createV2VerificationMethodUsingPOST",
@@ -2637,7 +2637,7 @@ OPERATIONS = [
         "action": "create_v2_verification_method_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/verificationmethods",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllV2VerificationMethodsByIdUsingGET",
@@ -2646,7 +2646,7 @@ OPERATIONS = [
         "action": "get_all_v2_verification_methods_by_id_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/{methodId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createRequestQueueV2UsingPOST",
@@ -2655,7 +2655,7 @@ OPERATIONS = [
         "action": "create_request_queue_v2_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/datasubject/v2/requestqueues/{templateId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllV2ResolutionsUsingGET",
@@ -2664,7 +2664,7 @@ OPERATIONS = [
         "action": "get_all_v2_resolutions_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/datasubject/v2/resolutions",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "addNewResolutionUsingPOST",
@@ -2673,7 +2673,7 @@ OPERATIONS = [
         "action": "add_new_resolution_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/datasubject/v2/resolutions",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateResolutionUsingPUT",
@@ -2682,7 +2682,7 @@ OPERATIONS = [
         "action": "update_resolution_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/datasubject/v2/resolutions/{resolutionId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteResolutionUsingDELETE",
@@ -2691,7 +2691,7 @@ OPERATIONS = [
         "action": "delete_resolution_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/datasubject/v2/resolutions/{resolutionId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "subtasksUsingGET",
@@ -2700,7 +2700,7 @@ OPERATIONS = [
         "action": "subtasks_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/datasubject/v2/subtasks",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getSubtaskByIDUsingGET",
@@ -2709,7 +2709,7 @@ OPERATIONS = [
         "action": "get_subtask_by_idusing_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskID}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateSubTaskUsingPUT",
@@ -2718,7 +2718,7 @@ OPERATIONS = [
         "action": "update_sub_task_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskID}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addDataDiscoveryUsingPUT",
@@ -2727,7 +2727,7 @@ OPERATIONS = [
         "action": "add_data_discovery_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskID}/add/discovery",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "completeSubTaskUsingPUT",
@@ -2736,7 +2736,7 @@ OPERATIONS = [
         "action": "complete_sub_task_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskID}/complete",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "reprocessSubtaskUsingPUT",
@@ -2745,7 +2745,7 @@ OPERATIONS = [
         "action": "reprocess_subtask_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskID}/reprocess",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateSubtaskStatusUsingPUT",
@@ -2754,7 +2754,7 @@ OPERATIONS = [
         "action": "update_subtask_status_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskId}/status",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "unstructuredDataDiscoveryUpdatesUsingPOST",
@@ -2763,7 +2763,7 @@ OPERATIONS = [
         "action": "unstructured_data_discovery_updates_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/datasubject/v3/datadiscovery/requestqueues/{requestQueueRefId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllSubtasksV3UsingPost",
@@ -2772,7 +2772,7 @@ OPERATIONS = [
         "action": "get_all_subtasks_v3_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/datasubject/v3/subtasks",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllEmissionFactorsBasicEntityDetails",
@@ -2781,7 +2781,7 @@ OPERATIONS = [
         "action": "get_all_emission_factors_basic_entity_details",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/esg-management/v1/emission-factors",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addEmissionFactor",
@@ -2790,7 +2790,7 @@ OPERATIONS = [
         "action": "add_emission_factor",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/esg-management/v1/entity-types/emission-factors/entities",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addEmissionTransaction",
@@ -2799,7 +2799,7 @@ OPERATIONS = [
         "action": "add_emission_transaction",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/esg-management/v1/entity-types/emission-transactions/entities",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findAllByTypeAndCriteria",
@@ -2808,7 +2808,7 @@ OPERATIONS = [
         "action": "find_all_by_type_and_criteria",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/esg-management/v1/entity-types/names/{entityTypeName}/entities/pages",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "fetchMetricsDetails",
@@ -2817,7 +2817,7 @@ OPERATIONS = [
         "action": "fetch_metrics_details",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/esg-management/v1/metrics/metric-details",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "assignStageByName",
@@ -2826,7 +2826,7 @@ OPERATIONS = [
         "action": "assign_stage_by_name",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/incident/v1/assignments/entities/{entityId}/stage",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "assignStageByName_1",
@@ -2835,7 +2835,7 @@ OPERATIONS = [
         "action": "assign_stage_by_name_1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/incident/v1/assignments/entities/{entityId}/types/{type}/stage",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createIncidentUsingPOST",
@@ -2844,7 +2844,7 @@ OPERATIONS = [
         "action": "create_incident_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/incident/v1/incidents",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "searchIncidentsUsingPOST",
@@ -2853,7 +2853,7 @@ OPERATIONS = [
         "action": "search_incidents_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/incident/v1/incidents/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getIncidentDetailByIncidentIdUsingGET",
@@ -2862,7 +2862,7 @@ OPERATIONS = [
         "action": "get_incident_detail_by_incident_id_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/incident/v1/incidents/{incidentId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateIncidentUsingPUT",
@@ -2871,7 +2871,7 @@ OPERATIONS = [
         "action": "update_incident_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/incident/v1/incidents/{incidentId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createInventoryLinks",
@@ -2880,7 +2880,7 @@ OPERATIONS = [
         "action": "create_inventory_links",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/incident/v1/incidents/{incidentId}/inventory-links/{inventoryType}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateV2UsingPUT",
@@ -2889,7 +2889,7 @@ OPERATIONS = [
         "action": "update_v2_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/integrationmanager/v2/credentials/{type}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createV2UsingPOST",
@@ -2898,7 +2898,7 @@ OPERATIONS = [
         "action": "create_v2_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/integrationmanager/v2/credentials/{type}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "exportWorkflowUsingGET_1",
@@ -2907,7 +2907,7 @@ OPERATIONS = [
         "action": "export_workflow_using_get_1",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/integrationmanager/v2/workflows/export",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "importWorkflowUsingPOST_1",
@@ -2916,7 +2916,7 @@ OPERATIONS = [
         "action": "import_workflow_using_post_1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/integrationmanager/v2/workflows/import",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "listAllInventoryRelationshipsUsingPOST",
@@ -2925,7 +2925,7 @@ OPERATIONS = [
         "action": "list_all_inventory_relationships_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/inventory/{inventoryId}/pages",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateInventoryRelationsUsingEntityTypeName_1",
@@ -2934,7 +2934,7 @@ OPERATIONS = [
         "action": "update_inventory_relations_using_entity_type_name_1",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/names/{entityTypeName}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "linkOrUnlinkInventoryRelationshipsUsingRelationshipUsingPUT_1",
@@ -2943,7 +2943,7 @@ OPERATIONS = [
         "action": "link_or_unlink_inventory_relationships_using_relationship_using_put_1",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/names/{entityTypeName}/data-elements",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getPersonalDataForRelationshipsUsingPOST_1",
@@ -2952,7 +2952,7 @@ OPERATIONS = [
         "action": "get_personal_data_for_relationships_using_post_1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/names/{entityTypeName}/data-elements/pages",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateInventoryRelationsUsingEntityTypeName",
@@ -2961,7 +2961,7 @@ OPERATIONS = [
         "action": "update_inventory_relations_using_entity_type_name",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/{entityTypeId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "linkOrUnlinkInventoryRelationshipsUsingRelationshipUsingPUT",
@@ -2970,7 +2970,7 @@ OPERATIONS = [
         "action": "link_or_unlink_inventory_relationships_using_relationship_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/{entityTypeId}/data-elements",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getPersonalDataForRelationshipsUsingPOST",
@@ -2979,7 +2979,7 @@ OPERATIONS = [
         "action": "get_personal_data_for_relationships_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory-linking/v1/contextual-entities/{contextualLinkId}/contextual-entity-types/{entityTypeId}/data-elements/pages",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createInventoryRelationsUsingPOST",
@@ -2988,7 +2988,7 @@ OPERATIONS = [
         "action": "create_inventory_relations_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory-linking/v1/inventories/relations",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addRelationshipBetweenEntitiesUsingPOST",
@@ -2997,7 +2997,7 @@ OPERATIONS = [
         "action": "add_relationship_between_entities_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/inventory-linking/v1/relationship",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getInventoryRelationshipUsingRelationshipTypeName_1",
@@ -3006,7 +3006,7 @@ OPERATIONS = [
         "action": "get_inventory_relationship_using_relationship_type_name_1",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/inventory-linking/v1/relationship-types/names/{relationshipTypeName}/relationship/{relationshipId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteInventoryRelationsUsingRelationshipTypeName_1",
@@ -3015,7 +3015,7 @@ OPERATIONS = [
         "action": "delete_inventory_relations_using_relationship_type_name_1",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/inventory-linking/v1/relationship-types/names/{relationshipTypeName}/relationship/{relationshipId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getInventoryRelationshipUsingRelationshipTypeName",
@@ -3024,7 +3024,7 @@ OPERATIONS = [
         "action": "get_inventory_relationship_using_relationship_type_name",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/inventory-linking/v1/relationship-types/{relationshipTypeId}/relationship/{relationshipId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteInventoryRelationsUsingRelationshipTypeName",
@@ -3033,7 +3033,7 @@ OPERATIONS = [
         "action": "delete_inventory_relations_using_relationship_type_name",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/inventory-linking/v1/relationship-types/{relationshipTypeId}/relationship/{relationshipId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAttributesBySchemaNameUsingGET",
@@ -3042,7 +3042,7 @@ OPERATIONS = [
         "action": "get_attributes_by_schema_name_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/issue-management/v1/attributes",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createIssueRelationshipLinksUsingPOST",
@@ -3051,7 +3051,7 @@ OPERATIONS = [
         "action": "create_issue_relationship_links_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/issue-management/v1/issuelink/issue/{issueId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getIssueLinksUsingGET",
@@ -3060,7 +3060,7 @@ OPERATIONS = [
         "action": "get_issue_links_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/issue-management/v1/issuelinks/{issueId}",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createIssueUsingPOST",
@@ -3069,7 +3069,7 @@ OPERATIONS = [
         "action": "create_issue_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/issue-management/v1/issues",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findAllIssuesByFilterUsingPOST",
@@ -3078,7 +3078,7 @@ OPERATIONS = [
         "action": "find_all_issues_by_filter_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/issue-management/v1/issues/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getIssueUsingGET",
@@ -3087,7 +3087,7 @@ OPERATIONS = [
         "action": "get_issue_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/issue-management/v1/issues/{issueId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateIssueUsingPUT",
@@ -3096,7 +3096,7 @@ OPERATIONS = [
         "action": "update_issue_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/issue-management/v1/issues/{issueId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateIssueUsingPATCH",
@@ -3105,7 +3105,7 @@ OPERATIONS = [
         "action": "update_issue_using_patch",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/issue-management/v1/issues/{issueId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getIssueRelatedTasksUsingGET",
@@ -3114,7 +3114,7 @@ OPERATIONS = [
         "action": "get_issue_related_tasks_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/issue-management/v1/issuetasks/{issueId}",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "findAllControlImplementationsAttributesAndOptionsByUsingPOST",
@@ -3123,7 +3123,7 @@ OPERATIONS = [
         "action": "find_all_control_implementations_attributes_and_options_by_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/controls/v1/control-implementation-attributes/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findAllControlImplementationsUsingPOST",
@@ -3132,7 +3132,7 @@ OPERATIONS = [
         "action": "find_all_control_implementations_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/controls/v1/control-implementations/pages",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getControlImplementationDetailsUsingGET",
@@ -3141,7 +3141,7 @@ OPERATIONS = [
         "action": "get_control_implementation_details_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/controls/v1/control-implementations/{guid}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateControlImplementationByImplementationIdUsingPUT",
@@ -3150,7 +3150,7 @@ OPERATIONS = [
         "action": "update_control_implementation_by_implementation_id_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/controls/v1/control-implementations/{guid}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "removeControlImplementationByEntityAndImplementationIdUsingDELETE",
@@ -3159,7 +3159,7 @@ OPERATIONS = [
         "action": "remove_control_implementation_by_entity_and_implementation_id_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/controls/v1/control-implementations/{guid}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addAttachmentsToImplementationUsingPOST",
@@ -3168,7 +3168,7 @@ OPERATIONS = [
         "action": "add_attachments_to_implementation_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/controls/v1/control-implementations/{guid}/attachments",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addControlUsingPOST",
@@ -3177,7 +3177,7 @@ OPERATIONS = [
         "action": "add_control_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/controls/v1/controls",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findControlsByCriteriaUsingPOST_1",
@@ -3186,7 +3186,7 @@ OPERATIONS = [
         "action": "find_controls_by_criteria_using_post_1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/controls/v1/controls/pages",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateControlUsingPUT_1",
@@ -3195,7 +3195,7 @@ OPERATIONS = [
         "action": "update_control_using_put_1",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/controls/v1/controls/{controlId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "removeControlUsingDELETE_1",
@@ -3204,7 +3204,7 @@ OPERATIONS = [
         "action": "remove_control_using_delete_1",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/controls/v1/controls/{controlId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findAssociatedControlImplementationsUsingPOST",
@@ -3213,7 +3213,7 @@ OPERATIONS = [
         "action": "find_associated_control_implementations_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/controls/v1/entities/{entityId}/control-implementations/pages",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findAllEvidencesBySearchCriteria_1",
@@ -3222,7 +3222,7 @@ OPERATIONS = [
         "action": "find_all_evidences_by_search_criteria_1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/controls/v1/evidence-task-implementations/pages",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findEvidenceImplementationsById_1",
@@ -3231,7 +3231,7 @@ OPERATIONS = [
         "action": "find_evidence_implementations_by_id_1",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/controls/v1/evidence-task-implementations/{evidenceTaskImplementationId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addEvidenceImplementationAttachment",
@@ -3240,7 +3240,7 @@ OPERATIONS = [
         "action": "add_evidence_implementation_attachment",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/controls/v1/evidence-task-implementations/{evidenceTaskImplementationId}/attachments",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "bulkCreateLinksUsingPOST",
@@ -3249,7 +3249,7 @@ OPERATIONS = [
         "action": "bulk_create_links_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/controls/v1/links/bulk",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addThreatUsingPOST_1",
@@ -3258,7 +3258,7 @@ OPERATIONS = [
         "action": "add_threat_using_post_1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/controls/v1/threats",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findThreatsByCriteriaUsingPOST",
@@ -3267,7 +3267,7 @@ OPERATIONS = [
         "action": "find_threats_by_criteria_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/controls/v1/threats/pages",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "removeThreatUsingDELETE",
@@ -3276,7 +3276,7 @@ OPERATIONS = [
         "action": "remove_threat_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/controls/v1/threats/{threatId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addVulnerabilityUsingPOST_1",
@@ -3285,7 +3285,7 @@ OPERATIONS = [
         "action": "add_vulnerability_using_post_1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/controls/v1/vulnerabilities",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findVulnerabilitiesByCriteriaUsingPOST",
@@ -3294,7 +3294,7 @@ OPERATIONS = [
         "action": "find_vulnerabilities_by_criteria_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/controls/v1/vulnerabilities/pages",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "removeVulnerabilityUsingDELETE",
@@ -3303,7 +3303,7 @@ OPERATIONS = [
         "action": "remove_vulnerability_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/controls/v1/vulnerabilities/{vulnerabilityId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllEnabledControlEntityTypesUsingGET",
@@ -3312,7 +3312,7 @@ OPERATIONS = [
         "action": "get_all_enabled_control_entity_types_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/controls/v2/control-entity-types",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllRelatedControlEntityTypesUsingGET",
@@ -3321,7 +3321,7 @@ OPERATIONS = [
         "action": "get_all_related_control_entity_types_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/controls/v2/related/control-entity-types",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateThreatsUsingPUT",
@@ -3330,7 +3330,7 @@ OPERATIONS = [
         "action": "update_threats_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/controls/v2/threats",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addThreatsUsingPOST",
@@ -3339,7 +3339,7 @@ OPERATIONS = [
         "action": "add_threats_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/controls/v2/threats",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateVulnerabilitiesUsingPUT",
@@ -3348,7 +3348,7 @@ OPERATIONS = [
         "action": "update_vulnerabilities_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/controls/v2/vulnerabilities",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addVulnerabilitiesUsingPOST",
@@ -3357,7 +3357,7 @@ OPERATIONS = [
         "action": "add_vulnerabilities_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/controls/v2/vulnerabilities",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getRiskTemplateUsingGET",
@@ -3366,7 +3366,7 @@ OPERATIONS = [
         "action": "get_risk_template_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/risk-template/v1/templates/{riskTemplateId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "unlinkRisksFromEntityUsingPost",
@@ -3375,7 +3375,7 @@ OPERATIONS = [
         "action": "unlink_risks_from_entity_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/risk/v2/entities/risks/unlink",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getActiveCategoriesUsingGET",
@@ -3384,7 +3384,7 @@ OPERATIONS = [
         "action": "get_active_categories_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/risk/v2/risk-categories",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getMatrixScoreSettingUsingGET",
@@ -3393,7 +3393,7 @@ OPERATIONS = [
         "action": "get_matrix_score_setting_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/risk/v2/risk-settings/matrix",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getStandardScoreSettingUsingGET",
@@ -3402,7 +3402,7 @@ OPERATIONS = [
         "action": "get_standard_score_setting_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/risk/v2/risk-settings/standard",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createRiskUsingPOST",
@@ -3411,7 +3411,7 @@ OPERATIONS = [
         "action": "create_risk_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/risk/v2/risks",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getRiskPageViewUsingPOST",
@@ -3420,7 +3420,7 @@ OPERATIONS = [
         "action": "get_risk_page_view_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/pages",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllEnabledRiskEntityTypesUsingGET",
@@ -3429,7 +3429,7 @@ OPERATIONS = [
         "action": "get_all_enabled_risk_entity_types_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/risk-entity-types",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllEnabledSourceEntityTypesUsingGET",
@@ -3438,7 +3438,7 @@ OPERATIONS = [
         "action": "get_all_enabled_source_entity_types_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/source-entity-types",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createUpdateRiskUsingPUT",
@@ -3447,7 +3447,7 @@ OPERATIONS = [
         "action": "create_update_risk_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/upsert",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "changeRiskStageUsingPOST",
@@ -3456,7 +3456,7 @@ OPERATIONS = [
         "action": "change_risk_stage_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{id}/assign-stage",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getLinkedRisksInformationUsingPOST",
@@ -3465,7 +3465,7 @@ OPERATIONS = [
         "action": "get_linked_risks_information_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskEntityType}/{entityId}/risks",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getRiskUsingGET",
@@ -3474,7 +3474,7 @@ OPERATIONS = [
         "action": "get_risk_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateRiskUsingPUT",
@@ -3483,7 +3483,7 @@ OPERATIONS = [
         "action": "update_risk_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteRiskUsingDELETE",
@@ -3492,7 +3492,7 @@ OPERATIONS = [
         "action": "delete_risk_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateRiskUsingPATCH",
@@ -3501,7 +3501,7 @@ OPERATIONS = [
         "action": "update_risk_using_patch",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "performRiskActionUsingPUT",
@@ -3510,7 +3510,7 @@ OPERATIONS = [
         "action": "perform_risk_action_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}/actions/{action}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "approveRiskUsingPUT",
@@ -3519,7 +3519,7 @@ OPERATIONS = [
         "action": "approve_risk_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}/approve",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateRiskApproversUsingPUT",
@@ -3528,7 +3528,7 @@ OPERATIONS = [
         "action": "update_risk_approvers_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}/approvers",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateRiskCategoriesUsingPUT",
@@ -3537,7 +3537,7 @@ OPERATIONS = [
         "action": "update_risk_categories_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}/categories",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addControlsToRiskUsingPOST",
@@ -3546,7 +3546,7 @@ OPERATIONS = [
         "action": "add_controls_to_risk_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}/control-implementations",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "grantRiskExceptionUsingPUT",
@@ -3555,7 +3555,7 @@ OPERATIONS = [
         "action": "grant_risk_exception_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}/grant-exception",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateRiskOwnersUsingPUT",
@@ -3564,7 +3564,7 @@ OPERATIONS = [
         "action": "update_risk_owners_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}/owners",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "reopenRiskUsingPUT",
@@ -3573,7 +3573,7 @@ OPERATIONS = [
         "action": "reopen_risk_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}/reopen",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "requestRiskExceptionUsingPUT",
@@ -3582,7 +3582,7 @@ OPERATIONS = [
         "action": "request_risk_exception_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}/request-exception",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "sendBackRiskUsingPUT",
@@ -3591,7 +3591,7 @@ OPERATIONS = [
         "action": "send_back_risk_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}/send-back",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "submitRiskUsingPUT",
@@ -3600,7 +3600,7 @@ OPERATIONS = [
         "action": "submit_risk_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}/submit",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addThreatToRisk",
@@ -3609,7 +3609,7 @@ OPERATIONS = [
         "action": "add_threat_to_risk",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}/threats",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addVulnerabilitiesToRisk",
@@ -3618,7 +3618,7 @@ OPERATIONS = [
         "action": "add_vulnerabilities_to_risk",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}/vulnerabilities",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createStandAloneRiskUsingPOST",
@@ -3627,7 +3627,7 @@ OPERATIONS = [
         "action": "create_stand_alone_risk_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/risk/v3/risks",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "applicationdata",
@@ -3636,7 +3636,7 @@ OPERATIONS = [
         "action": "applicationdata",
         "http": "GET",
         "path": "https://customer.my.onetrust.com/bannersdk/v2/applicationdata",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createProjectUsingPOST",
@@ -3645,7 +3645,7 @@ OPERATIONS = [
         "action": "create_project_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findProjectBasicDetailsByQueryCriteriaUsingPOST",
@@ -3654,7 +3654,7 @@ OPERATIONS = [
         "action": "find_project_basic_details_by_query_criteria_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects/basic-details/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findProjectsByListCriteriaUsingPOST",
@@ -3663,7 +3663,7 @@ OPERATIONS = [
         "action": "find_projects_by_list_criteria_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getProjectUsingGET",
@@ -3672,7 +3672,7 @@ OPERATIONS = [
         "action": "get_project_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects/{entityId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateProjectUsingPUT",
@@ -3681,7 +3681,7 @@ OPERATIONS = [
         "action": "update_project_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects/{entityId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteProjectUsingDELETE",
@@ -3690,7 +3690,7 @@ OPERATIONS = [
         "action": "delete_project_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/custom-entity/api/custom-entity/v1/projects/{entityId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createModelUsingPOST",
@@ -3699,7 +3699,7 @@ OPERATIONS = [
         "action": "create_model_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findModelBasicDetailsByQueryCriteriaUsingPOST",
@@ -3708,7 +3708,7 @@ OPERATIONS = [
         "action": "find_model_basic_details_by_query_criteria_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models/basic-details/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findModelsByListCriteriaUsingPOST",
@@ -3717,7 +3717,7 @@ OPERATIONS = [
         "action": "find_models_by_list_criteria_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getModelUsingGET",
@@ -3726,7 +3726,7 @@ OPERATIONS = [
         "action": "get_model_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models/{entityId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateModelUsingPUT",
@@ -3735,7 +3735,7 @@ OPERATIONS = [
         "action": "update_model_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models/{entityId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteModelUsingDELETE",
@@ -3744,7 +3744,7 @@ OPERATIONS = [
         "action": "delete_model_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/custom-entity/api/custom-entity/v2/models/{entityId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addEntityUsingEntityTypeIdOrEntityTypeNameUsingPOST",
@@ -3753,7 +3753,7 @@ OPERATIONS = [
         "action": "add_entity_using_entity_type_id_or_entity_type_name_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entities",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findAllByTypeIdAndCriteriaUsingPOST",
@@ -3762,7 +3762,7 @@ OPERATIONS = [
         "action": "find_all_by_type_id_and_criteria_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entities/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getEntityInformationUsingEntityTypeIdOrEntityTypeNameUsingGET",
@@ -3771,7 +3771,7 @@ OPERATIONS = [
         "action": "get_entity_information_using_entity_type_id_or_entity_type_name_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entities/{entityId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteUsingEntityTypeIdOrEntityTypeNameUsingDELETE",
@@ -3780,7 +3780,7 @@ OPERATIONS = [
         "action": "delete_using_entity_type_id_or_entity_type_name_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entities/{entityId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateUsingEntityTypeIdOrEntityTypeNameUsingPATCH",
@@ -3789,7 +3789,7 @@ OPERATIONS = [
         "action": "update_using_entity_type_id_or_entity_type_name_using_patch",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entities/{entityId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findEntityBasicDetailsByTypeAndCriteriaUsingPOST",
@@ -3798,7 +3798,7 @@ OPERATIONS = [
         "action": "find_entity_basic_details_by_type_and_criteria_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entity-basic-details/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createCustomLinkTypeUsingPOST",
@@ -3807,7 +3807,7 @@ OPERATIONS = [
         "action": "create_custom_link_type_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entity-link-types",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findAllByLinkTypeAndCriteriaUsingPOST",
@@ -3816,7 +3816,7 @@ OPERATIONS = [
         "action": "find_all_by_link_type_and_criteria_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entity-link-types/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getLinkTypeUsingGET",
@@ -3825,7 +3825,7 @@ OPERATIONS = [
         "action": "get_link_type_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entity-link-types/{entityLinkTypeId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getEntityTypeInformationUsingGET_1",
@@ -3834,7 +3834,7 @@ OPERATIONS = [
         "action": "get_entity_type_information_using_get_1",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entity-types/names/{entityTypeName}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateCustomEntityTypeUsingPATCH_1",
@@ -3843,7 +3843,7 @@ OPERATIONS = [
         "action": "update_custom_entity_type_using_patch_1",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entity-types/names/{entityTypeName}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "enabledCustomEntityTypeUsingPUT_1",
@@ -3852,7 +3852,7 @@ OPERATIONS = [
         "action": "enabled_custom_entity_type_using_put_1",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entity-types/names/{entityTypeName}/enable",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findAllByTypeAndCriteriaUsingPOST",
@@ -3861,7 +3861,7 @@ OPERATIONS = [
         "action": "find_all_by_type_and_criteria_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entity-types/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getEntityTypeInformationUsingGET",
@@ -3870,7 +3870,7 @@ OPERATIONS = [
         "action": "get_entity_type_information_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entity-types/{entityTypeId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateCustomEntityTypeUsingPATCH",
@@ -3879,7 +3879,7 @@ OPERATIONS = [
         "action": "update_custom_entity_type_using_patch",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entity-types/{entityTypeId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "enabledCustomEntityTypeUsingPUT",
@@ -3888,7 +3888,7 @@ OPERATIONS = [
         "action": "enabled_custom_entity_type_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/entity-types/{entityTypeId}/enable",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createLinkRecordBetweenEntitiesUsingLinkTypeIdUsingPOST",
@@ -3897,7 +3897,7 @@ OPERATIONS = [
         "action": "create_link_record_between_entities_using_link_type_id_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/links",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getLinkRecordInformationUsingLinkTypeIdUsingGET",
@@ -3906,7 +3906,7 @@ OPERATIONS = [
         "action": "get_link_record_information_using_link_type_id_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/links/{linkId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteLinkRecordByIdAndTypeUsingLinkTypeIdUsingDELETE",
@@ -3915,7 +3915,7 @@ OPERATIONS = [
         "action": "delete_link_record_by_id_and_type_using_link_type_id_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/links/{linkId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addOptionsUsingPOST",
@@ -3924,7 +3924,7 @@ OPERATIONS = [
         "action": "add_options_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/schema-attribute-options",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addAttributeUsingPOST",
@@ -3933,7 +3933,7 @@ OPERATIONS = [
         "action": "add_attribute_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/schema-attributes",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "disableAttributeUsingPUT",
@@ -3942,7 +3942,7 @@ OPERATIONS = [
         "action": "disable_attribute_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/schema-attributes/{attributeId}/disable",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "enableAttributeUsingPUT",
@@ -3951,7 +3951,7 @@ OPERATIONS = [
         "action": "enable_attribute_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/schema-attributes/{attributeId}/enable",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createTaskUsingPOST_1",
@@ -3960,7 +3960,7 @@ OPERATIONS = [
         "action": "create_task_using_post_1",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/tasks",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findTaskUsingGET_1",
@@ -3969,7 +3969,7 @@ OPERATIONS = [
         "action": "find_task_using_get_1",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/tasks/{taskId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateTaskUsingPUT_1",
@@ -3978,7 +3978,7 @@ OPERATIONS = [
         "action": "update_task_using_put_1",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/custom-entity/v1/tasks/{taskId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createPolicy",
@@ -3987,7 +3987,7 @@ OPERATIONS = [
         "action": "create_policy",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/create",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getLatestPolicies",
@@ -3996,7 +3996,7 @@ OPERATIONS = [
         "action": "get_latest_policies",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/list",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getPolicy",
@@ -4005,7 +4005,7 @@ OPERATIONS = [
         "action": "get_policy",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/{id}/details",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getPublishedPolicyVersion",
@@ -4014,7 +4014,7 @@ OPERATIONS = [
         "action": "get_published_policy_version",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/{id}/published-version",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addDocumentToPolicy",
@@ -4023,7 +4023,7 @@ OPERATIONS = [
         "action": "add_document_to_policy",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/{policyId}/documents",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createPolicyVersions",
@@ -4032,7 +4032,7 @@ OPERATIONS = [
         "action": "create_policy_versions",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/{policyId}/versions/create",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getPrivacyNoticesUsingGET",
@@ -4041,7 +4041,7 @@ OPERATIONS = [
         "action": "get_privacy_notices_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/privacynotice/v2/privacynotices",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getPrivacyNoticeVersionByPublishedDateUsingGET",
@@ -4050,7 +4050,7 @@ OPERATIONS = [
         "action": "get_privacy_notice_version_by_published_date_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/privacynotice/v2/privacynotices/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getPrivacyNoticeVersionsUsingGET",
@@ -4059,7 +4059,7 @@ OPERATIONS = [
         "action": "get_privacy_notice_versions_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/privacynotice/v2/privacynotices/{privacyNoticeId}/versions",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createTaskUsingPOST",
@@ -4068,7 +4068,7 @@ OPERATIONS = [
         "action": "create_task_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/task-management/v1/tasks",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getTaskByIdAndTaskTypeNameKeyUsingGET",
@@ -4077,7 +4077,7 @@ OPERATIONS = [
         "action": "get_task_by_id_and_task_type_name_key_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/task-management/v1/tasks/{taskId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateTaskUsingPUT",
@@ -4086,7 +4086,7 @@ OPERATIONS = [
         "action": "update_task_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/task-management/v1/tasks/{taskId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createVendorContractUsingPOST",
@@ -4095,7 +4095,7 @@ OPERATIONS = [
         "action": "create_vendor_contract_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/vendor/v1/contracts/add",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getContractSchemaUsingGET",
@@ -4104,7 +4104,7 @@ OPERATIONS = [
         "action": "get_contract_schema_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/vendor/v1/contracts/schemas",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "fetchAllContractTypesUsingGET",
@@ -4113,7 +4113,7 @@ OPERATIONS = [
         "action": "fetch_all_contract_types_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/vendor/v1/contracts/types",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "searchContractByVendorAndCriteriaUsingPOST",
@@ -4122,7 +4122,7 @@ OPERATIONS = [
         "action": "search_contract_by_vendor_and_criteria_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/vendor/v1/contracts/vendors/{vendorId}/contracts",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "removeVendorContractUsingDELETE",
@@ -4131,7 +4131,7 @@ OPERATIONS = [
         "action": "remove_vendor_contract_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/vendor/v1/contracts/{contractId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "loadVendorContractByContractIdUsingGET",
@@ -4140,7 +4140,7 @@ OPERATIONS = [
         "action": "load_vendor_contract_by_contract_id_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/vendor/v1/contracts/{contractId}/contracts",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateVendorContractUsingPUT",
@@ -4149,7 +4149,7 @@ OPERATIONS = [
         "action": "update_vendor_contract_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/vendor/v1/contracts/{contractId}/vendors/{vendorId}/contracts",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getEngagementSchemaUsingGET",
@@ -4158,7 +4158,7 @@ OPERATIONS = [
         "action": "get_engagement_schema_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/vendor/v1/engagement-schemas",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "loadEngagementByEngagementIdUsingGet",
@@ -4167,7 +4167,7 @@ OPERATIONS = [
         "action": "load_engagement_by_engagement_id_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/vendor/v1/engagements/{engagementId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateEngagementUsingPUT",
@@ -4176,7 +4176,7 @@ OPERATIONS = [
         "action": "update_engagement_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/vendor/v1/engagements/{engagementId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "removeEngagementUsingDELETE",
@@ -4185,7 +4185,7 @@ OPERATIONS = [
         "action": "remove_engagement_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/vendor/v1/engagements/{engagementId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateEngagementUsingPATCH",
@@ -4194,7 +4194,7 @@ OPERATIONS = [
         "action": "update_engagement_using_patch",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/vendor/v1/engagements/{engagementId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateEngagementStatus",
@@ -4203,7 +4203,7 @@ OPERATIONS = [
         "action": "update_engagement_status",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/vendor/v1/engagements/{engagementId}/status",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "loadEngagementUsingGET",
@@ -4212,7 +4212,7 @@ OPERATIONS = [
         "action": "load_engagement_using_get",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/vendor/v1/engagements-search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createEngagementUsingPOST",
@@ -4221,7 +4221,7 @@ OPERATIONS = [
         "action": "create_engagement_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/vendor/v1/vendor-engagements",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "listOfCoursesUsingGet",
@@ -4230,7 +4230,7 @@ OPERATIONS = [
         "action": "list_of_courses_using_get",
         "http": "GET",
         "path": "https://customer.my.onetrust.com/api/awareness-training/v1/courses",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "enrollUsersToCourseUsingPost",
@@ -4239,7 +4239,7 @@ OPERATIONS = [
         "action": "enroll_users_to_course_using_post",
         "http": "POST",
         "path": "https://customer.my.onetrust.com/api/awareness-training/v2/enrollments",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getStatusOfEnrollmentUsingGET",
@@ -4248,7 +4248,7 @@ OPERATIONS = [
         "action": "get_status_of_enrollment_using_get",
         "http": "GET",
         "path": "https://customer.my.onetrust.com/api/awareness-training/v1/enrollment-assignees/{enrollmentAssigneeId}/enrollment-progress",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "unEnrollUserUsingDELETE",
@@ -4257,7 +4257,7 @@ OPERATIONS = [
         "action": "un_enroll_user_using_delete",
         "http": "DELETE",
         "path": "https://customer.my.onetrust.com/api/awareness-training/v1/enrollments/enrollment-assignees/{enrollmentAssigneeId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getEnrollmentDetailsUsingPOST",
@@ -4266,7 +4266,7 @@ OPERATIONS = [
         "action": "get_enrollment_details_using_post",
         "http": "POST",
         "path": "https://customer.my.onetrust.com/api/awareness-training/v1/enrollments/assignments",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getCollectionPointsUsingGET",
@@ -4275,7 +4275,7 @@ OPERATIONS = [
         "action": "get_collection_points_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/collectionpoints",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createCollectionPointUsingPOST",
@@ -4284,7 +4284,7 @@ OPERATIONS = [
         "action": "create_collection_point_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/collectionpoints",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getTokenUsingGET",
@@ -4293,7 +4293,7 @@ OPERATIONS = [
         "action": "get_token_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/collectionpoints/{collectionpointGuid}/token",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "editCollectionPointUsingPUT",
@@ -4302,7 +4302,7 @@ OPERATIONS = [
         "action": "edit_collection_point_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/collectionpoints/{collectionpointId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "disableCollectionPointUsingPUT",
@@ -4311,7 +4311,7 @@ OPERATIONS = [
         "action": "disable_collection_point_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/collectionpoints/{collectionpointId}/disable",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createIndex",
@@ -4320,7 +4320,7 @@ OPERATIONS = [
         "action": "create_index",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/custom-indexes",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getIndexCreationStatus",
@@ -4329,7 +4329,7 @@ OPERATIONS = [
         "action": "get_index_creation_status",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/custom-indexes/{runId}/status",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getListUsingGET",
@@ -4338,7 +4338,7 @@ OPERATIONS = [
         "action": "get_list_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/custompreferences",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createCustomPreferenceUsingPOST",
@@ -4347,7 +4347,7 @@ OPERATIONS = [
         "action": "create_custom_preference_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/custompreferences",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "editCustomPreferenceUsingPUT",
@@ -4356,7 +4356,7 @@ OPERATIONS = [
         "action": "edit_custom_preference_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/custompreferences/{customPreferenceId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "findByGuidUsingGET",
@@ -4365,7 +4365,7 @@ OPERATIONS = [
         "action": "find_by_guid_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/custompreferences/{custompreferenceId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createOrUpdateDataSubjectUsingPOST",
@@ -4374,7 +4374,7 @@ OPERATIONS = [
         "action": "create_or_update_data_subject_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/datasubjects/dataelements",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "mergeDataSubjectsUsingPOST",
@@ -4383,7 +4383,7 @@ OPERATIONS = [
         "action": "merge_data_subjects_using_post",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/datasubjects/merge",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "mergeDatasubjectUsingPOST",
@@ -4392,7 +4392,7 @@ OPERATIONS = [
         "action": "merge_datasubject_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/datasubjects/merge/{mergeRequestId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataSubjectProfileUsingGET",
@@ -4401,7 +4401,7 @@ OPERATIONS = [
         "action": "get_data_subject_profile_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/datasubjects/profiles",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getDataSubjectPurposesByIdentifierUsingGET",
@@ -4410,7 +4410,7 @@ OPERATIONS = [
         "action": "get_data_subject_purposes_by_identifier_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/datasubjects/purposes",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "exportduplicatedatasubject",
@@ -4419,7 +4419,7 @@ OPERATIONS = [
         "action": "exportduplicatedatasubject",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/export-duplicate-datasubject/{mergeRequestId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getLinkTokensUsingGET",
@@ -4428,7 +4428,7 @@ OPERATIONS = [
         "action": "get_link_tokens_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/linktokens",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getDataSubjectPurposesByIdentifierUsingGET_1",
@@ -4437,7 +4437,7 @@ OPERATIONS = [
         "action": "get_data_subject_purposes_by_identifier_using_get_1",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/preferencecenters/{prefcenterId}/datasubjects/preferences",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updatePreferencesForDataSubjectApiUsingPUT",
@@ -4446,7 +4446,7 @@ OPERATIONS = [
         "action": "update_preferences_for_data_subject_api_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/preferencecenters/{prefcenterId}/datasubjects/preferences",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "withdrawPreferencesApiUsingDELETE",
@@ -4455,7 +4455,7 @@ OPERATIONS = [
         "action": "withdraw_preferences_api_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/preferencecenters/{prefcenterId}/datasubjects/preferences",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getPreferenceCenterByIdUsingGET",
@@ -4464,7 +4464,7 @@ OPERATIONS = [
         "action": "get_preference_center_by_id_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/preferencecenters/{prefcenterId}/preferences",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getPurposesUsingGET",
@@ -4473,7 +4473,7 @@ OPERATIONS = [
         "action": "get_purposes_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/purposes",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createPurposeUsingPOST",
@@ -4482,7 +4482,7 @@ OPERATIONS = [
         "action": "create_purpose_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/purposes",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createNewPurposeVersionUsingPOST",
@@ -4491,7 +4491,7 @@ OPERATIONS = [
         "action": "create_new_purpose_version_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/purposes/{purposeGuid}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "editPurposeUsingPUT",
@@ -4500,7 +4500,7 @@ OPERATIONS = [
         "action": "edit_purpose_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/purposes/{purposeId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataSubjectsForPurposesUsingGET",
@@ -4509,7 +4509,7 @@ OPERATIONS = [
         "action": "get_data_subjects_for_purposes_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/purposes/{purposeId}/datasubjects",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "publishPurposeUsingPUT",
@@ -4518,7 +4518,7 @@ OPERATIONS = [
         "action": "publish_purpose_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/purposes/{purposeId}/publish",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "setRetirementUsingPUT",
@@ -4527,7 +4527,7 @@ OPERATIONS = [
         "action": "set_retirement_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/purposes/{purposeId}/retire",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getReceiptListUsingGET",
@@ -4536,7 +4536,7 @@ OPERATIONS = [
         "action": "get_receipt_list_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/receipt-list",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getReceiptListDetailsUsingGET",
@@ -4545,7 +4545,7 @@ OPERATIONS = [
         "action": "get_receipt_list_details_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/receipts",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "findReceiptUsingGET",
@@ -4554,7 +4554,7 @@ OPERATIONS = [
         "action": "find_receipt_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/receipts/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getPagedMergeRequestUsingGET",
@@ -4563,7 +4563,7 @@ OPERATIONS = [
         "action": "get_paged_merge_request_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/scheduled-jobs/merge-request",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "scheduleMergeRequestUsingPOST",
@@ -4572,7 +4572,7 @@ OPERATIONS = [
         "action": "schedule_merge_request_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/scheduled-jobs/merge-request",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getMergeRequestUsingGET",
@@ -4581,7 +4581,7 @@ OPERATIONS = [
         "action": "get_merge_request_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/scheduled-jobs/merge-request/{mergeRequestGuid}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteMergeRequestUsingDELETE",
@@ -4590,7 +4590,7 @@ OPERATIONS = [
         "action": "delete_merge_request_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/scheduled-jobs/merge-request/{mergeRequestGuid}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "withdrawTransactionBehalfOfDatasubjectUsingPUT",
@@ -4599,7 +4599,7 @@ OPERATIONS = [
         "action": "withdraw_transaction_behalf_of_datasubject_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/transactions/withdraw/fordatasubject",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "withdrawTransactionByPurposeAndIdentifierUsingGET",
@@ -4608,7 +4608,7 @@ OPERATIONS = [
         "action": "withdraw_transaction_by_purpose_and_identifier_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v1/transactions/withdraw/purpose/{purposeId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getCollectionPointsUsingGET_1",
@@ -4617,7 +4617,7 @@ OPERATIONS = [
         "action": "get_collection_points_using_get_1",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v2/collectionpoints",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createVersionUsingPOST",
@@ -4626,7 +4626,7 @@ OPERATIONS = [
         "action": "create_version_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consentmanager/v2/collectionpoints/{collectionPointGuid}/version",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataSubjectsUsingGET",
@@ -4635,7 +4635,7 @@ OPERATIONS = [
         "action": "get_data_subjects_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v2/datasubjects",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "deleteDataSubjectProfilesUsingDELETE",
@@ -4644,7 +4644,7 @@ OPERATIONS = [
         "action": "delete_data_subject_profiles_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/consentmanager/v2/datasubjects/profiles",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "searchDataSubjectsPostUsingPOST",
@@ -4653,7 +4653,7 @@ OPERATIONS = [
         "action": "search_data_subjects_post_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consentmanager/v2/datasubjects/search",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getLinkedIdentityGroupsUsingGET",
@@ -4662,7 +4662,7 @@ OPERATIONS = [
         "action": "get_linked_identity_groups_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v2/linkedidentitygroups",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createLinkedIdentityGroupUsingPOST",
@@ -4671,7 +4671,7 @@ OPERATIONS = [
         "action": "create_linked_identity_group_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consentmanager/v2/linkedidentitygroups",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getLinkedIdentityGroupUsingGET",
@@ -4680,7 +4680,7 @@ OPERATIONS = [
         "action": "get_linked_identity_group_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v2/linkedidentitygroups/{linkedIdentityGroupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateLinkedIdentityGroupUsingPUT",
@@ -4689,7 +4689,7 @@ OPERATIONS = [
         "action": "update_linked_identity_group_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/consentmanager/v2/linkedidentitygroups/{linkedIdentityGroupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteUsingDELETE",
@@ -4698,7 +4698,7 @@ OPERATIONS = [
         "action": "delete_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/consentmanager/v2/linkedidentitygroups/{linkedIdentityGroupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getPreferenceCenterPageSchemaUsingGET",
@@ -4707,7 +4707,7 @@ OPERATIONS = [
         "action": "get_preference_center_page_schema_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v2/preferencecenterpage/{preferencecenterpageid}/schema",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getPreferenceCentersUsingGET",
@@ -4716,7 +4716,7 @@ OPERATIONS = [
         "action": "get_preference_centers_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v2/preferencecenters",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getRootSchemaUsingGET",
@@ -4725,7 +4725,7 @@ OPERATIONS = [
         "action": "get_root_schema_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v2/preferencecenters/{preferencecenterid}/schema",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getGroupedPurposesV2",
@@ -4734,7 +4734,7 @@ OPERATIONS = [
         "action": "get_grouped_purposes_v2",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v2/purposes",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getPurposeDetailUsingGET",
@@ -4743,7 +4743,7 @@ OPERATIONS = [
         "action": "get_purpose_detail_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consentmanager/v2/purposes/{purposeId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getConsentGroupListUsingGET",
@@ -4752,7 +4752,7 @@ OPERATIONS = [
         "action": "get_consent_group_list_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consent/v2/consent-groups",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createConsentGroupUsingPOST",
@@ -4761,7 +4761,7 @@ OPERATIONS = [
         "action": "create_consent_group_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consent/v2/consent-groups",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getConsentGroupSettingsUsingGET",
@@ -4770,7 +4770,7 @@ OPERATIONS = [
         "action": "get_consent_group_settings_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consent/v2/consent-groups/settings",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateConsentGroupSettingsUsingPUT",
@@ -4779,7 +4779,7 @@ OPERATIONS = [
         "action": "update_consent_group_settings_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/consent/v2/consent-groups/settings",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getConsentGroupUsingGET",
@@ -4788,7 +4788,7 @@ OPERATIONS = [
         "action": "get_consent_group_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/consent/v2/consent-groups/{consentGroupGuid}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addConsentGroupsToConsentGroupUsingPOST",
@@ -4797,7 +4797,7 @@ OPERATIONS = [
         "action": "add_consent_groups_to_consent_group_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consent/v2/consent-groups/{consentGroupGuid}/consent-groups",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "unlinkConsentGroupUsingDELETE",
@@ -4806,7 +4806,7 @@ OPERATIONS = [
         "action": "unlink_consent_group_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/consent/v2/consent-groups/{consentGroupGuid}/consent-groups",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addDataSubjectsToConsentGroupUsingPOST",
@@ -4815,7 +4815,7 @@ OPERATIONS = [
         "action": "add_data_subjects_to_consent_group_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consent/v2/consent-groups/{consentGroupGuid}/data-subjects",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteDataSubjectsToConsentGroupUsingDELETE",
@@ -4824,7 +4824,7 @@ OPERATIONS = [
         "action": "delete_data_subjects_to_consent_group_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/consent/v2/consent-groups/{consentGroupGuid}/data-subjects/{dataSubjectGuid}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updatePurposeRulesToConsentGroupUsingPUT",
@@ -4833,7 +4833,7 @@ OPERATIONS = [
         "action": "update_purpose_rules_to_consent_group_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/consent/v2/consent-groups/{consentGroupGuid}/purpose-rules",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "addPurposeRulesToConsentGroupUsingPOST",
@@ -4842,7 +4842,7 @@ OPERATIONS = [
         "action": "add_purpose_rules_to_consent_group_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consent/v2/consent-groups/{consentGroupGuid}/purpose-rules",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteConsentGroupPurposeRuleUsingDELETE",
@@ -4851,7 +4851,7 @@ OPERATIONS = [
         "action": "delete_consent_group_purpose_rule_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/consent/v2/consent-groups/{consentGroupGuid}/purpose-rules/{purposeGuid}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deletePurposeFromDataSubjectUsingDELETE",
@@ -4860,7 +4860,7 @@ OPERATIONS = [
         "action": "delete_purpose_from_data_subject_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/consent/v2/datasubject-purposes/{purposeGuid}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "DeleteDataSubjectProfileUsingDELETE",
@@ -4869,7 +4869,7 @@ OPERATIONS = [
         "action": "delete_data_subject_profile_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/consent/v2/datasubjects",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getReceiptListDetailsUsingPOST",
@@ -4878,7 +4878,7 @@ OPERATIONS = [
         "action": "get_receipt_list_details_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consent/v2/receipts",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getTransactionsUsingPOST",
@@ -4887,7 +4887,7 @@ OPERATIONS = [
         "action": "get_transactions_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/consent/v2/transactions",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getListOfDeletionCertificates",
@@ -4896,7 +4896,7 @@ OPERATIONS = [
         "action": "get_list_of_deletion_certificates",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/consent/v1/deletion-certificates",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "CrossDeviceConsentUsingDELETE",
@@ -4905,7 +4905,7 @@ OPERATIONS = [
         "action": "cross_device_consent_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/rest/api/consent/v1/receipts/cross-device",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteDataSubjectUsingTTL",
@@ -4914,7 +4914,7 @@ OPERATIONS = [
         "action": "delete_data_subject_using_ttl",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/data-subjects",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deletePurposeFromDataSubjectsUsingTTL",
@@ -4923,7 +4923,7 @@ OPERATIONS = [
         "action": "delete_purpose_from_data_subjects_using_ttl",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/data-subjects/profiles",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataSubjectsV4",
@@ -4932,7 +4932,7 @@ OPERATIONS = [
         "action": "get_data_subjects_v4",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/datasubjects",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getDataSubjectBasicDetailsV4",
@@ -4941,7 +4941,7 @@ OPERATIONS = [
         "action": "get_data_subject_basic_details_v4",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/datasubjects/basic-details",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataSubjectDetailsV4",
@@ -4950,7 +4950,7 @@ OPERATIONS = [
         "action": "get_data_subject_details_v4",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/datasubjects/details",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllProfilesByDataSubjectV4",
@@ -4959,7 +4959,7 @@ OPERATIONS = [
         "action": "get_all_profiles_by_data_subject_v4",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/datasubjects/ds-profiles",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getEmailLinkTokenByDataSubjectV4",
@@ -4968,7 +4968,7 @@ OPERATIONS = [
         "action": "get_email_link_token_by_data_subject_v4",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/datasubjects/linktokens",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataSubjectProfilesV4",
@@ -4977,7 +4977,7 @@ OPERATIONS = [
         "action": "get_data_subject_profiles_v4",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/datasubjects/profiles",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getDataSubjectProfilesUnorderedV4",
@@ -4986,7 +4986,7 @@ OPERATIONS = [
         "action": "get_data_subject_profiles_unordered_v4",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/datasubjects/profiles/unordered",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getDataSubjectProfileV4",
@@ -4995,7 +4995,7 @@ OPERATIONS = [
         "action": "get_data_subject_profile_v4",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/datasubjects/profiles/{purposeGuid}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "searchDataSubjectsByElementV4",
@@ -5004,7 +5004,7 @@ OPERATIONS = [
         "action": "search_data_subjects_by_element_v4",
         "http": "POST",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/datasubjects/search-by-element",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getDataSubjectsUnorderedV4",
@@ -5013,7 +5013,7 @@ OPERATIONS = [
         "action": "get_data_subjects_unordered_v4",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/datasubjects/unordered",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getDataSubjectGroupsListV4",
@@ -5022,7 +5022,7 @@ OPERATIONS = [
         "action": "get_data_subject_groups_list_v4",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/groups",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "createJobUsingPOST",
@@ -5031,7 +5031,7 @@ OPERATIONS = [
         "action": "create_job_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/jobs",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getLinkedIdentityGroupsByDataSubjectV4",
@@ -5040,7 +5040,7 @@ OPERATIONS = [
         "action": "get_linked_identity_groups_by_data_subject_v4",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/linkedidentitygroups",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createDataSubjectGroupV4",
@@ -5049,7 +5049,7 @@ OPERATIONS = [
         "action": "create_data_subject_group_v4",
         "http": "POST",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/linkedidentitygroups",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateDataSubjectGroupV4",
@@ -5058,7 +5058,7 @@ OPERATIONS = [
         "action": "update_data_subject_group_v4",
         "http": "PUT",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/linkedidentitygroups/{dataSubjectGroupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getLinkedIdentityGroupMembersV4",
@@ -5067,7 +5067,7 @@ OPERATIONS = [
         "action": "get_linked_identity_group_members_v4",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/linkedidentitygroups/{dataSubjectGroupId}/members",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getEmailLinkTokensListV4",
@@ -5076,7 +5076,7 @@ OPERATIONS = [
         "action": "get_email_link_tokens_list_v4",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/consent/v4/linktokens",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "uploadConsentAttachments",
@@ -5085,7 +5085,7 @@ OPERATIONS = [
         "action": "upload_consent_attachments",
         "http": "POST",
         "path": "https://__HOSTNAME__/rest/api/preferences/v1/attachments",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "downloadGivenConsentAttachments",
@@ -5094,7 +5094,7 @@ OPERATIONS = [
         "action": "download_given_consent_attachments",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/preferences/v1/attachments/{attachmentId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "removeGivenConsentAttachmentRefs",
@@ -5103,7 +5103,7 @@ OPERATIONS = [
         "action": "remove_given_consent_attachment_refs",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/rest/api/preferences/v1/attachments-reference/{attachmentId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "removeAllConsentAttachmentRefs",
@@ -5112,7 +5112,7 @@ OPERATIONS = [
         "action": "remove_all_consent_attachment_refs",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/rest/api/preferences/v1/datasubjects/{identifier}/attachment-references",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "downloadConsentAttachments",
@@ -5121,7 +5121,7 @@ OPERATIONS = [
         "action": "download_consent_attachments",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/preferences/v1/datasubjects/{identifier}/attachments",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getV3DatasubjectProfilesUsingPOST",
@@ -5130,7 +5130,7 @@ OPERATIONS = [
         "action": "get_v3_datasubject_profiles_using_post",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/preferences/v3/datasubject-profiles",
-        "paginate": "offset"
+        "paginate": "offset",
     },
     {
         "operation_id": "getV3DatasubjectsProfileUsingGet",
@@ -5139,7 +5139,7 @@ OPERATIONS = [
         "action": "get_v3_datasubjects_profile_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/rest/api/preferences/v3/datasubjects/profile",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "listGroupsUsingGET",
@@ -5148,7 +5148,7 @@ OPERATIONS = [
         "action": "list_groups_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/scim/v2/Groups",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getGroupResourceUsingGET",
@@ -5157,7 +5157,7 @@ OPERATIONS = [
         "action": "get_group_resource_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/scim/v2/Groups/{groupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateGroupMembersUsingPUT",
@@ -5166,7 +5166,7 @@ OPERATIONS = [
         "action": "update_group_members_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/scim/v2/Groups/{groupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateGroupMembersUsingPATCH",
@@ -5175,7 +5175,7 @@ OPERATIONS = [
         "action": "update_group_members_using_patch",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/scim/v2/Groups/{groupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getAllUsersUsingGET",
@@ -5184,7 +5184,7 @@ OPERATIONS = [
         "action": "get_all_users_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/scim/v2/Users",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createUserUsingPOST",
@@ -5193,7 +5193,7 @@ OPERATIONS = [
         "action": "create_user_using_post",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/scim/v2/Users",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getUserUsingGET",
@@ -5202,7 +5202,7 @@ OPERATIONS = [
         "action": "get_user_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/scim/v2/Users/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateUserUsingPUT",
@@ -5211,7 +5211,7 @@ OPERATIONS = [
         "action": "update_user_using_put",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/scim/v2/Users/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteUserUsingDELETE",
@@ -5220,7 +5220,7 @@ OPERATIONS = [
         "action": "delete_user_using_delete",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/scim/v2/Users/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "patchUserUsingPATCH",
@@ -5229,7 +5229,7 @@ OPERATIONS = [
         "action": "patch_user_using_patch",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/scim/v2/Users/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getGroups",
@@ -5238,7 +5238,7 @@ OPERATIONS = [
         "action": "get_groups",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/scim/v3/Groups",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createGroup",
@@ -5247,7 +5247,7 @@ OPERATIONS = [
         "action": "create_group",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/scim/v3/Groups",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getGroupById",
@@ -5256,7 +5256,7 @@ OPERATIONS = [
         "action": "get_group_by_id",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/scim/v3/Groups/{groupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateGroup",
@@ -5265,7 +5265,7 @@ OPERATIONS = [
         "action": "update_group",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/scim/v3/Groups/{groupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "deleteGroup",
@@ -5274,7 +5274,7 @@ OPERATIONS = [
         "action": "delete_group",
         "http": "DELETE",
         "path": "https://__HOSTNAME__/api/scim/v3/Groups/{groupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "modifyGroup",
@@ -5283,7 +5283,7 @@ OPERATIONS = [
         "action": "modify_group",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/scim/v3/Groups/{groupId}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getResourceTypesUsingGET",
@@ -5292,7 +5292,7 @@ OPERATIONS = [
         "action": "get_resource_types_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/scim/v3/ResourceTypes",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getResourceTypesByNameUsingGET",
@@ -5301,7 +5301,7 @@ OPERATIONS = [
         "action": "get_resource_types_by_name_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/scim/v3/ResourceTypes/{resourceName}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getSchemasUsingGET",
@@ -5310,7 +5310,7 @@ OPERATIONS = [
         "action": "get_schemas_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/scim/v3/Schemas",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getSchemasByNameUsingGET",
@@ -5319,7 +5319,7 @@ OPERATIONS = [
         "action": "get_schemas_by_name_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/scim/v3/Schemas/{schemaName}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getServiceProviderConfigUsingGET",
@@ -5328,7 +5328,7 @@ OPERATIONS = [
         "action": "get_service_provider_config_using_get",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/scim/v3/ServiceProviderConfig",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getUsers",
@@ -5337,7 +5337,7 @@ OPERATIONS = [
         "action": "get_users",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/scim/v3/Users",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "createUser",
@@ -5346,7 +5346,7 @@ OPERATIONS = [
         "action": "create_user",
         "http": "POST",
         "path": "https://__HOSTNAME__/api/scim/v3/Users",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "getUserById",
@@ -5355,7 +5355,7 @@ OPERATIONS = [
         "action": "get_user_by_id",
         "http": "GET",
         "path": "https://__HOSTNAME__/api/scim/v3/Users/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "updateUser",
@@ -5364,7 +5364,7 @@ OPERATIONS = [
         "action": "update_user",
         "http": "PUT",
         "path": "https://__HOSTNAME__/api/scim/v3/Users/{id}",
-        "paginate": "none"
+        "paginate": "none",
     },
     {
         "operation_id": "modifyUser",
@@ -5373,8 +5373,8 @@ OPERATIONS = [
         "action": "modify_user",
         "http": "PATCH",
         "path": "https://__HOSTNAME__/api/scim/v3/Users/{id}",
-        "paginate": "none"
-    }
+        "paginate": "none",
+    },
 ]
 
 DOMAINS = [
@@ -5412,11 +5412,10 @@ DOMAINS = [
     "tprm",
     "training",
     "universal_consent",
-    "user_provisioning"
+    "user_provisioning",
 ]
 
 # domain -> ordered list of MCP action names
 ACTIONS_BY_DOMAIN: dict[str, list[str]] = {}
 for _op in OPERATIONS:
-    ACTIONS_BY_DOMAIN.setdefault(_op['domain'], []).append(_op['action'])
-
+    ACTIONS_BY_DOMAIN.setdefault(_op["domain"], []).append(_op["action"])

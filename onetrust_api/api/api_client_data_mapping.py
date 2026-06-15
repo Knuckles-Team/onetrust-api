@@ -9,492 +9,501 @@ class OneTrustDataMapping(OneTrustApiBase):
     def get_data_categories_by_partial_name_using_get(self, **kwargs) -> Response:
         """Get List of Data Categories"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/inventory/v2/data-categories',
+            http="GET",
+            url_template="https://__HOSTNAME__/api/inventory/v2/data-categories",
             path_params=[],
-            query_params=['filter', 'page', 'size', 'sort'],
+            query_params=["filter", "page", "size", "sort"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def create_data_category_using_post(self, **kwargs) -> Response:
         """Create Data Category"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory/v2/data-categories',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory/v2/data-categories",
             path_params=[],
-            query_params=['generator'],
+            query_params=["generator"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_data_category_using_get(self, **kwargs) -> Response:
         """Get Data Category"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/inventory/v2/data-categories/{id}',
-            path_params=['id'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/inventory/v2/data-categories/{id}",
+            path_params=["id"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def delete_data_category_using_delete(self, **kwargs) -> Response:
         """Delete Data Category"""
         return self._call(
-            http='DELETE',
-            url_template='https://__HOSTNAME__/api/inventory/v2/data-categories/{id}',
-            path_params=['id'],
+            http="DELETE",
+            url_template="https://__HOSTNAME__/api/inventory/v2/data-categories/{id}",
+            path_params=["id"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_data_classification_using_post(self, **kwargs) -> Response:
         """Create Data Classification"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory/v2/data-classifications',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory/v2/data-classifications",
             path_params=[],
-            query_params=['generator'],
+            query_params=["generator"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_data_classification_using_get(self, **kwargs) -> Response:
         """Get Data Classification"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/inventory/v2/data-classifications/{id}',
-            path_params=['id'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/inventory/v2/data-classifications/{id}",
+            path_params=["id"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def delete_data_classification_using_delete(self, **kwargs) -> Response:
         """Delete Data Classification"""
         return self._call(
-            http='DELETE',
-            url_template='https://__HOSTNAME__/api/inventory/v2/data-classifications/{id}',
-            path_params=['id'],
+            http="DELETE",
+            url_template="https://__HOSTNAME__/api/inventory/v2/data-classifications/{id}",
+            path_params=["id"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_data_element_using_post(self, **kwargs) -> Response:
         """Create Data Element"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory/v2/data-elements',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory/v2/data-elements",
             path_params=[],
-            query_params=['generator'],
+            query_params=["generator"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_data_element_using_get(self, **kwargs) -> Response:
         """Get Data Element"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/inventory/v2/data-elements/{id}',
-            path_params=['id'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/inventory/v2/data-elements/{id}",
+            path_params=["id"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def delete_data_element_using_delete(self, **kwargs) -> Response:
         """Delete Data Element"""
         return self._call(
-            http='DELETE',
-            url_template='https://__HOSTNAME__/api/inventory/v2/data-elements/{id}',
-            path_params=['id'],
+            http="DELETE",
+            url_template="https://__HOSTNAME__/api/inventory/v2/data-elements/{id}",
+            path_params=["id"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_data_subjects_by_partial_name_using_get(self, **kwargs) -> Response:
         """Get List of Data Subjects"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/inventory/v2/data-subjects',
+            http="GET",
+            url_template="https://__HOSTNAME__/api/inventory/v2/data-subjects",
             path_params=[],
-            query_params=['filter', 'page', 'size', 'sort'],
+            query_params=["filter", "page", "size", "sort"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def create_data_subject_using_post(self, **kwargs) -> Response:
         """Create Data Subject"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory/v2/data-subjects',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory/v2/data-subjects",
             path_params=[],
-            query_params=['generator'],
+            query_params=["generator"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_data_subject_using_get(self, **kwargs) -> Response:
         """Get Data Subject"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/inventory/v2/data-subjects/{id}',
-            path_params=['id'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/inventory/v2/data-subjects/{id}",
+            path_params=["id"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def delete_data_subject_using_delete(self, **kwargs) -> Response:
         """Delete Data Subject"""
         return self._call(
-            http='DELETE',
-            url_template='https://__HOSTNAME__/api/inventory/v2/data-subjects/{id}',
-            path_params=['id'],
+            http="DELETE",
+            url_template="https://__HOSTNAME__/api/inventory/v2/data-subjects/{id}",
+            path_params=["id"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_inventory_association_using_put(self, **kwargs) -> Response:
         """Update Inventory Link"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{id}/associations/{associationId}',
-            path_params=['id', 'associationId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{id}/associations/{associationId}",
+            path_params=["id", "associationId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_relations_using_put(self, **kwargs) -> Response:
         """Link Inventory"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{id}/relations',
-            path_params=['id'],
-            query_params=['entityType'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{id}/relations",
+            path_params=["id"],
+            query_params=["entityType"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_relations_using_post(self, **kwargs) -> Response:
         """Link Inventory"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{id}/relations',
-            path_params=['id'],
-            query_params=['entityType'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{id}/relations",
+            path_params=["id"],
+            query_params=["entityType"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def delete_relations_using_delete(self, **kwargs) -> Response:
         """Delete Inventory Link"""
         return self._call(
-            http='DELETE',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{id}/relations',
-            path_params=['id'],
+            http="DELETE",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{id}/relations",
+            path_params=["id"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_inventory_relations_by_id_using_get(self, **kwargs) -> Response:
         """Get Inventory Links"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{id}/relations/{inventoryType}',
-            path_params=['id', 'inventoryType'],
-            query_params=['page', 'size'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{id}/relations/{inventoryType}",
+            path_params=["id", "inventoryType"],
+            query_params=["page", "size"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def set_inventory_as_parent_inventory_using_put(self, **kwargs) -> Response:
         """Set Inventory as Parent"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{inventoryId}/set-as-parent',
-            path_params=['inventoryId'],
-            query_params=['inventoryType'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{inventoryId}/set-as-parent",
+            path_params=["inventoryId"],
+            query_params=["inventoryType"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def unset_inventory_as_parent_inventory_using_put(self, **kwargs) -> Response:
         """Unset Inventory as Parent"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{inventoryId}/unset-as-parent',
-            path_params=['inventoryId'],
-            query_params=['inventoryType'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{inventoryId}/unset-as-parent",
+            path_params=["inventoryId"],
+            query_params=["inventoryType"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def link_asset_inventory_to_parent_asset_id_using_post(self, **kwargs) -> Response:
         """Add Asset Inventory as Child to Parent Inventory"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{parentInventoryId}/link-assets',
-            path_params=['parentInventoryId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{parentInventoryId}/link-assets",
+            path_params=["parentInventoryId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def link_legal_entity_inventory_to_parent_legal_entity_id_using_post(self, **kwargs) -> Response:
+    def link_legal_entity_inventory_to_parent_legal_entity_id_using_post(
+        self, **kwargs
+    ) -> Response:
         """Add Legal Entity Inventory as Child to Parent Inventory"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{parentInventoryId}/link-legal-entities',
-            path_params=['parentInventoryId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{parentInventoryId}/link-legal-entities",
+            path_params=["parentInventoryId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def link_processing_activity_inventory_to_parent_processing_activity_id_using_post(self, **kwargs) -> Response:
+    def link_processing_activity_inventory_to_parent_processing_activity_id_using_post(
+        self, **kwargs
+    ) -> Response:
         """Add Processing Activity Inventory as Child to Parent Inventory"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{parentInventoryId}/link-processing-activities',
-            path_params=['parentInventoryId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{parentInventoryId}/link-processing-activities",
+            path_params=["parentInventoryId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def link_vendor_inventory_to_parent_vendor_id_using_post(self, **kwargs) -> Response:
+    def link_vendor_inventory_to_parent_vendor_id_using_post(
+        self, **kwargs
+    ) -> Response:
         """Add Vendor Inventory as Child to Parent Inventory"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{parentInventoryId}/link-vendors',
-            path_params=['parentInventoryId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{parentInventoryId}/link-vendors",
+            path_params=["parentInventoryId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_list_of_inventories_using_get(self, **kwargs) -> Response:
         """Get List of Inventories"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}',
-            path_params=['schemaName'],
-            query_params=['filter', 'markForDelete', 'page', 'size'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}",
+            path_params=["schemaName"],
+            query_params=["filter", "markForDelete", "page", "size"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def create_inventory_using_post(self, **kwargs) -> Response:
         """Create Inventory"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}',
-            path_params=['schemaName'],
-            query_params=['generator', 'createAsMaster', 'sourceId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}",
+            path_params=["schemaName"],
+            query_params=["generator", "createAsMaster", "sourceId"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def upsert_inventory_using_put(self, **kwargs) -> Response:
         """Update Inventory by External ID"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/business-key',
-            path_params=['schemaName'],
-            query_params=['generator'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/business-key",
+            path_params=["schemaName"],
+            query_params=["generator"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def get_list_of_inventories_by_filter_criteria_using_post(self, **kwargs) -> Response:
+    def get_list_of_inventories_by_filter_criteria_using_post(
+        self, **kwargs
+    ) -> Response:
         """Get List of Inventories by Criteria"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/criteria',
-            path_params=['schemaName'],
-            query_params=['markForDelete', 'page', 'size'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/criteria",
+            path_params=["schemaName"],
+            query_params=["markForDelete", "page", "size"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_inventory_by_external_id_using_get(self, **kwargs) -> Response:
         """Get Inventory by External ID"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/reference/{externalId}',
-            path_params=['schemaName', 'externalId'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/reference/{externalId}",
+            path_params=["schemaName", "externalId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_inventory_by_id_using_get(self, **kwargs) -> Response:
         """Get Inventory by ID"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/{id}',
-            path_params=['schemaName', 'id'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/{id}",
+            path_params=["schemaName", "id"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_inventory_using_put(self, **kwargs) -> Response:
         """Update Inventory by ID"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/{id}',
-            path_params=['schemaName', 'id'],
-            query_params=['primaryEntity'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/{id}",
+            path_params=["schemaName", "id"],
+            query_params=["primaryEntity"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def delete_inventory_using_delete(self, **kwargs) -> Response:
         """Delete Inventory"""
         return self._call(
-            http='DELETE',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/{id}',
-            path_params=['schemaName', 'id'],
-            query_params=['deleteType', 'deleteReason'],
+            http="DELETE",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/{id}",
+            path_params=["schemaName", "id"],
+            query_params=["deleteType", "deleteReason"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def copy_inventory_using_post(self, **kwargs) -> Response:
         """Copy Inventory"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/{id}/copy',
-            path_params=['schemaName', 'id'],
-            query_params=['inheritFromMaster', 'copyRelated', 'copyAsChild'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/{id}/copy",
+            path_params=["schemaName", "id"],
+            query_params=["inheritFromMaster", "copyRelated", "copyAsChild"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_inventory_status_by_id_using_put(self, **kwargs) -> Response:
         """Update Inventory Status"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/{id}/status',
-            path_params=['schemaName', 'id'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{schemaName}/{id}/status",
+            path_params=["schemaName", "id"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def add_controls_to_inventory_using_post(self, **kwargs) -> Response:
         """Create Control Implementation"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories/{type}/{inventoryId}/control-implementations',
-            path_params=['type', 'inventoryId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories/{type}/{inventoryId}/control-implementations",
+            path_params=["type", "inventoryId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
-    def update_advanced_attributes_for_personal_data_association_using_put(self, **kwargs) -> Response:
+    def update_advanced_attributes_for_personal_data_association_using_put(
+        self, **kwargs
+    ) -> Response:
         """Update Advanced Attributes for Personal Data Association"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventories-personal-data/{personalDataAssociationId}',
-            path_params=['personalDataAssociationId'],
-            query_params=['inventoryType'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventories-personal-data/{personalDataAssociationId}",
+            path_params=["personalDataAssociationId"],
+            query_params=["inventoryType"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_hierarchy_for_inventory_id_using_get(self, **kwargs) -> Response:
         """Get List of Child Inventories by Root Inventory"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventory-hierarchies/{rootInventoryId}',
-            path_params=['rootInventoryId'],
-            query_params=['inventoryType', 'page', 'size', 'sort'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventory-hierarchies/{rootInventoryId}",
+            path_params=["rootInventoryId"],
+            query_params=["inventoryType", "page", "size", "sort"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def unlink_child_inventory_from_hierarchy_using_delete(self, **kwargs) -> Response:
         """Remove Child Inventory from Root Inventory"""
         return self._call(
-            http='DELETE',
-            url_template='https://__HOSTNAME__/api/inventory/v2/inventory-hierarchies/{rootInventoryId}',
-            path_params=['rootInventoryId'],
-            query_params=['inventoryType', 'childInventoryId'],
+            http="DELETE",
+            url_template="https://__HOSTNAME__/api/inventory/v2/inventory-hierarchies/{rootInventoryId}",
+            path_params=["rootInventoryId"],
+            query_params=["inventoryType", "childInventoryId"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_all_schemas_using_get(self, **kwargs) -> Response:
         """Get List of Inventory Schemas"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/inventory/v2/schemas',
+            http="GET",
+            url_template="https://__HOSTNAME__/api/inventory/v2/schemas",
             path_params=[],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_schema_details_using_field_name(self, **kwargs) -> Response:
         """Get Inventory Schema Details"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/inventory/v2/schemas/{schemaName}/attributes/{fieldName}',
-            path_params=['schemaName', 'fieldName'],
-            query_params=['showAll', 'optionsSize'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/inventory/v2/schemas/{schemaName}/attributes/{fieldName}",
+            path_params=["schemaName", "fieldName"],
+            query_params=["showAll", "optionsSize"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

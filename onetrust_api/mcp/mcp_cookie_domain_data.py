@@ -12,9 +12,7 @@ from onetrust_api.auth import get_client
 def register_cookie_domain_data_tools(mcp: FastMCP):
     @mcp.tool(tags={"cookie_domain_data"})
     async def onetrust_cookie_domain_data(
-        action: str = Field(
-            description="Action to perform. One of: 'domaindata'"
-        ),
+        action: str = Field(description="Action to perform. One of: 'domaindata'"),
         params_json: str = Field(
             default="{}",
             description="JSON string of parameters (path, query, and body fields) for the action.",
@@ -40,4 +38,3 @@ def register_cookie_domain_data_tools(mcp: FastMCP):
         if action == "domaindata":
             return client.domaindata(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

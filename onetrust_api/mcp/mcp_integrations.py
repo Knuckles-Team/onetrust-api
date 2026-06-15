@@ -46,4 +46,3 @@ def register_integrations_tools(mcp: FastMCP):
         elif action == "import_workflow_using_post_1":
             return client.import_workflow_using_post_1(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

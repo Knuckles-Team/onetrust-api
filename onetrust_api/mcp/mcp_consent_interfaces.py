@@ -40,4 +40,3 @@ def register_consent_interfaces_tools(mcp: FastMCP):
         if action == "get_realtime_preferences":
             return client.get_realtime_preferences(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

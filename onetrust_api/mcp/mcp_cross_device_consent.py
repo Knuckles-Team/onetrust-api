@@ -40,4 +40,3 @@ def register_cross_device_consent_tools(mcp: FastMCP):
         if action == "get_preferences_using_get":
             return client.get_preferences_using_get(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

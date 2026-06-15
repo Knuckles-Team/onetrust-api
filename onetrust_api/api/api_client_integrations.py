@@ -9,48 +9,47 @@ class OneTrustIntegrations(OneTrustApiBase):
     def update_v2_using_put_x(self, **kwargs) -> Response:
         """Update System Credential"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/integrationmanager/v2/credentials/{type}',
-            path_params=['type'],
-            query_params=['name'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/integrationmanager/v2/credentials/{type}",
+            path_params=["type"],
+            query_params=["name"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_v2_using_post_x(self, **kwargs) -> Response:
         """Create System Credential"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/integrationmanager/v2/credentials/{type}',
-            path_params=['type'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/integrationmanager/v2/credentials/{type}",
+            path_params=["type"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def export_workflow_using_get_1(self, **kwargs) -> Response:
         """Export Workflow"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/integrationmanager/v2/workflows/export',
+            http="GET",
+            url_template="https://__HOSTNAME__/api/integrationmanager/v2/workflows/export",
             path_params=[],
-            query_params=['workflowName'],
+            query_params=["workflowName"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def import_workflow_using_post_1(self, **kwargs) -> Response:
         """Import Workflow"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/integrationmanager/v2/workflows/import',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/integrationmanager/v2/workflows/import",
             path_params=[],
-            query_params=['name'],
+            query_params=["name"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

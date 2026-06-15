@@ -7,16 +7,22 @@ from onetrust_api.api.api_client_assessments import OneTrustAssessments
 from onetrust_api.api.api_client_audit_management import OneTrustAuditManagement
 from onetrust_api.api.api_client_bulk_export import OneTrustBulkExport
 from onetrust_api.api.api_client_cmp import OneTrustCmp
-from onetrust_api.api.api_client_compliance_automation import OneTrustComplianceAutomation
+from onetrust_api.api.api_client_compliance_automation import (
+    OneTrustComplianceAutomation,
+)
 from onetrust_api.api.api_client_consent_interfaces import OneTrustConsentInterfaces
 from onetrust_api.api.api_client_consent_receipts import OneTrustConsentReceipts
 from onetrust_api.api.api_client_cookie_consent import OneTrustCookieConsent
-from onetrust_api.api.api_client_cookie_consent_legacy import OneTrustCookieConsentLegacy
+from onetrust_api.api.api_client_cookie_consent_legacy import (
+    OneTrustCookieConsentLegacy,
+)
 from onetrust_api.api.api_client_cookie_domain_data import OneTrustCookieDomainData
 from onetrust_api.api.api_client_cross_device_consent import OneTrustCrossDeviceConsent
 from onetrust_api.api.api_client_data_catalog import OneTrustDataCatalog
 from onetrust_api.api.api_client_data_discovery import OneTrustDataDiscovery
-from onetrust_api.api.api_client_data_discovery_worker import OneTrustDataDiscoveryWorker
+from onetrust_api.api.api_client_data_discovery_worker import (
+    OneTrustDataDiscoveryWorker,
+)
 from onetrust_api.api.api_client_data_mapping import OneTrustDataMapping
 from onetrust_api.api.api_client_data_mapping_legacy import OneTrustDataMappingLegacy
 from onetrust_api.api.api_client_documents import OneTrustDocuments
@@ -78,4 +84,3 @@ class Api(
     """Composite OneTrust API client — every domain client, one class."""
 
     __slots__ = ()
-

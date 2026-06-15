@@ -164,11 +164,16 @@ class OneTrustApiBase:
             if not self._token:
                 raise AuthError("OneTrust token response contained no access_token.")
             # Refresh 60s before the stated expiry.
-            self._token_expiry = time.monotonic() + int(payload.get("expires_in", 3600)) - 60
+            self._token_expiry = (
+                time.monotonic() + int(payload.get("expires_in", 3600)) - 60
+            )
             return self._token
 
     def _auth_headers(self, content_type: str | None = "application/json") -> dict:
-        headers = {"Authorization": f"Bearer {self._ensure_token()}", "Accept": "application/json"}
+        headers = {
+            "Authorization": f"Bearer {self._ensure_token()}",
+            "Accept": "application/json",
+        }
         if content_type:
             headers["Content-Type"] = content_type
         return headers

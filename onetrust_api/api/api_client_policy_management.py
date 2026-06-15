@@ -9,72 +9,71 @@ class OneTrustPolicyManagement(OneTrustApiBase):
     def create_policy(self, **kwargs) -> Response:
         """Create Document"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/create',
-            path_params=['complianceType'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/create",
+            path_params=["complianceType"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_latest_policies(self, **kwargs) -> Response:
         """Get List of Documents"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/list',
-            path_params=['complianceType'],
-            query_params=['page', 'size', 'sort'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/list",
+            path_params=["complianceType"],
+            query_params=["page", "size", "sort"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def get_policy(self, **kwargs) -> Response:
         """Get Document"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/{id}/details',
-            path_params=['complianceType', 'id'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/{id}/details",
+            path_params=["complianceType", "id"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_published_policy_version(self, **kwargs) -> Response:
         """Get Document Version"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/{id}/published-version',
-            path_params=['complianceType', 'id'],
-            query_params=['date'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/{id}/published-version",
+            path_params=["complianceType", "id"],
+            query_params=["date"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def add_document_to_policy(self, **kwargs) -> Response:
         """Add Document Attachments"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/{policyId}/documents',
-            path_params=['complianceType', 'policyId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/{policyId}/documents",
+            path_params=["complianceType", "policyId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_policy_versions(self, **kwargs) -> Response:
         """Create Document Version"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/{policyId}/versions/create',
-            path_params=['complianceType', 'policyId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/enterprise-policy/v1/{complianceType}/{policyId}/versions/create",
+            path_params=["complianceType", "policyId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

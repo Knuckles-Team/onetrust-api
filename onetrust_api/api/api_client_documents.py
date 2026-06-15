@@ -9,24 +9,23 @@ class OneTrustDocuments(OneTrustApiBase):
     def file_upload(self, **kwargs) -> Response:
         """Upload File"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/document/v2/attachments',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/document/v2/attachments",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def file_location(self, **kwargs) -> Response:
         """Get File Location"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/document/v3/attachments/{attachmentId}/content',
-            path_params=['attachmentId'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/document/v3/attachments/{attachmentId}/content",
+            path_params=["attachmentId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

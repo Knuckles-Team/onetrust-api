@@ -9,12 +9,11 @@ class OneTrustMobileAppConsent(OneTrustApiBase):
     def applicationdata(self, **kwargs) -> Response:
         """Get SDK Configuration"""
         return self._call(
-            http='GET',
-            url_template='https://customer.my.onetrust.com/bannersdk/v2/applicationdata',
+            http="GET",
+            url_template="https://customer.my.onetrust.com/bannersdk/v2/applicationdata",
             path_params=[],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

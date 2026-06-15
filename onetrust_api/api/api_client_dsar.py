@@ -9,468 +9,495 @@ class OneTrustDsar(OneTrustApiBase):
     def get_all_group_and_attachment_details_using_get(self, **kwargs) -> Response:
         """Get Targeted Data Discovery Group"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/datadiscovery/groups/{groupId}/requestqueues/{requestQueueRefId}',
-            path_params=['groupId', 'requestQueueRefId'],
-            query_params=['includeAttachments'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/datadiscovery/groups/{groupId}/requestqueues/{requestQueueRefId}",
+            path_params=["groupId", "requestQueueRefId"],
+            query_params=["includeAttachments"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_all_group_by_request_using_get(self, **kwargs) -> Response:
         """Get List of Targeted Data Discovery Groups"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/datadiscovery/requestqueues/{requestQueueRefId}',
-            path_params=['requestQueueRefId'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/datadiscovery/requestqueues/{requestQueueRefId}",
+            path_params=["requestQueueRefId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def data_discovery_updates_using_post(self, **kwargs) -> Response:
         """Add Targeted Data Discovery Results Summary to Request"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/datadiscovery/requestqueues/{requestQueueRefId}',
-            path_params=['requestQueueRefId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/datadiscovery/requestqueues/{requestQueueRefId}",
+            path_params=["requestQueueRefId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_request_queue_from_message_using_post(self, **kwargs) -> Response:
         """Create Request"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def bulk_delete_using_put(self, **kwargs) -> Response:
         """Delete Requests"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/bulkdelete/{language}',
-            path_params=['language'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/bulkdelete/{language}",
+            path_params=["language"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_deletion_certificate_using_get(self, **kwargs) -> Response:
         """Get Deletion Certificate"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/delete-certificate/{requestRefId}',
-            path_params=['requestRefId'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/delete-certificate/{requestRefId}",
+            path_params=["requestRefId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_request_history_by_id_using_get(self, **kwargs) -> Response:
         """Get Request Audit History"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/id/{requestQueueId}/requesthistory',
-            path_params=['requestQueueId'],
-            query_params=['page', 'size'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/id/{requestQueueId}/requesthistory",
+            path_params=["requestQueueId"],
+            query_params=["page", "size"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def share_results_summary_using_post(self, **kwargs) -> Response:
         """Share Results Summary"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/results-summary/share/{requestQueueRefId}',
-            path_params=['requestQueueRefId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/results-summary/share/{requestQueueRefId}",
+            path_params=["requestQueueRefId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def search_for_request_using_post(self, **kwargs) -> Response:
         """Search Requests"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/search/{language}',
-            path_params=['language'],
-            query_params=['createddate', 'page', 'size'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/search/{language}",
+            path_params=["language"],
+            query_params=["createddate", "page", "size"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_request_creation_logs_using_get(self, **kwargs) -> Response:
         """Get Request Creation Logs"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/status/{requestTraceId}',
-            path_params=['requestTraceId'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/status/{requestTraceId}",
+            path_params=["requestTraceId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_all_request_queues_v2_using_get(self, **kwargs) -> Response:
         """Get List of Requests"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{language}',
-            path_params=['language'],
-            query_params=['modifieddate', 'createddate', 'status', 'ignoreUserRequests', 'page', 'size', 'sort'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{language}",
+            path_params=["language"],
+            query_params=[
+                "modifieddate",
+                "createddate",
+                "status",
+                "ignoreUserRequests",
+                "page",
+                "size",
+                "sort",
+            ],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def add_comments_using_put(self, **kwargs) -> Response:
         """Add Comment to Request"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/comments',
-            path_params=['requestQueueRefId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/comments",
+            path_params=["requestQueueRefId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_custom_fields_using_put(self, **kwargs) -> Response:
         """Update Request Custom Fields"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/customfields/{language}',
-            path_params=['requestQueueRefId', 'language'],
-            query_params=['mapOptionKeyToNameKey'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/customfields/{language}",
+            path_params=["requestQueueRefId", "language"],
+            query_params=["mapOptionKeyToNameKey"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_request_by_id_using_get(self, **kwargs) -> Response:
         """Get Request"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/language/{language}',
-            path_params=['requestQueueRefId', 'language'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/language/{language}",
+            path_params=["requestQueueRefId", "language"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def link_requests_using_put(self, **kwargs) -> Response:
         """Link Requests"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/linkrequest',
-            path_params=['requestQueueRefId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/linkrequest",
+            path_params=["requestQueueRefId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def move_status_by_request_ref_id_using_put(self, **kwargs) -> Response:
         """Update Request Stage"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/movestages/{language}',
-            path_params=['requestQueueRefId', 'language'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/movestages/{language}",
+            path_params=["requestQueueRefId", "language"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def pause_or_resume_deadline_using_put(self, **kwargs) -> Response:
         """Pause Request Deadline"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/pausedeadline',
-            path_params=['requestQueueRefId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/pausedeadline",
+            path_params=["requestQueueRefId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_request_history(self, **kwargs) -> Response:
         """Get Request Audit History"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/requesthistory',
-            path_params=['requestQueueRefId'],
-            query_params=['page', 'size'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/requesthistory",
+            path_params=["requestQueueRefId"],
+            query_params=["page", "size"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def get_all_sub_task_by_ref_id_using_get(self, **kwargs) -> Response:
         """Get List of Subtasks by Request"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/subtasks',
-            path_params=['requestQueueRefId'],
-            query_params=['page', 'size'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/subtasks",
+            path_params=["requestQueueRefId"],
+            query_params=["page", "size"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def create_sub_task_using_post(self, **kwargs) -> Response:
         """Add Subtask to Request"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/subtasks',
-            path_params=['requestQueueRefId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/subtasks",
+            path_params=["requestQueueRefId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_sub_task_from_template_using_post(self, **kwargs) -> Response:
         """Add Subtask to Request using Subtask Template"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/subtasks/template',
-            path_params=['requestQueueRefId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/subtasks/template",
+            path_params=["requestQueueRefId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_all_v2_verification_methods_using_get(self, **kwargs) -> Response:
         """Get List of Verification Methods"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/verificationmethods',
-            path_params=['requestQueueRefId'],
-            query_params=['includeComments', 'page', 'size', 'sort'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/verificationmethods",
+            path_params=["requestQueueRefId"],
+            query_params=["includeComments", "page", "size", "sort"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def update_v2_verification_method_using_put(self, **kwargs) -> Response:
         """Update Verification Method"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/verificationmethods',
-            path_params=['requestQueueRefId'],
-            query_params=['language', 'translate'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/verificationmethods",
+            path_params=["requestQueueRefId"],
+            query_params=["language", "translate"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_v2_verification_method_using_post(self, **kwargs) -> Response:
         """Create Verification Method"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/verificationmethods',
-            path_params=['requestQueueRefId'],
-            query_params=['language', 'translate'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/verificationmethods",
+            path_params=["requestQueueRefId"],
+            query_params=["language", "translate"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_all_v2_verification_methods_by_id_using_get(self, **kwargs) -> Response:
         """Get Verification Method"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/{methodId}',
-            path_params=['requestQueueRefId', 'methodId'],
-            query_params=['includeComments'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{requestQueueRefId}/{methodId}",
+            path_params=["requestQueueRefId", "methodId"],
+            query_params=["includeComments"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_request_queue_v2_using_post(self, **kwargs) -> Response:
         """Create Request"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/requestqueues/{templateId}',
-            path_params=['templateId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/requestqueues/{templateId}",
+            path_params=["templateId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_all_v2_resolutions_using_get(self, **kwargs) -> Response:
         """Get List of Resolutions"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/resolutions',
+            http="GET",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/resolutions",
             path_params=[],
-            query_params=['language', 'includeSubTaskResolutions', 'page', 'size', 'sort'],
+            query_params=[
+                "language",
+                "includeSubTaskResolutions",
+                "page",
+                "size",
+                "sort",
+            ],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def add_new_resolution_using_post(self, **kwargs) -> Response:
         """Create Resolution"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/resolutions',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/resolutions",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_resolution_using_put(self, **kwargs) -> Response:
         """Update Resolution"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/resolutions/{resolutionId}',
-            path_params=['resolutionId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/resolutions/{resolutionId}",
+            path_params=["resolutionId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def delete_resolution_using_delete(self, **kwargs) -> Response:
         """Delete Resolution"""
         return self._call(
-            http='DELETE',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/resolutions/{resolutionId}',
-            path_params=['resolutionId'],
+            http="DELETE",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/resolutions/{resolutionId}",
+            path_params=["resolutionId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def subtasks_using_get(self, **kwargs) -> Response:
         """Get List of Subtasks"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/subtasks',
+            http="GET",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/subtasks",
             path_params=[],
-            query_params=['language', 'modifieddate', 'status', 'openrequests', 'page', 'size', 'sort'],
+            query_params=[
+                "language",
+                "modifieddate",
+                "status",
+                "openrequests",
+                "page",
+                "size",
+                "sort",
+            ],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def get_subtask_by_idusing_get(self, **kwargs) -> Response:
         """Get Subtask"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskID}',
-            path_params=['subtaskID'],
-            query_params=['includeComments'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskID}",
+            path_params=["subtaskID"],
+            query_params=["includeComments"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_sub_task_using_put(self, **kwargs) -> Response:
         """Update Subtask"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskID}',
-            path_params=['subtaskID'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskID}",
+            path_params=["subtaskID"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def add_data_discovery_using_put(self, **kwargs) -> Response:
         """Add Targeted Data Discovery Details to Subtask"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskID}/add/discovery',
-            path_params=['subtaskID'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskID}/add/discovery",
+            path_params=["subtaskID"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def complete_sub_task_using_put(self, **kwargs) -> Response:
         """Complete Subtask"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskID}/complete',
-            path_params=['subtaskID'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskID}/complete",
+            path_params=["subtaskID"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def reprocess_subtask_using_put(self, **kwargs) -> Response:
         """Reprocess System Subtask"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskID}/reprocess',
-            path_params=['subtaskID'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskID}/reprocess",
+            path_params=["subtaskID"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_subtask_status_using_put(self, **kwargs) -> Response:
         """Update Subtask Status"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskId}/status',
-            path_params=['subtaskId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/datasubject/v2/subtasks/{subtaskId}/status",
+            path_params=["subtaskId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def unstructured_data_discovery_updates_using_post(self, **kwargs) -> Response:
         """Add Data Points to Targeted Data Discovery Results Summary"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/datasubject/v3/datadiscovery/requestqueues/{requestQueueRefId}',
-            path_params=['requestQueueRefId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/datasubject/v3/datadiscovery/requestqueues/{requestQueueRefId}",
+            path_params=["requestQueueRefId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_all_subtasks_v3_using_post(self, **kwargs) -> Response:
         """Get List of Subtasks by Criteria"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/datasubject/v3/subtasks',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/datasubject/v3/subtasks",
             path_params=[],
-            query_params=['includeClosedSubtasks', 'onlyActivatedSubtasks', 'page', 'size', 'sort'],
+            query_params=[
+                "includeClosedSubtasks",
+                "onlyActivatedSubtasks",
+                "page",
+                "size",
+                "sort",
+            ],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

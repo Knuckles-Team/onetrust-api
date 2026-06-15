@@ -44,4 +44,3 @@ def register_consent_receipts_tools(mcp: FastMCP):
         elif action == "create_identified_consent_receipt_using_post":
             return client.create_identified_consent_receipt_using_post(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

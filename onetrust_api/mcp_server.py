@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# coding: utf-8
 
 import logging
 import os
@@ -20,9 +19,7 @@ logger.setLevel(logging.INFO)
 
 
 def register_prompts(mcp: FastMCP):
-    @mcp.prompt(
-        name="example_prompt", description="Example prompt for OneTrust Api."
-    )
+    @mcp.prompt(name="example_prompt", description="Example prompt for OneTrust Api.")
     def example_prompt(query: str) -> str:
         """Example prompt."""
         return f"Please help with '{query}' using OneTrust Api"

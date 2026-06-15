@@ -9,36 +9,35 @@ class OneTrustConsentReceipts(OneTrustApiBase):
     def create_consent_receipt_using_post(self, **kwargs) -> Response:
         """Create Consent Receipts"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/request/v1/consentreceipts',
+            http="POST",
+            url_template="https://__HOSTNAME__/request/v1/consentreceipts",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_bulk_consent_receipt_using_post(self, **kwargs) -> Response:
         """Create Consent Receipts in Bulk"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/request/v1/consentreceipts/bulk',
+            http="POST",
+            url_template="https://__HOSTNAME__/request/v1/consentreceipts/bulk",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_identified_consent_receipt_using_post(self, **kwargs) -> Response:
         """Create Identified Consent Receipts"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/request/v1/consentreceipts/identified',
+            http="POST",
+            url_template="https://__HOSTNAME__/request/v1/consentreceipts/identified",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

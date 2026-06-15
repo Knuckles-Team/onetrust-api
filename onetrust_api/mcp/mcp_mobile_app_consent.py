@@ -12,9 +12,7 @@ from onetrust_api.auth import get_client
 def register_mobile_app_consent_tools(mcp: FastMCP):
     @mcp.tool(tags={"mobile_app_consent"})
     async def onetrust_mobile_app_consent(
-        action: str = Field(
-            description="Action to perform. One of: 'applicationdata'"
-        ),
+        action: str = Field(description="Action to perform. One of: 'applicationdata'"),
         params_json: str = Field(
             default="{}",
             description="JSON string of parameters (path, query, and body fields) for the action.",
@@ -40,4 +38,3 @@ def register_mobile_app_consent_tools(mcp: FastMCP):
         if action == "applicationdata":
             return client.applicationdata(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

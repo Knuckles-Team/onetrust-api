@@ -46,7 +46,9 @@ def register_cookie_consent_tools(mcp: FastMCP):
         elif action == "get_application_branding_attribute_list":
             return client.get_application_branding_attribute_list(**kwargs)
         elif action == "update_application_branding_attributes_for_public_api":
-            return client.update_application_branding_attributes_for_public_api(**kwargs)
+            return client.update_application_branding_attributes_for_public_api(
+                **kwargs
+            )
         elif action == "publish_app_script":
             return client.publish_app_script(**kwargs)
         elif action == "get_app_script_details":
@@ -112,4 +114,3 @@ def register_cookie_consent_tools(mcp: FastMCP):
         elif action == "recategorize_cookies_by_scan":
             return client.recategorize_cookies_by_scan(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

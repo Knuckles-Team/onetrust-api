@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# coding: utf-8
 from onetrust_api.agent_server import agent_server
 
 if __name__ == "__main__":

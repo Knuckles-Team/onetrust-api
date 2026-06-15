@@ -6,16 +6,25 @@ from onetrust_api.mcp.mcp_assessments import register_assessments_tools
 from onetrust_api.mcp.mcp_audit_management import register_audit_management_tools
 from onetrust_api.mcp.mcp_bulk_export import register_bulk_export_tools
 from onetrust_api.mcp.mcp_cmp import register_cmp_tools
-from onetrust_api.mcp.mcp_compliance_automation import register_compliance_automation_tools
+from onetrust_api.mcp.mcp_compliance_automation import (
+    register_compliance_automation_tools,
+)
 from onetrust_api.mcp.mcp_consent_interfaces import register_consent_interfaces_tools
 from onetrust_api.mcp.mcp_consent_receipts import register_consent_receipts_tools
 from onetrust_api.mcp.mcp_cookie_consent import register_cookie_consent_tools
-from onetrust_api.mcp.mcp_cookie_consent_legacy import register_cookie_consent_legacy_tools
+from onetrust_api.mcp.mcp_cookie_consent_legacy import (
+    register_cookie_consent_legacy_tools,
+)
 from onetrust_api.mcp.mcp_cookie_domain_data import register_cookie_domain_data_tools
-from onetrust_api.mcp.mcp_cross_device_consent import register_cross_device_consent_tools
+from onetrust_api.mcp.mcp_cross_device_consent import (
+    register_cross_device_consent_tools,
+)
+from onetrust_api.mcp.mcp_custom_api import register_custom_api_tools
 from onetrust_api.mcp.mcp_data_catalog import register_data_catalog_tools
 from onetrust_api.mcp.mcp_data_discovery import register_data_discovery_tools
-from onetrust_api.mcp.mcp_data_discovery_worker import register_data_discovery_worker_tools
+from onetrust_api.mcp.mcp_data_discovery_worker import (
+    register_data_discovery_worker_tools,
+)
 from onetrust_api.mcp.mcp_data_mapping import register_data_mapping_tools
 from onetrust_api.mcp.mcp_data_mapping_legacy import register_data_mapping_legacy_tools
 from onetrust_api.mcp.mcp_documents import register_documents_tools
@@ -35,7 +44,6 @@ from onetrust_api.mcp.mcp_tprm import register_tprm_tools
 from onetrust_api.mcp.mcp_training import register_training_tools
 from onetrust_api.mcp.mcp_universal_consent import register_universal_consent_tools
 from onetrust_api.mcp.mcp_user_provisioning import register_user_provisioning_tools
-from onetrust_api.mcp.mcp_custom_api import register_custom_api_tools
 
 # (tag, toggle_env_var, register_fn) — consumed by mcp_server.get_mcp_instance().
 TOOL_REGISTRY = [
@@ -45,18 +53,38 @@ TOOL_REGISTRY = [
     ("audit_management", "AUDIT_MANAGEMENTTOOL", register_audit_management_tools),
     ("bulk_export", "BULK_EXPORTTOOL", register_bulk_export_tools),
     ("cmp", "CMPTOOL", register_cmp_tools),
-    ("compliance_automation", "COMPLIANCE_AUTOMATIONTOOL", register_compliance_automation_tools),
+    (
+        "compliance_automation",
+        "COMPLIANCE_AUTOMATIONTOOL",
+        register_compliance_automation_tools,
+    ),
     ("consent_interfaces", "CONSENT_INTERFACESTOOL", register_consent_interfaces_tools),
     ("consent_receipts", "CONSENT_RECEIPTSTOOL", register_consent_receipts_tools),
     ("cookie_consent", "COOKIE_CONSENTTOOL", register_cookie_consent_tools),
-    ("cookie_consent_legacy", "COOKIE_CONSENT_LEGACYTOOL", register_cookie_consent_legacy_tools),
+    (
+        "cookie_consent_legacy",
+        "COOKIE_CONSENT_LEGACYTOOL",
+        register_cookie_consent_legacy_tools,
+    ),
     ("cookie_domain_data", "COOKIE_DOMAIN_DATATOOL", register_cookie_domain_data_tools),
-    ("cross_device_consent", "CROSS_DEVICE_CONSENTTOOL", register_cross_device_consent_tools),
+    (
+        "cross_device_consent",
+        "CROSS_DEVICE_CONSENTTOOL",
+        register_cross_device_consent_tools,
+    ),
     ("data_catalog", "DATA_CATALOGTOOL", register_data_catalog_tools),
     ("data_discovery", "DATA_DISCOVERYTOOL", register_data_discovery_tools),
-    ("data_discovery_worker", "DATA_DISCOVERY_WORKERTOOL", register_data_discovery_worker_tools),
+    (
+        "data_discovery_worker",
+        "DATA_DISCOVERY_WORKERTOOL",
+        register_data_discovery_worker_tools,
+    ),
     ("data_mapping", "DATA_MAPPINGTOOL", register_data_mapping_tools),
-    ("data_mapping_legacy", "DATA_MAPPING_LEGACYTOOL", register_data_mapping_legacy_tools),
+    (
+        "data_mapping_legacy",
+        "DATA_MAPPING_LEGACYTOOL",
+        register_data_mapping_legacy_tools,
+    ),
     ("documents", "DOCUMENTSTOOL", register_documents_tools),
     ("dsar", "DSARTOOL", register_dsar_tools),
     ("esg", "ESGTOOL", register_esg_tools),
@@ -116,4 +144,3 @@ __all__ = [
     "register_custom_api_tools",
     "TOOL_REGISTRY",
 ]
-

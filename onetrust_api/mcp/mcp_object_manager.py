@@ -40,7 +40,9 @@ def register_object_manager_tools(mcp: FastMCP):
         if action == "create_project_using_post":
             return client.create_project_using_post(**kwargs)
         elif action == "find_project_basic_details_by_query_criteria_using_post":
-            return client.find_project_basic_details_by_query_criteria_using_post(**kwargs)
+            return client.find_project_basic_details_by_query_criteria_using_post(
+                **kwargs
+            )
         elif action == "find_projects_by_list_criteria_using_post":
             return client.find_projects_by_list_criteria_using_post(**kwargs)
         elif action == "get_project_using_get":
@@ -52,7 +54,9 @@ def register_object_manager_tools(mcp: FastMCP):
         elif action == "create_model_using_post":
             return client.create_model_using_post(**kwargs)
         elif action == "find_model_basic_details_by_query_criteria_using_post":
-            return client.find_model_basic_details_by_query_criteria_using_post(**kwargs)
+            return client.find_model_basic_details_by_query_criteria_using_post(
+                **kwargs
+            )
         elif action == "find_models_by_list_criteria_using_post":
             return client.find_models_by_list_criteria_using_post(**kwargs)
         elif action == "get_model_using_get":
@@ -62,17 +66,34 @@ def register_object_manager_tools(mcp: FastMCP):
         elif action == "delete_model_using_delete":
             return client.delete_model_using_delete(**kwargs)
         elif action == "add_entity_using_entity_type_id_or_entity_type_name_using_post":
-            return client.add_entity_using_entity_type_id_or_entity_type_name_using_post_x(**kwargs)
+            return (
+                client.add_entity_using_entity_type_id_or_entity_type_name_using_post_x(
+                    **kwargs
+                )
+            )
         elif action == "find_all_by_type_id_and_criteria_using_post":
             return client.find_all_by_type_id_and_criteria_using_post_x(**kwargs)
-        elif action == "get_entity_information_using_entity_type_id_or_entity_type_name_using_get":
-            return client.get_entity_information_using_entity_type_id_or_entity_type_name_using_get_x(**kwargs)
+        elif (
+            action
+            == "get_entity_information_using_entity_type_id_or_entity_type_name_using_get"
+        ):
+            return client.get_entity_information_using_entity_type_id_or_entity_type_name_using_get_x(
+                **kwargs
+            )
         elif action == "delete_using_entity_type_id_or_entity_type_name_using_delete":
-            return client.delete_using_entity_type_id_or_entity_type_name_using_delete_x(**kwargs)
+            return (
+                client.delete_using_entity_type_id_or_entity_type_name_using_delete_x(
+                    **kwargs
+                )
+            )
         elif action == "update_using_entity_type_id_or_entity_type_name_using_patch":
-            return client.update_using_entity_type_id_or_entity_type_name_using_patch_x(**kwargs)
+            return client.update_using_entity_type_id_or_entity_type_name_using_patch_x(
+                **kwargs
+            )
         elif action == "find_entity_basic_details_by_type_and_criteria_using_post":
-            return client.find_entity_basic_details_by_type_and_criteria_using_post_x(**kwargs)
+            return client.find_entity_basic_details_by_type_and_criteria_using_post_x(
+                **kwargs
+            )
         elif action == "create_custom_link_type_using_post":
             return client.create_custom_link_type_using_post(**kwargs)
         elif action == "find_all_by_link_type_and_criteria_using_post":
@@ -93,12 +114,24 @@ def register_object_manager_tools(mcp: FastMCP):
             return client.update_custom_entity_type_using_patch(**kwargs)
         elif action == "enabled_custom_entity_type_using_put":
             return client.enabled_custom_entity_type_using_put(**kwargs)
-        elif action == "create_link_record_between_entities_using_link_type_id_using_post":
-            return client.create_link_record_between_entities_using_link_type_id_using_post_x(**kwargs)
+        elif (
+            action
+            == "create_link_record_between_entities_using_link_type_id_using_post"
+        ):
+            return client.create_link_record_between_entities_using_link_type_id_using_post_x(
+                **kwargs
+            )
         elif action == "get_link_record_information_using_link_type_id_using_get":
-            return client.get_link_record_information_using_link_type_id_using_get_x(**kwargs)
-        elif action == "delete_link_record_by_id_and_type_using_link_type_id_using_delete":
-            return client.delete_link_record_by_id_and_type_using_link_type_id_using_delete_x(**kwargs)
+            return client.get_link_record_information_using_link_type_id_using_get_x(
+                **kwargs
+            )
+        elif (
+            action
+            == "delete_link_record_by_id_and_type_using_link_type_id_using_delete"
+        ):
+            return client.delete_link_record_by_id_and_type_using_link_type_id_using_delete_x(
+                **kwargs
+            )
         elif action == "add_options_using_post":
             return client.add_options_using_post_x(**kwargs)
         elif action == "add_attribute_using_post":
@@ -114,4 +147,3 @@ def register_object_manager_tools(mcp: FastMCP):
         elif action == "update_task_using_put_1":
             return client.update_task_using_put_1_x(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

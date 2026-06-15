@@ -9,48 +9,47 @@ class OneTrustDataDiscoveryWorker(OneTrustApiBase):
     def get_eligible_jobs_using_get(self, **kwargs) -> Response:
         """Get List of Scan Jobs"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__:8080/api/data-discovery-bridge/v1/jobs',
+            http="GET",
+            url_template="https://__HOSTNAME__:8080/api/data-discovery-bridge/v1/jobs",
             path_params=[],
-            query_params=['datasourceId'],
+            query_params=["datasourceId"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def catalog_data_using_post(self, **kwargs) -> Response:
         """Submit Data to Catalog"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__:8080/api/data-discovery-bridge/v1/jobs/{jobId}/catalog-data',
-            path_params=['jobId'],
+            http="POST",
+            url_template="https://__HOSTNAME__:8080/api/data-discovery-bridge/v1/jobs/{jobId}/catalog-data",
+            path_params=["jobId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def classify_data_using_post(self, **kwargs) -> Response:
         """Submit Data to Classify"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__:8080/api/data-discovery-bridge/v1/jobs/{jobId}/classify-data',
-            path_params=['jobId'],
+            http="POST",
+            url_template="https://__HOSTNAME__:8080/api/data-discovery-bridge/v1/jobs/{jobId}/classify-data",
+            path_params=["jobId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_job_status_using_put(self, **kwargs) -> Response:
         """Update Scan Job Status"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__:8080/api/data-discovery-bridge/v1/jobs/{jobId}/status',
-            path_params=['jobId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__:8080/api/data-discovery-bridge/v1/jobs/{jobId}/status",
+            path_params=["jobId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

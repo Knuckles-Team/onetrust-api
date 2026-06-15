@@ -60,4 +60,3 @@ def register_audit_management_tools(mcp: FastMCP):
         elif action == "validate_and_reassign_scopes_using_put":
             return client.validate_and_reassign_scopes_using_put(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

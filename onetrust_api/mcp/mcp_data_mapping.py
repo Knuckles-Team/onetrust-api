@@ -81,10 +81,21 @@ def register_data_mapping_tools(mcp: FastMCP):
             return client.unset_inventory_as_parent_inventory_using_put(**kwargs)
         elif action == "link_asset_inventory_to_parent_asset_id_using_post":
             return client.link_asset_inventory_to_parent_asset_id_using_post(**kwargs)
-        elif action == "link_legal_entity_inventory_to_parent_legal_entity_id_using_post":
-            return client.link_legal_entity_inventory_to_parent_legal_entity_id_using_post(**kwargs)
-        elif action == "link_processing_activity_inventory_to_parent_processing_activity_id_using_post":
-            return client.link_processing_activity_inventory_to_parent_processing_activity_id_using_post(**kwargs)
+        elif (
+            action == "link_legal_entity_inventory_to_parent_legal_entity_id_using_post"
+        ):
+            return (
+                client.link_legal_entity_inventory_to_parent_legal_entity_id_using_post(
+                    **kwargs
+                )
+            )
+        elif (
+            action
+            == "link_processing_activity_inventory_to_parent_processing_activity_id_using_post"
+        ):
+            return client.link_processing_activity_inventory_to_parent_processing_activity_id_using_post(
+                **kwargs
+            )
         elif action == "link_vendor_inventory_to_parent_vendor_id_using_post":
             return client.link_vendor_inventory_to_parent_vendor_id_using_post(**kwargs)
         elif action == "get_list_of_inventories_using_get":
@@ -94,7 +105,9 @@ def register_data_mapping_tools(mcp: FastMCP):
         elif action == "upsert_inventory_using_put":
             return client.upsert_inventory_using_put(**kwargs)
         elif action == "get_list_of_inventories_by_filter_criteria_using_post":
-            return client.get_list_of_inventories_by_filter_criteria_using_post(**kwargs)
+            return client.get_list_of_inventories_by_filter_criteria_using_post(
+                **kwargs
+            )
         elif action == "get_inventory_by_external_id_using_get":
             return client.get_inventory_by_external_id_using_get(**kwargs)
         elif action == "get_inventory_by_id_using_get":
@@ -109,8 +122,13 @@ def register_data_mapping_tools(mcp: FastMCP):
             return client.update_inventory_status_by_id_using_put(**kwargs)
         elif action == "add_controls_to_inventory_using_post":
             return client.add_controls_to_inventory_using_post(**kwargs)
-        elif action == "update_advanced_attributes_for_personal_data_association_using_put":
-            return client.update_advanced_attributes_for_personal_data_association_using_put(**kwargs)
+        elif (
+            action
+            == "update_advanced_attributes_for_personal_data_association_using_put"
+        ):
+            return client.update_advanced_attributes_for_personal_data_association_using_put(
+                **kwargs
+            )
         elif action == "get_hierarchy_for_inventory_id_using_get":
             return client.get_hierarchy_for_inventory_id_using_get(**kwargs)
         elif action == "unlink_child_inventory_from_hierarchy_using_delete":
@@ -120,4 +138,3 @@ def register_data_mapping_tools(mcp: FastMCP):
         elif action == "get_schema_details_using_field_name":
             return client.get_schema_details_using_field_name(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

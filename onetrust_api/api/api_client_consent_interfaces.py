@@ -9,12 +9,11 @@ class OneTrustConsentInterfaces(OneTrustApiBase):
     def get_realtime_preferences(self, **kwargs) -> Response:
         """Get Data Subject's Preferences"""
         return self._call(
-            http='GET',
-            url_template='https://consent-api.onetrust.com/v2/preferences',
+            http="GET",
+            url_template="https://consent-api.onetrust.com/v2/preferences",
             path_params=[],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

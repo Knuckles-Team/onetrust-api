@@ -9,60 +9,59 @@ class OneTrustEsg(OneTrustApiBase):
     def get_all_emission_factors_basic_entity_details(self, **kwargs) -> Response:
         """Get List of Emission Factors"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/esg-management/v1/emission-factors',
+            http="GET",
+            url_template="https://__HOSTNAME__/api/esg-management/v1/emission-factors",
             path_params=[],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def add_emission_factor(self, **kwargs) -> Response:
         """Create Emission Factor"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/esg-management/v1/entity-types/emission-factors/entities',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/esg-management/v1/entity-types/emission-factors/entities",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def add_emission_transaction(self, **kwargs) -> Response:
         """Create Emission Transaction"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/esg-management/v1/entity-types/emission-transactions/entities',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/esg-management/v1/entity-types/emission-transactions/entities",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def find_all_by_type_and_criteria(self, **kwargs) -> Response:
         """Get List of Emission Details"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/esg-management/v1/entity-types/names/{entityTypeName}/entities/pages',
-            path_params=['entityTypeName'],
-            query_params=['page', 'size', 'sort'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/esg-management/v1/entity-types/names/{entityTypeName}/entities/pages",
+            path_params=["entityTypeName"],
+            query_params=["page", "size", "sort"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def fetch_metrics_details(self, **kwargs) -> Response:
         """Get Metric Details"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/esg-management/v1/metrics/metric-details',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/esg-management/v1/metrics/metric-details",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

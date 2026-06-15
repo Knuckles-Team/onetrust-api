@@ -112,7 +112,9 @@ def register_universal_consent_tools(mcp: FastMCP):
         elif action == "withdraw_transaction_behalf_of_datasubject_using_put":
             return client.withdraw_transaction_behalf_of_datasubject_using_put(**kwargs)
         elif action == "withdraw_transaction_by_purpose_and_identifier_using_get":
-            return client.withdraw_transaction_by_purpose_and_identifier_using_get(**kwargs)
+            return client.withdraw_transaction_by_purpose_and_identifier_using_get(
+                **kwargs
+            )
         elif action == "get_collection_points_using_get_1":
             return client.get_collection_points_using_get_1(**kwargs)
         elif action == "create_version_using_post":
@@ -232,4 +234,3 @@ def register_universal_consent_tools(mcp: FastMCP):
         elif action == "get_v3_datasubjects_profile_using_get":
             return client.get_v3_datasubjects_profile_using_get(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

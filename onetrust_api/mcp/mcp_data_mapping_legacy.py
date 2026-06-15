@@ -43,7 +43,12 @@ def register_data_mapping_legacy_tools(mcp: FastMCP):
             return client.list_all_data_elements_using_get(**kwargs)
         elif action == "get_schema_using_get_1":
             return client.get_schema_using_get_1(**kwargs)
-        elif action == "get_inventory_v2_schemas_attributes_attribute_id_values_value_id":
-            return client.get_inventory_v2_schemas_attributes_attribute_id_values_value_id(**kwargs)
+        elif (
+            action == "get_inventory_v2_schemas_attributes_attribute_id_values_value_id"
+        ):
+            return (
+                client.get_inventory_v2_schemas_attributes_attribute_id_values_value_id(
+                    **kwargs
+                )
+            )
         raise ValueError(f"Unknown action: {action}")
-

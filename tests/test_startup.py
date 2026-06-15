@@ -15,7 +15,7 @@ def test_api_composes_all_domains():
 
     # One base class per domain plus the shared base and Api itself.
     assert len(DOMAINS) == 35
-    assert callable(getattr(Api, "api_request"))
+    assert callable(Api.api_request)
 
 
 def test_client_constructs_with_token():

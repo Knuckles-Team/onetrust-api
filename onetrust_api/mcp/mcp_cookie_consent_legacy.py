@@ -60,4 +60,3 @@ def register_cookie_consent_legacy_tools(mcp: FastMCP):
         elif action == "get_cookie_reports_using_post":
             return client.get_cookie_reports_using_post(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

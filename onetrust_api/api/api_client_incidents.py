@@ -9,84 +9,83 @@ class OneTrustIncidents(OneTrustApiBase):
     def assign_stage_by_name_x(self, **kwargs) -> Response:
         """Update Incident Stage"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/incident/v1/assignments/entities/{entityId}/stage',
-            path_params=['entityId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/incident/v1/assignments/entities/{entityId}/stage",
+            path_params=["entityId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def assign_stage_by_name_1(self, **kwargs) -> Response:
         """Update Incident Stage by Type"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/incident/v1/assignments/entities/{entityId}/types/{type}/stage',
-            path_params=['entityId', 'type'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/incident/v1/assignments/entities/{entityId}/types/{type}/stage",
+            path_params=["entityId", "type"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_incident_using_post(self, **kwargs) -> Response:
         """Create Incident"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/incident/v1/incidents',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/incident/v1/incidents",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def search_incidents_using_post(self, **kwargs) -> Response:
         """Search Incidents"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/incident/v1/incidents/search',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/incident/v1/incidents/search",
             path_params=[],
-            query_params=['page', 'size', 'sort'],
+            query_params=["page", "size", "sort"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_incident_detail_by_incident_id_using_get(self, **kwargs) -> Response:
         """Get Incident"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/incident/v1/incidents/{incidentId}',
-            path_params=['incidentId'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/incident/v1/incidents/{incidentId}",
+            path_params=["incidentId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_incident_using_put(self, **kwargs) -> Response:
         """Update Incident"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/incident/v1/incidents/{incidentId}',
-            path_params=['incidentId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/incident/v1/incidents/{incidentId}",
+            path_params=["incidentId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_inventory_links(self, **kwargs) -> Response:
         """Link Incident to Inventory"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/incident/v1/incidents/{incidentId}/inventory-links/{inventoryType}',
-            path_params=['incidentId', 'inventoryType'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/incident/v1/incidents/{incidentId}/inventory-links/{inventoryType}",
+            path_params=["incidentId", "inventoryType"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

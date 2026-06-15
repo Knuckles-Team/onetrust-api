@@ -102,4 +102,3 @@ def register_assessments_tools(mcp: FastMCP):
         elif action == "export_template_with_business_keys_using_get":
             return client.export_template_with_business_keys_using_get(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

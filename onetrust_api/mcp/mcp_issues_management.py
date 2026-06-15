@@ -56,4 +56,3 @@ def register_issues_management_tools(mcp: FastMCP):
         elif action == "get_issue_related_tasks_using_get":
             return client.get_issue_related_tasks_using_get(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

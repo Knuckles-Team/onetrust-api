@@ -9,12 +9,11 @@ class OneTrustCookieDomainData(OneTrustApiBase):
     def domaindata(self, **kwargs) -> Response:
         """Get Domain Data"""
         return self._call(
-            http='GET',
-            url_template='https://cookies-data.onetrust.io/bannersdk/domaindata',
+            http="GET",
+            url_template="https://cookies-data.onetrust.io/bannersdk/domaindata",
             path_params=[],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

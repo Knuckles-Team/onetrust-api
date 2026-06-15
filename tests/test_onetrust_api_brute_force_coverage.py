@@ -56,10 +56,14 @@ def test_every_mcp_action_routes():
         fn = cap.fns[0]
         ctx = AsyncMock()  # exercise the progress-reporting branch
         for action in actions:
-            asyncio.run(fn(action=action, params_json="{}", client=mock_client, ctx=ctx))
+            asyncio.run(
+                fn(action=action, params_json="{}", client=mock_client, ctx=ctx)
+            )
         # Unknown action raises.
         with pytest.raises(ValueError):
-            asyncio.run(fn(action="__nope__", params_json="{}", client=mock_client, ctx=None))
+            asyncio.run(
+                fn(action="__nope__", params_json="{}", client=mock_client, ctx=None)
+            )
         # Invalid JSON returns an error dict, not an exception.
         bad = asyncio.run(
             fn(action=actions[0], params_json="{not json", client=mock_client, ctx=None)

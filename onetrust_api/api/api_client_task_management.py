@@ -9,36 +9,35 @@ class OneTrustTaskManagement(OneTrustApiBase):
     def create_task_using_post(self, **kwargs) -> Response:
         """Create Task"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/task-management/v1/tasks',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/task-management/v1/tasks",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_task_by_id_and_task_type_name_key_using_get(self, **kwargs) -> Response:
         """Get Task"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/task-management/v1/tasks/{taskId}',
-            path_params=['taskId'],
-            query_params=['taskTypeNameKey'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/task-management/v1/tasks/{taskId}",
+            path_params=["taskId"],
+            query_params=["taskTypeNameKey"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_task_using_put(self, **kwargs) -> Response:
         """Update Task"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/task-management/v1/tasks/{taskId}',
-            path_params=['taskId'],
-            query_params=['taskTypeNameKey'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/task-management/v1/tasks/{taskId}",
+            path_params=["taskId"],
+            query_params=["taskTypeNameKey"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

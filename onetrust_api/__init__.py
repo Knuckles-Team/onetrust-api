@@ -1,16 +1,14 @@
 #!/usr/bin/env python
-# coding: utf-8
 
 import importlib
 import inspect
 import warnings
-from typing import List
 
 # Suppress RequestsDependencyWarning due to chardet 6.x / requests 2.32.x mismatch
 # Centralized here to ensure it runs before any sub-package imports
 warnings.filterwarnings("ignore", message=".*urllib3.*or chardet.*")
 
-__all__: List[str] = []
+__all__: list[str] = []
 
 CORE_MODULES = [
     "onetrust_api.api_client",

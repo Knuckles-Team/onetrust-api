@@ -90,4 +90,3 @@ def register_user_provisioning_tools(mcp: FastMCP):
         elif action == "modify_user":
             return client.modify_user(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

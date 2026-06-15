@@ -9,12 +9,11 @@ class OneTrustCrossDeviceConsent(OneTrustApiBase):
     def get_preferences_using_get(self, **kwargs) -> Response:
         """Get Data Subject's Preferences"""
         return self._call(
-            http='GET',
-            url_template='https://consent-api.onetrust.com/v1/preferences',
+            http="GET",
+            url_template="https://consent-api.onetrust.com/v1/preferences",
             path_params=[],
-            query_params=['syncGroup'],
+            query_params=["syncGroup"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
-

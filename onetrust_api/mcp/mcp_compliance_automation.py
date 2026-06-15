@@ -44,4 +44,3 @@ def register_compliance_automation_tools(mcp: FastMCP):
         elif action == "update_initiative_using_put":
             return client.update_initiative_using_put(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-

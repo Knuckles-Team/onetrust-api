@@ -9,108 +9,107 @@ class OneTrustIssuesManagement(OneTrustApiBase):
     def get_attributes_by_schema_name_using_get(self, **kwargs) -> Response:
         """Get Attribute Schema"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/issue-management/v1/attributes',
+            http="GET",
+            url_template="https://__HOSTNAME__/api/issue-management/v1/attributes",
             path_params=[],
-            query_params=['schemaName'],
+            query_params=["schemaName"],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def create_issue_relationship_links_using_post(self, **kwargs) -> Response:
         """Create Issue Relationship"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/issue-management/v1/issuelink/issue/{issueId}',
-            path_params=['issueId'],
+            http="POST",
+            url_template="https://__HOSTNAME__/api/issue-management/v1/issuelink/issue/{issueId}",
+            path_params=["issueId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_issue_links_using_get(self, **kwargs) -> Response:
         """Get Issue Relationships"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/issue-management/v1/issuelinks/{issueId}',
-            path_params=['issueId'],
-            query_params=['page', 'size', 'sort'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/issue-management/v1/issuelinks/{issueId}",
+            path_params=["issueId"],
+            query_params=["page", "size", "sort"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
 
     def create_issue_using_post(self, **kwargs) -> Response:
         """Create Issue"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/issue-management/v1/issues',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/issue-management/v1/issues",
             path_params=[],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def find_all_issues_by_filter_using_post(self, **kwargs) -> Response:
         """Get List of Issues"""
         return self._call(
-            http='POST',
-            url_template='https://__HOSTNAME__/api/issue-management/v1/issues/search',
+            http="POST",
+            url_template="https://__HOSTNAME__/api/issue-management/v1/issues/search",
             path_params=[],
-            query_params=['page', 'size', 'sort'],
+            query_params=["page", "size", "sort"],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_issue_using_get(self, **kwargs) -> Response:
         """Get Issue"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/issue-management/v1/issues/{issueId}',
-            path_params=['issueId'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/issue-management/v1/issues/{issueId}",
+            path_params=["issueId"],
             query_params=[],
             has_body=False,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_issue_using_put(self, **kwargs) -> Response:
         """Update Issue"""
         return self._call(
-            http='PUT',
-            url_template='https://__HOSTNAME__/api/issue-management/v1/issues/{issueId}',
-            path_params=['issueId'],
+            http="PUT",
+            url_template="https://__HOSTNAME__/api/issue-management/v1/issues/{issueId}",
+            path_params=["issueId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def update_issue_using_patch(self, **kwargs) -> Response:
         """Modify Issue"""
         return self._call(
-            http='PATCH',
-            url_template='https://__HOSTNAME__/api/issue-management/v1/issues/{issueId}',
-            path_params=['issueId'],
+            http="PATCH",
+            url_template="https://__HOSTNAME__/api/issue-management/v1/issues/{issueId}",
+            path_params=["issueId"],
             query_params=[],
             has_body=True,
-            paginate='none',
+            paginate="none",
             kwargs=kwargs,
         )
 
     def get_issue_related_tasks_using_get(self, **kwargs) -> Response:
         """Get Issue Tasks"""
         return self._call(
-            http='GET',
-            url_template='https://__HOSTNAME__/api/issue-management/v1/issuetasks/{issueId}',
-            path_params=['issueId'],
-            query_params=['page', 'size', 'sort'],
+            http="GET",
+            url_template="https://__HOSTNAME__/api/issue-management/v1/issuetasks/{issueId}",
+            path_params=["issueId"],
+            query_params=["page", "size", "sort"],
             has_body=False,
-            paginate='offset',
+            paginate="offset",
             kwargs=kwargs,
         )
-

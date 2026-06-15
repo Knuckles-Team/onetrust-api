@@ -48,4 +48,3 @@ def register_training_tools(mcp: FastMCP):
         elif action == "get_enrollment_details_using_post":
             return client.get_enrollment_details_using_post(**kwargs)
         raise ValueError(f"Unknown action: {action}")
-
