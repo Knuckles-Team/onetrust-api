@@ -49,16 +49,9 @@ for module_name in CORE_MODULES:
 
 for module_name, extra_name in OPTIONAL_MODULES.items():
     module = _import_module_safely(module_name)
+    globals()[f"_{extra_name.upper()}_AVAILABLE"] = module is not None
     if module is not None:
         _expose_members(module)
-        globals()[f"_{extra_name.upper()}_AVAILABLE"] = True
-    else:
-        globals()[f"_{extra_name.upper()}_AVAILABLE"] = False
-
-_MCP_AVAILABLE = OPTIONAL_MODULES.get("onetrust_api.mcp_server") in [
-    m.__name__ for m in globals().values() if hasattr(m, "__name__")
-]
-_AGENT_AVAILABLE = "onetrust_api.agent_server" in globals()
 
 __all__.extend(["_MCP_AVAILABLE", "_AGENT_AVAILABLE"])
 

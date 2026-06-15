@@ -1,0 +1,56 @@
+{
+  "mcpServers": {
+    "onetrust-api": {
+      "command": "uv",
+      "args": [
+        "run",
+        "onetrust-mcp"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "<YOUR_FASTMCP_LOG_LEVEL>",
+        "ONETRUST_URL": "<YOUR_ONETRUST_URL>",
+        "ONETRUST_REGION": "us",
+        "ONETRUST_TOKEN": "<YOUR_ONETRUST_TOKEN>",
+        "ONETRUST_CLIENT_ID": "<YOUR_ONETRUST_CLIENT_ID>",
+        "ONETRUST_CLIENT_SECRET": "<YOUR_ONETRUST_CLIENT_SECRET>",
+        "ONETRUST_SSL_VERIFY": "<YOUR_ONETRUST_SSL_VERIFY>",
+        "ACCESS_MANAGEMENTTOOL": "True",
+        "AI_GOVERNANCETOOL": "True",
+        "ASSESSMENTSTOOL": "True",
+        "AUDIT_MANAGEMENTTOOL": "True",
+        "BULK_EXPORTTOOL": "True",
+        "CMPTOOL": "True",
+        "COMPLIANCE_AUTOMATIONTOOL": "True",
+        "CONSENT_INTERFACESTOOL": "True",
+        "CONSENT_RECEIPTSTOOL": "True",
+        "COOKIE_CONSENTTOOL": "True",
+        "COOKIE_CONSENT_LEGACYTOOL": "True",
+        "COOKIE_DOMAIN_DATATOOL": "True",
+        "CROSS_DEVICE_CONSENTTOOL": "True",
+        "DATA_CATALOGTOOL": "True",
+        "DATA_DISCOVERYTOOL": "True",
+        "DATA_DISCOVERY_WORKERTOOL": "True",
+        "DATA_MAPPINGTOOL": "True",
+        "DATA_MAPPING_LEGACYTOOL": "True",
+        "DOCUMENTSTOOL": "True",
+        "DSARTOOL": "True",
+        "ESGTOOL": "True",
+        "INCIDENTSTOOL": "True",
+        "INTEGRATIONSTOOL": "True",
+        "INVENTORYTOOL": "True",
+        "ISSUES_MANAGEMENTTOOL": "True",
+        "IT_RISK_MANAGEMENTTOOL": "True",
+        "MOBILE_APP_CONSENTTOOL": "True",
+        "OBJECT_MANAGERTOOL": "True",
+        "POLICY_MANAGEMENTTOOL": "True",
+        "PRIVACY_NOTICESTOOL": "True",
+        "TASK_MANAGEMENTTOOL": "True",
+        "TPRMTOOL": "True",
+        "TRAININGTOOL": "True",
+        "UNIVERSAL_CONSENTTOOL": "True",
+        "USER_PROVISIONINGTOOL": "True",
+        "CUSTOM_APITOOL": "True"
+      }
+    }
+  }
+}
