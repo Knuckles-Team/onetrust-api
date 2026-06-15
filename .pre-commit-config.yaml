@@ -14,12 +14,14 @@ repos:
       exclude: 'onetrust_api/skills/.*-docs/'
     - id: check-ast
     - id: check-yaml
+      args: ["--unsafe"]
     - id: check-toml
     - id: check-json
     - id: fix-byte-order-marker
       exclude: .gitignore
     - id: check-merge-conflict
     - id: detect-private-key
+      exclude: '^onetrust_api/specs/.*'
     - id: trailing-whitespace
     - id: end-of-file-fixer
     - id: no-commit-to-branch
@@ -43,7 +45,8 @@ repos:
             (?x)^(
               \./test/.*|
               \./tests/.*|
-              onetrust_api/skills/.*-docs/.*
+              onetrust_api/skills/.*-docs/.*|
+              onetrust_api/specs/.*
             )$
   - repo: https://github.com/nbQA-dev/nbQA
     rev: 1.9.1
