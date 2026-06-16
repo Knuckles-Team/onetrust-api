@@ -158,3 +158,15 @@ async def my_tool(param: str) -> str:
 ## When Stuck
 - Propose a plan first before making large changes.
 - Check `agent-utilities` documentation for existing helpers.
+
+<!-- BEGIN concept-coordination (generated) -->
+## Concept-ID Coordination (multi-session)
+
+Working in parallel with other sessions/worktrees? **Reserve a concept id before you write its `CONCEPT:` marker** so two sessions never collide:
+
+```bash
+agent-utilities --json concept reserve --ns KG-2   # or a package prefix, e.g. KEY
+```
+
+Full protocol (ledger, merge=union, reconcile, MCP/REST): <https://knuckles-team.github.io/agent-utilities/concept_coordination/>
+<!-- END concept-coordination (generated) -->
