@@ -57,6 +57,6 @@ RUN apt-get update \
     && curl -sS https://starship.rs/install.sh | sh -s -- --yes \
     && mkdir -p /root/.config \
     && echo 'eval "$(starship init bash)"' >> /root/.bashrc \
-    && uv pip install --system --upgrade --verbose --no-cache --break-system-packages --prerelease=allow onetrust-api[all]>=0.1.2
+    && uv pip install --system --upgrade --verbose --no-cache --break-system-packages --prerelease=allow onetrust-api[all]>=0.2.0
 
 CMD ["onetrust-mcp"]

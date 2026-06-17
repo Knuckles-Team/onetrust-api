@@ -11,7 +11,7 @@ from dotenv import find_dotenv, load_dotenv
 from fastmcp import FastMCP
 from fastmcp.utilities.logging import get_logger
 
-__version__ = "0.1.2"
+__version__ = "0.2.0"
 
 # Redirect logging to stderr to prevent MCP stdout corruption
 logger = get_logger(name="onetrust_mcp")
