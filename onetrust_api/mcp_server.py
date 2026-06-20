@@ -4,12 +4,10 @@ import logging
 import sys
 from typing import Any
 
-from agent_utilities.core.config import setting
 from agent_utilities.mcp_utilities import (
     create_mcp_server,
     load_config,
-    register_verbose_tools,
-    tool_mode,
+    register_tool_surface,
 )
 from fastmcp import FastMCP
 from fastmcp.utilities.logging import get_logger
@@ -35,7 +33,6 @@ def register_prompts(mcp: FastMCP):
 def get_mcp_instance() -> tuple[Any, Any, Any, Any]:
     """Initialize and return the OneTrust Api MCP instance, args, and middlewares."""
     load_config()
-    mode = tool_mode()
 
     args, mcp, middlewares = create_mcp_server(
         name="OneTrust Api MCP",
@@ -43,23 +40,19 @@ def get_mcp_instance() -> tuple[Any, Any, Any, Any]:
         instructions="OneTrust Api MCP Server",
     )
 
-    registered_tags = []
-    # condensed: per-domain action-routed tools, each gated by a {TAG}TOOL env var
-    # (default True). TOOL_REGISTRY is generated from the vendored OpenAPI specs.
-    if mode in ("condensed", "both"):
-        from onetrust_api.mcp import TOOL_REGISTRY
+    # One central call selects the surface per MCP_TOOL_MODE: condensed gates each
+    # generated TOOL_REGISTRY domain via setting("<TAG>TOOL", True); verbose adds
+    # the fully-typed 1:1 tools sourced from the OpenAPI manifest (OPERATIONS).
+    from onetrust_api.mcp import TOOL_REGISTRY
 
-        for tag, env_var, register_fn in TOOL_REGISTRY:
-            if setting(env_var, True):
-                register_fn(mcp)
-                registered_tags.append(tag)
-
-    # verbose: one fully-typed 1:1 tool per API method, sourced from the OpenAPI
-    # manifest (params drive the typed signatures).
-    if mode in ("verbose", "both"):
-        register_verbose_tools(
-            mcp, Api, get_client, service="onetrust-api", manifest=OPERATIONS
-        )
+    registered_tags = register_tool_surface(
+        mcp,
+        client_cls=Api,
+        get_client=get_client,
+        service="onetrust-api",
+        tool_registry=TOOL_REGISTRY,
+        manifest=OPERATIONS,
+    )
 
     register_prompts(mcp)
 
