@@ -12,10 +12,10 @@ Authentication priority:
 See ``docs/guides/oauth_sso.md`` in agent-utilities for full details.
 """
 
-import os
 import threading
 
-from agent_utilities.base_utilities import get_logger, to_boolean
+from agent_utilities.base_utilities import get_logger
+from agent_utilities.core.config import setting
 from agent_utilities.core.exceptions import AuthError, UnauthorizedError
 
 local = threading.local()
@@ -25,27 +25,45 @@ logger = get_logger(__name__)
 
 
 def get_client(
-    instance: str | None = os.getenv("ONETRUST_URL", None),
-    token: str | None = os.getenv("ONETRUST_TOKEN", None),
-    client_id: str | None = os.getenv("ONETRUST_CLIENT_ID", None),
-    client_secret: str | None = os.getenv("ONETRUST_CLIENT_SECRET", None),
-    region: str = os.getenv("ONETRUST_REGION", "us"),
-    consent_url: str | None = os.getenv("ONETRUST_CONSENT_URL", None),
-    worker_url: str | None = os.getenv("ONETRUST_WORKER_URL", None),
-    verify: bool = to_boolean(string=os.getenv("ONETRUST_SSL_VERIFY", "True")),
+    instance: str | None = None,
+    token: str | None = None,
+    client_id: str | None = None,
+    client_secret: str | None = None,
+    region: str | None = None,
+    consent_url: str | None = None,
+    worker_url: str | None = None,
+    verify: bool | None = None,
     config: dict | None = None,
 ) -> Api:
     """Factory function to create the OneTrust :class:`Api` client.
 
+    Credentials resolve live through the shared config layer (the one XDG
+    ``config.json`` / env), read at call time rather than frozen at import.
     Supports OIDC delegation, a fixed bearer token, and the OAuth2
-    client-credentials flow. Uses the shared ``delegated_auth`` helper from
-    agent-utilities.
+    client-credentials flow via the shared ``delegated_auth`` helper.
     """
     from agent_utilities.mcp.delegated_auth import (
         get_delegated_token,
         get_user_identity,
         is_delegation_enabled,
     )
+
+    instance = instance if instance is not None else setting("ONETRUST_URL")
+    token = token if token is not None else setting("ONETRUST_TOKEN")
+    client_id = client_id if client_id is not None else setting("ONETRUST_CLIENT_ID")
+    client_secret = (
+        client_secret
+        if client_secret is not None
+        else setting("ONETRUST_CLIENT_SECRET")
+    )
+    region = region if region is not None else setting("ONETRUST_REGION", "us")
+    consent_url = (
+        consent_url if consent_url is not None else setting("ONETRUST_CONSENT_URL")
+    )
+    worker_url = (
+        worker_url if worker_url is not None else setting("ONETRUST_WORKER_URL")
+    )
+    verify = verify if verify is not None else setting("ONETRUST_SSL_VERIFY", True)
 
     common = dict(
         region=region,

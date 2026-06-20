@@ -50,9 +50,9 @@ def test_every_operation_has_callable_client_method():
     missing = [
         op for op in OPERATIONS if not callable(getattr(Api, op["method"], None))
     ]
-    assert (
-        not missing
-    ), f"{len(missing)} operations without a client method: {missing[:5]}"
+    assert not missing, (
+        f"{len(missing)} operations without a client method: {missing[:5]}"
+    )
 
 
 def test_method_names_globally_unique():
@@ -80,3 +80,31 @@ def test_custom_api_escape_hatch_present():
     src = (MCP / "mcp_custom_api.py").read_text()
     assert "onetrust_api_request" in src
     assert callable(Api.api_request)
+
+
+def test_manifest_operations_carry_typed_params():
+    """Verbose typed tier: ops with inputs expose a normalized ``params`` list."""
+    assert all("params" in op and "summary" in op for op in OPERATIONS)
+    # the vast majority of operations take inputs (path/query/body)
+    with_params = [op for op in OPERATIONS if op["params"]]
+    assert len(with_params) > len(OPERATIONS) // 2
+    sample = with_params[0]["params"][0]
+    assert set(sample) >= {"name", "type", "required", "description"}
+
+
+@pytest.mark.asyncio
+async def test_verbose_mode_registers_one_tool_per_method(monkeypatch):
+    """verbose mode exposes exactly one 1:1 tool per manifest method."""
+    from unittest.mock import patch
+
+    from onetrust_api.mcp_server import get_mcp_instance
+
+    monkeypatch.setenv("MCP_TOOL_MODE", "verbose")
+    with patch("sys.argv", ["onetrust-mcp"]):
+        mcp, *_ = get_mcp_instance()
+        names = {t.name for t in await mcp.list_tools()}
+    expected = {f"onetrust_{op['method']}" for op in OPERATIONS}
+    # every manifest method is reachable as a verbose 1:1 tool
+    assert expected <= names
+    # and condensed action tools are not present in verbose-only mode
+    assert "onetrust_audit_management" not in names

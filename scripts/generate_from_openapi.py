@@ -120,6 +120,90 @@ def detect_pagination(http: str, query_params: list[str]) -> str:
     return "none"
 
 
+_OPENAPI_SCALAR = {"string", "integer", "number", "boolean", "array", "object"}
+
+
+def _resolve_ref(spec: dict, node):
+    """Follow ``$ref`` chains within a spec; return the resolved dict (or {})."""
+    seen: set[str] = set()
+    while isinstance(node, dict) and "$ref" in node:
+        ref = node["$ref"]
+        if not ref.startswith("#/") or ref in seen:
+            break
+        seen.add(ref)
+        cur = spec
+        for part in ref[2:].split("/"):
+            cur = cur.get(part, {}) if isinstance(cur, dict) else {}
+        node = cur
+    return node if isinstance(node, dict) else {}
+
+
+def _param_entry(name: str, schema: dict, required: bool, description) -> dict:
+    schema = schema or {}
+    t = schema.get("type")
+    if not t and any(k in schema for k in ("$ref", "allOf", "properties")):
+        t = "object"
+    if t not in _OPENAPI_SCALAR:
+        t = "string"
+    return {
+        "name": name,
+        "type": t,
+        "required": bool(required),
+        "description": re.sub(r"\s+", " ", (description or "").strip())[:200],
+    }
+
+
+def normalize_params(params: list, op: dict, spec: dict) -> list[dict]:
+    """Flatten path/query params + top-level requestBody fields into typed entries.
+
+    Produces ``[{name, type, required, description}, ...]`` for the verbose 1:1
+    tool tier (`register_verbose_tools` synthesizes a typed signature from it).
+    All fields dispatch by name; the client routes path/query/body internally.
+    """
+    out: list[dict] = []
+    seen: set[str] = set()
+    for p in params:
+        p = _resolve_ref(spec, p)
+        name = p.get("name")
+        if not name or p.get("in") not in ("path", "query") or name in seen:
+            continue
+        seen.add(name)
+        out.append(
+            _param_entry(
+                name,
+                p.get("schema") or {},
+                p.get("required") or p.get("in") == "path",
+                p.get("description"),
+            )
+        )
+    request_body = _resolve_ref(spec, op.get("requestBody") or {})
+    if request_body:
+        content = request_body.get("content") or {}
+        media = content.get("application/json") or next(iter(content.values()), {})
+        schema = _resolve_ref(spec, (media or {}).get("schema") or {})
+        props = schema.get("properties") or {}
+        required = set(schema.get("required") or [])
+        if props:
+            for pname, pschema in props.items():
+                if pname in seen:
+                    continue
+                seen.add(pname)
+                ps = _resolve_ref(spec, pschema)
+                out.append(
+                    _param_entry(pname, ps, pname in required, ps.get("description"))
+                )
+        else:
+            out.append(
+                {
+                    "name": "body",
+                    "type": "object",
+                    "required": bool(request_body.get("required")),
+                    "description": "Request body (JSON object).",
+                }
+            )
+    return out
+
+
 def collect_operations() -> dict[str, list[dict]]:
     """Return ``{domain: [operation_meta, ...]}`` across all vendored specs."""
     by_domain: dict[str, list[dict]] = {}
@@ -178,6 +262,7 @@ def collect_operations() -> dict[str, list[dict]]:
                         "has_body": has_body,
                         "paginate": detect_pagination(http, query_params),
                         "summary": summary,
+                        "params": normalize_params(params, op, spec),
                     }
                 )
         if ops:
@@ -299,6 +384,8 @@ def emit_manifest(by_domain: dict[str, list[dict]]) -> None:
             "http": op["http"],
             "path": op["url_template"],
             "paginate": op["paginate"],
+            "summary": op["summary"],
+            "params": op["params"],
         }
         for domain in sorted(by_domain)
         for op in by_domain[domain]
@@ -306,8 +393,11 @@ def emit_manifest(by_domain: dict[str, list[dict]]) -> None:
     lines = [
         AUTOGEN,
         "",
-        "# Each entry: {operation_id, domain, method, action, http, path, paginate}",
-        f"OPERATIONS = {json.dumps(operations, indent=4)}",
+        "# Each entry: {operation_id, domain, method, action, http, path, paginate,",
+        "#             summary, params:[{name,type,required,description}]}",
+        "# `summary` + `params` drive the verbose 1:1 tool tier (register_verbose_tools).",
+        # repr() (not json.dumps) — params carry Python bools; ruff format prettifies.
+        f"OPERATIONS = {operations!r}",
         "",
         "DOMAINS = " + json.dumps(sorted(by_domain), indent=4),
         "",

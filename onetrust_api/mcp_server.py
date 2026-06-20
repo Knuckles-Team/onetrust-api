@@ -1,15 +1,22 @@
 #!/usr/bin/python
 
 import logging
-import os
 import sys
 from typing import Any
 
-from agent_utilities.base_utilities import to_boolean
-from agent_utilities.mcp_utilities import create_mcp_server
-from dotenv import find_dotenv, load_dotenv
+from agent_utilities.core.config import setting
+from agent_utilities.mcp_utilities import (
+    create_mcp_server,
+    load_config,
+    register_verbose_tools,
+    tool_mode,
+)
 from fastmcp import FastMCP
 from fastmcp.utilities.logging import get_logger
+
+from onetrust_api.api._operation_manifest import OPERATIONS
+from onetrust_api.api_client import Api
+from onetrust_api.auth import get_client
 
 __version__ = "0.2.0"
 
@@ -27,7 +34,8 @@ def register_prompts(mcp: FastMCP):
 
 def get_mcp_instance() -> tuple[Any, Any, Any, Any]:
     """Initialize and return the OneTrust Api MCP instance, args, and middlewares."""
-    load_dotenv(find_dotenv())
+    load_config()
+    mode = tool_mode()
 
     args, mcp, middlewares = create_mcp_server(
         name="OneTrust Api MCP",
@@ -35,15 +43,23 @@ def get_mcp_instance() -> tuple[Any, Any, Any, Any]:
         instructions="OneTrust Api MCP Server",
     )
 
-    # Each domain is a consolidated, action-routed tool gated by a {TAG}TOOL env var
-    # (default True). TOOL_REGISTRY is generated from the vendored OpenAPI specs.
-    from onetrust_api.mcp import TOOL_REGISTRY
-
     registered_tags = []
-    for tag, env_var, register_fn in TOOL_REGISTRY:
-        if to_boolean(os.getenv(env_var, "True")):
-            register_fn(mcp)
-            registered_tags.append(tag)
+    # condensed: per-domain action-routed tools, each gated by a {TAG}TOOL env var
+    # (default True). TOOL_REGISTRY is generated from the vendored OpenAPI specs.
+    if mode in ("condensed", "both"):
+        from onetrust_api.mcp import TOOL_REGISTRY
+
+        for tag, env_var, register_fn in TOOL_REGISTRY:
+            if setting(env_var, True):
+                register_fn(mcp)
+                registered_tags.append(tag)
+
+    # verbose: one fully-typed 1:1 tool per API method, sourced from the OpenAPI
+    # manifest (params drive the typed signatures).
+    if mode in ("verbose", "both"):
+        register_verbose_tools(
+            mcp, Api, get_client, service="onetrust-api", manifest=OPERATIONS
+        )
 
     register_prompts(mcp)
 
