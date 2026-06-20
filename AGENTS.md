@@ -22,6 +22,13 @@ hand. The single source of truth is the vendored OpenAPI specs under
   `python scripts/generate_from_openapi.py` → `ruff format .` →
   `pytest` (the coverage keystone in `tests/test_onetrust_coverage.py` proves
   spec operations == client methods == MCP actions).
+- **Tool surface (`MCP_TOOL_MODE`).** `condensed` (default) registers the
+  per-domain action-routed tools; `verbose` registers one fully-typed 1:1 tool
+  per API method, with parameter types/descriptions sourced from
+  `_operation_manifest.py`'s `params`; `both` registers both. The manifest's
+  `params`/`summary` fields exist specifically to drive the shared
+  `register_verbose_tools` typed tier — generated, do not hand-edit.
+  (CONCEPT:ECO-4.82)
 
 ## Tech Stack & Architecture
 - Language/Version: Python 3.10+
