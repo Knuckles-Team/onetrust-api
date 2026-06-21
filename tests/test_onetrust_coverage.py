@@ -50,9 +50,9 @@ def test_every_operation_has_callable_client_method():
     missing = [
         op for op in OPERATIONS if not callable(getattr(Api, op["method"], None))
     ]
-    assert (
-        not missing
-    ), f"{len(missing)} operations without a client method: {missing[:5]}"
+    assert not missing, (
+        f"{len(missing)} operations without a client method: {missing[:5]}"
+    )
 
 
 def test_method_names_globally_unique():
