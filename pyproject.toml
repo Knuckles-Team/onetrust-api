@@ -29,10 +29,10 @@ onetrust-mcp = "onetrust_api.mcp_server:mcp_server"
 onetrust-agent = "onetrust_api.agent_server:agent_server"
 
 [project.entry-points."agent_utilities.skill_providers"]
-modular-contrib = "onetrust_api.skills"
+onetrust-api = "onetrust_api.skills"
 
 [project.entry-points."agent_utilities.prompt_providers"]
-modular-contrib = "onetrust_api.prompts"
+onetrust-api = "onetrust_api.prompts"
 
 [tool.setuptools]
 include-package-data = true
