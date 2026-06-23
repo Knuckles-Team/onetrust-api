@@ -1,62 +1,62 @@
-FROM python:3-slim
+# syntax=docker/dockerfile:1
+# Two right-sized images from ONE Dockerfile, selected by build --target. Both are
+# slim multi-stage (build in a builder, ship only /usr/local — no dev-tools/source):
+#
+#   --target agent  (DEFAULT)  installs onetrust-api[agent] = the FULL runtime
+#                              (agent-utilities[agent]: engine + pydantic-ai + dspy +
+#                              skills). Because [agent] also includes [mcp], this image
+#                              can run EITHER the agent OR the mcp server. Push as the
+#                              default tags: latest / main / <version>.
+#
+#   --target mcp               installs onetrust-api[mcp]   = MCP-server tooling ONLY
+#                              (agent-utilities[mcp]: fastmcp/fastapi — NO engine,
+#                              pydantic-ai, dspy, llama-index, tree-sitter). The slim
+#                              variant. Push as the :mcp / :mcp-<version> tag.
+#
+#   docker build --target agent -t onetrust-api:latest .
+#   docker build --target mcp   -t onetrust-api:mcp    .
+FROM python:3.11-slim AS builder-base
+COPY --from=ghcr.io/astral-sh/uv:0.11.7 /uv /uvx /bin/
+ENV UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy \
+    UV_SYSTEM_PYTHON=1 \
+    UV_HTTP_TIMEOUT=3600
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
+# Slim MCP-only dependency closure.
+FROM builder-base AS builder-mcp
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv pip install --system --upgrade --break-system-packages --prerelease=allow onetrust-api[mcp]>=0.2.0
+
+# Full agent runtime dependency closure.
+FROM builder-base AS builder-agent
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv pip install --system --upgrade --break-system-packages --prerelease=allow onetrust-api[agent]>=0.2.0
+
+FROM python:3.11-slim AS runtime-base
 ARG HOST=0.0.0.0
 ARG PORT=8000
-ARG TRANSPORT="http"
+ARG TRANSPORT="stdio"
 ARG AUTH_TYPE="none"
-ARG TOKEN_JWKS_URI=""
-ARG TOKEN_ISSUER=""
-ARG TOKEN_AUDIENCE=""
-ARG OAUTH_UPSTREAM_AUTH_ENDPOINT=""
-ARG OAUTH_UPSTREAM_TOKEN_ENDPOINT=""
-ARG OAUTH_UPSTREAM_CLIENT_ID=""
-ARG OAUTH_UPSTREAM_CLIENT_SECRET=""
-ARG OAUTH_BASE_URL=""
-ARG OIDC_CONFIG_URL=""
-ARG OIDC_CLIENT_ID=""
-ARG OIDC_CLIENT_SECRET=""
-ARG OIDC_BASE_URL=""
-ARG REMOTE_AUTH_SERVERS=""
-ARG REMOTE_BASE_URL=""
-ARG ALLOWED_CLIENT_REDIRECT_URIS=""
-ARG EUNOMIA_TYPE="none"
-ARG EUNOMIA_POLICY_FILE="mcp_policies.json"
-ARG EUNOMIA_REMOTE_URL=""
-
 ENV HOST=${HOST} \
     PORT=${PORT} \
     TRANSPORT=${TRANSPORT} \
     AUTH_TYPE=${AUTH_TYPE} \
-    TOKEN_JWKS_URI=${TOKEN_JWKS_URI} \
-    TOKEN_ISSUER=${TOKEN_ISSUER} \
-    TOKEN_AUDIENCE=${TOKEN_AUDIENCE} \
-    OAUTH_UPSTREAM_AUTH_ENDPOINT=${OAUTH_UPSTREAM_AUTH_ENDPOINT} \
-    OAUTH_UPSTREAM_TOKEN_ENDPOINT=${OAUTH_UPSTREAM_TOKEN_ENDPOINT} \
-    OAUTH_UPSTREAM_CLIENT_ID=${OAUTH_UPSTREAM_CLIENT_ID} \
-    OAUTH_UPSTREAM_CLIENT_SECRET=${OAUTH_UPSTREAM_CLIENT_SECRET} \
-    OAUTH_BASE_URL=${OAUTH_BASE_URL} \
-    OIDC_CONFIG_URL=${OIDC_CONFIG_URL} \
-    OIDC_CLIENT_ID=${OIDC_CLIENT_ID} \
-    OIDC_CLIENT_SECRET=${OIDC_CLIENT_SECRET} \
-    OIDC_BASE_URL=${OIDC_BASE_URL} \
-    REMOTE_AUTH_SERVERS=${REMOTE_AUTH_SERVERS} \
-    REMOTE_BASE_URL=${REMOTE_BASE_URL} \
-    ALLOWED_CLIENT_REDIRECT_URIS=${ALLOWED_CLIENT_REDIRECT_URIS} \
-    EUNOMIA_TYPE=${EUNOMIA_TYPE} \
-    EUNOMIA_POLICY_FILE=${EUNOMIA_POLICY_FILE} \
-    EUNOMIA_REMOTE_URL=${EUNOMIA_REMOTE_URL} \
     PYTHONUNBUFFERED=1 \
     PATH="/root/.local/bin:/usr/local/bin:${PATH}" \
     UV_HTTP_TIMEOUT=3600 \
     UV_SYSTEM_PYTHON=1 \
-    UV_COMPILE_BYTECODE=1
+    UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy
 
-RUN apt-get update \
-    && apt-get install -y default-jre ripgrep tree fd-find curl nano \
-    && curl -LsSf https://astral.sh/uv/install.sh | sh \
-    && curl -sS https://starship.rs/install.sh | sh -s -- --yes \
-    && mkdir -p /root/.config \
-    && echo 'eval "$(starship init bash)"' >> /root/.bashrc \
-    && uv pip install --system --upgrade --verbose --no-cache --break-system-packages --prerelease=allow onetrust-api[all]>=0.2.0
-
+# Slim image: MCP server only.
+FROM runtime-base AS mcp
+COPY --from=builder-mcp /usr/local /usr/local
 CMD ["onetrust-mcp"]
+
+# Full image (DEFAULT target): agent runtime; can also run the mcp server.
+FROM runtime-base AS agent
+COPY --from=builder-agent /usr/local /usr/local
+CMD ["onetrust-agent"]
