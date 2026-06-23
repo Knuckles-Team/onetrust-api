@@ -52,7 +52,7 @@ dev = [
 ]
 
 [tool.setuptools.package-data]
-onetrust_api = [ "mcp_config.json", "agent/**", "specs/*.json", "prompts/**", "skills/**",]
+onetrust_api = [ "mcp_config.json", "specs/*.json", "prompts/**", "skills/**",]
 
 [tool.ruff.lint]
 select = [ "E", "F", "I", "UP", "B",]
