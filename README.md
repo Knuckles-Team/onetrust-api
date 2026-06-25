@@ -148,6 +148,73 @@ onetrust-mcp --transport "streamable-http" --host "0.0.0.0" --port "8000"
 _36 action-routed tools (default `MCP_TOOL_MODE=condensed`). Each is enabled unless its toggle is set false; set `MCP_TOOL_MODE=verbose` (or `both`) for the 1:1 per-operation surface. Auto-generated — do not edit._
 <!-- MCP-TOOLS-TABLE:END -->
 
+### MCP Configuration Examples
+
+> **Install the slim `[mcp]` extra.** All examples below install
+> `onetrust-api[mcp]` — the MCP-server extra that pulls only the FastMCP /
+> FastAPI tooling (`agent-utilities[mcp]`). It deliberately **excludes** the heavy
+> agent runtime (the epistemic-graph engine, `pydantic-ai`, `dspy`, `llama-index`,
+> `tree-sitter`), so `uvx`/container installs are dramatically smaller and faster.
+> Use the full `[agent]` extra only when you need the integrated Pydantic AI agent
+> (see [Installation](#installation)).
+
+#### stdio Transport (Recommended for local IDEs e.g., Cursor, Claude Desktop)
+
+```json
+{
+  "mcpServers": {
+    "onetrust": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "onetrust-api[mcp]",
+        "onetrust-mcp"
+      ],
+      "env": {
+        "ONETRUST_URL": "https://acme.my.onetrust.com",
+        "ONETRUST_TOKEN": "your_token"
+      }
+    }
+  }
+}
+```
+
+#### Streamable-HTTP Transport (Recommended for production deployments)
+
+```json
+{
+  "mcpServers": {
+    "onetrust": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "onetrust-api[mcp]",
+        "onetrust-mcp"
+      ],
+      "env": {
+        "TRANSPORT": "streamable-http",
+        "HOST": "0.0.0.0",
+        "PORT": "8000",
+        "ONETRUST_URL": "https://acme.my.onetrust.com",
+        "ONETRUST_TOKEN": "your_token"
+      }
+    }
+  }
+}
+```
+
+Alternatively, connect to a pre-deployed remote or local Streamable-HTTP instance:
+
+```json
+{
+  "mcpServers": {
+    "onetrust": {
+      "url": "http://localhost:8000/onetrust-api/mcp"
+    }
+  }
+}
+```
+
 ## A2A Agent
 
 ### Run A2A Server
@@ -169,60 +236,140 @@ docker build -t onetrust-api .
 
 ```bash
 docker run -d \
-  --name onetrust-api \
+  --name onetrust-api-mcp \
   -p 8000:8000 \
-  -e TRANSPORT=http \
-  -e ONETRUST_URL="http://your-service:8080" \
+  -e TRANSPORT=streamable-http \
+  -e PORT=8000 \
+  -e ONETRUST_URL="https://acme.my.onetrust.com" \
   -e ONETRUST_TOKEN="your_token" \
-  knucklessg1/onetrust-api:latest
+  knucklessg1/onetrust-api:mcp
 ```
+
+> The `:mcp` tag is the **slim MCP-server image** (built from
+> `docker/Dockerfile --target mcp`, installing `onetrust-api[mcp]`). The default
+> `:latest` tag is the **full agent image** (`--target agent`, `onetrust-api[agent]`)
+> which also bundles the Pydantic AI agent and the epistemic-graph engine — use it
+> when you run `onetrust-agent` (the agent), not just the MCP server. See
+> [Container images](#container-images-mcp-vs-agent).
 
 ### Deploy with Docker Compose
 
 ```yaml
 services:
-  onetrust-api:
-    image: knucklessg1/onetrust-api:latest
+  onetrust-api-mcp:
+    image: knucklessg1/onetrust-api:mcp
     environment:
       - HOST=0.0.0.0
       - PORT=8000
-      - TRANSPORT=http
-      - ONETRUST_URL=http://your-service:8080
+      - TRANSPORT=streamable-http
+      - ONETRUST_URL=https://acme.my.onetrust.com
       - ONETRUST_TOKEN=your_token
     ports:
       - 8000:8000
 ```
 
-#### Configure `mcp.json` for AI Integration (e.g. Claude Desktop)
+## Installation
 
-```json
-{
-  "mcpServers": {
-    "onetrust": {
-      "command": "uv",
-      "args": [
-        "run",
-        "--with",
-        "onetrust-api",
-        "onetrust-mcp"
-      ],
-      "env": {
-        "ONETRUST_URL": "http://your-service:8080",
-        "ONETRUST_TOKEN": "your_token"
-      }
-    }
-  }
-}
-```
+Pick the extra that matches what you want to run:
 
-## Install Python Package
+| Extra | Installs | Use when |
+|-------|----------|----------|
+| `onetrust-api[mcp]` | Slim MCP server only (`agent-utilities[mcp]` — FastMCP/FastAPI) | You only run the **MCP server** (smallest install / image) |
+| `onetrust-api[agent]` | Full agent runtime (`agent-utilities[agent,logfire]` — Pydantic AI + the epistemic-graph engine) | You run the **integrated agent** |
+| `onetrust-api[all]` | Everything (`mcp` + `agent`) | Development / both surfaces |
 
 ```bash
-python -m pip install onetrust-api
+# MCP server only (recommended for tool hosting — slim deps)
+uv pip install "onetrust-api[mcp]"
+
+# Full agent runtime (Pydantic AI + epistemic-graph engine)
+uv pip install "onetrust-api[agent]"
+
+# Everything (development)
+uv pip install "onetrust-api[all]"      # or: python -m pip install "onetrust-api[all]"
 ```
+
+### Container images (`:mcp` vs `:agent`)
+
+One multi-stage `docker/Dockerfile` builds two right-sized images, selected by `--target`:
+
+| Image tag | Build target | Contents | Entrypoint |
+|-----------|--------------|----------|------------|
+| `knucklessg1/onetrust-api:mcp` | `--target mcp` | `onetrust-api[mcp]` — **slim**, no engine/`pydantic-ai`/`dspy`/`llama-index`/`tree-sitter` | `onetrust-mcp` |
+| `knucklessg1/onetrust-api:latest` | `--target agent` (default) | `onetrust-api[agent]` — **full** agent runtime + epistemic-graph engine | `onetrust-agent` |
+
 ```bash
-uv pip install onetrust-api
+docker build --target mcp   -t knucklessg1/onetrust-api:mcp    docker/   # slim MCP server
+docker build --target agent -t knucklessg1/onetrust-api:latest docker/   # full agent
 ```
+
+`docker/mcp.compose.yml` runs the slim `:mcp` server; `docker/agent.compose.yml` runs the
+agent (`:latest`) with a co-located `:mcp` sidecar.
+
+### Knowledge-graph database (`epistemic-graph`)
+
+The **full agent** (`[agent]` / `:latest`) embeds the **epistemic-graph** engine (pulled in
+transitively via `agent-utilities[agent]`). For production — or to share one knowledge graph
+across multiple agents — run **epistemic-graph as its own database container** and point the
+agent at it instead of embedding it. Deployment recipes (single-node + Raft HA), connection
+config, and the full database architecture (with diagrams) are documented in the
+[epistemic-graph deployment guide](https://knuckles-team.github.io/epistemic-graph/deployment/).
+The slim `[mcp]` server does **not** require the database.
+
+## Environment Variables
+
+Every variable the server reads. See [`.env.example`](.env.example) for a copy-paste
+starting point.
+
+### Connection & credentials (OneTrust)
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `ONETRUST_URL` | Tenant host URL, e.g. `https://acme.my.onetrust.com` (overrides `ONETRUST_REGION`) | — |
+| `ONETRUST_REGION` | Shared regional pod when no URL is set: `us`, `eu`, `de`, `uk`, `au`, `ca`, `fr`, `in`, `jp`, `trial`, `uat`, … | `us` |
+| `ONETRUST_TOKEN` | Pre-minted OAuth2 bearer token | — |
+| `ONETRUST_CLIENT_ID` | OAuth2 client-credentials client id (exchanged at `/api/access/v1/oauth/token`) | — |
+| `ONETRUST_CLIENT_SECRET` | OAuth2 client-credentials client secret | — |
+| `ONETRUST_CONSENT_URL` | Optional host for consent-transaction APIs (privacy portal) | — |
+| `ONETRUST_WORKER_URL` | Optional on-prem Data Discovery worker-node host | — |
+| `ONETRUST_SSL_VERIFY` | Verify TLS for OneTrust requests | `True` |
+
+### MCP server / transport
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `TRANSPORT` | `stdio`, `streamable-http`, or `sse` | `stdio` |
+| `HOST` | Bind host (HTTP transports) | `0.0.0.0` |
+| `PORT` | Bind port (HTTP transports) | `8000` |
+| `AUTH_TYPE` | MCP transport auth mode (`none`, …) | `none` |
+| `MCP_TOOL_MODE` | Tool surface: `condensed`, `verbose`, or `both` | `condensed` |
+| `MCP_ENABLED_TOOLS` / `MCP_DISABLED_TOOLS` | Comma-separated tool allow/deny list | — |
+| `MCP_ENABLED_TAGS` / `MCP_DISABLED_TAGS` | Comma-separated tag allow/deny list | — |
+| `FASTMCP_LOG_LEVEL` | FastMCP log level (e.g. `INFO`, `DEBUG`) | `INFO` |
+| `DEBUG` | Verbose logging | `False` |
+| `PYTHONUNBUFFERED` | Unbuffered stdout (recommended in containers) | `1` |
+
+### Tool toggles
+Each action-routed domain tool can be disabled individually via its `<DOMAIN>TOOL` toggle env
+var (set to `false`). The full list is in the [Available MCP Tools](#available-mcp-tools) table
+above (e.g. `INCIDENTSTOOL`, `DSARTOOL`, `CONSENT_RECEIPTSTOOL`, `ESGTOOL`).
+
+### Telemetry & governance
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `ENABLE_OTEL` | Enable OpenTelemetry export | `True` |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | OTLP collector endpoint | — |
+| `OTEL_EXPORTER_OTLP_PUBLIC_KEY` / `OTEL_EXPORTER_OTLP_SECRET_KEY` | OTLP auth keys | — |
+| `OTEL_EXPORTER_OTLP_PROTOCOL` | OTLP protocol (e.g. `http/protobuf`) | — |
+| `EUNOMIA_TYPE` | Authorization mode: `none`, `embedded`, `remote` | `none` |
+| `EUNOMIA_POLICY_FILE` | Embedded policy file | `mcp_policies.json` |
+| `EUNOMIA_REMOTE_URL` | Remote Eunomia server URL | — |
+
+### Agent CLI (full `[agent]` runtime only)
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `MCP_URL` | URL of the MCP server the agent connects to | `http://localhost:8000/mcp` |
+| `PROVIDER` | LLM provider (e.g. `openai`) | `openai` |
+| `MODEL_ID` | Model id (e.g. `gpt-4o`) | `gpt-4o` |
+| `ENABLE_WEB_UI` | Serve the AG-UI web interface | `True` |
 
 ## Documentation
 
