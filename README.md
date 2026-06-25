@@ -63,6 +63,90 @@ so you can scope the surface (e.g. set `ESGTOOL=False` to drop ESG).
 
 #### Environment Variables
 
+<!-- ENV-VARS-TABLE:START -->
+
+#### Package environment variables
+
+| Variable | Example | Description |
+|----------|---------|-------------|
+| `ONETRUST_URL` | — | Tenant host URL (overrides ONETRUST_REGION). e.g. https://acme.my.onetrust.com |
+| `ONETRUST_REGION` | `us` | Or pick a shared regional pod: us, eu, de, uk, au, ca, fr, in, jp, trial, uat ... |
+| `ONETRUST_TOKEN` | — | 1) Pre-minted OAuth2 bearer token (Global Settings > Access Management > Credentials) |
+| `ONETRUST_CLIENT_ID` | — | 2) OAuth2 client-credentials (exchanged at /api/access/v1/oauth/token) |
+| `ONETRUST_CLIENT_SECRET` | — |  |
+| `ONETRUST_CONSENT_URL` | — | Consent transaction / privacy-portal host (consent_receipts, universal_consent ...) |
+| `ONETRUST_WORKER_URL` | — | On-prem Data Discovery worker-node host |
+| `ONETRUST_SSL_VERIFY` | `True` | ─── HTTP behaviour ──────────────────────────────────────────────────── |
+| `FASTMCP_LOG_LEVEL` | `INFO` | ─── MCP transport / auth (agent-utilities) ──────────────────────────── |
+| `TRANSPORT` | `stdio` |  |
+| `AUTH_TYPE` | `none` |  |
+| `ACCESS_MANAGEMENTTOOL` | `True` | MCP tools table (condensed action-routed surface). |
+| `AI_GOVERNANCETOOL` | `True` |  |
+| `CUSTOM_APITOOL` | `True` |  |
+| `ASSESSMENTSTOOL` | `True` |  |
+| `AUDIT_MANAGEMENTTOOL` | `True` |  |
+| `BULK_EXPORTTOOL` | `True` |  |
+| `CMPTOOL` | `True` |  |
+| `COMPLIANCE_AUTOMATIONTOOL` | `True` |  |
+| `CONSENT_INTERFACESTOOL` | `True` |  |
+| `CONSENT_RECEIPTSTOOL` | `True` |  |
+| `COOKIE_CONSENTTOOL` | `True` |  |
+| `COOKIE_CONSENT_LEGACYTOOL` | `True` |  |
+| `COOKIE_DOMAIN_DATATOOL` | `True` |  |
+| `CROSS_DEVICE_CONSENTTOOL` | `True` |  |
+| `DATA_CATALOGTOOL` | `True` |  |
+| `DATA_DISCOVERYTOOL` | `True` |  |
+| `DATA_DISCOVERY_WORKERTOOL` | `True` |  |
+| `DATA_MAPPINGTOOL` | `True` |  |
+| `DATA_MAPPING_LEGACYTOOL` | `True` |  |
+| `DOCUMENTSTOOL` | `True` |  |
+| `DSARTOOL` | `True` |  |
+| `ESGTOOL` | `True` |  |
+| `INCIDENTSTOOL` | `True` |  |
+| `INTEGRATIONSTOOL` | `True` |  |
+| `INVENTORYTOOL` | `True` |  |
+| `ISSUES_MANAGEMENTTOOL` | `True` |  |
+| `IT_RISK_MANAGEMENTTOOL` | `True` |  |
+| `MOBILE_APP_CONSENTTOOL` | `True` |  |
+| `OBJECT_MANAGERTOOL` | `True` |  |
+| `POLICY_MANAGEMENTTOOL` | `True` |  |
+| `PRIVACY_NOTICESTOOL` | `True` |  |
+| `TASK_MANAGEMENTTOOL` | `True` |  |
+| `TPRMTOOL` | `True` |  |
+| `TRAININGTOOL` | `True` |  |
+| `UNIVERSAL_CONSENTTOOL` | `True` |  |
+| `USER_PROVISIONINGTOOL` | `True` |  |
+
+#### Inherited agent-utilities variables (apply to every connector)
+
+| Variable | Example | Description |
+|----------|---------|-------------|
+| `HOST` | `0.0.0.0` | Bind host (HTTP transports) |
+| `PORT` | `8000` | Bind port (HTTP transports) |
+| `MCP_TOOL_MODE` | `condensed` | Tool surface: `condensed` | `verbose` | `both` |
+| `MCP_ENABLED_TOOLS` | — | Comma-separated tool allow-list |
+| `MCP_DISABLED_TOOLS` | — | Comma-separated tool deny-list |
+| `MCP_ENABLED_TAGS` | — | Comma-separated tag allow-list |
+| `MCP_DISABLED_TAGS` | — | Comma-separated tag deny-list |
+| `EUNOMIA_TYPE` | `none` | Authorization mode: `none` | `embedded` | `remote` |
+| `EUNOMIA_POLICY_FILE` | `mcp_policies.json` | Embedded Eunomia policy file |
+| `EUNOMIA_REMOTE_URL` | — | Remote Eunomia authorization server URL |
+| `ENABLE_OTEL` | `False` | Enable OpenTelemetry export |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | — | OTLP collector endpoint |
+| `MCP_CLIENT_AUTH` | — | Outbound MCP auth (`oidc-client-credentials` for fleet calls) |
+| `OIDC_CLIENT_ID` | — | OIDC client id (service-account auth) |
+| `OIDC_CLIENT_SECRET` | — | OIDC client secret (service-account auth) |
+| `DEBUG` | `False` | Verbose logging |
+| `PYTHONUNBUFFERED` | `1` | Unbuffered stdout (recommended in containers) |
+| `MCP_URL` | `http://localhost:8000/mcp` | URL of the MCP server the agent connects to |
+| `PROVIDER` | `openai` | LLM provider for the agent |
+| `MODEL_ID` | `gpt-4o` | Model id for the agent |
+| `ENABLE_WEB_UI` | `True` | Serve the AG-UI web interface |
+
+_47 package + 21 inherited variable(s). Auto-generated from `.env.example` + the shared agent-utilities set — do not edit._
+<!-- ENV-VARS-TABLE:END -->
+
+
 | Variable | Description |
 | --- | --- |
 | `ONETRUST_URL` | Tenant host URL, e.g. `https://acme.my.onetrust.com` (overrides region). |
