@@ -190,6 +190,8 @@ onetrust-mcp --transport "streamable-http" --host "0.0.0.0" --port "8000"
 
 <!-- MCP-TOOLS-TABLE:START -->
 
+#### Condensed action-routed tools (default — `MCP_TOOL_MODE=condensed`)
+
 | MCP Tool | Toggle Env Var | Description |
 |----------|----------------|-------------|
 | `onetrust_access_management` | `ACCESS_MANAGEMENTTOOL` | Manage OneTrust access management operations. |
@@ -229,7 +231,614 @@ onetrust-mcp --transport "streamable-http" --host "0.0.0.0" --port "8000"
 | `onetrust_universal_consent` | `UNIVERSAL_CONSENTTOOL` | Manage OneTrust universal consent operations. |
 | `onetrust_user_provisioning` | `USER_PROVISIONINGTOOL` | Manage OneTrust user provisioning operations. |
 
-_36 action-routed tools (default `MCP_TOOL_MODE=condensed`). Each is enabled unless its toggle is set false; set `MCP_TOOL_MODE=verbose` (or `both`) for the 1:1 per-operation surface. Auto-generated — do not edit._
+#### Verbose 1:1 API-mapped tools (`MCP_TOOL_MODE=verbose` or `both`)
+
+<details>
+<summary>597 per-operation tools — one per public API method (click to expand)</summary>
+
+| MCP Tool | Toggle Env Var | Description |
+|----------|----------------|-------------|
+| `onetrust_add_access_levels_for_user_group_by_id_v2` | `ACCESS_MANAGEMENTTOOL` | Add User Group Roles |
+| `onetrust_add_amember_for_user_group_by_id_v2` | `ACCESS_MANAGEMENTTOOL` | Add User to User Group |
+| `onetrust_add_attachments_to_implementation_using_post` | `IT_RISK_MANAGEMENTTOOL` | Attach Files to Control Implementation |
+| `onetrust_add_attribute_using_post` | `AI_GOVERNANCETOOL` | Add Attribute to Schema |
+| `onetrust_add_attribute_using_post_x` | `OBJECT_MANAGERTOOL` | Add Attribute to Schema |
+| `onetrust_add_comments_using_put` | `DSARTOOL` | Add Comment to Request |
+| `onetrust_add_consent_groups_to_consent_group_using_post` | `UNIVERSAL_CONSENTTOOL` | Add Consent Groups to Parent Consent Group |
+| `onetrust_add_control_using_post` | `IT_RISK_MANAGEMENTTOOL` | Create Control |
+| `onetrust_add_controls_to_inventory_using_post` | `DATA_MAPPINGTOOL` | Create Control Implementation |
+| `onetrust_add_controls_to_risk_using_post` | `IT_RISK_MANAGEMENTTOOL` | Add Controls to Risk |
+| `onetrust_add_data_discovery_using_put` | `DSARTOOL` | Add Targeted Data Discovery Details to Subtask |
+| `onetrust_add_data_subjects_to_consent_group_using_post` | `UNIVERSAL_CONSENTTOOL` | Add Data Subjects to Parent Consent Group |
+| `onetrust_add_document_to_policy` | `POLICY_MANAGEMENTTOOL` | Add Document Attachments |
+| `onetrust_add_emission_factor` | `ESGTOOL` | Create Emission Factor |
+| `onetrust_add_emission_transaction` | `ESGTOOL` | Create Emission Transaction |
+| `onetrust_add_entity_using_entity_type_id_or_entity_type_name_using_post` | `AI_GOVERNANCETOOL` | Create Entity |
+| `onetrust_add_entity_using_entity_type_id_or_entity_type_name_using_post_x` | `OBJECT_MANAGERTOOL` | Create Object |
+| `onetrust_add_evidence_implementation_attachment` | `IT_RISK_MANAGEMENTTOOL` | Add Attachments to Evidence Task Implementation |
+| `onetrust_add_manual_assessment_links_using_post` | `ASSESSMENTSTOOL` | Link Assessments |
+| `onetrust_add_members_using_post` | `ACCESS_MANAGEMENTTOOL` | Add Members to User Group |
+| `onetrust_add_multiple_members_for_user_group_by_id_v2` | `ACCESS_MANAGEMENTTOOL` | Add Multiple Users to User Group |
+| `onetrust_add_new_resolution_using_post` | `DSARTOOL` | Create Resolution |
+| `onetrust_add_options_using_post` | `AI_GOVERNANCETOOL` | Add Options to Attribute |
+| `onetrust_add_options_using_post_x` | `OBJECT_MANAGERTOOL` | Add Options to Attribute |
+| `onetrust_add_or_update_tags_using_put` | `ASSESSMENTSTOOL` | Update Assessment Tags |
+| `onetrust_add_purpose_rules_to_consent_group_using_post` | `UNIVERSAL_CONSENTTOOL` | Add Purpose Rules to Consent Group |
+| `onetrust_add_relationship_between_entities_using_post` | `INVENTORYTOOL` | Create Relationship |
+| `onetrust_add_scans` | `COOKIE_CONSENTTOOL` | Scan Websites |
+| `onetrust_add_threat_to_risk` | `IT_RISK_MANAGEMENTTOOL` | Add Threat to Risk |
+| `onetrust_add_threat_using_post_1` | `IT_RISK_MANAGEMENTTOOL` | Create Threat |
+| `onetrust_add_threats_using_post` | `IT_RISK_MANAGEMENTTOOL` | Create Multiple Threats |
+| `onetrust_add_user_access_level_v2` | `ACCESS_MANAGEMENTTOOL` | Add User Role |
+| `onetrust_add_vulnerabilities_to_risk` | `IT_RISK_MANAGEMENTTOOL` | Add Vulnerabilities to Risk |
+| `onetrust_add_vulnerabilities_using_post` | `IT_RISK_MANAGEMENTTOOL` | Create Multiple Vulnerabilities |
+| `onetrust_add_vulnerability_using_post_1` | `IT_RISK_MANAGEMENTTOOL` | Create Vulnerability |
+| `onetrust_applicationdata` | `MOBILE_APP_CONSENTTOOL` | Get SDK Configuration |
+| `onetrust_approve_assessment_using_post` | `ASSESSMENTSTOOL` | Approve Assessment |
+| `onetrust_approve_risk_using_put` | `IT_RISK_MANAGEMENTTOOL` | Approve Risk |
+| `onetrust_archive_assessments_using_put` | `ASSESSMENTSTOOL` | Archive Assessment |
+| `onetrust_archive_scans` | `COOKIE_CONSENTTOOL` | Archive Scans |
+| `onetrust_assign_entities_to_geo_rule_group` | `COOKIE_CONSENTTOOL` | Assign Geolocation Rule Group |
+| `onetrust_assign_stage_by_name` | `AI_GOVERNANCETOOL` | Update Entity Workflow Stage |
+| `onetrust_assign_stage_by_name_1` | `INCIDENTSTOOL` | Update Incident Stage by Type |
+| `onetrust_assign_stage_by_name_x` | `INCIDENTSTOOL` | Update Incident Stage |
+| `onetrust_bulk_add_cookies` | `COOKIE_CONSENTTOOL` | Add Cookies |
+| `onetrust_bulk_cancel_domain_schedule` | `COOKIE_CONSENTTOOL` | Cancel Scheduled Website Scans |
+| `onetrust_bulk_create_links_using_post` | `IT_RISK_MANAGEMENTTOOL` | Link Controls |
+| `onetrust_bulk_delete_cookies` | `COOKIE_CONSENTTOOL` | Delete Cookies |
+| `onetrust_bulk_delete_using_put` | `DSARTOOL` | Delete Requests |
+| `onetrust_bulk_edit_cookies` | `COOKIE_CONSENTTOOL` | Edit Cookies |
+| `onetrust_cancel_bulk_export_delete` | `BULK_EXPORTTOOL` | Cancel Bulk Export |
+| `onetrust_cancel_job_using_patch` | `DATA_DISCOVERYTOOL` | Cancel Scan Job |
+| `onetrust_cancel_scan` | `COOKIE_CONSENTTOOL` | Cancel Scan |
+| `onetrust_cancel_scan_job` | `DATA_DISCOVERYTOOL` | Cancel Scan Job |
+| `onetrust_catalog_data_using_post` | `DATA_DISCOVERY_WORKERTOOL` | Submit Data to Catalog |
+| `onetrust_change_risk_stage_using_post` | `IT_RISK_MANAGEMENTTOOL` | Update Risk Stage |
+| `onetrust_check_scans_status` | `COOKIE_CONSENTTOOL` | Get Scan Statuses |
+| `onetrust_classify_data_using_post` | `DATA_DISCOVERY_WORKERTOOL` | Submit Data to Classify |
+| `onetrust_complete_sub_task_using_put` | `DSARTOOL` | Complete Subtask |
+| `onetrust_copy_inventory_using_post` | `DATA_MAPPINGTOOL` | Copy Inventory |
+| `onetrust_create_application` | `COOKIE_CONSENTTOOL` | Create Application |
+| `onetrust_create_assessment_risk_using_post` | `ASSESSMENTSTOOL` | Create Assessment Risk |
+| `onetrust_create_assessment_using_post` | `ASSESSMENTSTOOL` | Launch Assessment |
+| `onetrust_create_assessment_using_post_1` | `ASSESSMENTSTOOL` | Launch Assessment |
+| `onetrust_create_bulk_assessment_using_post` | `ASSESSMENTSTOOL` | Launch Assessments in Bulk |
+| `onetrust_create_bulk_consent_receipt_using_post` | `CONSENT_RECEIPTSTOOL` | Create Consent Receipts in Bulk |
+| `onetrust_create_collection_point_using_post` | `UNIVERSAL_CONSENTTOOL` | Create Collection Point |
+| `onetrust_create_consent_group_using_post` | `UNIVERSAL_CONSENTTOOL` | Create Consent Group |
+| `onetrust_create_consent_receipt_using_post` | `CONSENT_RECEIPTSTOOL` | Create Consent Receipts |
+| `onetrust_create_credential` | `DATA_DISCOVERYTOOL` | Create Credential |
+| `onetrust_create_custom_link_type_using_post` | `OBJECT_MANAGERTOOL` | Create Relationship Type between Objects |
+| `onetrust_create_custom_preference_using_post` | `UNIVERSAL_CONSENTTOOL` | Create Purpose Preference |
+| `onetrust_create_data_asset_tag_associations_v1` | `DATA_CATALOGTOOL` | Create Tag Associations |
+| `onetrust_create_data_asset_term_associations_v1` | `DATA_CATALOGTOOL` | Create Term Associations |
+| `onetrust_create_data_category_using_post` | `DATA_MAPPINGTOOL` | Create Data Category |
+| `onetrust_create_data_classification_using_post` | `DATA_MAPPINGTOOL` | Create Data Classification |
+| `onetrust_create_data_element_using_post` | `DATA_MAPPINGTOOL` | Create Data Element |
+| `onetrust_create_data_subject_group_v4` | `UNIVERSAL_CONSENTTOOL` | Create Data Subject Group |
+| `onetrust_create_data_subject_using_post` | `DATA_MAPPINGTOOL` | Create Data Subject |
+| `onetrust_create_detector` | `DATA_DISCOVERYTOOL` | Create Custom Classifier |
+| `onetrust_create_domain_group` | `COOKIE_CONSENTTOOL` | Create or Update Domain Group |
+| `onetrust_create_domain_group_using_post` | `COOKIE_CONSENT_LEGACYTOOL` | Create or Update Domain Group |
+| `onetrust_create_engagement_using_post` | `TPRMTOOL` | Create Engagement |
+| `onetrust_create_group` | `USER_PROVISIONINGTOOL` | Create User Group |
+| `onetrust_create_identified_consent_receipt_using_post` | `CONSENT_RECEIPTSTOOL` | Create Identified Consent Receipts |
+| `onetrust_create_incident_using_post` | `INCIDENTSTOOL` | Create Incident |
+| `onetrust_create_index` | `UNIVERSAL_CONSENTTOOL` | Create Custom Index |
+| `onetrust_create_inventory_links` | `INCIDENTSTOOL` | Link Incident to Inventory |
+| `onetrust_create_inventory_relations_using_post` | `INVENTORYTOOL` | Create Relationship |
+| `onetrust_create_inventory_using_post` | `DATA_MAPPINGTOOL` | Create Inventory |
+| `onetrust_create_issue_relationship_links_using_post` | `ISSUES_MANAGEMENTTOOL` | Create Issue Relationship |
+| `onetrust_create_issue_using_post` | `ISSUES_MANAGEMENTTOOL` | Create Issue |
+| `onetrust_create_job_using_post` | `UNIVERSAL_CONSENTTOOL` | Create Job |
+| `onetrust_create_job_using_post_x` | `DATA_DISCOVERYTOOL` | Create Scan Job |
+| `onetrust_create_link_record_between_entities_using_link_type_id_using_post` | `AI_GOVERNANCETOOL` | Create Relationship Record between Entities |
+| `onetrust_create_link_record_between_entities_using_link_type_id_using_post_x` | `OBJECT_MANAGERTOOL` | Create Relationship Record between Objects |
+| `onetrust_create_linked_identity_group_using_post` | `UNIVERSAL_CONSENTTOOL` | Create Data Subject Group |
+| `onetrust_create_model_using_post` | `OBJECT_MANAGERTOOL` | Create Model Object |
+| `onetrust_create_new_cookie` | `COOKIE_CONSENT_LEGACYTOOL` | Create Cookie |
+| `onetrust_create_new_purpose_version_using_post` | `UNIVERSAL_CONSENTTOOL` | Create New Purpose Version |
+| `onetrust_create_or_update_data_subject_using_post` | `UNIVERSAL_CONSENTTOOL` | Update Data Subject's Data Elements |
+| `onetrust_create_or_upsert_data_asset_v1` | `DATA_CATALOGTOOL` | Create Data Asset |
+| `onetrust_create_organization_using_post` | `ACCESS_MANAGEMENTTOOL` | Create Organization |
+| `onetrust_create_policy` | `POLICY_MANAGEMENTTOOL` | Create Document |
+| `onetrust_create_policy_versions` | `POLICY_MANAGEMENTTOOL` | Create Document Version |
+| `onetrust_create_project_using_post` | `OBJECT_MANAGERTOOL` | Create Project Object |
+| `onetrust_create_purpose_using_post` | `UNIVERSAL_CONSENTTOOL` | Create Purpose |
+| `onetrust_create_relations_using_post` | `DATA_MAPPINGTOOL` | Link Inventory |
+| `onetrust_create_request_queue_from_message_using_post` | `DSARTOOL` | Create Request |
+| `onetrust_create_request_queue_v2_using_post` | `DSARTOOL` | Create Request |
+| `onetrust_create_risk_using_post` | `IT_RISK_MANAGEMENTTOOL` | Create Risk |
+| `onetrust_create_stand_alone_risk_using_post` | `IT_RISK_MANAGEMENTTOOL` | Create Risk |
+| `onetrust_create_sub_task_from_template_using_post` | `DSARTOOL` | Add Subtask to Request using Subtask Template |
+| `onetrust_create_sub_task_using_post` | `DSARTOOL` | Add Subtask to Request |
+| `onetrust_create_tag_v2` | `DATA_CATALOGTOOL` | Create Tag |
+| `onetrust_create_task_using_post` | `TASK_MANAGEMENTTOOL` | Create Task |
+| `onetrust_create_task_using_post_1` | `AI_GOVERNANCETOOL` | Create Task |
+| `onetrust_create_task_using_post_1_x` | `OBJECT_MANAGERTOOL` | Create Task |
+| `onetrust_create_task_using_post_x` | `ASSESSMENTSTOOL` | Create Assessment Task |
+| `onetrust_create_term_using_post` | `DATA_CATALOGTOOL` | Create Term |
+| `onetrust_create_update_risk_using_put` | `IT_RISK_MANAGEMENTTOOL` | Create or Update Risk |
+| `onetrust_create_user` | `USER_PROVISIONINGTOOL` | Create User |
+| `onetrust_create_user_group_using_post` | `ACCESS_MANAGEMENTTOOL` | Create User Group |
+| `onetrust_create_user_group_v2` | `ACCESS_MANAGEMENTTOOL` | Create User Group |
+| `onetrust_create_user_using_post` | `USER_PROVISIONINGTOOL` | Create User |
+| `onetrust_create_user_v2` | `ACCESS_MANAGEMENTTOOL` | Create User |
+| `onetrust_create_v2_using_post` | `DATA_DISCOVERYTOOL` | Create Scan Profile |
+| `onetrust_create_v2_using_post_x` | `INTEGRATIONSTOOL` | Create System Credential |
+| `onetrust_create_v2_verification_method_using_post` | `DSARTOOL` | Create Verification Method |
+| `onetrust_create_vendor_contract_using_post` | `TPRMTOOL` | Create Contract |
+| `onetrust_create_version_using_post` | `UNIVERSAL_CONSENTTOOL` | Create New Collection Point Version |
+| `onetrust_cross_device_consent_using_delete` | `UNIVERSAL_CONSENTTOOL` | Delete Cross Device Consents and Receipts |
+| `onetrust_data_discovery_updates_using_post` | `DSARTOOL` | Add Targeted Data Discovery Results Summary to Request |
+| `onetrust_delete_audit_using_delete` | `AUDIT_MANAGEMENTTOOL` | Delete Audit |
+| `onetrust_delete_consent_group_purpose_rule_using_delete` | `UNIVERSAL_CONSENTTOOL` | Remove Purpose Rule from Consent Group |
+| `onetrust_delete_credential` | `DATA_DISCOVERYTOOL` | Delete Credential |
+| `onetrust_delete_data_asset_tag_associations_v1` | `DATA_CATALOGTOOL` | Delete Multiple Data Asset Tag Associations |
+| `onetrust_delete_data_asset_term_associations_v1` | `DATA_CATALOGTOOL` | Delete Multiple Data Asset Term Associations |
+| `onetrust_delete_data_asset_v1` | `DATA_CATALOGTOOL` | Delete Data Asset |
+| `onetrust_delete_data_category_using_delete` | `DATA_MAPPINGTOOL` | Delete Data Category |
+| `onetrust_delete_data_classification_using_delete` | `DATA_MAPPINGTOOL` | Delete Data Classification |
+| `onetrust_delete_data_element_using_delete` | `DATA_MAPPINGTOOL` | Delete Data Element |
+| `onetrust_delete_data_subject_profile_using_delete` | `UNIVERSAL_CONSENTTOOL` | Delete Data Subjects |
+| `onetrust_delete_data_subject_profiles_using_delete` | `UNIVERSAL_CONSENTTOOL` | Delete Purposes from Data Subject |
+| `onetrust_delete_data_subject_using_delete` | `DATA_MAPPINGTOOL` | Delete Data Subject |
+| `onetrust_delete_data_subject_using_ttl` | `UNIVERSAL_CONSENTTOOL` | Delete Data Subject |
+| `onetrust_delete_data_subjects_to_consent_group_using_delete` | `UNIVERSAL_CONSENTTOOL` | Remove Data Subject from Parent Consent Group |
+| `onetrust_delete_detector` | `DATA_DISCOVERYTOOL` | Delete Custom Classifier |
+| `onetrust_delete_domain` | `COOKIE_CONSENTTOOL` | Delete Domain |
+| `onetrust_delete_group` | `USER_PROVISIONINGTOOL` | Delete User Group |
+| `onetrust_delete_inventory_relations_using_relationship_type_name` | `INVENTORYTOOL` | Delete Relationship by Type ID |
+| `onetrust_delete_inventory_relations_using_relationship_type_name_1` | `INVENTORYTOOL` | Delete Relationship by Type Name |
+| `onetrust_delete_inventory_using_delete` | `DATA_MAPPINGTOOL` | Delete Inventory |
+| `onetrust_delete_link_record_by_id_and_type_using_link_type_id_using_delete` | `AI_GOVERNANCETOOL` | Remove Relationship Record |
+| `onetrust_delete_link_record_by_id_and_type_using_link_type_id_using_delete_x` | `OBJECT_MANAGERTOOL` | Remove Relationship Record |
+| `onetrust_delete_merge_request_using_delete` | `UNIVERSAL_CONSENTTOOL` | Delete Scheduled Export |
+| `onetrust_delete_model_using_delete` | `OBJECT_MANAGERTOOL` | Delete Model Object |
+| `onetrust_delete_organization_post` | `ACCESS_MANAGEMENTTOOL` | Delete Organization |
+| `onetrust_delete_project_using_delete` | `OBJECT_MANAGERTOOL` | Delete Project Object |
+| `onetrust_delete_purpose_from_data_subject_using_delete` | `UNIVERSAL_CONSENTTOOL` | Delete Purpose from Data Subjects |
+| `onetrust_delete_purpose_from_data_subjects_using_ttl` | `UNIVERSAL_CONSENTTOOL` | Delete Purposes from Data Subjects |
+| `onetrust_delete_relations_using_delete` | `DATA_MAPPINGTOOL` | Delete Inventory Link |
+| `onetrust_delete_resolution_using_delete` | `DSARTOOL` | Delete Resolution |
+| `onetrust_delete_risk_using_delete` | `IT_RISK_MANAGEMENTTOOL` | Delete Risk |
+| `onetrust_delete_scan_profile_using_delete_1` | `DATA_DISCOVERYTOOL` | Delete Scan Profile |
+| `onetrust_delete_scope_using_delete` | `AUDIT_MANAGEMENTTOOL` | Delete Audit Scope |
+| `onetrust_delete_system_using_delete_1` | `DATA_DISCOVERYTOOL` | Delete Data Source |
+| `onetrust_delete_template_versions_using_delete` | `ASSESSMENTSTOOL` | Delete Template |
+| `onetrust_delete_user_group_by_id_v2` | `ACCESS_MANAGEMENTTOOL` | Delete User Group |
+| `onetrust_delete_user_group_using_delete` | `ACCESS_MANAGEMENTTOOL` | Delete User Group |
+| `onetrust_delete_user_using_delete` | `USER_PROVISIONINGTOOL` | Delete User |
+| `onetrust_delete_using_delete` | `UNIVERSAL_CONSENTTOOL` | Delete Data Subject Group |
+| `onetrust_delete_using_entity_type_id_or_entity_type_name_using_delete` | `AI_GOVERNANCETOOL` | Delete Entity |
+| `onetrust_delete_using_entity_type_id_or_entity_type_name_using_delete_x` | `OBJECT_MANAGERTOOL` | Delete Object |
+| `onetrust_disable_attribute_using_put` | `AI_GOVERNANCETOOL` | Disable Attribute |
+| `onetrust_disable_attribute_using_put_x` | `OBJECT_MANAGERTOOL` | Disable Attribute |
+| `onetrust_disable_collection_point_using_put` | `UNIVERSAL_CONSENTTOOL` | Update Collection Point Status |
+| `onetrust_domaindata` | `COOKIE_DOMAIN_DATATOOL` | Get Domain Data |
+| `onetrust_download_consent_attachments` | `UNIVERSAL_CONSENTTOOL` | Download All Consent Attachments |
+| `onetrust_download_given_consent_attachments` | `UNIVERSAL_CONSENTTOOL` | Download Consent Attachment |
+| `onetrust_download_script_file` | `COOKIE_CONSENTTOOL` | Download Script File |
+| `onetrust_download_to_local_using_get` | `COOKIE_CONSENT_LEGACYTOOL` | Download Script File |
+| `onetrust_edit_collection_point_using_put` | `UNIVERSAL_CONSENTTOOL` | Update Existing Collection Point |
+| `onetrust_edit_custom_preference_using_put` | `UNIVERSAL_CONSENTTOOL` | Update Purpose Preference |
+| `onetrust_edit_purpose_using_put` | `UNIVERSAL_CONSENTTOOL` | Update Purpose |
+| `onetrust_edit_workpaper_details_using_post` | `AUDIT_MANAGEMENTTOOL` | Update Workpaper |
+| `onetrust_enable_attribute_using_put` | `AI_GOVERNANCETOOL` | Enable Attribute |
+| `onetrust_enable_attribute_using_put_x` | `OBJECT_MANAGERTOOL` | Enable Attribute |
+| `onetrust_enabled_custom_entity_type_using_put` | `OBJECT_MANAGERTOOL` | Enable Custom Object Type by ID |
+| `onetrust_enabled_custom_entity_type_using_put_1` | `OBJECT_MANAGERTOOL` | Enable Custom Object Type by Name |
+| `onetrust_enroll_users_to_course_using_post` | `TRAININGTOOL` | Enroll Users to Course |
+| `onetrust_export_assessment_using_get` | `ASSESSMENTSTOOL` | Get Assessment |
+| `onetrust_export_template_with_business_keys_using_get` | `ASSESSMENTSTOOL` | Export Template |
+| `onetrust_export_workflow_using_get_1` | `INTEGRATIONSTOOL` | Export Workflow |
+| `onetrust_exportduplicatedatasubject` | `UNIVERSAL_CONSENTTOOL` | Generate Export of Duplicate Data Subjects |
+| `onetrust_external_search` | `DATA_CATALOGTOOL` | Get Catalog Search Results |
+| `onetrust_external_search_using_continuationtoken` | `DATA_CATALOGTOOL` | Get Catalog Search Results |
+| `onetrust_fetch_all_contract_types_using_get` | `TPRMTOOL` | Get List of Contract Types |
+| `onetrust_fetch_metrics_details` | `ESGTOOL` | Get Metric Details |
+| `onetrust_file_location` | `DOCUMENTSTOOL` | Get File Location |
+| `onetrust_file_upload` | `DOCUMENTSTOOL` | Upload File |
+| `onetrust_find_all_by_link_type_and_criteria_using_post` | `OBJECT_MANAGERTOOL` | Get List of Relationship Link Types |
+| `onetrust_find_all_by_type_and_criteria` | `ESGTOOL` | Get List of Emission Details |
+| `onetrust_find_all_by_type_and_criteria_using_post` | `OBJECT_MANAGERTOOL` | Get List of Object Types |
+| `onetrust_find_all_by_type_and_criteria_using_post_1` | `AI_GOVERNANCETOOL` | Get List of Entity Types |
+| `onetrust_find_all_by_type_id_and_criteria_using_post` | `AI_GOVERNANCETOOL` | Get Full Entity Details |
+| `onetrust_find_all_by_type_id_and_criteria_using_post_x` | `OBJECT_MANAGERTOOL` | Get Full Object Details |
+| `onetrust_find_all_control_implementations_attributes_and_options_by_using_post` | `IT_RISK_MANAGEMENTTOOL` | Search Control Implementation Attributes |
+| `onetrust_find_all_control_implementations_using_post` | `IT_RISK_MANAGEMENTTOOL` | Get List of Control Implementations |
+| `onetrust_find_all_evidences_by_search_criteria_1` | `IT_RISK_MANAGEMENTTOOL` | Get List of Evidence Task Implementations |
+| `onetrust_find_all_initiatives_by_filter_using_post` | `COMPLIANCE_AUTOMATIONTOOL` | Get List of Initiatives |
+| `onetrust_find_all_issues_by_filter_using_post` | `ISSUES_MANAGEMENTTOOL` | Get List of Issues |
+| `onetrust_find_associated_control_implementations_using_post` | `IT_RISK_MANAGEMENTTOOL` | Get List of Control Implementations by Entity |
+| `onetrust_find_by_guid_using_get` | `UNIVERSAL_CONSENTTOOL` | Get Purpose Preference |
+| `onetrust_find_controls_by_criteria_using_post_1` | `IT_RISK_MANAGEMENTTOOL` | Get List of Controls |
+| `onetrust_find_entity_basic_details_by_type_and_criteria_using_post` | `AI_GOVERNANCETOOL` | Get Basic Entity Details |
+| `onetrust_find_entity_basic_details_by_type_and_criteria_using_post_x` | `OBJECT_MANAGERTOOL` | Get Basic Object Details |
+| `onetrust_find_evidence_implementations_by_id_1` | `IT_RISK_MANAGEMENTTOOL` | Get Evidence Task Implementation |
+| `onetrust_find_model_basic_details_by_query_criteria_using_post` | `OBJECT_MANAGERTOOL` | Get Basic Model Object Details |
+| `onetrust_find_models_by_list_criteria_using_post` | `OBJECT_MANAGERTOOL` | Get Model Object Details |
+| `onetrust_find_project_basic_details_by_query_criteria_using_post` | `OBJECT_MANAGERTOOL` | Get Basic Project Object Details |
+| `onetrust_find_projects_by_list_criteria_using_post` | `OBJECT_MANAGERTOOL` | Get Project Object Details |
+| `onetrust_find_receipt_using_get` | `UNIVERSAL_CONSENTTOOL` | Get Receipt |
+| `onetrust_find_task_using_get_1` | `AI_GOVERNANCETOOL` | Get Task |
+| `onetrust_find_task_using_get_1_x` | `OBJECT_MANAGERTOOL` | Get Task |
+| `onetrust_find_threats_by_criteria_using_post` | `IT_RISK_MANAGEMENTTOOL` | Get List of Threats |
+| `onetrust_find_vulnerabilities_by_criteria_using_post` | `IT_RISK_MANAGEMENTTOOL` | Get List of Vulnerabilities |
+| `onetrust_get_access_levels_for_user_group_by_id_v2` | `ACCESS_MANAGEMENTTOOL` | Get User Group Roles |
+| `onetrust_get_active_categories_using_get` | `IT_RISK_MANAGEMENTTOOL` | Get List of Risk Categories |
+| `onetrust_get_all_assessment_basic_details_using_get` | `ASSESSMENTSTOOL` | Get List of Assessments |
+| `onetrust_get_all_basic_template_details_using_get` | `ASSESSMENTSTOOL` | Get List of Templates |
+| `onetrust_get_all_data_asset_attribute_names` | `DATA_CATALOGTOOL` | Get List of Data Asset Attributes |
+| `onetrust_get_all_emission_factors_basic_entity_details` | `ESGTOOL` | Get List of Emission Factors |
+| `onetrust_get_all_enabled_control_entity_types_using_get` | `IT_RISK_MANAGEMENTTOOL` | Get List of Control Entity Source Types |
+| `onetrust_get_all_enabled_risk_entity_types_using_get` | `IT_RISK_MANAGEMENTTOOL` | Get List of Risk Entity Types |
+| `onetrust_get_all_enabled_source_entity_types_using_get` | `IT_RISK_MANAGEMENTTOOL` | Get List of Risk Entity Source Types |
+| `onetrust_get_all_glossaries_by_names` | `DATA_CATALOGTOOL` | Get Glossary |
+| `onetrust_get_all_glossaries_names` | `DATA_CATALOGTOOL` | Get List of Glossaries |
+| `onetrust_get_all_group_and_attachment_details_using_get` | `DSARTOOL` | Get Targeted Data Discovery Group |
+| `onetrust_get_all_group_by_request_using_get` | `DSARTOOL` | Get List of Targeted Data Discovery Groups |
+| `onetrust_get_all_profiles_by_data_subject_v4` | `UNIVERSAL_CONSENTTOOL` | Get List of All Purpose Details by Data Subject |
+| `onetrust_get_all_related_control_entity_types_using_get` | `IT_RISK_MANAGEMENTTOOL` | Get Related Control Entity Types |
+| `onetrust_get_all_request_queues_v2_using_get` | `DSARTOOL` | Get List of Requests |
+| `onetrust_get_all_schemas_using_get` | `DATA_MAPPINGTOOL` | Get List of Inventory Schemas |
+| `onetrust_get_all_sub_task_by_ref_id_using_get` | `DSARTOOL` | Get List of Subtasks by Request |
+| `onetrust_get_all_subtasks_v3_using_post` | `DSARTOOL` | Get List of Subtasks by Criteria |
+| `onetrust_get_all_term_attribute_names` | `DATA_CATALOGTOOL` | Get List of Term Attributes |
+| `onetrust_get_all_user_details_v2` | `ACCESS_MANAGEMENTTOOL` | Get List of Users |
+| `onetrust_get_all_user_group_with_filters_v2` | `ACCESS_MANAGEMENTTOOL` | Get List of User Groups |
+| `onetrust_get_all_users_using_get` | `USER_PROVISIONINGTOOL` | Get List of Users |
+| `onetrust_get_all_using_get_1` | `DATA_DISCOVERYTOOL` | Get List of Data Sources |
+| `onetrust_get_all_using_get_2` | `DATA_DISCOVERYTOOL` | Get List of Scan Profiles |
+| `onetrust_get_all_v2_resolutions_using_get` | `DSARTOOL` | Get List of Resolutions |
+| `onetrust_get_all_v2_verification_methods_by_id_using_get` | `DSARTOOL` | Get Verification Method |
+| `onetrust_get_all_v2_verification_methods_using_get` | `DSARTOOL` | Get List of Verification Methods |
+| `onetrust_get_app_script_details` | `COOKIE_CONSENTTOOL` | Get Script for Application |
+| `onetrust_get_application_branding_attribute_list` | `COOKIE_CONSENTTOOL` | Get Branding Attributes for Application |
+| `onetrust_get_applications` | `COOKIE_CONSENTTOOL` | Get List of Applications |
+| `onetrust_get_assessment_delete_logs_using_get` | `ASSESSMENTSTOOL` | Export Deleted Assessment Audit Log |
+| `onetrust_get_assessment_results_using_get` | `ASSESSMENTSTOOL` | Get List of Assessment Results |
+| `onetrust_get_assessments_using_post` | `ASSESSMENTSTOOL` | Get List of Assessments by Criteria |
+| `onetrust_get_attachment_download_commands_get` | `BULK_EXPORTTOOL` | Get Bulk Export Download Details |
+| `onetrust_get_attributes_by_schema_name_using_get` | `ISSUES_MANAGEMENTTOOL` | Get Attribute Schema |
+| `onetrust_get_audit_detail_using_get` | `AUDIT_MANAGEMENTTOOL` | Get Audit |
+| `onetrust_get_audit_list_page_using_post` | `AUDIT_MANAGEMENTTOOL` | Get List of Audits |
+| `onetrust_get_audit_workpaper_list_view_using_post` | `AUDIT_MANAGEMENTTOOL` | Get List of Workpapers |
+| `onetrust_get_banner` | `CMPTOOL` | Get Banner Data |
+| `onetrust_get_branding_attribute_list` | `COOKIE_CONSENTTOOL` | Get Branding Attributes for Domain |
+| `onetrust_get_categorized_cookies` | `COOKIE_CONSENTTOOL` | Get Categorized Cookies |
+| `onetrust_get_categorized_cookies_using_get` | `COOKIE_CONSENT_LEGACYTOOL` | Categorize Cookies by Domain |
+| `onetrust_get_categorized_cookies_with_cookie_ids_using_get` | `COOKIE_CONSENT_LEGACYTOOL` | Categorize Cookies by Domain and Cookie ID |
+| `onetrust_get_collection_points_using_get` | `UNIVERSAL_CONSENTTOOL` | Get List of Collection Points |
+| `onetrust_get_collection_points_using_get_1` | `UNIVERSAL_CONSENTTOOL` | Get List of Collection Points |
+| `onetrust_get_consent_group_list_using_get` | `UNIVERSAL_CONSENTTOOL` | Get List of Consent Groups |
+| `onetrust_get_consent_group_settings_using_get` | `UNIVERSAL_CONSENTTOOL` | Get Priority Scores for Purpose Statuses |
+| `onetrust_get_consent_group_using_get` | `UNIVERSAL_CONSENTTOOL` | Get Consent Group |
+| `onetrust_get_contract_schema_using_get` | `TPRMTOOL` | Get Contract Schema |
+| `onetrust_get_control_implementation_details_using_get` | `IT_RISK_MANAGEMENTTOOL` | Get Control Implementation |
+| `onetrust_get_cookie_reports_using_post` | `COOKIE_CONSENT_LEGACYTOOL` | Get List of Cookies by Criteria |
+| `onetrust_get_cookies_by_filter` | `COOKIE_CONSENTTOOL` | Get List of Cookies by Criteria |
+| `onetrust_get_credential_by_id` | `DATA_DISCOVERYTOOL` | Get Credential |
+| `onetrust_get_credentials` | `DATA_DISCOVERYTOOL` | Get List of Credentials |
+| `onetrust_get_credits_information_get` | `BULK_EXPORTTOOL` | Get Bulk Export Credit Details |
+| `onetrust_get_data_asset_attribute_by_name` | `DATA_CATALOGTOOL` | Get Data Asset Attribute |
+| `onetrust_get_data_asset_v1` | `DATA_CATALOGTOOL` | Get Data Asset |
+| `onetrust_get_data_categories_by_partial_name_using_get` | `DATA_MAPPINGTOOL` | Get List of Data Categories |
+| `onetrust_get_data_category_using_get` | `DATA_MAPPINGTOOL` | Get Data Category |
+| `onetrust_get_data_classification_using_get` | `DATA_MAPPINGTOOL` | Get Data Classification |
+| `onetrust_get_data_element_using_get` | `DATA_MAPPINGTOOL` | Get Data Element |
+| `onetrust_get_data_source_by_id_using_get_1` | `DATA_DISCOVERYTOOL` | Get Data Source |
+| `onetrust_get_data_subject_basic_details_v4` | `UNIVERSAL_CONSENTTOOL` | Get Data Subject |
+| `onetrust_get_data_subject_details_v4` | `UNIVERSAL_CONSENTTOOL` | Get Data Subject Details |
+| `onetrust_get_data_subject_groups_list_v4` | `UNIVERSAL_CONSENTTOOL` | Get List of Data Subject Groups |
+| `onetrust_get_data_subject_profile_using_get` | `UNIVERSAL_CONSENTTOOL` | Get List of Data Subjects |
+| `onetrust_get_data_subject_profile_v4` | `UNIVERSAL_CONSENTTOOL` | Get Purpose Details by Data Subject |
+| `onetrust_get_data_subject_profiles_unordered_v4` | `UNIVERSAL_CONSENTTOOL` | Get Optimized List of All Purpose Details for All Data Subjects |
+| `onetrust_get_data_subject_profiles_v4` | `UNIVERSAL_CONSENTTOOL` | Get List of All Purpose Details for All Data Subjects |
+| `onetrust_get_data_subject_purposes_by_identifier_using_get` | `UNIVERSAL_CONSENTTOOL` | Get List of Purposes for a Data Subject |
+| `onetrust_get_data_subject_purposes_by_identifier_using_get_1` | `UNIVERSAL_CONSENTTOOL` | Get Data Subject's Preferences in a Preference Center |
+| `onetrust_get_data_subject_using_get` | `DATA_MAPPINGTOOL` | Get Data Subject |
+| `onetrust_get_data_subjects_by_partial_name_using_get` | `DATA_MAPPINGTOOL` | Get List of Data Subjects |
+| `onetrust_get_data_subjects_for_purposes_using_get` | `UNIVERSAL_CONSENTTOOL` | Get List of Data Subjects by Purpose |
+| `onetrust_get_data_subjects_unordered_v4` | `UNIVERSAL_CONSENTTOOL` | Get Optimized List of Data Subjects |
+| `onetrust_get_data_subjects_using_get` | `UNIVERSAL_CONSENTTOOL` | Get List of Data Subjects |
+| `onetrust_get_data_subjects_v4` | `UNIVERSAL_CONSENTTOOL` | Get List of Data Subjects |
+| `onetrust_get_deletion_certificate_using_get` | `DSARTOOL` | Get Deletion Certificate |
+| `onetrust_get_detailed_scan_result_information` | `COOKIE_CONSENTTOOL` | Get Scan Results |
+| `onetrust_get_detector_by_classifier_name` | `DATA_DISCOVERYTOOL` | Get Custom Classifier |
+| `onetrust_get_docker_repository_tags_using_get` | `DATA_DISCOVERYTOOL` | Get List of Image tags |
+| `onetrust_get_domain_scans` | `COOKIE_CONSENTTOOL` | Get List of Scans by Domain |
+| `onetrust_get_domains_scanned_by_sort` | `COOKIE_CONSENTTOOL` | Get List of Websites |
+| `onetrust_get_domains_scanned_by_sort_using_get` | `COOKIE_CONSENT_LEGACYTOOL` | Get List of Websites |
+| `onetrust_get_eligible_jobs_using_get` | `DATA_DISCOVERY_WORKERTOOL` | Get List of Scan Jobs |
+| `onetrust_get_email_link_token_by_data_subject_v4` | `UNIVERSAL_CONSENTTOOL` | Get Data Subject Token |
+| `onetrust_get_email_link_tokens_list_v4` | `UNIVERSAL_CONSENTTOOL` | Get List of Data Subject Tokens |
+| `onetrust_get_engagement_schema_using_get` | `TPRMTOOL` | Get Engagement Schema |
+| `onetrust_get_enrollment_details_using_post` | `TRAININGTOOL` | Get Enrollment Details |
+| `onetrust_get_entity_information_using_entity_type_id_or_entity_type_name_using_get` | `AI_GOVERNANCETOOL` | Get Entity |
+| `onetrust_get_entity_information_using_entity_type_id_or_entity_type_name_using_get_x` | `OBJECT_MANAGERTOOL` | Get Object |
+| `onetrust_get_entity_type_information_using_get` | `OBJECT_MANAGERTOOL` | Get Object Type by ID |
+| `onetrust_get_entity_type_information_using_get_1` | `AI_GOVERNANCETOOL` | Get Entity Type |
+| `onetrust_get_entity_type_information_using_get_1_x` | `OBJECT_MANAGERTOOL` | Get Object Type by Name |
+| `onetrust_get_export_run_details_get` | `BULK_EXPORTTOOL` | Get Bulk Export Status |
+| `onetrust_get_export_runs_get` | `BULK_EXPORTTOOL` | Get List of Bulk Exports |
+| `onetrust_get_geo_rule_group_details` | `COOKIE_CONSENTTOOL` | Get Geolocation Rule Group |
+| `onetrust_get_geo_rule_groups` | `COOKIE_CONSENTTOOL` | Get List of Geolocation Rule Groups |
+| `onetrust_get_group_by_id` | `USER_PROVISIONINGTOOL` | Get User Group |
+| `onetrust_get_group_resource_using_get` | `USER_PROVISIONINGTOOL` | Get Group |
+| `onetrust_get_grouped_purposes_v2` | `UNIVERSAL_CONSENTTOOL` | Get List of Purpose Versions |
+| `onetrust_get_groups` | `USER_PROVISIONINGTOOL` | Get List of User Groups |
+| `onetrust_get_hierarchy_for_inventory_id_using_get` | `DATA_MAPPINGTOOL` | Get List of Child Inventories by Root Inventory |
+| `onetrust_get_incident_detail_by_incident_id_using_get` | `INCIDENTSTOOL` | Get Incident |
+| `onetrust_get_index_creation_status` | `UNIVERSAL_CONSENTTOOL` | Get Index Creation Status |
+| `onetrust_get_initiative_using_get` | `COMPLIANCE_AUTOMATIONTOOL` | Get Initiative |
+| `onetrust_get_inventory_by_external_id_using_get` | `DATA_MAPPINGTOOL` | Get Inventory by External ID |
+| `onetrust_get_inventory_by_id_using_get` | `DATA_MAPPINGTOOL` | Get Inventory by ID |
+| `onetrust_get_inventory_relations_by_id_using_get` | `DATA_MAPPINGTOOL` | Get Inventory Links |
+| `onetrust_get_inventory_relationship_using_relationship_type_name` | `INVENTORYTOOL` | Get Relationship by Type ID |
+| `onetrust_get_inventory_relationship_using_relationship_type_name_1` | `INVENTORYTOOL` | Get Relationship by Type Name |
+| `onetrust_get_inventory_v2_schemas_attributes_attribute_id_values_value_id` | `DATA_MAPPING_LEGACYTOOL` | Get Attribute Options |
+| `onetrust_get_issue_links_using_get` | `ISSUES_MANAGEMENTTOOL` | Get Issue Relationships |
+| `onetrust_get_issue_related_tasks_using_get` | `ISSUES_MANAGEMENTTOOL` | Get Issue Tasks |
+| `onetrust_get_issue_using_get` | `ISSUES_MANAGEMENTTOOL` | Get Issue |
+| `onetrust_get_job_by_id_using_get` | `DATA_DISCOVERYTOOL` | Get Scan Job |
+| `onetrust_get_job_using_get_1` | `DATA_DISCOVERYTOOL` | Get Scan Job |
+| `onetrust_get_latest_policies` | `POLICY_MANAGEMENTTOOL` | Get List of Documents |
+| `onetrust_get_link_record_information_using_link_type_id_using_get` | `AI_GOVERNANCETOOL` | Get Relationship Record |
+| `onetrust_get_link_record_information_using_link_type_id_using_get_x` | `OBJECT_MANAGERTOOL` | Get Relationship Record |
+| `onetrust_get_link_tokens_using_get` | `UNIVERSAL_CONSENTTOOL` | Get List of Data Subject Tokens |
+| `onetrust_get_link_type_using_get` | `OBJECT_MANAGERTOOL` | Get Relationship Type |
+| `onetrust_get_linked_assessments_information_using_get` | `ASSESSMENTSTOOL` | Get List of Linked Assessments |
+| `onetrust_get_linked_identity_group_members_v4` | `UNIVERSAL_CONSENTTOOL` | Get List of Data Subject Group Members |
+| `onetrust_get_linked_identity_group_using_get` | `UNIVERSAL_CONSENTTOOL` | Get Data Subject Group |
+| `onetrust_get_linked_identity_groups_by_data_subject_v4` | `UNIVERSAL_CONSENTTOOL` | Get List of Data Subject Group Associations by Data Subject |
+| `onetrust_get_linked_identity_groups_using_get` | `UNIVERSAL_CONSENTTOOL` | Get List of Data Subject Groups |
+| `onetrust_get_linked_risks_information_using_post` | `IT_RISK_MANAGEMENTTOOL` | Get List of Linked Risks |
+| `onetrust_get_list_of_deletion_certificates` | `UNIVERSAL_CONSENTTOOL` | Get List of Deletion Certificates |
+| `onetrust_get_list_of_inventories_by_filter_criteria_using_post` | `DATA_MAPPINGTOOL` | Get List of Inventories by Criteria |
+| `onetrust_get_list_of_inventories_using_get` | `DATA_MAPPINGTOOL` | Get List of Inventories |
+| `onetrust_get_list_using_get` | `UNIVERSAL_CONSENTTOOL` | Get List of Purpose Preferences |
+| `onetrust_get_matrix_score_setting_using_get` | `IT_RISK_MANAGEMENTTOOL` | Get Risk Matrix Configuration |
+| `onetrust_get_members_from_auser_group_by_id_v2` | `ACCESS_MANAGEMENTTOOL` | Get List of Users in User Group |
+| `onetrust_get_merge_request_using_get` | `UNIVERSAL_CONSENTTOOL` | Get Scheduled Export |
+| `onetrust_get_model_using_get` | `OBJECT_MANAGERTOOL` | Get Model Object |
+| `onetrust_get_oauth_token` | `ACCESS_MANAGEMENTTOOL` | Generate Access Token |
+| `onetrust_get_paged_merge_request_using_get` | `UNIVERSAL_CONSENTTOOL` | Get List of Scheduled Exports |
+| `onetrust_get_paginated_attachment_download_commands_get` | `BULK_EXPORTTOOL` | Get List of Bulk Export Download Details |
+| `onetrust_get_personal_data_for_relationships_using_post` | `INVENTORYTOOL` | Get Personal Data for Relationship by Type ID |
+| `onetrust_get_personal_data_for_relationships_using_post_1` | `INVENTORYTOOL` | Get Personal Data for Relationship by Type Name |
+| `onetrust_get_policy` | `POLICY_MANAGEMENTTOOL` | Get Document |
+| `onetrust_get_preference_center_by_id_using_get` | `UNIVERSAL_CONSENTTOOL` | Get Preference Center Schema |
+| `onetrust_get_preference_center_page_schema_using_get` | `UNIVERSAL_CONSENTTOOL` | Get Preference Center Page Schema |
+| `onetrust_get_preference_centers_using_get` | `UNIVERSAL_CONSENTTOOL` | Get List of Preference Centers |
+| `onetrust_get_preferences` | `CMPTOOL` | Get Preference Center Data |
+| `onetrust_get_preferences_using_get` | `CROSS_DEVICE_CONSENTTOOL` | Get Data Subject's Preferences |
+| `onetrust_get_privacy_notice_version_by_published_date_using_get` | `PRIVACY_NOTICESTOOL` | Get Privacy Notice Version |
+| `onetrust_get_privacy_notice_versions_using_get` | `PRIVACY_NOTICESTOOL` | Get List of Privacy Notice Versions |
+| `onetrust_get_privacy_notices_using_get` | `PRIVACY_NOTICESTOOL` | Get List of Privacy Notices |
+| `onetrust_get_project_using_get` | `OBJECT_MANAGERTOOL` | Get Project Object |
+| `onetrust_get_published_policy_version` | `POLICY_MANAGEMENTTOOL` | Get Document Version |
+| `onetrust_get_purpose_detail_using_get` | `UNIVERSAL_CONSENTTOOL` | Get Purpose |
+| `onetrust_get_purposes_using_get` | `UNIVERSAL_CONSENTTOOL` | Get List of Purposes |
+| `onetrust_get_realtime_preferences` | `CONSENT_INTERFACESTOOL` | Get Data Subject's Preferences |
+| `onetrust_get_receipt_list_details_using_get` | `UNIVERSAL_CONSENTTOOL` | Get List of Receipt Details by Data Subject |
+| `onetrust_get_receipt_list_details_using_post` | `UNIVERSAL_CONSENTTOOL` | Get List of Receipts |
+| `onetrust_get_receipt_list_using_get` | `UNIVERSAL_CONSENTTOOL` | Get List of Receipts by Data Subject |
+| `onetrust_get_related_entities_for_an_entity_using_post` | `AI_GOVERNANCETOOL` | Get List of Relationship Records by Entity |
+| `onetrust_get_request_by_id_using_get` | `DSARTOOL` | Get Request |
+| `onetrust_get_request_creation_logs_using_get` | `DSARTOOL` | Get Request Creation Logs |
+| `onetrust_get_request_history` | `DSARTOOL` | Get Request Audit History |
+| `onetrust_get_request_history_by_id_using_get` | `DSARTOOL` | Get Request Audit History |
+| `onetrust_get_resource_types_by_name_using_get` | `USER_PROVISIONINGTOOL` | Get Supported Resource Types |
+| `onetrust_get_resource_types_using_get` | `USER_PROVISIONINGTOOL` | Get Supported Resources |
+| `onetrust_get_risk_page_view_using_post` | `IT_RISK_MANAGEMENTTOOL` | Get List of Risks |
+| `onetrust_get_risk_template_using_get` | `IT_RISK_MANAGEMENTTOOL` | Get Risk Template |
+| `onetrust_get_risk_using_get` | `IT_RISK_MANAGEMENTTOOL` | Get Risk |
+| `onetrust_get_root_schema_using_get` | `UNIVERSAL_CONSENTTOOL` | Get Preference Center Root Schema |
+| `onetrust_get_scan_delta_details` | `COOKIE_CONSENTTOOL` | Get List of Added or Removed Cookies |
+| `onetrust_get_scan_jobs_by_data_source_using_get_1` | `DATA_DISCOVERYTOOL` | Get List of Scan Jobs |
+| `onetrust_get_scan_profile_using_get_1` | `DATA_DISCOVERYTOOL` | Get Scan Profile |
+| `onetrust_get_scan_result_summary` | `COOKIE_CONSENTTOOL` | Get Scan Result Summary |
+| `onetrust_get_schema_details_using_field_name` | `DATA_MAPPINGTOOL` | Get Inventory Schema Details |
+| `onetrust_get_schema_using_get_1` | `DATA_MAPPING_LEGACYTOOL` | Get Inventory Schema |
+| `onetrust_get_schemas_by_name_using_get` | `USER_PROVISIONINGTOOL` | Get SCIM Schema |
+| `onetrust_get_schemas_using_get` | `USER_PROVISIONINGTOOL` | Get List of Supported SCIM Schemas |
+| `onetrust_get_script_details` | `COOKIE_CONSENTTOOL` | Get Script for Domain |
+| `onetrust_get_script_for_website` | `COOKIE_CONSENTTOOL` | Get Script for Website |
+| `onetrust_get_script_for_website_using_get` | `COOKIE_CONSENT_LEGACYTOOL` | Get Script for Website |
+| `onetrust_get_service_provider_config_using_get` | `USER_PROVISIONINGTOOL` | Get Service Provider Configuration |
+| `onetrust_get_standard_score_setting_using_get` | `IT_RISK_MANAGEMENTTOOL` | Get Standard Risk Configuration |
+| `onetrust_get_status_of_enrollment_using_get` | `TRAININGTOOL` | Get User's Enrollment Status |
+| `onetrust_get_subtask_by_idusing_get` | `DSARTOOL` | Get Subtask |
+| `onetrust_get_tag_details_with_associated_terms` | `DATA_CATALOGTOOL` | Get Tag |
+| `onetrust_get_tags_using_get` | `ASSESSMENTSTOOL` | Get List of Assessment Tags |
+| `onetrust_get_task_by_id_and_task_type_name_key_using_get` | `TASK_MANAGEMENTTOOL` | Get Task |
+| `onetrust_get_template_details` | `COOKIE_CONSENTTOOL` | Get Template Details |
+| `onetrust_get_templates` | `COOKIE_CONSENTTOOL` | Get List of Templates |
+| `onetrust_get_term_attribute_by_name` | `DATA_CATALOGTOOL` | Get Term Attribute |
+| `onetrust_get_token_using_get` | `UNIVERSAL_CONSENTTOOL` | Get Collection Point Token |
+| `onetrust_get_transactions_using_post` | `UNIVERSAL_CONSENTTOOL` | Get List of Transactions |
+| `onetrust_get_ucpurposes` | `CMPTOOL` | Get Universal Consent Purposes |
+| `onetrust_get_user_access_levels_v2` | `ACCESS_MANAGEMENTTOOL` | Get User Roles |
+| `onetrust_get_user_by_id` | `USER_PROVISIONINGTOOL` | Get User |
+| `onetrust_get_user_group_by_id_v2` | `ACCESS_MANAGEMENTTOOL` | Get User Group |
+| `onetrust_get_user_using_get` | `USER_PROVISIONINGTOOL` | Get User |
+| `onetrust_get_user_v2` | `ACCESS_MANAGEMENTTOOL` | Get User |
+| `onetrust_get_users` | `USER_PROVISIONINGTOOL` | Get List of Users |
+| `onetrust_get_v1_field_details` | `DATA_CATALOGTOOL` | Get Search Fields |
+| `onetrust_get_v3_datasubject_profiles_using_post` | `UNIVERSAL_CONSENTTOOL` | Get List of Data Subjects |
+| `onetrust_get_v3_datasubjects_profile_using_get` | `UNIVERSAL_CONSENTTOOL` | Get Data Subject |
+| `onetrust_get_vendors` | `CMPTOOL` | Get IAB and Google Vendors |
+| `onetrust_get_workflow_details_for_assessment_using_get` | `ASSESSMENTSTOOL` | Get Assessment Workflow Stages |
+| `onetrust_get_workpaper_basic_detail_information_using_get` | `AUDIT_MANAGEMENTTOOL` | Get Workpaper Control Details |
+| `onetrust_get_workpaper_result_using_get` | `AUDIT_MANAGEMENTTOOL` | Get Workpaper Results |
+| `onetrust_grant_risk_exception_using_put` | `IT_RISK_MANAGEMENTTOOL` | Grant Risk Exception |
+| `onetrust_import_template_by_id_using_post` | `ASSESSMENTSTOOL` | Import Template |
+| `onetrust_import_workflow_using_post_1` | `INTEGRATIONSTOOL` | Import Workflow |
+| `onetrust_link_asset_inventory_to_parent_asset_id_using_post` | `DATA_MAPPINGTOOL` | Add Asset Inventory as Child to Parent Inventory |
+| `onetrust_link_legal_entity_inventory_to_parent_legal_entity_id_using_post` | `DATA_MAPPINGTOOL` | Add Legal Entity Inventory as Child to Parent Inventory |
+| `onetrust_link_or_unlink_inventory_relationships_using_relationship_using_put` | `INVENTORYTOOL` | Link or Unlink Personal Data to Relationship by Type ID |
+| `onetrust_link_or_unlink_inventory_relationships_using_relationship_using_put_1` | `INVENTORYTOOL` | Link or Unlink Personal Data to Relationship by Type Name |
+| `onetrust_link_processing_activity_inventory_to_parent_processing_activity_id_using_post` | `DATA_MAPPINGTOOL` | Add Processing Activity Inventory as Child to Parent Inventory |
+| `onetrust_link_requests_using_put` | `DSARTOOL` | Link Requests |
+| `onetrust_link_vendor_inventory_to_parent_vendor_id_using_post` | `DATA_MAPPINGTOOL` | Add Vendor Inventory as Child to Parent Inventory |
+| `onetrust_list_all_data_classifications_using_get` | `DATA_MAPPING_LEGACYTOOL` | Get List of Data Classifications |
+| `onetrust_list_all_data_elements_using_get` | `DATA_MAPPING_LEGACYTOOL` | Get List of Data Elements |
+| `onetrust_list_all_inventory_relationships_using_post` | `INVENTORYTOOL` | Get List of Relationships |
+| `onetrust_list_detectors` | `DATA_DISCOVERYTOOL` | Get List of Custom Classifiers |
+| `onetrust_list_groups_using_get` | `USER_PROVISIONINGTOOL` | Get List of Groups |
+| `onetrust_list_of_courses_using_get` | `TRAININGTOOL` | Get List of Courses |
+| `onetrust_load_engagement_by_engagement_id_using_get` | `TPRMTOOL` | Get Engagement |
+| `onetrust_load_engagement_using_get` | `TPRMTOOL` | Search Engagements |
+| `onetrust_load_vendor_contract_by_contract_id_using_get` | `TPRMTOOL` | Get Contract |
+| `onetrust_login_history` | `ACCESS_MANAGEMENTTOOL` | Get Audit Records for Login History |
+| `onetrust_merge_data_subjects_using_post` | `UNIVERSAL_CONSENTTOOL` | Deduplicate Data Subjects |
+| `onetrust_merge_datasubject_using_post` | `UNIVERSAL_CONSENTTOOL` | Deduplicate Data Subjects |
+| `onetrust_modify_group` | `USER_PROVISIONINGTOOL` | Modify User Group |
+| `onetrust_modify_user` | `USER_PROVISIONINGTOOL` | Modify User |
+| `onetrust_move_status_by_request_ref_id_using_put` | `DSARTOOL` | Update Request Stage |
+| `onetrust_organization_tree_structure_using_get` | `ACCESS_MANAGEMENTTOOL` | Get List of Organizations |
+| `onetrust_patch_user_using_patch` | `USER_PROVISIONINGTOOL` | Modify User |
+| `onetrust_pause_or_resume_deadline_using_put` | `DSARTOOL` | Pause Request Deadline |
+| `onetrust_perform_risk_action_using_put` | `IT_RISK_MANAGEMENTTOOL` | Perform Risk Action |
+| `onetrust_post_log_consent` | `CMPTOOL` | Log Consent |
+| `onetrust_publish_app_script` | `COOKIE_CONSENTTOOL` | Publish Application SDK |
+| `onetrust_publish_purpose_using_put` | `UNIVERSAL_CONSENTTOOL` | Publish Purpose |
+| `onetrust_publish_script_to_site` | `COOKIE_CONSENTTOOL` | Publish Script to Website |
+| `onetrust_publish_to_site_using_put` | `COOKIE_CONSENT_LEGACYTOOL` | Publish Script to Website |
+| `onetrust_reassess_assessment_using_post` | `ASSESSMENTSTOOL` | Reassess Assessment |
+| `onetrust_reassign_assessment_using_put` | `ASSESSMENTSTOOL` | Reassign Assessment |
+| `onetrust_recategorize_cookies_by_scan` | `COOKIE_CONSENTTOOL` | Recategorize Cookies |
+| `onetrust_remove_access_level_for_user_group_by_id_v2` | `ACCESS_MANAGEMENTTOOL` | Remove User Group Roles |
+| `onetrust_remove_all_consent_attachment_refs` | `UNIVERSAL_CONSENTTOOL` | Remove All Consent Attachments |
+| `onetrust_remove_amember_for_user_group_by_id_v2` | `ACCESS_MANAGEMENTTOOL` | Remove User from User Group |
+| `onetrust_remove_control_implementation_by_entity_and_implementation_id_using_delete` | `IT_RISK_MANAGEMENTTOOL` | Delete Control Implementation |
+| `onetrust_remove_control_using_delete_1` | `IT_RISK_MANAGEMENTTOOL` | Delete Control |
+| `onetrust_remove_engagement_using_delete` | `TPRMTOOL` | Delete Engagement |
+| `onetrust_remove_given_consent_attachment_refs` | `UNIVERSAL_CONSENTTOOL` | Remove Consent Attachment |
+| `onetrust_remove_members_using_delete` | `ACCESS_MANAGEMENTTOOL` | Remove Members from User Group |
+| `onetrust_remove_multiple_members_for_user_group_by_id_v2` | `ACCESS_MANAGEMENTTOOL` | Remove Multiple Users from User Group |
+| `onetrust_remove_threat_using_delete` | `IT_RISK_MANAGEMENTTOOL` | Delete Threat |
+| `onetrust_remove_user_access_level_v2` | `ACCESS_MANAGEMENTTOOL` | Remove User Role |
+| `onetrust_remove_vendor_contract_using_delete` | `TPRMTOOL` | Delete Contract |
+| `onetrust_remove_vulnerability_using_delete` | `IT_RISK_MANAGEMENTTOOL` | Delete Vulnerability |
+| `onetrust_reopen_assessment_using_post` | `ASSESSMENTSTOOL` | Reopen Assessment |
+| `onetrust_reopen_risk_using_put` | `IT_RISK_MANAGEMENTTOOL` | Reopen Risk |
+| `onetrust_reprocess_subtask_using_put` | `DSARTOOL` | Reprocess System Subtask |
+| `onetrust_request_bulk_add_domain_using_post` | `COOKIE_CONSENT_LEGACYTOOL` | Add Websites to Scan |
+| `onetrust_request_risk_exception_using_put` | `IT_RISK_MANAGEMENTTOOL` | Request Risk Exception |
+| `onetrust_retrieve_all_tags_name` | `DATA_CATALOGTOOL` | Get List of Tags |
+| `onetrust_retrieve_all_terms` | `DATA_CATALOGTOOL` | Get List of Terms |
+| `onetrust_retrieve_members_using_get` | `ACCESS_MANAGEMENTTOOL` | Get User Group Members |
+| `onetrust_retrieve_terms_by_name` | `DATA_CATALOGTOOL` | Get Term |
+| `onetrust_retrieve_terms_name` | `DATA_CATALOGTOOL` | Get List of Term Names |
+| `onetrust_retrieve_user_groups_using_get` | `ACCESS_MANAGEMENTTOOL` | Get List of User Groups |
+| `onetrust_review_assessment_using_post` | `ASSESSMENTSTOOL` | Complete Assessment |
+| `onetrust_scan_application` | `COOKIE_CONSENTTOOL` | Scan Application |
+| `onetrust_schedule_merge_request_using_post` | `UNIVERSAL_CONSENTTOOL` | Create Scheduled Export of Duplicate Data Subjects |
+| `onetrust_schedule_scans` | `COOKIE_CONSENTTOOL` | Schedule Website Scans |
+| `onetrust_search_contract_by_vendor_and_criteria_using_post` | `TPRMTOOL` | Search Contracts |
+| `onetrust_search_data_subjects_by_element_v4` | `UNIVERSAL_CONSENTTOOL` | Search Data Subjects by Data Element |
+| `onetrust_search_data_subjects_post_using_post` | `UNIVERSAL_CONSENTTOOL` | Search Data Subjects |
+| `onetrust_search_for_request_using_post` | `DSARTOOL` | Search Requests |
+| `onetrust_search_incidents_using_post` | `INCIDENTSTOOL` | Search Incidents |
+| `onetrust_send_back_assessment_to_in_progress_using_post` | `ASSESSMENTSTOOL` | Send Back Assessment |
+| `onetrust_send_back_risk_using_put` | `IT_RISK_MANAGEMENTTOOL` | Send Back Risk |
+| `onetrust_set_inventory_as_parent_inventory_using_put` | `DATA_MAPPINGTOOL` | Set Inventory as Parent |
+| `onetrust_set_retirement_using_put` | `UNIVERSAL_CONSENTTOOL` | Retire Purpose |
+| `onetrust_set_user_default_organization_v2` | `ACCESS_MANAGEMENTTOOL` | Modify User Default Organization |
+| `onetrust_share_results_summary_using_post` | `DSARTOOL` | Share Results Summary |
+| `onetrust_soft_delete_assessment_using_put` | `ASSESSMENTSTOOL` | Move Assessment to Recycle Bin |
+| `onetrust_start_export_run_post` | `BULK_EXPORTTOOL` | Create Bulk Export |
+| `onetrust_submit_assessment_using_post` | `ASSESSMENTSTOOL` | Submit Assessment |
+| `onetrust_submit_responses_using_post` | `ASSESSMENTSTOOL` | Submit Responses |
+| `onetrust_submit_risk_using_put` | `IT_RISK_MANAGEMENTTOOL` | Submit Risk |
+| `onetrust_subtasks_using_get` | `DSARTOOL` | Get List of Subtasks |
+| `onetrust_un_enroll_user_using_delete` | `TRAININGTOOL` | Unenroll User from Course |
+| `onetrust_unarchive_assessments_using_put` | `ASSESSMENTSTOOL` | Unarchive Assessment |
+| `onetrust_unlink_child_inventory_from_hierarchy_using_delete` | `DATA_MAPPINGTOOL` | Remove Child Inventory from Root Inventory |
+| `onetrust_unlink_consent_group_using_delete` | `UNIVERSAL_CONSENTTOOL` | Remove Consent Groups from Parent Consent Group |
+| `onetrust_unlink_risks_from_entity_using_post` | `IT_RISK_MANAGEMENTTOOL` | Unlink Risks |
+| `onetrust_unset_inventory_as_parent_inventory_using_put` | `DATA_MAPPINGTOOL` | Unset Inventory as Parent |
+| `onetrust_unstructured_data_discovery_updates_using_post` | `DSARTOOL` | Add Data Points to Targeted Data Discovery Results Summary |
+| `onetrust_update_access_level_for_user_group_by_id_v2` | `ACCESS_MANAGEMENTTOOL` | Update User Group Roles |
+| `onetrust_update_advanced_attributes_for_personal_data_association_using_put` | `DATA_MAPPINGTOOL` | Update Advanced Attributes for Personal Data Association |
+| `onetrust_update_application_branding_attributes_for_public_api` | `COOKIE_CONSENTTOOL` | Update Branding Attributes for Application |
+| `onetrust_update_basic_assessment_details_using_patch` | `ASSESSMENTSTOOL` | Modify Assessment |
+| `onetrust_update_branding_attributes_for_public_api` | `COOKIE_CONSENTTOOL` | Update Branding Attributes for Domain |
+| `onetrust_update_consent_group_settings_using_put` | `UNIVERSAL_CONSENTTOOL` | Update Priority Scores for Purpose Statuses |
+| `onetrust_update_control_implementation_by_implementation_id_using_put` | `IT_RISK_MANAGEMENTTOOL` | Update Control Implementation |
+| `onetrust_update_control_using_put_1` | `IT_RISK_MANAGEMENTTOOL` | Update Control |
+| `onetrust_update_cookie` | `COOKIE_CONSENT_LEGACYTOOL` | Update Cookie |
+| `onetrust_update_credential` | `DATA_DISCOVERYTOOL` | Update Credential |
+| `onetrust_update_custom_entity_type_using_patch` | `OBJECT_MANAGERTOOL` | Modify Custom Object Type by ID |
+| `onetrust_update_custom_entity_type_using_patch_1` | `OBJECT_MANAGERTOOL` | Modify Custom Object Type by Name |
+| `onetrust_update_custom_fields_using_put` | `DSARTOOL` | Update Request Custom Fields |
+| `onetrust_update_data_asset_v1` | `DATA_CATALOGTOOL` | Modify Data Asset |
+| `onetrust_update_data_subject_group_v4` | `UNIVERSAL_CONSENTTOOL` | Update Data Subject Group |
+| `onetrust_update_detector` | `DATA_DISCOVERYTOOL` | Update Custom Classifier |
+| `onetrust_update_engagement_status` | `TPRMTOOL` | Update Engagement Status |
+| `onetrust_update_engagement_using_patch` | `TPRMTOOL` | Modify Engagement |
+| `onetrust_update_engagement_using_put` | `TPRMTOOL` | Update Engagement |
+| `onetrust_update_group` | `USER_PROVISIONINGTOOL` | Update User Group |
+| `onetrust_update_group_members_using_patch` | `USER_PROVISIONINGTOOL` | Modify Group |
+| `onetrust_update_group_members_using_put` | `USER_PROVISIONINGTOOL` | Update Group |
+| `onetrust_update_incident_using_put` | `INCIDENTSTOOL` | Update Incident |
+| `onetrust_update_initiative_using_put` | `COMPLIANCE_AUTOMATIONTOOL` | Update Initiative |
+| `onetrust_update_inventory_association_using_put` | `DATA_MAPPINGTOOL` | Update Inventory Link |
+| `onetrust_update_inventory_relations_using_entity_type_name` | `INVENTORYTOOL` | Update Relationship by Type ID |
+| `onetrust_update_inventory_relations_using_entity_type_name_1` | `INVENTORYTOOL` | Update Relationship by Type Name |
+| `onetrust_update_inventory_status_by_id_using_put` | `DATA_MAPPINGTOOL` | Update Inventory Status |
+| `onetrust_update_inventory_using_put` | `DATA_MAPPINGTOOL` | Update Inventory by ID |
+| `onetrust_update_issue_using_patch` | `ISSUES_MANAGEMENTTOOL` | Modify Issue |
+| `onetrust_update_issue_using_put` | `ISSUES_MANAGEMENTTOOL` | Update Issue |
+| `onetrust_update_job_status_using_put` | `DATA_DISCOVERY_WORKERTOOL` | Update Scan Job Status |
+| `onetrust_update_linked_identity_group_using_put` | `UNIVERSAL_CONSENTTOOL` | Update Data Subject Group |
+| `onetrust_update_model_using_put` | `OBJECT_MANAGERTOOL` | Modify Model Object |
+| `onetrust_update_organization_using_put` | `ACCESS_MANAGEMENTTOOL` | Update Organization |
+| `onetrust_update_preferences_for_data_subject_api_using_put` | `UNIVERSAL_CONSENTTOOL` | Update Data Subject's Preferences in a Preference Center |
+| `onetrust_update_primary_record_using_put` | `ASSESSMENTSTOOL` | Set Primary Record |
+| `onetrust_update_project_using_put` | `OBJECT_MANAGERTOOL` | Modify Project Object |
+| `onetrust_update_purpose_rules_to_consent_group_using_put` | `UNIVERSAL_CONSENTTOOL` | Update Consent Group Purpose Rule |
+| `onetrust_update_relations_using_put` | `DATA_MAPPINGTOOL` | Link Inventory |
+| `onetrust_update_resolution_using_put` | `DSARTOOL` | Update Resolution |
+| `onetrust_update_risk_approvers_using_put` | `IT_RISK_MANAGEMENTTOOL` | Update Risk Approvers |
+| `onetrust_update_risk_categories_using_put` | `IT_RISK_MANAGEMENTTOOL` | Update Risk Categories |
+| `onetrust_update_risk_owners_using_put` | `IT_RISK_MANAGEMENTTOOL` | Update Risk Owners |
+| `onetrust_update_risk_using_patch` | `IT_RISK_MANAGEMENTTOOL` | Modify Risk |
+| `onetrust_update_risk_using_put` | `IT_RISK_MANAGEMENTTOOL` | Update Risk |
+| `onetrust_update_sub_task_using_put` | `DSARTOOL` | Update Subtask |
+| `onetrust_update_subtask_status_using_put` | `DSARTOOL` | Update Subtask Status |
+| `onetrust_update_task_using_put` | `TASK_MANAGEMENTTOOL` | Update Task |
+| `onetrust_update_task_using_put_1` | `AI_GOVERNANCETOOL` | Update Task |
+| `onetrust_update_task_using_put_1_x` | `OBJECT_MANAGERTOOL` | Update Task |
+| `onetrust_update_threats_using_put` | `IT_RISK_MANAGEMENTTOOL` | Update Threats |
+| `onetrust_update_user` | `USER_PROVISIONINGTOOL` | Update User |
+| `onetrust_update_user_group_by_id_v2` | `ACCESS_MANAGEMENTTOOL` | Update User Group |
+| `onetrust_update_user_group_using_put` | `ACCESS_MANAGEMENTTOOL` | Update User Group |
+| `onetrust_update_user_using_put` | `USER_PROVISIONINGTOOL` | Update User |
+| `onetrust_update_user_v2` | `ACCESS_MANAGEMENTTOOL` | Update User |
+| `onetrust_update_using_entity_type_id_or_entity_type_name_using_patch` | `AI_GOVERNANCETOOL` | Modify Entity |
+| `onetrust_update_using_entity_type_id_or_entity_type_name_using_patch_x` | `OBJECT_MANAGERTOOL` | Modify Object |
+| `onetrust_update_v2_using_put` | `DATA_DISCOVERYTOOL` | Update Scan Profile |
+| `onetrust_update_v2_using_put_x` | `INTEGRATIONSTOOL` | Update System Credential |
+| `onetrust_update_v2_verification_method_using_put` | `DSARTOOL` | Update Verification Method |
+| `onetrust_update_vendor_contract_using_put` | `TPRMTOOL` | Update Contract |
+| `onetrust_update_vulnerabilities_using_put` | `IT_RISK_MANAGEMENTTOOL` | Update Vulnerabilities |
+| `onetrust_upload_consent_attachments` | `UNIVERSAL_CONSENTTOOL` | Upload Consent Attachment |
+| `onetrust_upsert_inventory_using_put` | `DATA_MAPPINGTOOL` | Update Inventory by External ID |
+| `onetrust_upsert_source_system_v3_using_put` | `DATA_DISCOVERYTOOL` | Create or Update Data Source |
+| `onetrust_user_activity` | `ACCESS_MANAGEMENTTOOL` | Get Audit Records for User's Profile |
+| `onetrust_validate_and_create_audit_using_post` | `AUDIT_MANAGEMENTTOOL` | Create Audit |
+| `onetrust_validate_and_reassign_scopes_using_put` | `AUDIT_MANAGEMENTTOOL` | Update Audit Scope |
+| `onetrust_validate_and_update_audit_using_put` | `AUDIT_MANAGEMENTTOOL` | Update Audit |
+| `onetrust_withdraw_preferences_api_using_delete` | `UNIVERSAL_CONSENTTOOL` | Withdraw Data Subject's Consent for All Purposes in a Preference Center |
+| `onetrust_withdraw_transaction_behalf_of_datasubject_using_put` | `UNIVERSAL_CONSENTTOOL` | Withdraw Consent on Behalf of a Data Subject |
+| `onetrust_withdraw_transaction_by_purpose_and_identifier_using_get` | `UNIVERSAL_CONSENTTOOL` | Withdraw Data Subject's Consent |
+
+</details>
+
+_36 action-routed tool(s) (default) · 597 verbose 1:1 tool(s). Each is enabled unless its `<DOMAIN>TOOL` toggle is set false; `MCP_TOOL_MODE` selects the surface (`condensed` default · `verbose` 1:1 · `both`). Auto-generated — do not edit._
 <!-- MCP-TOOLS-TABLE:END -->
 
 ### MCP Configuration Examples

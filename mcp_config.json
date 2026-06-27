@@ -7,6 +7,7 @@
         "onetrust-mcp"
       ],
       "env": {
+        "MCP_TOOL_MODE": "condensed",
         "FASTMCP_LOG_LEVEL": "<YOUR_FASTMCP_LOG_LEVEL>",
         "ONETRUST_URL": "<YOUR_ONETRUST_URL>",
         "ONETRUST_REGION": "us",
