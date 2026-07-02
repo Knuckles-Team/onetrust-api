@@ -843,20 +843,20 @@ _36 action-routed tool(s) (default) · 597 verbose 1:1 tool(s). Each is enabled 
 
 ### MCP Configuration Examples
 
-> **Install the slim `[mcp]` extra.** All examples below install
-> `onetrust-api[mcp]` — the MCP-server extra that pulls only the FastMCP /
-> FastAPI tooling (`agent-utilities[mcp]`). It deliberately **excludes** the heavy
-> agent runtime (the epistemic-graph engine, `pydantic-ai`, `dspy`, `llama-index`,
-> `tree-sitter`), so `uvx`/container installs are dramatically smaller and faster.
-> Use the full `[agent]` extra only when you need the integrated Pydantic AI agent
-> (see [Installation](#installation)).
+<!-- MCP-CONFIG-EXAMPLES:START -->
 
-#### stdio Transport (Recommended for local IDEs e.g., Cursor, Claude Desktop)
+> **Install the slim `[mcp]` extra.** All examples install `onetrust-api[mcp]` — the
+> MCP-server extra that pulls only the FastMCP / FastAPI tooling (`agent-utilities[mcp]`).
+> It deliberately **excludes** the heavy agent runtime (`pydantic-ai`, the epistemic-graph
+> engine, `dspy`, `llama-index`), so `uvx` / container installs are far smaller. Use the
+> full `[agent]` extra only when you need the integrated Pydantic AI agent.
+
+#### stdio Transport (local IDEs — Cursor, Claude Desktop, VS Code)
 
 ```json
 {
   "mcpServers": {
-    "onetrust": {
+    "onetrust-mcp": {
       "command": "uvx",
       "args": [
         "--from",
@@ -864,49 +864,196 @@ _36 action-routed tool(s) (default) · 597 verbose 1:1 tool(s). Each is enabled 
         "onetrust-mcp"
       ],
       "env": {
-        "ONETRUST_URL": "https://acme.my.onetrust.com",
-        "ONETRUST_TOKEN": "your_token"
+        "MCP_TOOL_MODE": "condensed",
+        "ACCESS_MANAGEMENTTOOL": "True",
+        "AI_GOVERNANCETOOL": "True",
+        "ASSESSMENTSTOOL": "True",
+        "AUDIT_MANAGEMENTTOOL": "True",
+        "BULK_EXPORTTOOL": "True",
+        "CMPTOOL": "True",
+        "COMPLIANCE_AUTOMATIONTOOL": "True",
+        "CONSENT_INTERFACESTOOL": "True",
+        "CONSENT_RECEIPTSTOOL": "True",
+        "COOKIE_CONSENTTOOL": "True",
+        "COOKIE_CONSENT_LEGACYTOOL": "True",
+        "COOKIE_DOMAIN_DATATOOL": "True",
+        "CROSS_DEVICE_CONSENTTOOL": "True",
+        "CUSTOM_APITOOL": "True",
+        "DATA_CATALOGTOOL": "True",
+        "DATA_DISCOVERYTOOL": "True",
+        "DATA_DISCOVERY_WORKERTOOL": "True",
+        "DATA_MAPPINGTOOL": "True",
+        "DATA_MAPPING_LEGACYTOOL": "True",
+        "DOCUMENTSTOOL": "True",
+        "DSARTOOL": "True",
+        "ESGTOOL": "True",
+        "INCIDENTSTOOL": "True",
+        "INTEGRATIONSTOOL": "True",
+        "INVENTORYTOOL": "True",
+        "ISSUES_MANAGEMENTTOOL": "True",
+        "IT_RISK_MANAGEMENTTOOL": "True",
+        "MOBILE_APP_CONSENTTOOL": "True",
+        "OBJECT_MANAGERTOOL": "True",
+        "ONETRUST_CLIENT_ID": "",
+        "ONETRUST_CLIENT_SECRET": "",
+        "ONETRUST_CONSENT_URL": "",
+        "ONETRUST_REGION": "us",
+        "ONETRUST_TOKEN": "",
+        "ONETRUST_URL": "",
+        "ONETRUST_WORKER_URL": "",
+        "POLICY_MANAGEMENTTOOL": "True",
+        "PRIVACY_NOTICESTOOL": "True",
+        "TASK_MANAGEMENTTOOL": "True",
+        "TPRMTOOL": "True",
+        "TRAININGTOOL": "True",
+        "UNIVERSAL_CONSENTTOOL": "True",
+        "USER_PROVISIONINGTOOL": "True"
       }
     }
   }
 }
 ```
 
-#### Streamable-HTTP Transport (Recommended for production deployments)
+#### Streamable-HTTP Transport (networked / production)
 
 ```json
 {
   "mcpServers": {
-    "onetrust": {
+    "onetrust-mcp": {
       "command": "uvx",
       "args": [
         "--from",
         "onetrust-api[mcp]",
-        "onetrust-mcp"
+        "onetrust-mcp",
+        "--transport",
+        "streamable-http",
+        "--port",
+        "8000"
       ],
       "env": {
         "TRANSPORT": "streamable-http",
         "HOST": "0.0.0.0",
         "PORT": "8000",
-        "ONETRUST_URL": "https://acme.my.onetrust.com",
-        "ONETRUST_TOKEN": "your_token"
+        "MCP_TOOL_MODE": "condensed",
+        "ACCESS_MANAGEMENTTOOL": "True",
+        "AI_GOVERNANCETOOL": "True",
+        "ASSESSMENTSTOOL": "True",
+        "AUDIT_MANAGEMENTTOOL": "True",
+        "BULK_EXPORTTOOL": "True",
+        "CMPTOOL": "True",
+        "COMPLIANCE_AUTOMATIONTOOL": "True",
+        "CONSENT_INTERFACESTOOL": "True",
+        "CONSENT_RECEIPTSTOOL": "True",
+        "COOKIE_CONSENTTOOL": "True",
+        "COOKIE_CONSENT_LEGACYTOOL": "True",
+        "COOKIE_DOMAIN_DATATOOL": "True",
+        "CROSS_DEVICE_CONSENTTOOL": "True",
+        "CUSTOM_APITOOL": "True",
+        "DATA_CATALOGTOOL": "True",
+        "DATA_DISCOVERYTOOL": "True",
+        "DATA_DISCOVERY_WORKERTOOL": "True",
+        "DATA_MAPPINGTOOL": "True",
+        "DATA_MAPPING_LEGACYTOOL": "True",
+        "DOCUMENTSTOOL": "True",
+        "DSARTOOL": "True",
+        "ESGTOOL": "True",
+        "INCIDENTSTOOL": "True",
+        "INTEGRATIONSTOOL": "True",
+        "INVENTORYTOOL": "True",
+        "ISSUES_MANAGEMENTTOOL": "True",
+        "IT_RISK_MANAGEMENTTOOL": "True",
+        "MOBILE_APP_CONSENTTOOL": "True",
+        "OBJECT_MANAGERTOOL": "True",
+        "ONETRUST_CLIENT_ID": "",
+        "ONETRUST_CLIENT_SECRET": "",
+        "ONETRUST_CONSENT_URL": "",
+        "ONETRUST_REGION": "us",
+        "ONETRUST_TOKEN": "",
+        "ONETRUST_URL": "",
+        "ONETRUST_WORKER_URL": "",
+        "POLICY_MANAGEMENTTOOL": "True",
+        "PRIVACY_NOTICESTOOL": "True",
+        "TASK_MANAGEMENTTOOL": "True",
+        "TPRMTOOL": "True",
+        "TRAININGTOOL": "True",
+        "UNIVERSAL_CONSENTTOOL": "True",
+        "USER_PROVISIONINGTOOL": "True"
       }
     }
   }
 }
 ```
 
-Alternatively, connect to a pre-deployed remote or local Streamable-HTTP instance:
+Alternatively, connect to a pre-deployed Streamable-HTTP instance by `url`:
 
 ```json
 {
   "mcpServers": {
-    "onetrust": {
-      "url": "http://localhost:8000/onetrust-api/mcp"
+    "onetrust-mcp": {
+      "url": "http://localhost:8000/onetrust-mcp/mcp"
     }
   }
 }
 ```
+
+Deploying the Streamable-HTTP server via Docker:
+
+```bash
+docker run -d \
+  --name onetrust-mcp-mcp \
+  -p 8000:8000 \
+  -e TRANSPORT=streamable-http \
+  -e HOST=0.0.0.0 \
+  -e PORT=8000 \
+  -e MCP_TOOL_MODE=condensed \
+  -e ACCESS_MANAGEMENTTOOL=True \
+  -e AI_GOVERNANCETOOL=True \
+  -e ASSESSMENTSTOOL=True \
+  -e AUDIT_MANAGEMENTTOOL=True \
+  -e BULK_EXPORTTOOL=True \
+  -e CMPTOOL=True \
+  -e COMPLIANCE_AUTOMATIONTOOL=True \
+  -e CONSENT_INTERFACESTOOL=True \
+  -e CONSENT_RECEIPTSTOOL=True \
+  -e COOKIE_CONSENTTOOL=True \
+  -e COOKIE_CONSENT_LEGACYTOOL=True \
+  -e COOKIE_DOMAIN_DATATOOL=True \
+  -e CROSS_DEVICE_CONSENTTOOL=True \
+  -e CUSTOM_APITOOL=True \
+  -e DATA_CATALOGTOOL=True \
+  -e DATA_DISCOVERYTOOL=True \
+  -e DATA_DISCOVERY_WORKERTOOL=True \
+  -e DATA_MAPPINGTOOL=True \
+  -e DATA_MAPPING_LEGACYTOOL=True \
+  -e DOCUMENTSTOOL=True \
+  -e DSARTOOL=True \
+  -e ESGTOOL=True \
+  -e INCIDENTSTOOL=True \
+  -e INTEGRATIONSTOOL=True \
+  -e INVENTORYTOOL=True \
+  -e ISSUES_MANAGEMENTTOOL=True \
+  -e IT_RISK_MANAGEMENTTOOL=True \
+  -e MOBILE_APP_CONSENTTOOL=True \
+  -e OBJECT_MANAGERTOOL=True \
+  -e ONETRUST_CLIENT_ID="" \
+  -e ONETRUST_CLIENT_SECRET="" \
+  -e ONETRUST_CONSENT_URL="" \
+  -e ONETRUST_REGION=us \
+  -e ONETRUST_TOKEN="" \
+  -e ONETRUST_URL="" \
+  -e ONETRUST_WORKER_URL="" \
+  -e POLICY_MANAGEMENTTOOL=True \
+  -e PRIVACY_NOTICESTOOL=True \
+  -e TASK_MANAGEMENTTOOL=True \
+  -e TPRMTOOL=True \
+  -e TRAININGTOOL=True \
+  -e UNIVERSAL_CONSENTTOOL=True \
+  -e USER_PROVISIONINGTOOL=True \
+  knucklessg1/onetrust-api:mcp
+```
+
+_Auto-generated from the code-read env surface (`MCP_TOOL_MODE` + package vars) — do not edit._
+<!-- MCP-CONFIG-EXAMPLES:END -->
 
 ## A2A Agent
 
