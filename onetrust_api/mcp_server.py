@@ -30,6 +30,96 @@ def register_prompts(mcp: FastMCP):
         return f"Please help with '{query}' using OneTrust Api"
 
 
+def _records(result: Any) -> list[dict[str, Any]]:
+    """Normalise a client Response / dict / list into a list of record dicts."""
+    data = getattr(result, "data", result)
+    if isinstance(data, dict):
+        for key in ("content", "data", "items", "results", "records"):
+            if isinstance(data.get(key), list):
+                return data[key]
+        return [data]
+    if isinstance(data, list):
+        return [r for r in data if isinstance(r, dict)]
+    return []
+
+
+def register_ingest_tools(mcp: FastMCP):
+    """Wire-First native KG ingestion tools — list via the real client, push typed nodes.
+
+    CONCEPT:AU-KG.ingest.enterprise-source-extractor. Each tool lists OneTrust records
+    through the composite ``Api`` client and pushes them into the epistemic-graph as typed
+    OWL nodes (matching onetrust.ttl). Best-effort: returns ``{"ingested": None}`` when no
+    engine is reachable, so the tool never fails on a KG-less deployment.
+    """
+    from fastmcp import Context
+    from fastmcp.dependencies import Depends
+
+    from onetrust_api import kg_ingest
+
+    @mcp.tool(tags={"ingest"})
+    async def onetrust_ingest_assessments(
+        params_json: str = "{}",
+        client=Depends(get_client),
+        ctx: Context | None = None,
+    ) -> Any:
+        """Ingest OneTrust assessments into the KG as typed :Assessment nodes + :Document summaries.
+
+        Lists assessments via ``get_all_assessment_basic_details_using_get`` (params_json is a
+        JSON string of its query params, e.g. ``{"size":100}``) and pushes each as an
+        :Assessment (+ :AssessmentTemplate / :Person links) plus a companion :Document.
+        """
+        import json
+
+        kwargs = json.loads(params_json) if params_json else {}
+        result = client.get_all_assessment_basic_details_using_get(**kwargs)
+        records = _records(result)
+        if ctx:
+            await ctx.info(f"Ingesting {len(records)} assessments into the KG")
+        nodes = kg_ingest.ingest_assessments(records)
+        docs = kg_ingest.ingest_documents(kg_ingest.assessment_documents(records))
+        return {"listed": len(records), "ingested": nodes, "documents": docs}
+
+    @mcp.tool(tags={"ingest"})
+    async def onetrust_ingest_cookies(
+        params_json: str = "{}",
+        client=Depends(get_client),
+        ctx: Context | None = None,
+    ) -> Any:
+        """Ingest OneTrust cookie-scan results into the KG as typed :Cookie (+ :CookieDomain) nodes.
+
+        Lists cookies via ``get_cookies_by_filter`` (params_json = its JSON query/body params).
+        """
+        import json
+
+        kwargs = json.loads(params_json) if params_json else {}
+        result = client.get_cookies_by_filter(**kwargs)
+        records = _records(result)
+        if ctx:
+            await ctx.info(f"Ingesting {len(records)} cookies into the KG")
+        nodes = kg_ingest.ingest_cookies(records)
+        return {"listed": len(records), "ingested": nodes}
+
+    @mcp.tool(tags={"ingest"})
+    async def onetrust_ingest_inventories(
+        params_json: str = "{}",
+        client=Depends(get_client),
+        ctx: Context | None = None,
+    ) -> Any:
+        """Ingest OneTrust data-inventory records into the KG as typed :Inventory (+ :DataElement) nodes.
+
+        Lists inventories via ``get_list_of_inventories_using_get`` (params_json = its JSON query params).
+        """
+        import json
+
+        kwargs = json.loads(params_json) if params_json else {}
+        result = client.get_list_of_inventories_using_get(**kwargs)
+        records = _records(result)
+        if ctx:
+            await ctx.info(f"Ingesting {len(records)} inventory records into the KG")
+        nodes = kg_ingest.ingest_inventories(records)
+        return {"listed": len(records), "ingested": nodes}
+
+
 def get_mcp_instance() -> tuple[Any, Any, Any, Any]:
     """Initialize and return the OneTrust Api MCP instance, args, and middlewares."""
     load_config()
@@ -55,6 +145,7 @@ def get_mcp_instance() -> tuple[Any, Any, Any, Any]:
     )
 
     register_prompts(mcp)
+    register_ingest_tools(mcp)
 
     for mw in middlewares:
         mcp.add_middleware(mw)

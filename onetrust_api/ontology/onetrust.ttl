@@ -1,0 +1,168 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix : <http://knuckles.team/kg#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# OneTrust privacy / trust-governance ontology — assessments (PIA/DPIA), the data
+# inventory + its data elements, and cookie-consent scan results. All classes and
+# properties live in the shared `:` (kg#) namespace; only the owl:Ontology node gets
+# the per-package IRI. Backs the onetrust-api MCP tool surface (onetrust_assessments /
+# onetrust_data_mapping / onetrust_cookie_consent / onetrust_inventory / …).
+# Shared classes (:Person, :Document) are REUSED, never redefined here.
+
+# --- classes (owl:Class) ---
+
+:Assessment a owl:Class ;
+    rdfs:label "Assessment" ;
+    rdfs:comment "A OneTrust privacy/risk assessment instance (PIA/DPIA/TRA) launched from a template (onetrust_assessments)." .
+
+:AssessmentTemplate a owl:Class ;
+    rdfs:label "Assessment Template" ;
+    rdfs:comment "A reusable questionnaire template an Assessment is launched from (onetrust_assessments templates)." .
+
+:Inventory a owl:Class ;
+    rdfs:label "Inventory Record" ;
+    rdfs:comment "A OneTrust data-inventory record — an asset, vendor, legal entity, or processing activity in the data map (onetrust_data_mapping / onetrust_inventory)." .
+
+:DataElement a owl:Class ;
+    rdfs:label "Data Element" ;
+    rdfs:comment "A personal-data element / attribute tracked in the data map, carrying its data categories and classifications (onetrust_data_mapping data elements)." .
+
+:DataSubject a owl:Class ;
+    rdfs:label "Data Subject" ;
+    rdfs:comment "A category of individual (e.g. customer, employee) whose personal data a DataElement or Assessment concerns." .
+
+:Cookie a owl:Class ;
+    rdfs:label "Cookie" ;
+    rdfs:comment "A tracked cookie / tracker discovered by a cookie-consent scan, with its host, lifespan, and category (onetrust_cookie_consent)." .
+
+:CookieDomain a owl:Class ;
+    rdfs:label "Cookie Domain" ;
+    rdfs:comment "A website domain scanned for cookies and served a consent banner (onetrust_cookie_consent domains)." .
+
+:ConsentReceipt a owl:Class ;
+    rdfs:label "Consent Receipt" ;
+    rdfs:comment "A recorded proof of a data subject's consent transaction (onetrust_consent_receipts / onetrust_universal_consent)." .
+
+# --- links (owl:ObjectProperty) ---
+
+:usesTemplate a owl:ObjectProperty ;
+    rdfs:label "uses template" ;
+    rdfs:comment "Links an Assessment to the AssessmentTemplate it was launched from." ;
+    rdfs:domain :Assessment ;
+    rdfs:range :AssessmentTemplate .
+
+:assessesInventory a owl:ObjectProperty ;
+    rdfs:label "assesses inventory" ;
+    rdfs:comment "Links an Assessment to the primary Inventory record it evaluates." ;
+    rdfs:domain :Assessment ;
+    rdfs:range :Inventory .
+
+:respondedBy a owl:ObjectProperty ;
+    rdfs:label "responded by" ;
+    rdfs:comment "Links an Assessment to the Person who is its respondent." ;
+    rdfs:domain :Assessment ;
+    rdfs:range :Person .
+
+:approvedBy a owl:ObjectProperty ;
+    rdfs:label "approved by" ;
+    rdfs:comment "Links an Assessment to the Person who approves it." ;
+    rdfs:domain :Assessment ;
+    rdfs:range :Person .
+
+:hasDataElement a owl:ObjectProperty ;
+    rdfs:label "has data element" ;
+    rdfs:comment "Links an Inventory record to a DataElement it processes." ;
+    rdfs:domain :Inventory ;
+    rdfs:range :DataElement .
+
+:concernsDataSubject a owl:ObjectProperty ;
+    rdfs:label "concerns data subject" ;
+    rdfs:comment "Links a DataElement to a category of DataSubject it describes." ;
+    rdfs:domain :DataElement ;
+    rdfs:range :DataSubject .
+
+:ownedBy a owl:ObjectProperty ;
+    rdfs:label "owned by" ;
+    rdfs:comment "Links an Inventory record to the Person who is its business owner." ;
+    rdfs:domain :Inventory ;
+    rdfs:range :Person .
+
+:scannedOnDomain a owl:ObjectProperty ;
+    rdfs:label "scanned on domain" ;
+    rdfs:comment "Links a Cookie to the CookieDomain a scan discovered it on." ;
+    rdfs:domain :Cookie ;
+    rdfs:range :CookieDomain .
+
+# --- fields (owl:DatatypeProperty) ---
+
+:externalId a owl:DatatypeProperty ;
+    rdfs:label "external id" ;
+    rdfs:comment "The native OneTrust identifier of the object (assessmentId, inventory id, cookieId)." ;
+    rdfs:range xsd:string .
+
+:number a owl:DatatypeProperty ;
+    rdfs:label "number" ;
+    rdfs:comment "Human-facing record number of an Assessment or Inventory (e.g. A-123)." ;
+    rdfs:range xsd:string .
+
+:status a owl:DatatypeProperty ;
+    rdfs:label "status" ;
+    rdfs:comment "Lifecycle status of an Assessment or Inventory (e.g. NOT_STARTED, IN_PROGRESS, COMPLETED)." ;
+    rdfs:range xsd:string .
+
+:result a owl:DatatypeProperty ;
+    rdfs:label "result" ;
+    rdfs:comment "Outcome/result label of a completed Assessment." ;
+    rdfs:range xsd:string .
+
+:riskScore a owl:DatatypeProperty ;
+    rdfs:label "risk score" ;
+    rdfs:comment "Numeric residual/inherent risk score computed for an Assessment." ;
+    rdfs:range xsd:decimal .
+
+:riskLevel a owl:DatatypeProperty ;
+    rdfs:label "risk level" ;
+    rdfs:comment "Named risk level of an Assessment (e.g. Low, Medium, High)." ;
+    rdfs:range xsd:string .
+
+:deadline a owl:DatatypeProperty ;
+    rdfs:label "deadline" ;
+    rdfs:comment "Due date of an Assessment." ;
+    rdfs:range xsd:string .
+
+:inventoryType a owl:DatatypeProperty ;
+    rdfs:label "inventory type" ;
+    rdfs:comment "Type of an Inventory record (ASSETS, VENDORS, ENTITIES, PROCESSING_ACTIVITIES)." ;
+    rdfs:range xsd:string .
+
+:host a owl:DatatypeProperty ;
+    rdfs:label "host" ;
+    rdfs:comment "The host/domain a Cookie is set from." ;
+    rdfs:range xsd:string .
+
+:cookieCategory a owl:DatatypeProperty ;
+    rdfs:label "cookie category" ;
+    rdfs:comment "Consent category a Cookie is classified into (Strictly Necessary, Performance, …)." ;
+    rdfs:range xsd:string .
+
+:lifespan a owl:DatatypeProperty ;
+    rdfs:label "lifespan" ;
+    rdfs:comment "How long a Cookie persists (its declared lifespan/expiry)." ;
+    rdfs:range xsd:string .
+
+:thirdParty a owl:DatatypeProperty ;
+    rdfs:label "third party" ;
+    rdfs:comment "Whether a Cookie is set by a third party." ;
+    rdfs:range xsd:boolean .
+
+<http://knuckles.team/kg/onetrust> a owl:Ontology ;
+    rdfs:label "OneTrust Privacy & Trust Governance Ontology" ;
+    rdfs:comment """OneTrust trust-governance model — privacy/risk assessments (PIA/DPIA)
+    and their templates, the data inventory and its data elements + data subjects, and
+    cookie-consent scan results (cookies and the domains they were found on) — federated
+    into the agent-utilities knowledge-graph hub's enterprise layer.""" ;
+    owl:imports <http://knuckles.team/kg/enterprise> .
