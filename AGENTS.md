@@ -28,7 +28,7 @@ hand. The single source of truth is the vendored OpenAPI specs under
   `_operation_manifest.py`'s `params`; `both` registers both. The manifest's
   `params`/`summary` fields exist specifically to drive the shared
   `register_verbose_tools` typed tier — generated, do not hand-edit.
-  (CONCEPT:ECO-4.82)
+  (CONCEPT:AU-ECO.mcp.tool-mode-standardization)
 
 ## Tech Stack & Architecture
 - Language/Version: Python 3.10+
@@ -166,7 +166,7 @@ async def my_tool(param: str) -> str:
 Working in parallel with other sessions/worktrees? **Reserve a concept id before you write its `CONCEPT:` marker** so two sessions never collide:
 
 ```bash
-agent-utilities --json concept reserve --ns KG-2   # or a package prefix, e.g. KEY
+agent-utilities --json concept reserve --ns EG-KG.compute.backend   # or a package prefix, e.g. KEY
 ```
 
 Full protocol (ledger, merge=union, reconcile, MCP/REST): <https://knuckles-team.github.io/agent-utilities/concept_coordination/>
