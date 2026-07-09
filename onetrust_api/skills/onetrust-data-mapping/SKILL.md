@@ -1,5 +1,6 @@
 ---
 name: onetrust-data-mapping
+skill_type: skill
 description: >-
   Data inventory & data-mapping operations on the OneTrust Data Mapping /
   Inventory API via the onetrust-api MCP server — list and read inventory records

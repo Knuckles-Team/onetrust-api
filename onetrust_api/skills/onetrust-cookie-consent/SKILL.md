@@ -1,5 +1,6 @@
 ---
 name: onetrust-cookie-consent
+skill_type: skill
 description: >-
   Cookie-consent scanning and categorization on the OneTrust Cookie Consent API
   via the onetrust-api MCP server — scan domains/apps, list discovered cookies,

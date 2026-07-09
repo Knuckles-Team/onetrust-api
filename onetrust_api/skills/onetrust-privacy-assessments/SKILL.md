@@ -1,5 +1,6 @@
 ---
 name: onetrust-privacy-assessments
+skill_type: skill
 description: >-
   Privacy & risk assessment operations on the OneTrust Assessment Automation API
   via the onetrust-api MCP server — list, launch, read, complete, and approve
