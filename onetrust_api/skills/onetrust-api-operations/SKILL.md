@@ -1,5 +1,6 @@
 ---
 name: onetrust-api-operations
+skill_type: skill
 description: >-
   Operate onetrust-api through its governed MCP and GraphOS capabilities, including onetrust cookie consent, onetrust data mapping, onetrust privacy assessments. Use when a request requires this provider's read, change, automation, ingestion, troubleshooting, or evidence workflows.
 ---
