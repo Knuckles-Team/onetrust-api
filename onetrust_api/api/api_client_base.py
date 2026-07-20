@@ -24,13 +24,16 @@ import time
 from typing import Any, TypeVar
 
 import requests
-import urllib3
 from agent_utilities.base_utilities import get_logger
 from agent_utilities.core.exceptions import (
     AuthError,
     MissingParameterError,
     ParameterError,
     UnauthorizedError,
+)
+from agent_utilities.core.transport_security import (
+    ResolvedTLSProfile,
+    resolve_configured_tls_profile,
 )
 from pydantic import ValidationError
 
@@ -79,18 +82,16 @@ class OneTrustApiBase:
         region: str = "us",
         consent_url: str | None = None,
         worker_url: str | None = None,
-        proxies: dict | None = None,
-        verify: bool = True,
+        tls_profile: ResolvedTLSProfile | None = None,
         max_retries: int = 3,
         debug: bool = False,
     ):
         logger.setLevel(logging.DEBUG if debug else logging.ERROR)
 
-        self.verify = verify
-        self.proxies = proxies
+        self.tls_profile = tls_profile or resolve_configured_tls_profile("onetrust")
         self.debug = debug
         self.max_retries = max_retries
-        self._session = requests.Session()
+        self._session = self.tls_profile.configure_requests_session(requests.Session())
         self._token_lock = threading.Lock()
         self._token = token
         self._token_expiry = 0.0
@@ -119,9 +120,6 @@ class OneTrustApiBase:
         if worker_host:
             self._host_map["localhost:8080"] = worker_host
 
-        if self.verify is False:
-            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
         if not self._token and not (self._client_id and self._client_secret):
             raise MissingParameterError(
                 "Provide ONETRUST_TOKEN, or ONETRUST_CLIENT_ID and "
@@ -145,12 +143,12 @@ class OneTrustApiBase:
                     data={"grant_type": "client_credentials"},
                     auth=(self._client_id or "", self._client_secret or ""),
                     headers={"Accept": "application/json"},
-                    verify=self.verify,
-                    proxies=self.proxies,
                     timeout=30,
                 )
             except requests.RequestException as e:
-                raise AuthError(f"OneTrust token request failed: {e}") from e
+                raise AuthError(
+                    f"OneTrust token request failed: {type(e).__name__}"
+                ) from e
             if resp.status_code in (401, 403):
                 raise UnauthorizedError(
                     f"OneTrust client-credentials rejected ({resp.status_code})."
@@ -217,8 +215,6 @@ class OneTrustApiBase:
                 json=json,
                 data=data,
                 headers=request_headers,
-                verify=self.verify,
-                proxies=self.proxies,
                 timeout=60,
             )
             if response.status_code == 429 and attempt < self.max_retries:
@@ -233,9 +229,14 @@ class OneTrustApiBase:
                 continue
             if response.status_code in (401, 403):
                 raise (AuthError if response.status_code == 401 else UnauthorizedError)(
-                    f"OneTrust request to {url} failed ({response.status_code})."
+                    f"OneTrust request failed ({response.status_code})."
                 )
             return response
+
+    def close(self) -> None:
+        """Release transport resources and runtime-only TLS material."""
+        self._session.close()
+        self.tls_profile.cleanup()
 
     @staticmethod
     def _retry_delay(response: requests.Response, attempt: int) -> float:
@@ -365,7 +366,7 @@ class OneTrustApiBase:
         except ValidationError as e:
             raise ParameterError(f"Invalid parameters: {e.errors()}") from e
         except requests.RequestException as e:
-            logger.error("OneTrust request error: %s", e)
+            logger.error("Operation failed: error_type=%s", type(e).__name__)
             raise
 
     # --------------------------------------------------------------- escape hatch

@@ -17,6 +17,10 @@ import threading
 from agent_utilities.base_utilities import get_logger
 from agent_utilities.core.config import setting
 from agent_utilities.core.exceptions import AuthError, UnauthorizedError
+from agent_utilities.core.transport_security import (
+    ResolvedTLSProfile,
+    resolve_configured_tls_profile,
+)
 
 local = threading.local()
 from onetrust_api.api_client import Api
@@ -32,7 +36,7 @@ def get_client(
     region: str | None = None,
     consent_url: str | None = None,
     worker_url: str | None = None,
-    verify: bool | None = None,
+    tls_profile: ResolvedTLSProfile | None = None,
     config: dict | None = None,
 ) -> Api:
     """Factory function to create the OneTrust :class:`Api` client.
@@ -44,7 +48,6 @@ def get_client(
     """
     from agent_utilities.mcp.delegated_auth import (
         get_delegated_token,
-        get_user_identity,
         is_delegation_enabled,
     )
 
@@ -63,13 +66,13 @@ def get_client(
     worker_url = (
         worker_url if worker_url is not None else setting("ONETRUST_WORKER_URL")
     )
-    verify = verify if verify is not None else setting("ONETRUST_SSL_VERIFY", True)
+    profile = tls_profile or resolve_configured_tls_profile("onetrust")
 
     common = dict(
         region=region,
         consent_url=consent_url,
         worker_url=worker_url,
-        verify=verify,
+        tls_profile=profile,
     )
 
     # --- Path 1: OIDC Delegation (RFC 8693 Token Exchange) ---
@@ -79,20 +82,18 @@ def get_client(
                 config=config,
                 audience=(config or {}).get("audience", instance or region),
                 scopes=(config or {}).get("delegated_scopes", "api"),
-                verify=verify,
             )
-            identity = get_user_identity()
-            logger.info(
-                "Using OIDC delegated token for OneTrust API",
-                extra={"user_email": identity.get("email"), "instance": instance},
-            )
+            logger.info("Using OIDC delegated token for OneTrust API")
             return Api(url=instance, token=delegated_token, **common)
         except Exception as e:
             logger.error(
                 "OIDC delegation failed for OneTrust",
-                extra={"error_type": type(e).__name__, "error_message": str(e)},
+                extra={
+                    "error_type": type(e).__name__,
+                    "error_message": type(e).__name__,
+                },
             )
-            raise RuntimeError(f"Token exchange failed: {str(e)}") from e
+            raise RuntimeError(f"Token exchange failed: {type(e).__name__}") from e
 
     # --- Path 2: Fixed Credentials (token or client-credentials) ---
     logger.info("Using fixed credentials for OneTrust API")
@@ -109,5 +110,5 @@ def get_client(
             "AUTHENTICATION ERROR: The OneTrust credentials provided are not valid. "
             "Check ONETRUST_URL/ONETRUST_REGION and ONETRUST_TOKEN (or "
             "ONETRUST_CLIENT_ID/ONETRUST_CLIENT_SECRET). "
-            f"Error details: {str(e)}"
+            f"Error details: {type(e).__name__}"
         ) from e

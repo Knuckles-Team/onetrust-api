@@ -1,109 +1,27 @@
-"""Native epistemic-graph ingestion for OneTrust records (typed graph nodes + documents).
+"""Native epistemic-graph ingestion for OneTrust records.
 
-CONCEPT:AU-KG.ingest.enterprise-source-extractor. This is the record-source twin of
-media-downloader's blob ingestion: the onetrust-api package natively pushes its data into
-the ONE epistemic-graph knowledge graph as **typed OWL nodes** (`:Assessment`,
-`:AssessmentTemplate`, `:Inventory`, `:DataElement`, `:DataSubject`, `:Cookie`,
-`:CookieDomain`, `:Person`) + links, and as **:Document** nodes (assessment summaries worth
-semantic search), matching the classes federated by ``onetrust_api.ontology`` (onetrust.ttl).
-
-The write path is the shared fleet primitive
-``agent_utilities.knowledge_graph.memory.native_ingest`` — this module is only a thin mapper
-(records → entity/document dicts). The import is GUARDED: if that primitive is not present in
-the installed agent_utilities, we fall back to a small self-contained txn writer over the
-lightweight engine client (``GraphComputeEngine()._client`` + ``txn``), the same fast client
-the blob ``MediaStore`` uses. Everything is dependency-/engine-guarded: with no KG stack or no
-reachable engine, every entry point **no-ops** (returns ``None``), so the connector keeps
-working with zero KG infrastructure. Node ids follow ``onetrust:<class>:<externalId>``.
+CONCEPT:AU-KG.ingest.enterprise-source-extractor. Connector-specific mappers emit
+canonical node_type nodes and relationship edges. The required agent-utilities
+native-ingest primitive owns the transaction and raises NativeIngestError when the
+authoritative engine cannot commit.
 """
 
 from __future__ import annotations
 
-import logging
 from typing import Any
 
-logger = logging.getLogger("onetrust_api.kg")
+from agent_utilities.knowledge_graph.memory.native_ingest import (
+    ingest_documents as _native_ingest_documents,
+)
+from agent_utilities.knowledge_graph.memory.native_ingest import (
+    ingest_entities as _native_ingest_entities,
+)
+from agent_utilities.knowledge_graph.memory.native_ingest import (
+    media_store as _native_media_store,
+)
 
 _SOURCE = "onetrust-api"
 _DOMAIN = "onetrust"
-_DEFAULT_GRAPH = "__commons__"
-
-
-# --------------------------------------------------------------------------------------
-# Write path — prefer the shared primitive; fall back to a self-contained txn writer.
-# --------------------------------------------------------------------------------------
-def _native():
-    """Return the shared native_ingest module, or ``None`` if unavailable."""
-    try:
-        from agent_utilities.knowledge_graph.memory import native_ingest
-
-        return native_ingest
-    except Exception as e:  # noqa: BLE001 — primitive not in installed agent_utilities
-        logger.debug("native_ingest primitive unavailable: %s", e)
-        return None
-
-
-def _fallback_client() -> tuple[Any | None, str]:
-    """Resolve ``(engine_client, graph)`` for the self-contained fallback writer."""
-    try:
-        from agent_utilities.knowledge_graph.core.graph_compute import (
-            GraphComputeEngine,
-        )
-    except Exception as e:  # noqa: BLE001 — KG stack absent
-        logger.debug("KG ingest unavailable (import): %s", e)
-        return None, ""
-    try:
-        engine = GraphComputeEngine()
-        client = getattr(engine, "_client", None)
-        if client is None:
-            return None, ""
-        return client, (getattr(engine, "graph_name", None) or _DEFAULT_GRAPH)
-    except Exception as e:  # noqa: BLE001 — engine unreachable
-        logger.debug("KG ingest: engine unreachable: %s", e)
-        return None, ""
-
-
-def _fallback_write_nodes(
-    nodes: list[dict[str, Any]],
-    relationships: list[dict[str, Any]] | None,
-    *,
-    client: Any | None,
-    graph: str | None,
-) -> dict[str, int] | None:
-    """Self-contained txn writer (used only when the shared primitive is absent)."""
-    nodes = [n for n in (nodes or []) if n.get("id")]
-    if not nodes:
-        return None
-    if client is None:
-        client, graph = _fallback_client()
-    if client is None:
-        return None
-    graph = graph or _DEFAULT_GRAPH
-    try:
-        txn = client.txn.begin(graph=graph)
-        for node in nodes:
-            props = {k: v for k, v in node.items() if k != "id" and v is not None}
-            props.setdefault("source", _SOURCE)
-            props.setdefault("domain", _DOMAIN)
-            client.txn.add_node(txn, node["id"], props)
-        committed = client.txn.commit(txn)
-    except Exception as e:  # noqa: BLE001 — engine/txn failure is non-fatal
-        logger.warning("KG ingest: txn failed: %s", e)
-        return None
-    if not committed:
-        logger.warning("KG ingest: txn not committed (conflict)")
-        return None
-    edges = 0
-    for rel in relationships or []:
-        try:
-            client.edges.add(
-                rel["source"], rel["target"], {"type": rel.get("type", "RELATED")}
-            )
-            edges += 1
-        except Exception as e:  # noqa: BLE001 — pure edge link, best-effort
-            logger.debug("KG ingest: edge skipped: %s", e)
-    logger.info("KG ingest[onetrust]: wrote %d nodes, %d edges", len(nodes), edges)
-    return {"nodes": len(nodes), "edges": edges}
 
 
 def ingest_entities(
@@ -114,22 +32,16 @@ def ingest_entities(
     domain: str = _DOMAIN,
     client: Any | None = None,
     graph: str | None = None,
-) -> dict[str, int] | None:
-    """Write typed OWL nodes (+ edges) into epistemic-graph.
-
-    ``entities``: ``[{"id":..., "type":<owl:Class>, ...props}]``.
-    ``relationships``: ``[{"source":id, "target":id, "type":<link>}]``.
-    Returns ``{"nodes":n, "edges":m}`` or ``None`` (no engine / failure; never raises).
-    """
-    entities = [e for e in (entities or []) if e.get("id")]
-    if not entities:
-        return None
-    native = _native()
-    if native is not None and client is None:
-        return native.ingest_entities(
-            entities, relationships, source=source, domain=domain, graph=graph
-        )
-    return _fallback_write_nodes(entities, relationships, client=client, graph=graph)
+) -> dict[str, int]:
+    """Write canonical typed nodes and relationships through agent-utilities."""
+    return _native_ingest_entities(
+        entities,
+        relationships,
+        source=source,
+        domain=domain,
+        client=client,
+        graph=graph,
+    )
 
 
 def ingest_documents(
@@ -139,50 +51,22 @@ def ingest_documents(
     domain: str = _DOMAIN,
     client: Any | None = None,
     graph: str | None = None,
-) -> dict[str, int] | None:
-    """Write text records as ``:Document`` nodes (semantic-search fodder).
-
-    Each doc: ``{"id":..., "text":..., "title"?:..., "source_uri"?:..., ...props}``.
-    Returns ``{"nodes":n, "edges":0}`` or ``None``.
-    """
-    documents = [
-        d
-        for d in (documents or [])
-        if d.get("id") and (d.get("text") or d.get("content"))
-    ]
-    if not documents:
-        return None
-    native = _native()
-    if native is not None and client is None:
-        return native.ingest_documents(
-            documents, source=source, domain=domain, graph=graph
-        )
-    # Fallback: shape docs into :Document nodes and write them.
-    nodes: list[dict[str, Any]] = []
-    for doc in documents:
-        node = {k: v for k, v in doc.items() if k != "content" and v is not None}
-        node["id"] = doc["id"]
-        node["type"] = "Document"
-        node["text"] = doc.get("text") or doc.get("content")
-        nodes.append(node)
-    return _fallback_write_nodes(nodes, None, client=client, graph=graph)
+) -> dict[str, int]:
+    """Write searchable documents through the authoritative native-ingest path."""
+    return _native_ingest_documents(
+        documents,
+        source=source,
+        domain=domain,
+        client=client,
+        graph=graph,
+    )
 
 
-def media_store() -> Any | None:
-    """Return a :class:`MediaStore` over a live engine (raw-blob ingestion), or ``None``."""
-    native = _native()
-    if native is not None:
-        try:
-            return native.media_store()
-        except Exception as e:  # noqa: BLE001
-            logger.debug("KG ingest: media_store unavailable: %s", e)
-            return None
-    return None
+def media_store() -> Any:
+    """Return the authoritative native media store."""
+    return _native_media_store()
 
 
-# --------------------------------------------------------------------------------------
-# Domain mappers — OneTrust records → typed entity/document dicts.
-# --------------------------------------------------------------------------------------
 def _s(value: Any) -> str | None:
     return str(value) if value is not None else None
 
@@ -192,7 +76,7 @@ def ingest_assessments(
     *,
     client: Any | None = None,
     graph: str | None = None,
-) -> dict[str, int] | None:
+) -> dict[str, int]:
     """Map assessment records → ``:Assessment`` (+ ``:AssessmentTemplate``/``:Person``) nodes.
 
     Accepts the ``AssessmentListViewBasicDto`` / ``AssessmentListViewResponseV2`` shape
@@ -208,7 +92,7 @@ def ingest_assessments(
         entities.append(
             {
                 "id": node_id,
-                "type": "Assessment",
+                "node_type": "Assessment",
                 "name": a.get("name"),
                 "number": a.get("number"),
                 "status": a.get("status") or a.get("state"),
@@ -226,7 +110,7 @@ def ingest_assessments(
             entities.append(
                 {
                     "id": f"onetrust:assessment_template:{tid}",
-                    "type": "AssessmentTemplate",
+                    "node_type": "AssessmentTemplate",
                     "name": a.get("templateName"),
                     "externalId": _s(tid),
                 }
@@ -235,7 +119,7 @@ def ingest_assessments(
                 {
                     "source": node_id,
                     "target": f"onetrust:assessment_template:{tid}",
-                    "type": "usesTemplate",
+                    "relationship": "usesTemplate",
                 }
             )
         for person, rel in (
@@ -245,7 +129,7 @@ def ingest_assessments(
             pid = _person_id(person)
             if pid:
                 entities.append(_person_node(person, pid))
-                relationships.append({"source": node_id, "target": pid, "type": rel})
+                relationships.append({"source": node_id, "target": pid, "relationship": rel})
     return ingest_entities(entities, relationships, client=client, graph=graph)
 
 
@@ -284,7 +168,7 @@ def ingest_cookies(
     *,
     client: Any | None = None,
     graph: str | None = None,
-) -> dict[str, int] | None:
+) -> dict[str, int]:
     """Map cookie scan records → ``:Cookie`` (+ ``:CookieDomain``) nodes.
 
     Accepts the ``CookieResponseDto`` / ``CookieInformationDetailed`` shape returned by
@@ -301,7 +185,7 @@ def ingest_cookies(
         entities.append(
             {
                 "id": node_id,
-                "type": "Cookie",
+                "node_type": "Cookie",
                 "name": c.get("cookieName") or c.get("name"),
                 "host": host,
                 "lifespan": _s(c.get("lifespan") or c.get("cookieLifeSpan")),
@@ -313,9 +197,9 @@ def ingest_cookies(
         )
         if host:
             dom_id = f"onetrust:cookie_domain:{host}"
-            entities.append({"id": dom_id, "type": "CookieDomain", "name": host})
+            entities.append({"id": dom_id, "node_type": "CookieDomain", "name": host})
             relationships.append(
-                {"source": node_id, "target": dom_id, "type": "scannedOnDomain"}
+                {"source": node_id, "target": dom_id, "relationship": "scannedOnDomain"}
             )
     return ingest_entities(entities, relationships, client=client, graph=graph)
 
@@ -325,7 +209,7 @@ def ingest_inventories(
     *,
     client: Any | None = None,
     graph: str | None = None,
-) -> dict[str, int] | None:
+) -> dict[str, int]:
     """Map inventory records → ``:Inventory`` (+ embedded ``:DataElement``/``:Person``) nodes.
 
     Accepts the ``BulkUpsertInventoryResponse`` / inventory list shape; extracts any embedded
@@ -341,7 +225,7 @@ def ingest_inventories(
         entities.append(
             {
                 "id": node_id,
-                "type": "Inventory",
+                "node_type": "Inventory",
                 "name": inv.get("name"),
                 "number": inv.get("number"),
                 "inventoryType": inv.get("inventoryType"),
@@ -355,7 +239,7 @@ def ingest_inventories(
             if pid:
                 entities.append(_person_node(owner, pid))
                 relationships.append(
-                    {"source": node_id, "target": pid, "type": "ownedBy"}
+                    {"source": node_id, "target": pid, "relationship": "ownedBy"}
                 )
         for de in inv.get("dataElements") or []:
             de_ent, de_rels = _data_element_entities(de, parent=node_id)
@@ -369,7 +253,7 @@ def ingest_data_elements(
     *,
     client: Any | None = None,
     graph: str | None = None,
-) -> dict[str, int] | None:
+) -> dict[str, int]:
     """Map data-element records → ``:DataElement`` (+ ``:DataSubject``) nodes.
 
     Accepts the ``DataElementDetailedResponse`` shape returned by
@@ -394,7 +278,7 @@ def _data_element_entities(
     entities: list[dict[str, Any]] = [
         {
             "id": node_id,
-            "type": "DataElement",
+            "node_type": "DataElement",
             "name": de.get("name"),
             "description": de.get("description"),
             "status": de.get("status"),
@@ -404,7 +288,7 @@ def _data_element_entities(
     relationships: list[dict[str, Any]] = []
     if parent:
         relationships.append(
-            {"source": parent, "target": node_id, "type": "hasDataElement"}
+            {"source": parent, "target": node_id, "relationship": "hasDataElement"}
         )
     for ds in de.get("dataSubjectTypes") or []:
         ds_id = ds.get("id") if isinstance(ds, dict) else ds
@@ -412,9 +296,9 @@ def _data_element_entities(
         if ds_id is None:
             continue
         subj_id = f"onetrust:data_subject:{ds_id}"
-        entities.append({"id": subj_id, "type": "DataSubject", "name": ds_name})
+        entities.append({"id": subj_id, "node_type": "DataSubject", "name": ds_name})
         relationships.append(
-            {"source": node_id, "target": subj_id, "type": "concernsDataSubject"}
+            {"source": node_id, "target": subj_id, "relationship": "concernsDataSubject"}
         )
     return entities, relationships
 
@@ -429,7 +313,7 @@ def _person_id(person: Any) -> str | None:
 def _person_node(person: dict[str, Any], node_id: str) -> dict[str, Any]:
     return {
         "id": node_id,
-        "type": "Person",
+        "node_type": "Person",
         "name": person.get("fullName") or person.get("name"),
         "email": person.get("email"),
     }

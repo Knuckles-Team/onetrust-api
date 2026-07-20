@@ -227,6 +227,7 @@ sync:
   updated_field: lastUpdated
   pagination: page
   doc_type: assessment
+  tool_schema_sha256: 9551d768e3dad678a55328cd2594c83f58286f8246743eee21113b27487619bd
   raw:
     server: onetrust-api
     tool: onetrust_assessments
@@ -252,6 +253,7 @@ sync:
   updated_field: lastUpdated
   pagination: page
   doc_type: inventory
+  tool_schema_sha256: e20b4770c98fcab26dedff89b0b5a50cf5fc274959e97f76d118af235dee6833
   raw:
     server: onetrust-api
     tool: onetrust_data_mapping
@@ -268,17 +270,20 @@ sync:
     doc_type: inventory
 provenance:
   generated_by: scripts/generate_connector_manifests.py
-  generated_at: '2026-07-09T00:00:00Z'
+  generated_at: '2026-07-18T00:00:00Z'
   source_artifacts:
   - a2a.json
   - onetrust_api/connectors/mcp_source_presets.json
+  - onetrust_api/connectors/tool_schema_fingerprints.json
   - onetrust_api/ontology/onetrust.ttl
   integrity:
     algorithm: urdna2015-sha256
     hash: a462ef0407cbc22d9c73e5052db5c194a2b29b78478492379370cfb8228c72b0
     triple_count: 96
   signer: ontology-manifest-generator
-  signature: b4451b600192fea2ccbf7f2d2229fcd70d043afb52b149540c8807fd7e5fd91d
+  signature_algorithm: ed25519
+  signing_public_key: q0Cp7bmQMqJhbofGKKw8xXC6KbFzukBDDke0UYVi8y4
+  signature: 5qq_yQwamwuMQbg2Gj3YKw3AodsYyQV8xcHHVxKiaQ1vGIUEspoY04qjQaT5i0cNH367xQ94ikvywmYpMjCaCA
 policy:
   pii_fields: {}
   tenant_boundary: null

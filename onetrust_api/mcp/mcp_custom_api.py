@@ -29,13 +29,13 @@ def register_custom_api_tools(mcp: FastMCP):
     ) -> Any:
         """Execute an arbitrary OneTrust REST API request directly."""
         if ctx:
-            await ctx.info(f"Executing custom OneTrust {method} {endpoint}")
+            await ctx.info("Executing configured OneTrust API operation")
         import json
 
         try:
             payload = json.loads(params_json) if params_json else {}
         except Exception as e:
-            return {"error": f"Invalid params_json: {e}"}
+            return {"error": "Operation failed"}
         if not isinstance(payload, dict):
             return {"error": "params_json must decode to a JSON object"}
         return client.api_request(

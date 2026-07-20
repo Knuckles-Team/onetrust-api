@@ -11,7 +11,7 @@ docker run -d --name onetrust-api -p 8000:8000 \
   -e TRANSPORT=streamable-http \
   -e ONETRUST_URL="https://acme.my.onetrust.com" \
   -e ONETRUST_TOKEN="your_token" \
-  knucklessg1/onetrust-api:latest
+  example/onetrust-api@sha256:<digest>
 ```
 
 ## Docker Compose
@@ -19,7 +19,7 @@ docker run -d --name onetrust-api -p 8000:8000 \
 ```yaml
 services:
   onetrust-api:
-    image: knucklessg1/onetrust-api:latest
+    image: example/onetrust-api@sha256:<digest>
     environment:
       - HOST=0.0.0.0
       - PORT=8000

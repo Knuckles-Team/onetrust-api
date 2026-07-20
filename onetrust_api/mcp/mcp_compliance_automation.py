@@ -32,7 +32,7 @@ def register_compliance_automation_tools(mcp: FastMCP):
         try:
             kwargs = json.loads(params_json) if params_json else {}
         except Exception as e:
-            return {"error": f"Invalid params_json: {e}"}
+            return {"error": "Operation failed"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}

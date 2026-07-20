@@ -4,11 +4,9 @@ import logging
 import sys
 from typing import Any
 
-from agent_utilities.mcp_utilities import (
-    create_mcp_server,
-    load_config,
-    register_tool_surface,
-)
+from agent_utilities.core.config import load_config
+from agent_utilities.mcp.server_factory import create_mcp_server
+from agent_utilities.mcp.verbose_tools import register_tool_surface
 from fastmcp import FastMCP
 from fastmcp.utilities.logging import get_logger
 
@@ -48,8 +46,7 @@ def register_ingest_tools(mcp: FastMCP):
 
     CONCEPT:AU-KG.ingest.enterprise-source-extractor. Each tool lists OneTrust records
     through the composite ``Api`` client and pushes them into the epistemic-graph as typed
-    OWL nodes (matching onetrust.ttl). Best-effort: returns ``{"ingested": None}`` when no
-    engine is reachable, so the tool never fails on a KG-less deployment.
+    OWL nodes (matching onetrust.ttl). Native-ingest failures propagate to the caller.
     """
     from fastmcp import Context
     from fastmcp.dependencies import Depends
@@ -76,7 +73,12 @@ def register_ingest_tools(mcp: FastMCP):
         if ctx:
             await ctx.info(f"Ingesting {len(records)} assessments into the KG")
         nodes = kg_ingest.ingest_assessments(records)
-        docs = kg_ingest.ingest_documents(kg_ingest.assessment_documents(records))
+        documents = kg_ingest.assessment_documents(records)
+        docs = (
+            kg_ingest.ingest_documents(documents)
+            if documents
+            else {"nodes": 0, "edges": 0}
+        )
         return {"listed": len(records), "ingested": nodes, "documents": docs}
 
     @mcp.tool(tags={"ingest"})

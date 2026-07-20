@@ -76,7 +76,8 @@ so you can scope the surface (e.g. set `ESGTOOL=False` to drop ESG).
 | `ONETRUST_CLIENT_SECRET` | — |  |
 | `ONETRUST_CONSENT_URL` | — | Consent transaction / privacy-portal host (consent_receipts, universal_consent ...) |
 | `ONETRUST_WORKER_URL` | — | On-prem Data Discovery worker-node host |
-| `ONETRUST_SSL_VERIFY` | `True` | ─── HTTP behaviour ──────────────────────────────────────────────────── |
+| `TLS_PROFILE` | — | Named `AgentConfig` transport-security profile; verification is mandatory. |
+| `TLS_PROFILES_REF` | — | Runtime secret reference for the TLS profile catalog. |
 | `FASTMCP_LOG_LEVEL` | `INFO` | ─── MCP transport / auth (agent-utilities) ──────────────────────────── |
 | `TRANSPORT` | `stdio` |  |
 | `AUTH_TYPE` | `none` |  |
@@ -155,7 +156,8 @@ _47 package + 21 inherited variable(s). Auto-generated from `.env.example` + the
 | `ONETRUST_CLIENT_ID` / `ONETRUST_CLIENT_SECRET` | OAuth2 client-credentials (exchanged at `/api/access/v1/oauth/token`). |
 | `ONETRUST_CONSENT_URL` | Optional host for consent-transaction APIs (privacy portal). |
 | `ONETRUST_WORKER_URL` | Optional on-prem Data Discovery worker-node host. |
-| `ONETRUST_SSL_VERIFY` | Verify TLS (default `True`). |
+| `TLS_PROFILE` | Named `AgentConfig` transport-security profile; verification is mandatory. |
+| `TLS_PROFILES_REF` | Runtime secret reference for the TLS profile catalog. |
 | `<DOMAIN>TOOL` | Toggle a domain tool, e.g. `INCIDENTSTOOL`, `DSARTOOL`, `CONSENT_RECEIPTSTOOL` (default `True`). |
 
 #### Run in stdio mode (default):
@@ -845,11 +847,10 @@ _36 action-routed tool(s) (default) · 597 verbose 1:1 tool(s). Each is enabled 
 
 <!-- MCP-CONFIG-EXAMPLES:START -->
 
-> **Install the slim `[mcp]` extra.** All examples install `onetrust-api[mcp]` — the
-> MCP-server extra that pulls only the FastMCP / FastAPI tooling (`agent-utilities[mcp]`).
-> It deliberately **excludes** the heavy agent runtime (`pydantic-ai`, the epistemic-graph
-> engine, `dspy`, `llama-index`), so `uvx` / container installs are far smaller. Use the
-> full `[agent]` extra only when you need the integrated Pydantic AI agent.
+> **Install the connector-focused `[mcp]` extra.** Examples use `onetrust-api[mcp]` to add
+> FastMCP / FastAPI through `agent-utilities[mcp]`; the required Agent Utilities core
+> still carries `epistemic-graph[full]`. The `[agent-runtime]` extra additionally
+> enables model orchestration.
 
 #### stdio Transport (local IDEs — Cursor, Claude Desktop, VS Code)
 
@@ -864,7 +865,7 @@ _36 action-routed tool(s) (default) · 597 verbose 1:1 tool(s). Each is enabled 
         "onetrust-mcp"
       ],
       "env": {
-        "MCP_TOOL_MODE": "condensed",
+        "MCP_TOOL_MODE": "intent",
         "ACCESS_MANAGEMENTTOOL": "True",
         "AI_GOVERNANCETOOL": "True",
         "ASSESSMENTSTOOL": "True",
@@ -894,13 +895,7 @@ _36 action-routed tool(s) (default) · 597 verbose 1:1 tool(s). Each is enabled 
         "IT_RISK_MANAGEMENTTOOL": "True",
         "MOBILE_APP_CONSENTTOOL": "True",
         "OBJECT_MANAGERTOOL": "True",
-        "ONETRUST_CLIENT_ID": "",
-        "ONETRUST_CLIENT_SECRET": "",
-        "ONETRUST_CONSENT_URL": "",
         "ONETRUST_REGION": "us",
-        "ONETRUST_TOKEN": "",
-        "ONETRUST_URL": "",
-        "ONETRUST_WORKER_URL": "",
         "POLICY_MANAGEMENTTOOL": "True",
         "PRIVACY_NOTICESTOOL": "True",
         "TASK_MANAGEMENTTOOL": "True",
@@ -913,6 +908,10 @@ _36 action-routed tool(s) (default) · 597 verbose 1:1 tool(s). Each is enabled 
   }
 }
 ```
+
+Runtime references require an alias-aware launcher such as GraphOS. Other
+launchers must omit those entries and inject the resolved values through their
+own runtime secret boundary.
 
 #### Streamable-HTTP Transport (networked / production)
 
@@ -932,9 +931,9 @@ _36 action-routed tool(s) (default) · 597 verbose 1:1 tool(s). Each is enabled 
       ],
       "env": {
         "TRANSPORT": "streamable-http",
-        "HOST": "0.0.0.0",
+        "HOST": "127.0.0.1",
         "PORT": "8000",
-        "MCP_TOOL_MODE": "condensed",
+        "MCP_TOOL_MODE": "intent",
         "ACCESS_MANAGEMENTTOOL": "True",
         "AI_GOVERNANCETOOL": "True",
         "ASSESSMENTSTOOL": "True",
@@ -964,13 +963,7 @@ _36 action-routed tool(s) (default) · 597 verbose 1:1 tool(s). Each is enabled 
         "IT_RISK_MANAGEMENTTOOL": "True",
         "MOBILE_APP_CONSENTTOOL": "True",
         "OBJECT_MANAGERTOOL": "True",
-        "ONETRUST_CLIENT_ID": "",
-        "ONETRUST_CLIENT_SECRET": "",
-        "ONETRUST_CONSENT_URL": "",
         "ONETRUST_REGION": "us",
-        "ONETRUST_TOKEN": "",
-        "ONETRUST_URL": "",
-        "ONETRUST_WORKER_URL": "",
         "POLICY_MANAGEMENTTOOL": "True",
         "PRIVACY_NOTICESTOOL": "True",
         "TASK_MANAGEMENTTOOL": "True",
@@ -996,16 +989,18 @@ Alternatively, connect to a pre-deployed Streamable-HTTP instance by `url`:
 }
 ```
 
-Deploying the Streamable-HTTP server via Docker:
+Run a reviewed container image as a least-privilege stdio child (no
+listener or published port):
 
 ```bash
-docker run -d \
-  --name onetrust-mcp-mcp \
-  -p 8000:8000 \
-  -e TRANSPORT=streamable-http \
-  -e HOST=0.0.0.0 \
-  -e PORT=8000 \
-  -e MCP_TOOL_MODE=condensed \
+docker run -i --rm \
+  --read-only \
+  --cap-drop=ALL \
+  --security-opt=no-new-privileges \
+  --pids-limit=256 \
+  --tmpfs /tmp:rw,noexec,nosuid,nodev,size=64m \
+  -e TRANSPORT=stdio \
+  -e MCP_TOOL_MODE=intent \
   -e ACCESS_MANAGEMENTTOOL=True \
   -e AI_GOVERNANCETOOL=True \
   -e ASSESSMENTSTOOL=True \
@@ -1035,13 +1030,7 @@ docker run -d \
   -e IT_RISK_MANAGEMENTTOOL=True \
   -e MOBILE_APP_CONSENTTOOL=True \
   -e OBJECT_MANAGERTOOL=True \
-  -e ONETRUST_CLIENT_ID="" \
-  -e ONETRUST_CLIENT_SECRET="" \
-  -e ONETRUST_CONSENT_URL="" \
   -e ONETRUST_REGION=us \
-  -e ONETRUST_TOKEN="" \
-  -e ONETRUST_URL="" \
-  -e ONETRUST_WORKER_URL="" \
   -e POLICY_MANAGEMENTTOOL=True \
   -e PRIVACY_NOTICESTOOL=True \
   -e TASK_MANAGEMENTTOOL=True \
@@ -1049,8 +1038,13 @@ docker run -d \
   -e TRAININGTOOL=True \
   -e UNIVERSAL_CONSENTTOOL=True \
   -e USER_PROVISIONINGTOOL=True \
-  knucklessg1/onetrust-api:mcp
+  registry.example.invalid/onetrust-api@sha256:<digest> onetrust-mcp
 ```
+
+For containerized network HTTP, supply an authenticated TLS ingress (or
+direct server TLS), exact `MCP_ALLOWED_HOSTS`, and an exact trusted-proxy
+CIDR policy through the operator-owned deployment profile. The generator
+does not emit an unauthenticated non-loopback listener.
 
 _Auto-generated from the code-read env surface (`MCP_TOOL_MODE` + package vars) — do not edit._
 <!-- MCP-CONFIG-EXAMPLES:END -->
@@ -1082,12 +1076,12 @@ docker run -d \
   -e PORT=8000 \
   -e ONETRUST_URL="https://acme.my.onetrust.com" \
   -e ONETRUST_TOKEN="your_token" \
-  knucklessg1/onetrust-api:mcp
+  example/onetrust-api:mcp
 ```
 
-> The `:mcp` tag is the **slim MCP-server image** (built from
+> The `:mcp` tag is the **MCP-serving image** (built from
 > `docker/Dockerfile --target mcp`, installing `onetrust-api[mcp]`). The default
-> `:latest` tag is the **full agent image** (`--target agent`, `onetrust-api[agent]`)
+> the immutable agent image is the **full agent image** (`--target agent`, `onetrust-api[agent]`)
 > which also bundles the Pydantic AI agent and the epistemic-graph engine — use it
 > when you run `onetrust-agent` (the agent), not just the MCP server. See
 > [Container images](#container-images-mcp-vs-agent).
@@ -1097,7 +1091,7 @@ docker run -d \
 ```yaml
 services:
   onetrust-api-mcp:
-    image: knucklessg1/onetrust-api:mcp
+    image: example/onetrust-api:mcp
     environment:
       - HOST=0.0.0.0
       - PORT=8000
@@ -1114,15 +1108,15 @@ Pick the extra that matches what you want to run:
 
 | Extra | Installs | Use when |
 |-------|----------|----------|
-| `onetrust-api[mcp]` | Slim MCP server only (`agent-utilities[mcp]` — FastMCP/FastAPI) | You only run the **MCP server** (smallest install / image) |
-| `onetrust-api[agent]` | Full agent runtime (`agent-utilities[agent,logfire]` — Pydantic AI + the epistemic-graph engine) | You run the **integrated agent** |
+| `onetrust-api[mcp]` | Connector-focused MCP server (`agent-utilities[mcp]` — FastMCP/FastAPI + `epistemic-graph[full]`) | You only run the **MCP server** (smallest install / image) |
+| `onetrust-api[agent]` | Agent runtime (`agent-utilities[agent-runtime,logfire]` — model orchestration + `epistemic-graph[full]`) | You run the **integrated agent** |
 | `onetrust-api[all]` | Everything (`mcp` + `agent`) | Development / both surfaces |
 
 ```bash
-# MCP server only (recommended for tool hosting — slim deps)
+# Connector-focused MCP server (includes the shared graph engine)
 uv pip install "onetrust-api[mcp]"
 
-# Full agent runtime (Pydantic AI + epistemic-graph engine)
+# Agent runtime (adds model orchestration to the shared graph engine)
 uv pip install "onetrust-api[agent]"
 
 # Everything (development)
@@ -1135,26 +1129,27 @@ One multi-stage `docker/Dockerfile` builds two right-sized images, selected by `
 
 | Image tag | Build target | Contents | Entrypoint |
 |-----------|--------------|----------|------------|
-| `knucklessg1/onetrust-api:mcp` | `--target mcp` | `onetrust-api[mcp]` — **slim**, no engine/`pydantic-ai`/`dspy`/`llama-index`/`tree-sitter` | `onetrust-mcp` |
-| `knucklessg1/onetrust-api:latest` | `--target agent` (default) | `onetrust-api[agent]` — **full** agent runtime + epistemic-graph engine | `onetrust-agent` |
+| `example/onetrust-api:mcp` | `--target mcp` | `onetrust-api[mcp]` — **connector-focused**, includes `epistemic-graph[full]`; no model-orchestration stack | `onetrust-mcp` |
+| `example/onetrust-api@sha256:<digest>` | `--target agent` (default) | `onetrust-api[agent]` — **agent runtime**, model orchestration + `epistemic-graph[full]` | `onetrust-agent` |
 
 ```bash
-docker build --target mcp   -t knucklessg1/onetrust-api:mcp    docker/   # slim MCP server
-docker build --target agent -t knucklessg1/onetrust-api:latest docker/   # full agent
+docker build --target mcp   -t example/onetrust-api:mcp    docker/   # connector-focused MCP server
+docker build --target agent -t example/onetrust-api:agent-local docker/   # agent runtime
 ```
 
-`docker/mcp.compose.yml` runs the slim `:mcp` server; `docker/agent.compose.yml` runs the
-agent (`:latest`) with a co-located `:mcp` sidecar.
+`docker/mcp.compose.yml` runs the connector-focused `:mcp` server; `docker/agent.compose.yml` runs the
+agent (`immutable agent digest`) with a co-located `:mcp` sidecar.
 
 ### Knowledge-graph database (`epistemic-graph`)
 
-The **full agent** (`[agent]` / `:latest`) embeds the **epistemic-graph** engine (pulled in
-transitively via `agent-utilities[agent]`). For production — or to share one knowledge graph
-across multiple agents — run **epistemic-graph as its own database container** and point the
-agent at it instead of embedding it. Deployment recipes (single-node + Raft HA), connection
-config, and the full database architecture (with diagrams) are documented in the
+Both `[mcp]` and `[agent]` carry the **epistemic-graph** engine through the required
+Agent Utilities core dependency (`epistemic-graph[full]`). The `[mcp]` extra keeps
+the server connector-focused; `[agent]` additionally enables model orchestration. Local
+deployments can use the bundled engine. For production or shared state, run
+**epistemic-graph as a dedicated database service** and configure the runtime to use it.
+Deployment recipes (single-node + Raft HA), connection configuration, and architecture
+diagrams are documented in the
 [epistemic-graph deployment guide](https://knuckles-team.github.io/epistemic-graph/deployment/).
-The slim `[mcp]` server does **not** require the database.
 
 ## Environment Variables
 
@@ -1171,7 +1166,8 @@ starting point.
 | `ONETRUST_CLIENT_SECRET` | OAuth2 client-credentials client secret | — |
 | `ONETRUST_CONSENT_URL` | Optional host for consent-transaction APIs (privacy portal) | — |
 | `ONETRUST_WORKER_URL` | Optional on-prem Data Discovery worker-node host | — |
-| `ONETRUST_SSL_VERIFY` | Verify TLS for OneTrust requests | `True` |
+| `TLS_PROFILE` | Named `AgentConfig` transport-security profile; verification is mandatory | — |
+| `TLS_PROFILES_REF` | Runtime secret reference for the TLS profile catalog | — |
 
 ### MCP server / transport
 | Variable | Description | Default |
@@ -1226,29 +1222,46 @@ the source of truth for installation, usage, and deployment.
 
 ## Repository Owners
 
-<img width="100%" height="180em" src="https://github-readme-stats.vercel.app/api?username=Knucklessg1&show_icons=true&hide_border=true&&count_private=true&include_all_commits=true" />
+<img width="100%" height="180em" src="https://github-readme-stats.vercel.app/api?username=example&show_icons=true&hide_border=true&&count_private=true&include_all_commits=true" />
 
-![GitHub followers](https://img.shields.io/github/followers/Knucklessg1)
-![GitHub User's stars](https://img.shields.io/github/stars/Knucklessg1)
+![GitHub followers](https://img.shields.io/github/followers/example)
+![GitHub User's stars](https://img.shields.io/github/stars/example)
 
 
-<!-- BEGIN agent-os-genesis-deploy (generated; do not edit between markers) -->
+<!-- BEGIN agent-utilities-deployment (generated; do not edit between markers) -->
 
-## Deploy with `agent-os-genesis`
+## Deploy with `agent-utilities-deployment`
 
-This package can be provisioned for you — skill-guided — by the **`agent-os-genesis`**
-universal skill (its *single-package deploy mode*): it picks your install method, seeds
-secrets to OpenBao/Vault (or `.env`), trusts your enterprise CA, registers the MCP
-server, and verifies it — the same machinery that stands up the whole Agent OS, narrowed
-to just this package. Ask your agent to **"deploy `onetrust-api` with agent-os-genesis"**.
+Provision this package with the consolidated **`agent-utilities-deployment`**
+workflow. It selects an installed-package, editable-source, or immutable-container
+path; records only runtime secret and TLS-profile references in `AgentConfig`; and
+runs doctor, registration, policy, observability, and rollback gates. Ask your agent
+to **"deploy `onetrust-api` with agent-utilities-deployment"**.
 
 | Install mode | Command |
 |------|---------|
-| Bare-metal, prod (PyPI) | `uvx onetrust-mcp` · or `uv tool install onetrust-api` |
-| Bare-metal, dev (editable) | `uv pip install -e ".[all]"` · or `pip install -e ".[all]"` |
-| Container, prod | deploy `knucklessg1/onetrust-api:latest` via docker-compose / swarm / podman / podman-compose / kubernetes |
-| Container, dev (editable) | deploy `docker/compose.dev.yml` (source-mounted at `/src`; edits live on restart) |
+| Installed package | `uv tool install "onetrust-api[mcp]"`, then run `onetrust-mcp` |
+| Editable source | `uv pip install -e ".[agent]"`, then run `onetrust-mcp` |
+| Immutable container | deploy `registry.example.invalid/onetrust-api@sha256:<digest>` through the operator-selected orchestrator |
 
-Secrets are read-existing + seeded via `vault_sync` — you are only prompted for what's missing.
+The repository embeds no deployment profile, credential value, certificate path, or
+environment-specific endpoint. Supply those at runtime through `AgentConfig` and the
+configured secret provider.
 
-<!-- END agent-os-genesis-deploy -->
+<!-- END agent-utilities-deployment -->
+
+<!-- GOVERNED-CAPABILITY:START -->
+## Governed capability contract
+
+This package ships a compact canonical skill surface with specialist procedures
+kept as referenced workflows. The current MCP tools, skill metadata,
+`connector_manifest.yml`, ontology, mappings, shapes, fixtures, migrations,
+tool-schema fingerprints, and certification metadata form one versioned
+capability contract. Validate them together; do not rely on stale tool names or
+historical per-task skill wrappers.
+
+Runtime endpoints, credentials, certificate trust, tenant identity, retention,
+and observability policy are deployment inputs and are never packaged values.
+See [Configuration, trust, and privacy](docs/configuration.md) before enabling a
+network transport, connector ingestion, GraphOS delegation, or trace export.
+<!-- GOVERNED-CAPABILITY:END -->

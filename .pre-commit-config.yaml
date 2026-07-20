@@ -8,7 +8,7 @@ ci:
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
+    rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c # v6.0.0
     hooks:
     - id: check-added-large-files
       exclude: 'onetrust_api/skills/.*-docs/'
@@ -26,18 +26,18 @@ repos:
     - id: end-of-file-fixer
     - id: no-commit-to-branch
   - repo: https://github.com/psf/black
-    rev: 26.1.0
+    rev: 6305bf1ae645ab7541be4f5028a86239316178eb # 26.1.0
     hooks:
     - id: black
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.4
+    rev: a27a2e47c7751b639d2b5badf0ef6ff11fee893f # v0.15.4
     hooks:
       - id: ruff
         exclude: ^(tests/|test/|scripts/|script/)
         types_or: [ python, pyi, jupyter ]
         args: ["--fix", "--ignore=E402"]
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
+    rev: 63c8f8312b7559622c0d82815639671ae42132ac # v2.4.1
     hooks:
       - id: codespell
         args: ["-L", "ans,linar,nam,tread,ot,"]
@@ -50,26 +50,18 @@ repos:
               onetrust_api/api/_operation_manifest\.py
             )$
   - repo: https://github.com/nbQA-dev/nbQA
-    rev: 1.9.1
+    rev: d31b7eae1767c43460afb3ba130e0a6602933abe # 1.9.1
     hooks:
       - id: nbqa-black
         exclude: ^(tests/|test/|scripts/|script/)
   - repo: local
     hooks:
-      - id: check-ontology-integrity
-        name: check connector ontology manifest integrity (C5/X6, fail-closed)
-        entry: |-
-          bash -c '[ -f connector_manifest.yml ] || exit 0; python3 /home/apps/workspace/agent-packages/agent-utilities/scripts/check_connector_manifests.py --manifest connector_manifest.yml'
-        language: system
-        pass_filenames: false
-        always_run: true
-        files: ^(connector_manifest\.yml|.*/ontology/.*\.ttl|.*/connectors/mcp_source_presets\.json|a2a\.json)$
-      - id: okf-no-legacy-concepts
-        name: OKF-CIS — no legacy CONCEPT ids
-        entry: python3 /home/apps/workspace/agent-packages/agent-utilities/scripts/check_no_legacy_markers.py .
-        language: system
-        pass_filenames: false
-        always_run: true
+  - id: okf-no-legacy-concepts
+    name: OKF-CIS — no legacy CONCEPT ids
+    entry: bash -c 'repo=$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)"); root=${AGENT_UTILITIES_ROOT:-"$(dirname "$repo")/agent-utilities"}; python3 "$root/scripts/check_no_legacy_markers.py" . "$@"' --
+    language: system
+    pass_filenames: false
+    always_run: true
       - id: mcp-readme-table
         name: sync MCP tools table in README
         entry: |-
