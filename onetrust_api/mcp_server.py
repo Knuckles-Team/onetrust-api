@@ -14,7 +14,7 @@ from onetrust_api.api._operation_manifest import OPERATIONS
 from onetrust_api.api_client import Api
 from onetrust_api.auth import get_client
 
-__version__ = "0.2.1"
+__version__ = "1.0.0"
 
 # Redirect logging to stderr to prevent MCP stdout corruption
 logger = get_logger(name="onetrust_mcp")
