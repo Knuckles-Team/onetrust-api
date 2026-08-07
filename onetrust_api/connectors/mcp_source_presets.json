@@ -1,7 +1,7 @@
 {
   "_comment": "Tier-1 mcp_tool source presets for onetrust-api (AU-KG.ingest.mcp-tool-connector). Sync OneTrust privacy records into the KG via the onetrust-api MCP server. Contributed presets win over the central MCP_TOOL_PRESETS. Native typed-node ingestion is done by the onetrust_ingest_* tools; these declarative presets cover document-style sync.",
   "onetrust-assessments": {
-    "server": "onetrust-api",
+    "server": "onetrust-mcp",
     "tool": "onetrust_assessments",
     "action": "get_all_assessment_basic_details_using_get",
     "records_path": "data",
@@ -16,7 +16,7 @@
     "doc_type": "assessment"
   },
   "onetrust-inventory": {
-    "server": "onetrust-api",
+    "server": "onetrust-mcp",
     "tool": "onetrust_data_mapping",
     "action": "get_list_of_inventories_using_get",
     "records_path": "data",

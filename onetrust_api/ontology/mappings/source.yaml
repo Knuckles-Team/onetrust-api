@@ -3,7 +3,7 @@ connector: onetrust-api
 ontology_source: onetrust
 sync:
 - preset: onetrust-assessments
-  server: onetrust-api
+  server: onetrust-mcp
   tool: onetrust_assessments
   action: get_all_assessment_basic_details_using_get
   records_path: data
@@ -14,7 +14,7 @@ sync:
   doc_type: assessment
   tool_schema_sha256: 9551d768e3dad678a55328cd2594c83f58286f8246743eee21113b27487619bd
 - preset: onetrust-inventory
-  server: onetrust-api
+  server: onetrust-mcp
   tool: onetrust_data_mapping
   action: get_list_of_inventories_using_get
   records_path: data
