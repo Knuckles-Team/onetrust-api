@@ -97,9 +97,11 @@ def ingest_assessments(
                 "number": a.get("number"),
                 "status": a.get("status") or a.get("state"),
                 "result": a.get("result") or a.get("resultName"),
-                "riskScore": a.get("residualRiskScore")
-                if a.get("residualRiskScore") is not None
-                else a.get("inherentRiskScore"),
+                "riskScore": (
+                    a.get("residualRiskScore")
+                    if a.get("residualRiskScore") is not None
+                    else a.get("inherentRiskScore")
+                ),
                 "riskLevel": a.get("assessmentRiskLevelName"),
                 "deadline": a.get("deadline"),
                 "externalId": _s(aid),
@@ -129,7 +131,9 @@ def ingest_assessments(
             pid = _person_id(person)
             if pid:
                 entities.append(_person_node(person, pid))
-                relationships.append({"source": node_id, "target": pid, "relationship": rel})
+                relationships.append(
+                    {"source": node_id, "target": pid, "relationship": rel}
+                )
     return ingest_entities(entities, relationships, client=client, graph=graph)
 
 
@@ -145,9 +149,11 @@ def assessment_documents(assessments: list[dict[str, Any]]) -> list[dict[str, An
             f"Number: {a.get('number')}" if a.get("number") else None,
             f"Template: {a.get('templateName')}" if a.get("templateName") else None,
             f"Status: {a.get('status') or a.get('state')}",
-            f"Result: {a.get('result') or a.get('resultName')}"
-            if (a.get("result") or a.get("resultName"))
-            else None,
+            (
+                f"Result: {a.get('result') or a.get('resultName')}"
+                if (a.get("result") or a.get("resultName"))
+                else None
+            ),
         ]
         text = "\n".join(p for p in parts if p)
         if not text.strip():
@@ -298,7 +304,11 @@ def _data_element_entities(
         subj_id = f"onetrust:data_subject:{ds_id}"
         entities.append({"id": subj_id, "node_type": "DataSubject", "name": ds_name})
         relationships.append(
-            {"source": node_id, "target": subj_id, "relationship": "concernsDataSubject"}
+            {
+                "source": node_id,
+                "target": subj_id,
+                "relationship": "concernsDataSubject",
+            }
         )
     return entities, relationships
 

@@ -9,8 +9,14 @@ CONCEPT:AU-KG.ingest.enterprise-source-extractor.
 
 from __future__ import annotations
 
+from typing import Any
+
+import msgpack
 import pytest
 from agent_utilities.knowledge_graph.memory.native_ingest import NativeIngestError
+from agent_utilities.security.brain_context import ActorContext, use_actor
+from agent_utilities.models.company_brain import ActorType
+from agent_utilities.knowledge_graph.core.session import GraphSession, use_session
 
 from onetrust_api.kg_ingest import (
     assessment_documents,
@@ -23,30 +29,92 @@ from onetrust_api.kg_ingest import (
 )
 
 
-class _FakeTxn:
-    def __init__(self):
-        self.nodes = {}
-        self.edges = []
-        self.committed = False
+@pytest.fixture(autouse=True)
+def _governed_session():
+    actor = ActorContext(
+        actor_id="subject:opaque:synthetic",
+        actor_type=ActorType.AUTOMATED_SERVICE,
+        roles=(),
+        tenant_id="tenant:opaque:synthetic",
+        authenticated=True,
+    )
+    session = GraphSession(
+        actor=actor,
+        tenant=actor.tenant_id,
+        scopes=frozenset({"kg:write"}),
+        graph="graph:opaque:synthetic",
+        policy_version="policy:opaque:synthetic",
+        audience="epistemic-graph",
+    )
+    with use_actor(actor), use_session(session):
+        yield
 
-    def begin(self, graph=None):
-        self.graph = graph
-        return "txn-1"
 
-    def add_node(self, txn, node_id, props):
-        self.nodes[node_id] = props
+class _FakeNodes:
+    def __init__(self) -> None:
+        self.values: dict[str, dict[str, Any]] = {}
 
-    def add_edge(self, txn, source, target, props):
-        self.edges.append((source, target, props))
+    def properties(self, node_id: str) -> dict[str, Any] | None:
+        return self.values.get(node_id)
 
-    def commit(self, txn):
-        self.committed = True
-        return True
+    def list(self) -> list[tuple[str, dict[str, Any]]]:
+        return list(self.values.items())
+
+
+class _FakeChanges:
+    def __init__(self, nodes: _FakeNodes) -> None:
+        self.nodes = nodes
+        self.edges: list[tuple[str, str, dict[str, Any]]] = []
+        self.applied: list[dict[str, Any]] = []
+        self.records: dict[str, dict[str, Any]] = {}
+        self.versions: dict[str, dict[str, Any]] = {}
+
+    def get(self, envelope_id: str) -> dict[str, Any] | None:
+        return self.records.get(envelope_id)
+
+    def content_version(self, object_id: str) -> dict[str, Any] | None:
+        return self.versions.get(object_id)
+
+    def cursor(self, _source: str, _partition: str = "") -> None:
+        return None
+
+    def apply(self, envelope: dict[str, Any]) -> dict[str, Any]:
+        self.applied.append(envelope)
+        mutation = envelope["mutation"]
+        for operation in mutation["operations"]:
+            method = operation["method"]
+            params = method["params"]
+            properties = msgpack.unpackb(params["properties_msgpack"], raw=False)
+            if method["method"] == "AddNode":
+                self.nodes.values[params["node_id"]] = properties
+            elif method["method"] == "AddEdge":
+                self.edges.append(
+                    (params["source_id"], params["target_id"], properties)
+                )
+        version = envelope["content_version"]
+        self.versions[version["object_id"]] = version
+        self.records[envelope["envelope_id"]] = envelope
+        return {
+            "batch_id": mutation["batch_id"],
+            "replayed": False,
+            "projection_pending": False,
+        }
+
+
+class _FakeRdf:
+    def validate_shacl(self, _shapes: str, _data_graph: str) -> dict[str, Any]:
+        return {"conforms": True, "results": []}
 
 
 class _FakeClient:
-    def __init__(self):
-        self.txn = _FakeTxn()
+    def __init__(self) -> None:
+        self.nodes = _FakeNodes()
+        self.changes = _FakeChanges(self.nodes)
+        self.rdf = _FakeRdf()
+
+    @staticmethod
+    def supports(operation: str) -> bool:
+        return operation == "ApplyChangeEnvelope"
 
 
 def test_ingest_entities_writes_nodes_and_edges():
@@ -58,14 +126,13 @@ def test_ingest_entities_writes_nodes_and_edges():
         ],
         [{"source": "a", "target": "b", "relationship": "usesTemplate"}],
         client=c,
-        graph="__commons__",
     )
     assert res == {"nodes": 2, "edges": 1}
-    assert c.txn.committed is True
-    assert set(c.txn.nodes) == {"a", "b"}
-    assert c.txn.nodes["a"]["source"] == "onetrust-api"
-    assert c.txn.nodes["a"]["domain"] == "onetrust"
-    assert c.txn.edges == [("a", "b", {"relationship": "usesTemplate"})]
+    assert len(c.changes.applied) == 1
+    assert set(c.nodes.values) == {"a", "b"}
+    assert c.nodes.values["a"]["source"] == "onetrust-api"
+    assert c.nodes.values["a"]["domain"] == "onetrust"
+    assert c.changes.edges == [("a", "b", {"relationship": "usesTemplate"})]
 
 
 def test_ingest_assessments_maps_assessment_template_and_person():
@@ -85,26 +152,26 @@ def test_ingest_assessments_maps_assessment_template_and_person():
             }
         ],
         client=c,
-        graph="__commons__",
     )
     assert res == {"nodes": 3, "edges": 2}
-    assert c.txn.nodes["onetrust:assessment:A1"]["node_type"] == "Assessment"
-    assert c.txn.nodes["onetrust:assessment:A1"]["number"] == "AS-7"
-    assert c.txn.nodes["onetrust:assessment:A1"]["externalId"] == "A1"
+    assert c.nodes.values["onetrust:assessment:A1"]["node_type"] == "Assessment"
+    assert c.nodes.values["onetrust:assessment:A1"]["number"] == "AS-7"
+    assert c.nodes.values["onetrust:assessment:A1"]["externalId"] == "A1"
     assert (
-        c.txn.nodes["onetrust:assessment_template:T9"]["node_type"] == "AssessmentTemplate"
+        c.nodes.values["onetrust:assessment_template:T9"]["node_type"]
+        == "AssessmentTemplate"
     )
-    assert c.txn.nodes["onetrust:person:u1"]["node_type"] == "Person"
+    assert c.nodes.values["onetrust:person:u1"]["node_type"] == "Person"
     assert (
         "onetrust:assessment:A1",
         "onetrust:assessment_template:T9",
         {"relationship": "usesTemplate"},
-    ) in c.txn.edges
+    ) in c.changes.edges
     assert (
         "onetrust:assessment:A1",
         "onetrust:person:u1",
         {"relationship": "respondedBy"},
-    ) in c.txn.edges
+    ) in c.changes.edges
 
 
 def test_assessment_documents_and_ingest_documents():
@@ -113,9 +180,9 @@ def test_assessment_documents_and_ingest_documents():
     )
     assert docs and docs[0]["id"] == "onetrust:assessment_doc:A1"
     c = _FakeClient()
-    res = ingest_documents(docs, client=c, graph="__commons__")
+    res = ingest_documents(docs, client=c)
     assert res == {"nodes": 1, "edges": 0}
-    node = c.txn.nodes["onetrust:assessment_doc:A1"]
+    node = c.nodes.values["onetrust:assessment_doc:A1"]
     assert node["node_type"] == "Document"
     assert "Vendor PIA" in node["text"]
 
@@ -134,16 +201,17 @@ def test_ingest_cookies_maps_cookie_and_domain():
             }
         ],
         client=c,
-        graph="__commons__",
     )
     assert res == {"nodes": 2, "edges": 1}
-    ck = c.txn.nodes["onetrust:cookie:CK1"]
+    ck = c.nodes.values["onetrust:cookie:CK1"]
     assert ck["node_type"] == "Cookie"
     assert ck["host"] == "example.com"
     assert ck["cookieCategory"] == "Performance"
     assert ck["thirdParty"] is True
-    assert c.txn.nodes["onetrust:cookie_domain:example.com"]["node_type"] == "CookieDomain"
-    assert c.txn.edges == [
+    assert (
+        c.nodes.values["onetrust:cookie_domain:example.com"]["node_type"] == "CookieDomain"
+    )
+    assert c.changes.edges == [
         (
             "onetrust:cookie:CK1",
             "onetrust:cookie_domain:example.com",
@@ -173,14 +241,13 @@ def test_ingest_inventories_extracts_data_elements_and_owner():
             }
         ],
         client=c,
-        graph="__commons__",
     )
     # Inventory + Person + DataElement + DataSubject = 4 nodes
     assert res == {"nodes": 4, "edges": 3}
-    assert c.txn.nodes["onetrust:inventory:INV1"]["inventoryType"] == "ASSETS"
-    assert c.txn.nodes["onetrust:data_element:DE1"]["node_type"] == "DataElement"
-    assert c.txn.nodes["onetrust:data_subject:DS1"]["node_type"] == "DataSubject"
-    edge_types = {e[2]["relationship"] for e in c.txn.edges}
+    assert c.nodes.values["onetrust:inventory:INV1"]["inventoryType"] == "ASSETS"
+    assert c.nodes.values["onetrust:data_element:DE1"]["node_type"] == "DataElement"
+    assert c.nodes.values["onetrust:data_subject:DS1"]["node_type"] == "DataSubject"
+    edge_types = {e[2]["relationship"] for e in c.changes.edges}
     assert edge_types == {"ownedBy", "hasDataElement", "concernsDataSubject"}
 
 
@@ -196,10 +263,9 @@ def test_ingest_data_elements_standalone():
             }
         ],
         client=c,
-        graph="__commons__",
     )
     assert res == {"nodes": 1, "edges": 0}
-    assert c.txn.nodes["onetrust:data_element:DE9"]["name"] == "SSN"
+    assert c.nodes.values["onetrust:data_element:DE9"]["name"] == "SSN"
 
 
 def test_retired_node_type_alias_is_rejected():

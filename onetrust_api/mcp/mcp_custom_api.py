@@ -34,7 +34,7 @@ def register_custom_api_tools(mcp: FastMCP):
 
         try:
             payload = json.loads(params_json) if params_json else {}
-        except Exception as e:
+        except Exception:
             return {"error": "Operation failed"}
         if not isinstance(payload, dict):
             return {"error": "params_json must decode to a JSON object"}

@@ -29,7 +29,7 @@ def register_mobile_app_consent_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception as e:
+        except Exception:
             return {"error": "Operation failed"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
