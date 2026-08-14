@@ -21,7 +21,7 @@
 ![PyPI - Wheel](https://img.shields.io/pypi/wheel/onetrust-api)
 ![PyPI - Implementation](https://img.shields.io/pypi/implementation/onetrust-api)
 
-*Version: 1.0.0*
+*Version: 1.1.0*
 
 ## Overview
 
@@ -69,19 +69,19 @@ so you can scope the surface (e.g. set `ESGTOOL=False` to drop ESG).
 
 | Variable | Example | Description |
 |----------|---------|-------------|
-| `ONETRUST_URL` | — | Tenant host URL (overrides ONETRUST_REGION). e.g. https://acme.my.onetrust.com |
+| `ONETRUST_URL` | — | ─── OneTrust connection ─────────────────────────────────────────────── Tenant host URL (overrides ONETRUST_REGION). e.g. https://acme.my.onetrust.com |
 | `ONETRUST_REGION` | `us` | Or pick a shared regional pod: us, eu, de, uk, au, ca, fr, in, jp, trial, uat ... |
-| `ONETRUST_TOKEN` | — | 1) Pre-minted OAuth2 bearer token (Global Settings > Access Management > Credentials) |
+| `ONETRUST_TOKEN` | secret-injected | ─── Authentication (use ONE of the two) ─────────────────────────────── 1) Pre-minted OAuth2 bearer token (Global Settings > Access Management > Credentials) |
 | `ONETRUST_CLIENT_ID` | — | 2) OAuth2 client-credentials (exchanged at /api/access/v1/oauth/token) |
-| `ONETRUST_CLIENT_SECRET` | — |  |
-| `ONETRUST_CONSENT_URL` | — | Consent transaction / privacy-portal host (consent_receipts, universal_consent ...) |
+| `ONETRUST_CLIENT_SECRET` | secret-injected |  |
+| `ONETRUST_CONSENT_URL` | — | ─── Optional service hosts ──────────────────────────────────────────── Consent transaction / privacy-portal host (consent_receipts, universal_consent ...) |
 | `ONETRUST_WORKER_URL` | — | On-prem Data Discovery worker-node host |
-| `TLS_PROFILE` | — | Named `AgentConfig` transport-security profile; verification is mandatory. |
-| `TLS_PROFILES_REF` | — | Runtime secret reference for the TLS profile catalog. |
+| `TLS_PROFILE` | `private-pki` | ─── HTTP behaviour ──────────────────────────────────────────────────── TLS verification is mandatory. Select a named runtime profile from AgentConfig. |
+| `TLS_PROFILES_REF` | `secret://runtime/tls-profiles` |  |
 | `FASTMCP_LOG_LEVEL` | `INFO` | ─── MCP transport / auth (agent-utilities) ──────────────────────────── |
 | `TRANSPORT` | `stdio` |  |
 | `AUTH_TYPE` | `none` |  |
-| `ACCESS_MANAGEMENTTOOL` | `True` | MCP tools table (condensed action-routed surface). |
+| `ACCESS_MANAGEMENTTOOL` | `True` | ─── Tool Toggle Switches (per-domain <DOMAIN>TOOL; set False to disable) ─ These names match the authoritative "Toggle Env Var" column in the README MCP tools table (condensed action-routed surface). |
 | `AI_GOVERNANCETOOL` | `True` |  |
 | `CUSTOM_APITOOL` | `True` |  |
 | `ASSESSMENTSTOOL` | `True` |  |
@@ -122,21 +122,23 @@ so you can scope the surface (e.g. set `ESGTOOL=False` to drop ESG).
 
 | Variable | Example | Description |
 |----------|---------|-------------|
-| `HOST` | `0.0.0.0` | Bind host (HTTP transports) |
+| `HOST` | `127.0.0.1` | Loopback bind host (set an authenticated ingress explicitly) |
 | `PORT` | `8000` | Bind port (HTTP transports) |
-| `MCP_TOOL_MODE` | `condensed` | Tool surface: `condensed` | `verbose` | `both` |
+| `MCP_TOOL_MODE` | `intent` | Tool surface: `intent` \| `condensed` \| `verbose` \| `both` |
 | `MCP_ENABLED_TOOLS` | — | Comma-separated tool allow-list |
 | `MCP_DISABLED_TOOLS` | — | Comma-separated tool deny-list |
 | `MCP_ENABLED_TAGS` | — | Comma-separated tag allow-list |
 | `MCP_DISABLED_TAGS` | — | Comma-separated tag deny-list |
-| `EUNOMIA_TYPE` | `none` | Authorization mode: `none` | `embedded` | `remote` |
+| `EUNOMIA_TYPE` | `none` | Authorization mode: `none` \| `embedded` \| `remote` |
 | `EUNOMIA_POLICY_FILE` | `mcp_policies.json` | Embedded Eunomia policy file |
 | `EUNOMIA_REMOTE_URL` | — | Remote Eunomia authorization server URL |
 | `ENABLE_OTEL` | `False` | Enable OpenTelemetry export |
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | — | OTLP collector endpoint |
-| `MCP_CLIENT_AUTH` | — | Outbound MCP auth (`oidc-client-credentials` for fleet calls) |
+| `MCP_CLIENT_AUTH` | — | Outbound MCP child auth: `oidc-client-credentials` \| `basic` \| `none` |
 | `OIDC_CLIENT_ID` | — | OIDC client id (service-account auth) |
-| `OIDC_CLIENT_SECRET` | — | OIDC client secret (service-account auth) |
+| `OIDC_CLIENT_SECRET_REF` | `secret://identity/oidc-client-secret` | Runtime secret reference for the OIDC service account |
+| `MCP_BASIC_AUTH_USERNAME` | — | HTTP Basic username (`MCP_CLIENT_AUTH=basic`) |
+| `MCP_BASIC_AUTH_PASSWORD_REF` | `secret://identity/mcp-basic-password` | Runtime secret reference for HTTP Basic auth (`MCP_CLIENT_AUTH=basic`) |
 | `DEBUG` | `False` | Verbose logging |
 | `PYTHONUNBUFFERED` | `1` | Unbuffered stdout (recommended in containers) |
 | `MCP_URL` | `http://localhost:8000/mcp` | URL of the MCP server the agent connects to |
@@ -144,7 +146,7 @@ so you can scope the surface (e.g. set `ESGTOOL=False` to drop ESG).
 | `MODEL_ID` | `gpt-4o` | Model id for the agent |
 | `ENABLE_WEB_UI` | `True` | Serve the AG-UI web interface |
 
-_47 package + 21 inherited variable(s). Auto-generated from `.env.example` + the shared agent-utilities set — do not edit._
+_48 package + 23 inherited variable(s). Auto-generated from `.env.example` + the shared agent-utilities set — do not edit._
 <!-- ENV-VARS-TABLE:END -->
 
 

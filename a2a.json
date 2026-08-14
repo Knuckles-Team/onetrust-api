@@ -1,7 +1,7 @@
 {
   "name": "onetrust-api-agent",
   "type": "agent",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "OneTrust API + MCP Server + A2A Agent \u2014 100% API coverage",
   "url": "https://github.com/Knuckles-Team/onetrust-api/tree/main",
   "license": "MIT",
