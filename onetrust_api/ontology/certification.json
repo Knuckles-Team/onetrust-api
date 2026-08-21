@@ -1,8 +1,7 @@
 {
   "api_version": "graphos.io/v1",
   "artifacts": {
-    "a2a.json": "069ffe5a284227ea2e608bd9a32df617e7bc9048144317d2c9828c15c14902b3",
-    "connector_manifest.yml": "7b10b8ce87df7d05d0c689344db97f1bf6db356b494ed8899f23a057f89acd4d",
+    "connector_manifest.yml": "2c99ff73ad66be41fa28d59f86325b1a89bb206dc4112a529f442878a94970e7",
     "onetrust_api/connectors/mcp_source_presets.json": "0d6c636c1b1edd78596121d5e79116481560262c9d97a0f456880d3d2f3f97e1",
     "onetrust_api/connectors/tool_schema_fingerprints.json": "880bbbca41c4e57f0224774d5a3bc195d3d7df4dd4ecda438de02a22260e5c1b",
     "onetrust_api/ontology/fixtures/records.json": "2477764beb1371ec2a6644e015135e2f7088a2bec6697052a4a402e06cb5b87d",
@@ -19,19 +18,19 @@
     "synthetic_fixture_contract": "passed"
   },
   "compatibility": {
-    "agent_utilities": ">=2.1.0,<3",
+    "agent_utilities": ">=2.4.0,<3",
     "bundle_schema": "2",
-    "epistemic_graph": ">=2.23.0,<3"
+    "epistemic_graph": ">=2.26.0,<3"
   },
   "connector": "onetrust-api",
   "kind": "ConnectorSourceAttestation",
   "live_certified": false,
   "mode": "offline-source",
   "schema_version": "2",
-  "signature": "Tnp8iEFkl4ODPQi5sG9W-YnekK9U90t62l8CDQEN5MhXoHWGDN3kqQ9OyOwyQcR1tuAFDdS91L1oIOwAvfXOBw",
-  "signature_algorithm": "ed25519",
-  "signer": "ontology-manifest-generator",
-  "signing_public_key": "QkigdPNpcUU7x7NcSkwCsUXIQpaFncMQbYSoiSgI2SY",
+  "signature": null,
+  "signature_algorithm": "none",
+  "signer": "UNSIGNED-PREVIEW",
+  "signing_public_key": "",
   "status": "source-validated",
-  "validated_at": "2026-07-31T04:00:00Z"
+  "validated_at": "2026-08-21T04:30:39Z"
 }
