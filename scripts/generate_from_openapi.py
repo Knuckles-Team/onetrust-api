@@ -940,7 +940,7 @@ def main() -> None:
     if args.apply:
         missing_by_domain: dict[str, set[str]] = {}
         for f in findings:
-            if f.kind == "MISSING HANDLER":
+            if f.kind == "MISSING HANDLER" and f.action is not None:
                 missing_by_domain.setdefault(f.domain, set()).add(f.action)
         changed_any = False
         for domain, actions in missing_by_domain.items():
