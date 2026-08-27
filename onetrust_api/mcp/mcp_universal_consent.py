@@ -9,6 +9,353 @@ from pydantic import Field
 from onetrust_api.auth import get_client
 
 
+def _dispatch_universal_consent_group01(client, action, kwargs):
+    if action == "get_collection_points_using_get":
+        return client.get_collection_points_using_get(**kwargs)
+    elif action == "create_collection_point_using_post":
+        return client.create_collection_point_using_post(**kwargs)
+    elif action == "get_token_using_get":
+        return client.get_token_using_get(**kwargs)
+    elif action == "edit_collection_point_using_put":
+        return client.edit_collection_point_using_put(**kwargs)
+    elif action == "disable_collection_point_using_put":
+        return client.disable_collection_point_using_put(**kwargs)
+    elif action == "create_index":
+        return client.create_index(**kwargs)
+    elif action == "get_index_creation_status":
+        return client.get_index_creation_status(**kwargs)
+    elif action == "get_list_using_get":
+        return client.get_list_using_get(**kwargs)
+    raise ValueError(f"Unknown action: {action}")
+
+
+def _dispatch_universal_consent_group02(client, action, kwargs):
+    if action == "create_custom_preference_using_post":
+        return client.create_custom_preference_using_post(**kwargs)
+    elif action == "edit_custom_preference_using_put":
+        return client.edit_custom_preference_using_put(**kwargs)
+    elif action == "find_by_guid_using_get":
+        return client.find_by_guid_using_get(**kwargs)
+    elif action == "create_or_update_data_subject_using_post":
+        return client.create_or_update_data_subject_using_post(**kwargs)
+    elif action == "merge_data_subjects_using_post":
+        return client.merge_data_subjects_using_post(**kwargs)
+    elif action == "merge_datasubject_using_post":
+        return client.merge_datasubject_using_post(**kwargs)
+    elif action == "get_data_subject_profile_using_get":
+        return client.get_data_subject_profile_using_get(**kwargs)
+    elif action == "get_data_subject_purposes_by_identifier_using_get":
+        return client.get_data_subject_purposes_by_identifier_using_get(**kwargs)
+    raise ValueError(f"Unknown action: {action}")
+
+
+def _dispatch_universal_consent_group03(client, action, kwargs):
+    if action == "exportduplicatedatasubject":
+        return client.exportduplicatedatasubject(**kwargs)
+    elif action == "get_link_tokens_using_get":
+        return client.get_link_tokens_using_get(**kwargs)
+    elif action == "get_data_subject_purposes_by_identifier_using_get_1":
+        return client.get_data_subject_purposes_by_identifier_using_get_1(**kwargs)
+    elif action == "update_preferences_for_data_subject_api_using_put":
+        return client.update_preferences_for_data_subject_api_using_put(**kwargs)
+    elif action == "withdraw_preferences_api_using_delete":
+        return client.withdraw_preferences_api_using_delete(**kwargs)
+    elif action == "get_preference_center_by_id_using_get":
+        return client.get_preference_center_by_id_using_get(**kwargs)
+    elif action == "get_purposes_using_get":
+        return client.get_purposes_using_get(**kwargs)
+    elif action == "create_purpose_using_post":
+        return client.create_purpose_using_post(**kwargs)
+    raise ValueError(f"Unknown action: {action}")
+
+
+def _dispatch_universal_consent_group04(client, action, kwargs):
+    if action == "create_new_purpose_version_using_post":
+        return client.create_new_purpose_version_using_post(**kwargs)
+    elif action == "edit_purpose_using_put":
+        return client.edit_purpose_using_put(**kwargs)
+    elif action == "get_data_subjects_for_purposes_using_get":
+        return client.get_data_subjects_for_purposes_using_get(**kwargs)
+    elif action == "publish_purpose_using_put":
+        return client.publish_purpose_using_put(**kwargs)
+    elif action == "set_retirement_using_put":
+        return client.set_retirement_using_put(**kwargs)
+    elif action == "get_receipt_list_using_get":
+        return client.get_receipt_list_using_get(**kwargs)
+    elif action == "get_receipt_list_details_using_get":
+        return client.get_receipt_list_details_using_get(**kwargs)
+    elif action == "find_receipt_using_get":
+        return client.find_receipt_using_get(**kwargs)
+    raise ValueError(f"Unknown action: {action}")
+
+
+def _dispatch_universal_consent_group05(client, action, kwargs):
+    if action == "get_paged_merge_request_using_get":
+        return client.get_paged_merge_request_using_get(**kwargs)
+    elif action == "schedule_merge_request_using_post":
+        return client.schedule_merge_request_using_post(**kwargs)
+    elif action == "get_merge_request_using_get":
+        return client.get_merge_request_using_get(**kwargs)
+    elif action == "delete_merge_request_using_delete":
+        return client.delete_merge_request_using_delete(**kwargs)
+    elif action == "withdraw_transaction_behalf_of_datasubject_using_put":
+        return client.withdraw_transaction_behalf_of_datasubject_using_put(**kwargs)
+    elif action == "withdraw_transaction_by_purpose_and_identifier_using_get":
+        return client.withdraw_transaction_by_purpose_and_identifier_using_get(**kwargs)
+    elif action == "get_collection_points_using_get_1":
+        return client.get_collection_points_using_get_1(**kwargs)
+    elif action == "create_version_using_post":
+        return client.create_version_using_post(**kwargs)
+    raise ValueError(f"Unknown action: {action}")
+
+
+def _dispatch_universal_consent_group06(client, action, kwargs):
+    if action == "get_data_subjects_using_get":
+        return client.get_data_subjects_using_get(**kwargs)
+    elif action == "delete_data_subject_profiles_using_delete":
+        return client.delete_data_subject_profiles_using_delete(**kwargs)
+    elif action == "search_data_subjects_post_using_post":
+        return client.search_data_subjects_post_using_post(**kwargs)
+    elif action == "get_linked_identity_groups_using_get":
+        return client.get_linked_identity_groups_using_get(**kwargs)
+    elif action == "create_linked_identity_group_using_post":
+        return client.create_linked_identity_group_using_post(**kwargs)
+    elif action == "get_linked_identity_group_using_get":
+        return client.get_linked_identity_group_using_get(**kwargs)
+    elif action == "update_linked_identity_group_using_put":
+        return client.update_linked_identity_group_using_put(**kwargs)
+    elif action == "delete_using_delete":
+        return client.delete_using_delete(**kwargs)
+    raise ValueError(f"Unknown action: {action}")
+
+
+def _dispatch_universal_consent_group07(client, action, kwargs):
+    if action == "get_preference_center_page_schema_using_get":
+        return client.get_preference_center_page_schema_using_get(**kwargs)
+    elif action == "get_preference_centers_using_get":
+        return client.get_preference_centers_using_get(**kwargs)
+    elif action == "get_root_schema_using_get":
+        return client.get_root_schema_using_get(**kwargs)
+    elif action == "get_grouped_purposes_v2":
+        return client.get_grouped_purposes_v2(**kwargs)
+    elif action == "get_purpose_detail_using_get":
+        return client.get_purpose_detail_using_get(**kwargs)
+    elif action == "get_consent_group_list_using_get":
+        return client.get_consent_group_list_using_get(**kwargs)
+    elif action == "create_consent_group_using_post":
+        return client.create_consent_group_using_post(**kwargs)
+    elif action == "get_consent_group_settings_using_get":
+        return client.get_consent_group_settings_using_get(**kwargs)
+    raise ValueError(f"Unknown action: {action}")
+
+
+def _dispatch_universal_consent_group08(client, action, kwargs):
+    if action == "update_consent_group_settings_using_put":
+        return client.update_consent_group_settings_using_put(**kwargs)
+    elif action == "get_consent_group_using_get":
+        return client.get_consent_group_using_get(**kwargs)
+    elif action == "add_consent_groups_to_consent_group_using_post":
+        return client.add_consent_groups_to_consent_group_using_post(**kwargs)
+    elif action == "unlink_consent_group_using_delete":
+        return client.unlink_consent_group_using_delete(**kwargs)
+    elif action == "add_data_subjects_to_consent_group_using_post":
+        return client.add_data_subjects_to_consent_group_using_post(**kwargs)
+    elif action == "delete_data_subjects_to_consent_group_using_delete":
+        return client.delete_data_subjects_to_consent_group_using_delete(**kwargs)
+    elif action == "update_purpose_rules_to_consent_group_using_put":
+        return client.update_purpose_rules_to_consent_group_using_put(**kwargs)
+    elif action == "add_purpose_rules_to_consent_group_using_post":
+        return client.add_purpose_rules_to_consent_group_using_post(**kwargs)
+    raise ValueError(f"Unknown action: {action}")
+
+
+def _dispatch_universal_consent_group09(client, action, kwargs):
+    if action == "delete_consent_group_purpose_rule_using_delete":
+        return client.delete_consent_group_purpose_rule_using_delete(**kwargs)
+    elif action == "delete_purpose_from_data_subject_using_delete":
+        return client.delete_purpose_from_data_subject_using_delete(**kwargs)
+    elif action == "delete_data_subject_profile_using_delete":
+        return client.delete_data_subject_profile_using_delete(**kwargs)
+    elif action == "get_receipt_list_details_using_post":
+        return client.get_receipt_list_details_using_post(**kwargs)
+    elif action == "get_transactions_using_post":
+        return client.get_transactions_using_post(**kwargs)
+    elif action == "get_list_of_deletion_certificates":
+        return client.get_list_of_deletion_certificates(**kwargs)
+    elif action == "cross_device_consent_using_delete":
+        return client.cross_device_consent_using_delete(**kwargs)
+    elif action == "delete_data_subject_using_ttl":
+        return client.delete_data_subject_using_ttl(**kwargs)
+    raise ValueError(f"Unknown action: {action}")
+
+
+def _dispatch_universal_consent_group10(client, action, kwargs):
+    if action == "delete_purpose_from_data_subjects_using_ttl":
+        return client.delete_purpose_from_data_subjects_using_ttl(**kwargs)
+    elif action == "get_data_subjects_v4":
+        return client.get_data_subjects_v4(**kwargs)
+    elif action == "get_data_subject_basic_details_v4":
+        return client.get_data_subject_basic_details_v4(**kwargs)
+    elif action == "get_data_subject_details_v4":
+        return client.get_data_subject_details_v4(**kwargs)
+    elif action == "get_all_profiles_by_data_subject_v4":
+        return client.get_all_profiles_by_data_subject_v4(**kwargs)
+    elif action == "get_email_link_token_by_data_subject_v4":
+        return client.get_email_link_token_by_data_subject_v4(**kwargs)
+    elif action == "get_data_subject_profiles_v4":
+        return client.get_data_subject_profiles_v4(**kwargs)
+    elif action == "get_data_subject_profiles_unordered_v4":
+        return client.get_data_subject_profiles_unordered_v4(**kwargs)
+    raise ValueError(f"Unknown action: {action}")
+
+
+def _dispatch_universal_consent_group11(client, action, kwargs):
+    if action == "get_data_subject_profile_v4":
+        return client.get_data_subject_profile_v4(**kwargs)
+    elif action == "search_data_subjects_by_element_v4":
+        return client.search_data_subjects_by_element_v4(**kwargs)
+    elif action == "get_data_subjects_unordered_v4":
+        return client.get_data_subjects_unordered_v4(**kwargs)
+    elif action == "get_data_subject_groups_list_v4":
+        return client.get_data_subject_groups_list_v4(**kwargs)
+    elif action == "create_job_using_post":
+        return client.create_job_using_post(**kwargs)
+    elif action == "get_linked_identity_groups_by_data_subject_v4":
+        return client.get_linked_identity_groups_by_data_subject_v4(**kwargs)
+    elif action == "create_data_subject_group_v4":
+        return client.create_data_subject_group_v4(**kwargs)
+    elif action == "update_data_subject_group_v4":
+        return client.update_data_subject_group_v4(**kwargs)
+    raise ValueError(f"Unknown action: {action}")
+
+
+def _dispatch_universal_consent_group12(client, action, kwargs):
+    if action == "get_linked_identity_group_members_v4":
+        return client.get_linked_identity_group_members_v4(**kwargs)
+    elif action == "get_email_link_tokens_list_v4":
+        return client.get_email_link_tokens_list_v4(**kwargs)
+    elif action == "upload_consent_attachments":
+        return client.upload_consent_attachments(**kwargs)
+    elif action == "download_given_consent_attachments":
+        return client.download_given_consent_attachments(**kwargs)
+    elif action == "remove_given_consent_attachment_refs":
+        return client.remove_given_consent_attachment_refs(**kwargs)
+    elif action == "remove_all_consent_attachment_refs":
+        return client.remove_all_consent_attachment_refs(**kwargs)
+    elif action == "download_consent_attachments":
+        return client.download_consent_attachments(**kwargs)
+    elif action == "get_v3_datasubject_profiles_using_post":
+        return client.get_v3_datasubject_profiles_using_post(**kwargs)
+    raise ValueError(f"Unknown action: {action}")
+
+
+def _dispatch_universal_consent_group13(client, action, kwargs):
+    if action == "get_v3_datasubjects_profile_using_get":
+        return client.get_v3_datasubjects_profile_using_get(**kwargs)
+    raise ValueError(f"Unknown action: {action}")
+
+
+_ACTION_HANDLERS_UNIVERSAL_CONSENT = {
+    "get_collection_points_using_get": _dispatch_universal_consent_group01,
+    "create_collection_point_using_post": _dispatch_universal_consent_group01,
+    "get_token_using_get": _dispatch_universal_consent_group01,
+    "edit_collection_point_using_put": _dispatch_universal_consent_group01,
+    "disable_collection_point_using_put": _dispatch_universal_consent_group01,
+    "create_index": _dispatch_universal_consent_group01,
+    "get_index_creation_status": _dispatch_universal_consent_group01,
+    "get_list_using_get": _dispatch_universal_consent_group01,
+    "create_custom_preference_using_post": _dispatch_universal_consent_group02,
+    "edit_custom_preference_using_put": _dispatch_universal_consent_group02,
+    "find_by_guid_using_get": _dispatch_universal_consent_group02,
+    "create_or_update_data_subject_using_post": _dispatch_universal_consent_group02,
+    "merge_data_subjects_using_post": _dispatch_universal_consent_group02,
+    "merge_datasubject_using_post": _dispatch_universal_consent_group02,
+    "get_data_subject_profile_using_get": _dispatch_universal_consent_group02,
+    "get_data_subject_purposes_by_identifier_using_get": _dispatch_universal_consent_group02,
+    "exportduplicatedatasubject": _dispatch_universal_consent_group03,
+    "get_link_tokens_using_get": _dispatch_universal_consent_group03,
+    "get_data_subject_purposes_by_identifier_using_get_1": _dispatch_universal_consent_group03,
+    "update_preferences_for_data_subject_api_using_put": _dispatch_universal_consent_group03,
+    "withdraw_preferences_api_using_delete": _dispatch_universal_consent_group03,
+    "get_preference_center_by_id_using_get": _dispatch_universal_consent_group03,
+    "get_purposes_using_get": _dispatch_universal_consent_group03,
+    "create_purpose_using_post": _dispatch_universal_consent_group03,
+    "create_new_purpose_version_using_post": _dispatch_universal_consent_group04,
+    "edit_purpose_using_put": _dispatch_universal_consent_group04,
+    "get_data_subjects_for_purposes_using_get": _dispatch_universal_consent_group04,
+    "publish_purpose_using_put": _dispatch_universal_consent_group04,
+    "set_retirement_using_put": _dispatch_universal_consent_group04,
+    "get_receipt_list_using_get": _dispatch_universal_consent_group04,
+    "get_receipt_list_details_using_get": _dispatch_universal_consent_group04,
+    "find_receipt_using_get": _dispatch_universal_consent_group04,
+    "get_paged_merge_request_using_get": _dispatch_universal_consent_group05,
+    "schedule_merge_request_using_post": _dispatch_universal_consent_group05,
+    "get_merge_request_using_get": _dispatch_universal_consent_group05,
+    "delete_merge_request_using_delete": _dispatch_universal_consent_group05,
+    "withdraw_transaction_behalf_of_datasubject_using_put": _dispatch_universal_consent_group05,
+    "withdraw_transaction_by_purpose_and_identifier_using_get": _dispatch_universal_consent_group05,
+    "get_collection_points_using_get_1": _dispatch_universal_consent_group05,
+    "create_version_using_post": _dispatch_universal_consent_group05,
+    "get_data_subjects_using_get": _dispatch_universal_consent_group06,
+    "delete_data_subject_profiles_using_delete": _dispatch_universal_consent_group06,
+    "search_data_subjects_post_using_post": _dispatch_universal_consent_group06,
+    "get_linked_identity_groups_using_get": _dispatch_universal_consent_group06,
+    "create_linked_identity_group_using_post": _dispatch_universal_consent_group06,
+    "get_linked_identity_group_using_get": _dispatch_universal_consent_group06,
+    "update_linked_identity_group_using_put": _dispatch_universal_consent_group06,
+    "delete_using_delete": _dispatch_universal_consent_group06,
+    "get_preference_center_page_schema_using_get": _dispatch_universal_consent_group07,
+    "get_preference_centers_using_get": _dispatch_universal_consent_group07,
+    "get_root_schema_using_get": _dispatch_universal_consent_group07,
+    "get_grouped_purposes_v2": _dispatch_universal_consent_group07,
+    "get_purpose_detail_using_get": _dispatch_universal_consent_group07,
+    "get_consent_group_list_using_get": _dispatch_universal_consent_group07,
+    "create_consent_group_using_post": _dispatch_universal_consent_group07,
+    "get_consent_group_settings_using_get": _dispatch_universal_consent_group07,
+    "update_consent_group_settings_using_put": _dispatch_universal_consent_group08,
+    "get_consent_group_using_get": _dispatch_universal_consent_group08,
+    "add_consent_groups_to_consent_group_using_post": _dispatch_universal_consent_group08,
+    "unlink_consent_group_using_delete": _dispatch_universal_consent_group08,
+    "add_data_subjects_to_consent_group_using_post": _dispatch_universal_consent_group08,
+    "delete_data_subjects_to_consent_group_using_delete": _dispatch_universal_consent_group08,
+    "update_purpose_rules_to_consent_group_using_put": _dispatch_universal_consent_group08,
+    "add_purpose_rules_to_consent_group_using_post": _dispatch_universal_consent_group08,
+    "delete_consent_group_purpose_rule_using_delete": _dispatch_universal_consent_group09,
+    "delete_purpose_from_data_subject_using_delete": _dispatch_universal_consent_group09,
+    "delete_data_subject_profile_using_delete": _dispatch_universal_consent_group09,
+    "get_receipt_list_details_using_post": _dispatch_universal_consent_group09,
+    "get_transactions_using_post": _dispatch_universal_consent_group09,
+    "get_list_of_deletion_certificates": _dispatch_universal_consent_group09,
+    "cross_device_consent_using_delete": _dispatch_universal_consent_group09,
+    "delete_data_subject_using_ttl": _dispatch_universal_consent_group09,
+    "delete_purpose_from_data_subjects_using_ttl": _dispatch_universal_consent_group10,
+    "get_data_subjects_v4": _dispatch_universal_consent_group10,
+    "get_data_subject_basic_details_v4": _dispatch_universal_consent_group10,
+    "get_data_subject_details_v4": _dispatch_universal_consent_group10,
+    "get_all_profiles_by_data_subject_v4": _dispatch_universal_consent_group10,
+    "get_email_link_token_by_data_subject_v4": _dispatch_universal_consent_group10,
+    "get_data_subject_profiles_v4": _dispatch_universal_consent_group10,
+    "get_data_subject_profiles_unordered_v4": _dispatch_universal_consent_group10,
+    "get_data_subject_profile_v4": _dispatch_universal_consent_group11,
+    "search_data_subjects_by_element_v4": _dispatch_universal_consent_group11,
+    "get_data_subjects_unordered_v4": _dispatch_universal_consent_group11,
+    "get_data_subject_groups_list_v4": _dispatch_universal_consent_group11,
+    "create_job_using_post": _dispatch_universal_consent_group11,
+    "get_linked_identity_groups_by_data_subject_v4": _dispatch_universal_consent_group11,
+    "create_data_subject_group_v4": _dispatch_universal_consent_group11,
+    "update_data_subject_group_v4": _dispatch_universal_consent_group11,
+    "get_linked_identity_group_members_v4": _dispatch_universal_consent_group12,
+    "get_email_link_tokens_list_v4": _dispatch_universal_consent_group12,
+    "upload_consent_attachments": _dispatch_universal_consent_group12,
+    "download_given_consent_attachments": _dispatch_universal_consent_group12,
+    "remove_given_consent_attachment_refs": _dispatch_universal_consent_group12,
+    "remove_all_consent_attachment_refs": _dispatch_universal_consent_group12,
+    "download_consent_attachments": _dispatch_universal_consent_group12,
+    "get_v3_datasubject_profiles_using_post": _dispatch_universal_consent_group12,
+    "get_v3_datasubjects_profile_using_get": _dispatch_universal_consent_group13,
+}
+
+
 def register_universal_consent_tools(mcp: FastMCP):
     @mcp.tool(tags={"universal_consent"})
     async def onetrust_universal_consent(
@@ -37,200 +384,7 @@ def register_universal_consent_tools(mcp: FastMCP):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "get_collection_points_using_get":
-            return client.get_collection_points_using_get(**kwargs)
-        elif action == "create_collection_point_using_post":
-            return client.create_collection_point_using_post(**kwargs)
-        elif action == "get_token_using_get":
-            return client.get_token_using_get(**kwargs)
-        elif action == "edit_collection_point_using_put":
-            return client.edit_collection_point_using_put(**kwargs)
-        elif action == "disable_collection_point_using_put":
-            return client.disable_collection_point_using_put(**kwargs)
-        elif action == "create_index":
-            return client.create_index(**kwargs)
-        elif action == "get_index_creation_status":
-            return client.get_index_creation_status(**kwargs)
-        elif action == "get_list_using_get":
-            return client.get_list_using_get(**kwargs)
-        elif action == "create_custom_preference_using_post":
-            return client.create_custom_preference_using_post(**kwargs)
-        elif action == "edit_custom_preference_using_put":
-            return client.edit_custom_preference_using_put(**kwargs)
-        elif action == "find_by_guid_using_get":
-            return client.find_by_guid_using_get(**kwargs)
-        elif action == "create_or_update_data_subject_using_post":
-            return client.create_or_update_data_subject_using_post(**kwargs)
-        elif action == "merge_data_subjects_using_post":
-            return client.merge_data_subjects_using_post(**kwargs)
-        elif action == "merge_datasubject_using_post":
-            return client.merge_datasubject_using_post(**kwargs)
-        elif action == "get_data_subject_profile_using_get":
-            return client.get_data_subject_profile_using_get(**kwargs)
-        elif action == "get_data_subject_purposes_by_identifier_using_get":
-            return client.get_data_subject_purposes_by_identifier_using_get(**kwargs)
-        elif action == "exportduplicatedatasubject":
-            return client.exportduplicatedatasubject(**kwargs)
-        elif action == "get_link_tokens_using_get":
-            return client.get_link_tokens_using_get(**kwargs)
-        elif action == "get_data_subject_purposes_by_identifier_using_get_1":
-            return client.get_data_subject_purposes_by_identifier_using_get_1(**kwargs)
-        elif action == "update_preferences_for_data_subject_api_using_put":
-            return client.update_preferences_for_data_subject_api_using_put(**kwargs)
-        elif action == "withdraw_preferences_api_using_delete":
-            return client.withdraw_preferences_api_using_delete(**kwargs)
-        elif action == "get_preference_center_by_id_using_get":
-            return client.get_preference_center_by_id_using_get(**kwargs)
-        elif action == "get_purposes_using_get":
-            return client.get_purposes_using_get(**kwargs)
-        elif action == "create_purpose_using_post":
-            return client.create_purpose_using_post(**kwargs)
-        elif action == "create_new_purpose_version_using_post":
-            return client.create_new_purpose_version_using_post(**kwargs)
-        elif action == "edit_purpose_using_put":
-            return client.edit_purpose_using_put(**kwargs)
-        elif action == "get_data_subjects_for_purposes_using_get":
-            return client.get_data_subjects_for_purposes_using_get(**kwargs)
-        elif action == "publish_purpose_using_put":
-            return client.publish_purpose_using_put(**kwargs)
-        elif action == "set_retirement_using_put":
-            return client.set_retirement_using_put(**kwargs)
-        elif action == "get_receipt_list_using_get":
-            return client.get_receipt_list_using_get(**kwargs)
-        elif action == "get_receipt_list_details_using_get":
-            return client.get_receipt_list_details_using_get(**kwargs)
-        elif action == "find_receipt_using_get":
-            return client.find_receipt_using_get(**kwargs)
-        elif action == "get_paged_merge_request_using_get":
-            return client.get_paged_merge_request_using_get(**kwargs)
-        elif action == "schedule_merge_request_using_post":
-            return client.schedule_merge_request_using_post(**kwargs)
-        elif action == "get_merge_request_using_get":
-            return client.get_merge_request_using_get(**kwargs)
-        elif action == "delete_merge_request_using_delete":
-            return client.delete_merge_request_using_delete(**kwargs)
-        elif action == "withdraw_transaction_behalf_of_datasubject_using_put":
-            return client.withdraw_transaction_behalf_of_datasubject_using_put(**kwargs)
-        elif action == "withdraw_transaction_by_purpose_and_identifier_using_get":
-            return client.withdraw_transaction_by_purpose_and_identifier_using_get(
-                **kwargs
-            )
-        elif action == "get_collection_points_using_get_1":
-            return client.get_collection_points_using_get_1(**kwargs)
-        elif action == "create_version_using_post":
-            return client.create_version_using_post(**kwargs)
-        elif action == "get_data_subjects_using_get":
-            return client.get_data_subjects_using_get(**kwargs)
-        elif action == "delete_data_subject_profiles_using_delete":
-            return client.delete_data_subject_profiles_using_delete(**kwargs)
-        elif action == "search_data_subjects_post_using_post":
-            return client.search_data_subjects_post_using_post(**kwargs)
-        elif action == "get_linked_identity_groups_using_get":
-            return client.get_linked_identity_groups_using_get(**kwargs)
-        elif action == "create_linked_identity_group_using_post":
-            return client.create_linked_identity_group_using_post(**kwargs)
-        elif action == "get_linked_identity_group_using_get":
-            return client.get_linked_identity_group_using_get(**kwargs)
-        elif action == "update_linked_identity_group_using_put":
-            return client.update_linked_identity_group_using_put(**kwargs)
-        elif action == "delete_using_delete":
-            return client.delete_using_delete(**kwargs)
-        elif action == "get_preference_center_page_schema_using_get":
-            return client.get_preference_center_page_schema_using_get(**kwargs)
-        elif action == "get_preference_centers_using_get":
-            return client.get_preference_centers_using_get(**kwargs)
-        elif action == "get_root_schema_using_get":
-            return client.get_root_schema_using_get(**kwargs)
-        elif action == "get_grouped_purposes_v2":
-            return client.get_grouped_purposes_v2(**kwargs)
-        elif action == "get_purpose_detail_using_get":
-            return client.get_purpose_detail_using_get(**kwargs)
-        elif action == "get_consent_group_list_using_get":
-            return client.get_consent_group_list_using_get(**kwargs)
-        elif action == "create_consent_group_using_post":
-            return client.create_consent_group_using_post(**kwargs)
-        elif action == "get_consent_group_settings_using_get":
-            return client.get_consent_group_settings_using_get(**kwargs)
-        elif action == "update_consent_group_settings_using_put":
-            return client.update_consent_group_settings_using_put(**kwargs)
-        elif action == "get_consent_group_using_get":
-            return client.get_consent_group_using_get(**kwargs)
-        elif action == "add_consent_groups_to_consent_group_using_post":
-            return client.add_consent_groups_to_consent_group_using_post(**kwargs)
-        elif action == "unlink_consent_group_using_delete":
-            return client.unlink_consent_group_using_delete(**kwargs)
-        elif action == "add_data_subjects_to_consent_group_using_post":
-            return client.add_data_subjects_to_consent_group_using_post(**kwargs)
-        elif action == "delete_data_subjects_to_consent_group_using_delete":
-            return client.delete_data_subjects_to_consent_group_using_delete(**kwargs)
-        elif action == "update_purpose_rules_to_consent_group_using_put":
-            return client.update_purpose_rules_to_consent_group_using_put(**kwargs)
-        elif action == "add_purpose_rules_to_consent_group_using_post":
-            return client.add_purpose_rules_to_consent_group_using_post(**kwargs)
-        elif action == "delete_consent_group_purpose_rule_using_delete":
-            return client.delete_consent_group_purpose_rule_using_delete(**kwargs)
-        elif action == "delete_purpose_from_data_subject_using_delete":
-            return client.delete_purpose_from_data_subject_using_delete(**kwargs)
-        elif action == "delete_data_subject_profile_using_delete":
-            return client.delete_data_subject_profile_using_delete(**kwargs)
-        elif action == "get_receipt_list_details_using_post":
-            return client.get_receipt_list_details_using_post(**kwargs)
-        elif action == "get_transactions_using_post":
-            return client.get_transactions_using_post(**kwargs)
-        elif action == "get_list_of_deletion_certificates":
-            return client.get_list_of_deletion_certificates(**kwargs)
-        elif action == "cross_device_consent_using_delete":
-            return client.cross_device_consent_using_delete(**kwargs)
-        elif action == "delete_data_subject_using_ttl":
-            return client.delete_data_subject_using_ttl(**kwargs)
-        elif action == "delete_purpose_from_data_subjects_using_ttl":
-            return client.delete_purpose_from_data_subjects_using_ttl(**kwargs)
-        elif action == "get_data_subjects_v4":
-            return client.get_data_subjects_v4(**kwargs)
-        elif action == "get_data_subject_basic_details_v4":
-            return client.get_data_subject_basic_details_v4(**kwargs)
-        elif action == "get_data_subject_details_v4":
-            return client.get_data_subject_details_v4(**kwargs)
-        elif action == "get_all_profiles_by_data_subject_v4":
-            return client.get_all_profiles_by_data_subject_v4(**kwargs)
-        elif action == "get_email_link_token_by_data_subject_v4":
-            return client.get_email_link_token_by_data_subject_v4(**kwargs)
-        elif action == "get_data_subject_profiles_v4":
-            return client.get_data_subject_profiles_v4(**kwargs)
-        elif action == "get_data_subject_profiles_unordered_v4":
-            return client.get_data_subject_profiles_unordered_v4(**kwargs)
-        elif action == "get_data_subject_profile_v4":
-            return client.get_data_subject_profile_v4(**kwargs)
-        elif action == "search_data_subjects_by_element_v4":
-            return client.search_data_subjects_by_element_v4(**kwargs)
-        elif action == "get_data_subjects_unordered_v4":
-            return client.get_data_subjects_unordered_v4(**kwargs)
-        elif action == "get_data_subject_groups_list_v4":
-            return client.get_data_subject_groups_list_v4(**kwargs)
-        elif action == "create_job_using_post":
-            return client.create_job_using_post(**kwargs)
-        elif action == "get_linked_identity_groups_by_data_subject_v4":
-            return client.get_linked_identity_groups_by_data_subject_v4(**kwargs)
-        elif action == "create_data_subject_group_v4":
-            return client.create_data_subject_group_v4(**kwargs)
-        elif action == "update_data_subject_group_v4":
-            return client.update_data_subject_group_v4(**kwargs)
-        elif action == "get_linked_identity_group_members_v4":
-            return client.get_linked_identity_group_members_v4(**kwargs)
-        elif action == "get_email_link_tokens_list_v4":
-            return client.get_email_link_tokens_list_v4(**kwargs)
-        elif action == "upload_consent_attachments":
-            return client.upload_consent_attachments(**kwargs)
-        elif action == "download_given_consent_attachments":
-            return client.download_given_consent_attachments(**kwargs)
-        elif action == "remove_given_consent_attachment_refs":
-            return client.remove_given_consent_attachment_refs(**kwargs)
-        elif action == "remove_all_consent_attachment_refs":
-            return client.remove_all_consent_attachment_refs(**kwargs)
-        elif action == "download_consent_attachments":
-            return client.download_consent_attachments(**kwargs)
-        elif action == "get_v3_datasubject_profiles_using_post":
-            return client.get_v3_datasubject_profiles_using_post(**kwargs)
-        elif action == "get_v3_datasubjects_profile_using_get":
-            return client.get_v3_datasubjects_profile_using_get(**kwargs)
-        raise ValueError(f"Unknown action: {action}")
+        handler = _ACTION_HANDLERS_UNIVERSAL_CONSENT.get(action)
+        if handler is None:
+            raise ValueError(f"Unknown action: {action}")
+        return handler(client, action, kwargs)
