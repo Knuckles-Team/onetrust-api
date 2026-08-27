@@ -8,6 +8,24 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_data_discovery_worker_1(action, kwargs, client):
+    # get_eligible_jobs_using_get .. update_job_status_using_put (4 actions)
+    if action == "get_eligible_jobs_using_get":
+        return client.get_eligible_jobs_using_get(**kwargs)
+    elif action == "catalog_data_using_post":
+        return client.catalog_data_using_post(**kwargs)
+    elif action == "classify_data_using_post":
+        return client.classify_data_using_post(**kwargs)
+    elif action == "update_job_status_using_put":
+        return client.update_job_status_using_put(**kwargs)
+    return _UNHANDLED
+
+
+_DATA_DISCOVERY_WORKER_DISPATCHERS = (_dispatch_data_discovery_worker_1,)
+
 
 def register_data_discovery_worker_tools(mcp: FastMCP):
     @mcp.tool(tags={"data_discovery_worker"})
@@ -31,18 +49,14 @@ def register_data_discovery_worker_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "get_eligible_jobs_using_get":
-            return client.get_eligible_jobs_using_get(**kwargs)
-        elif action == "catalog_data_using_post":
-            return client.catalog_data_using_post(**kwargs)
-        elif action == "classify_data_using_post":
-            return client.classify_data_using_post(**kwargs)
-        elif action == "update_job_status_using_put":
-            return client.update_job_status_using_put(**kwargs)
+        for _dispatch in _DATA_DISCOVERY_WORKER_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

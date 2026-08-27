@@ -8,6 +8,116 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_cookie_consent_1(action, kwargs, client):
+    # create_application .. publish_script_to_site (9 actions)
+    if action == "create_application":
+        return client.create_application(**kwargs)
+    elif action == "scan_application":
+        return client.scan_application(**kwargs)
+    elif action == "get_applications":
+        return client.get_applications(**kwargs)
+    elif action == "get_application_branding_attribute_list":
+        return client.get_application_branding_attribute_list(**kwargs)
+    elif action == "update_application_branding_attributes_for_public_api":
+        return client.update_application_branding_attributes_for_public_api(**kwargs)
+    elif action == "publish_app_script":
+        return client.publish_app_script(**kwargs)
+    elif action == "get_app_script_details":
+        return client.get_app_script_details(**kwargs)
+    elif action == "get_categorized_cookies":
+        return client.get_categorized_cookies(**kwargs)
+    elif action == "publish_script_to_site":
+        return client.publish_script_to_site(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_cookie_consent_2(action, kwargs, client):
+    # get_script_for_website .. get_geo_rule_group_details (9 actions)
+    if action == "get_script_for_website":
+        return client.get_script_for_website(**kwargs)
+    elif action == "delete_domain":
+        return client.delete_domain(**kwargs)
+    elif action == "create_domain_group":
+        return client.create_domain_group(**kwargs)
+    elif action == "get_script_details":
+        return client.get_script_details(**kwargs)
+    elif action == "download_script_file":
+        return client.download_script_file(**kwargs)
+    elif action == "get_branding_attribute_list":
+        return client.get_branding_attribute_list(**kwargs)
+    elif action == "update_branding_attributes_for_public_api":
+        return client.update_branding_attributes_for_public_api(**kwargs)
+    elif action == "get_geo_rule_groups":
+        return client.get_geo_rule_groups(**kwargs)
+    elif action == "get_geo_rule_group_details":
+        return client.get_geo_rule_group_details(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_cookie_consent_3(action, kwargs, client):
+    # assign_entities_to_geo_rule_group .. bulk_delete_cookies (9 actions)
+    if action == "assign_entities_to_geo_rule_group":
+        return client.assign_entities_to_geo_rule_group(**kwargs)
+    elif action == "get_templates":
+        return client.get_templates(**kwargs)
+    elif action == "get_template_details":
+        return client.get_template_details(**kwargs)
+    elif action == "get_domains_scanned_by_sort":
+        return client.get_domains_scanned_by_sort(**kwargs)
+    elif action == "add_scans":
+        return client.add_scans(**kwargs)
+    elif action == "archive_scans":
+        return client.archive_scans(**kwargs)
+    elif action == "bulk_edit_cookies":
+        return client.bulk_edit_cookies(**kwargs)
+    elif action == "bulk_add_cookies":
+        return client.bulk_add_cookies(**kwargs)
+    elif action == "bulk_delete_cookies":
+        return client.bulk_delete_cookies(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_cookie_consent_4(action, kwargs, client):
+    # schedule_scans .. cancel_scan (9 actions)
+    if action == "schedule_scans":
+        return client.schedule_scans(**kwargs)
+    elif action == "bulk_cancel_domain_schedule":
+        return client.bulk_cancel_domain_schedule(**kwargs)
+    elif action == "get_domain_scans":
+        return client.get_domain_scans(**kwargs)
+    elif action == "get_scan_delta_details":
+        return client.get_scan_delta_details(**kwargs)
+    elif action == "get_detailed_scan_result_information":
+        return client.get_detailed_scan_result_information(**kwargs)
+    elif action == "get_scan_result_summary":
+        return client.get_scan_result_summary(**kwargs)
+    elif action == "get_cookies_by_filter":
+        return client.get_cookies_by_filter(**kwargs)
+    elif action == "check_scans_status":
+        return client.check_scans_status(**kwargs)
+    elif action == "cancel_scan":
+        return client.cancel_scan(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_cookie_consent_5(action, kwargs, client):
+    # recategorize_cookies_by_scan .. recategorize_cookies_by_scan (1 actions)
+    if action == "recategorize_cookies_by_scan":
+        return client.recategorize_cookies_by_scan(**kwargs)
+    return _UNHANDLED
+
+
+_COOKIE_CONSENT_DISPATCHERS = (
+    _dispatch_cookie_consent_1,
+    _dispatch_cookie_consent_2,
+    _dispatch_cookie_consent_3,
+    _dispatch_cookie_consent_4,
+    _dispatch_cookie_consent_5,
+)
+
 
 def register_cookie_consent_tools(mcp: FastMCP):
     @mcp.tool(tags={"cookie_consent"})
@@ -31,86 +141,14 @@ def register_cookie_consent_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "create_application":
-            return client.create_application(**kwargs)
-        elif action == "scan_application":
-            return client.scan_application(**kwargs)
-        elif action == "get_applications":
-            return client.get_applications(**kwargs)
-        elif action == "get_application_branding_attribute_list":
-            return client.get_application_branding_attribute_list(**kwargs)
-        elif action == "update_application_branding_attributes_for_public_api":
-            return client.update_application_branding_attributes_for_public_api(
-                **kwargs
-            )
-        elif action == "publish_app_script":
-            return client.publish_app_script(**kwargs)
-        elif action == "get_app_script_details":
-            return client.get_app_script_details(**kwargs)
-        elif action == "get_categorized_cookies":
-            return client.get_categorized_cookies(**kwargs)
-        elif action == "publish_script_to_site":
-            return client.publish_script_to_site(**kwargs)
-        elif action == "get_script_for_website":
-            return client.get_script_for_website(**kwargs)
-        elif action == "delete_domain":
-            return client.delete_domain(**kwargs)
-        elif action == "create_domain_group":
-            return client.create_domain_group(**kwargs)
-        elif action == "get_script_details":
-            return client.get_script_details(**kwargs)
-        elif action == "download_script_file":
-            return client.download_script_file(**kwargs)
-        elif action == "get_branding_attribute_list":
-            return client.get_branding_attribute_list(**kwargs)
-        elif action == "update_branding_attributes_for_public_api":
-            return client.update_branding_attributes_for_public_api(**kwargs)
-        elif action == "get_geo_rule_groups":
-            return client.get_geo_rule_groups(**kwargs)
-        elif action == "get_geo_rule_group_details":
-            return client.get_geo_rule_group_details(**kwargs)
-        elif action == "assign_entities_to_geo_rule_group":
-            return client.assign_entities_to_geo_rule_group(**kwargs)
-        elif action == "get_templates":
-            return client.get_templates(**kwargs)
-        elif action == "get_template_details":
-            return client.get_template_details(**kwargs)
-        elif action == "get_domains_scanned_by_sort":
-            return client.get_domains_scanned_by_sort(**kwargs)
-        elif action == "add_scans":
-            return client.add_scans(**kwargs)
-        elif action == "archive_scans":
-            return client.archive_scans(**kwargs)
-        elif action == "bulk_edit_cookies":
-            return client.bulk_edit_cookies(**kwargs)
-        elif action == "bulk_add_cookies":
-            return client.bulk_add_cookies(**kwargs)
-        elif action == "bulk_delete_cookies":
-            return client.bulk_delete_cookies(**kwargs)
-        elif action == "schedule_scans":
-            return client.schedule_scans(**kwargs)
-        elif action == "bulk_cancel_domain_schedule":
-            return client.bulk_cancel_domain_schedule(**kwargs)
-        elif action == "get_domain_scans":
-            return client.get_domain_scans(**kwargs)
-        elif action == "get_scan_delta_details":
-            return client.get_scan_delta_details(**kwargs)
-        elif action == "get_detailed_scan_result_information":
-            return client.get_detailed_scan_result_information(**kwargs)
-        elif action == "get_scan_result_summary":
-            return client.get_scan_result_summary(**kwargs)
-        elif action == "get_cookies_by_filter":
-            return client.get_cookies_by_filter(**kwargs)
-        elif action == "check_scans_status":
-            return client.check_scans_status(**kwargs)
-        elif action == "cancel_scan":
-            return client.cancel_scan(**kwargs)
-        elif action == "recategorize_cookies_by_scan":
-            return client.recategorize_cookies_by_scan(**kwargs)
+        for _dispatch in _COOKIE_CONSENT_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

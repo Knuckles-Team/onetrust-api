@@ -8,6 +8,18 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_mobile_app_consent_1(action, kwargs, client):
+    # applicationdata .. applicationdata (1 actions)
+    if action == "applicationdata":
+        return client.applicationdata(**kwargs)
+    return _UNHANDLED
+
+
+_MOBILE_APP_CONSENT_DISPATCHERS = (_dispatch_mobile_app_consent_1,)
+
 
 def register_mobile_app_consent_tools(mcp: FastMCP):
     @mcp.tool(tags={"mobile_app_consent"})
@@ -29,12 +41,14 @@ def register_mobile_app_consent_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "applicationdata":
-            return client.applicationdata(**kwargs)
+        for _dispatch in _MOBILE_APP_CONSENT_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

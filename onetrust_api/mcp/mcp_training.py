@@ -8,6 +8,26 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_training_1(action, kwargs, client):
+    # list_of_courses_using_get .. get_enrollment_details_using_post (5 actions)
+    if action == "list_of_courses_using_get":
+        return client.list_of_courses_using_get(**kwargs)
+    elif action == "enroll_users_to_course_using_post":
+        return client.enroll_users_to_course_using_post(**kwargs)
+    elif action == "get_status_of_enrollment_using_get":
+        return client.get_status_of_enrollment_using_get(**kwargs)
+    elif action == "un_enroll_user_using_delete":
+        return client.un_enroll_user_using_delete(**kwargs)
+    elif action == "get_enrollment_details_using_post":
+        return client.get_enrollment_details_using_post(**kwargs)
+    return _UNHANDLED
+
+
+_TRAINING_DISPATCHERS = (_dispatch_training_1,)
+
 
 def register_training_tools(mcp: FastMCP):
     @mcp.tool(tags={"training"})
@@ -31,20 +51,14 @@ def register_training_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "list_of_courses_using_get":
-            return client.list_of_courses_using_get(**kwargs)
-        elif action == "enroll_users_to_course_using_post":
-            return client.enroll_users_to_course_using_post(**kwargs)
-        elif action == "get_status_of_enrollment_using_get":
-            return client.get_status_of_enrollment_using_get(**kwargs)
-        elif action == "un_enroll_user_using_delete":
-            return client.un_enroll_user_using_delete(**kwargs)
-        elif action == "get_enrollment_details_using_post":
-            return client.get_enrollment_details_using_post(**kwargs)
+        for _dispatch in _TRAINING_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

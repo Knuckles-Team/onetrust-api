@@ -8,6 +8,26 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_data_mapping_legacy_1(action, kwargs, client):
+    # list_all_data_classifications_using_get .. get_inventory_v2_schemas_attributes_attribute_id_values_value_id (4 actions)
+    if action == "list_all_data_classifications_using_get":
+        return client.list_all_data_classifications_using_get(**kwargs)
+    elif action == "list_all_data_elements_using_get":
+        return client.list_all_data_elements_using_get(**kwargs)
+    elif action == "get_schema_using_get_1":
+        return client.get_schema_using_get_1(**kwargs)
+    elif action == "get_inventory_v2_schemas_attributes_attribute_id_values_value_id":
+        return client.get_inventory_v2_schemas_attributes_attribute_id_values_value_id(
+            **kwargs
+        )
+    return _UNHANDLED
+
+
+_DATA_MAPPING_LEGACY_DISPATCHERS = (_dispatch_data_mapping_legacy_1,)
+
 
 def register_data_mapping_legacy_tools(mcp: FastMCP):
     @mcp.tool(tags={"data_mapping_legacy"})
@@ -31,24 +51,14 @@ def register_data_mapping_legacy_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "list_all_data_classifications_using_get":
-            return client.list_all_data_classifications_using_get(**kwargs)
-        elif action == "list_all_data_elements_using_get":
-            return client.list_all_data_elements_using_get(**kwargs)
-        elif action == "get_schema_using_get_1":
-            return client.get_schema_using_get_1(**kwargs)
-        elif (
-            action == "get_inventory_v2_schemas_attributes_attribute_id_values_value_id"
-        ):
-            return (
-                client.get_inventory_v2_schemas_attributes_attribute_id_values_value_id(
-                    **kwargs
-                )
-            )
+        for _dispatch in _DATA_MAPPING_LEGACY_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

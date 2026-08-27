@@ -8,6 +8,18 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_consent_interfaces_1(action, kwargs, client):
+    # get_realtime_preferences .. get_realtime_preferences (1 actions)
+    if action == "get_realtime_preferences":
+        return client.get_realtime_preferences(**kwargs)
+    return _UNHANDLED
+
+
+_CONSENT_INTERFACES_DISPATCHERS = (_dispatch_consent_interfaces_1,)
+
 
 def register_consent_interfaces_tools(mcp: FastMCP):
     @mcp.tool(tags={"consent_interfaces"})
@@ -31,12 +43,14 @@ def register_consent_interfaces_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "get_realtime_preferences":
-            return client.get_realtime_preferences(**kwargs)
+        for _dispatch in _CONSENT_INTERFACES_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

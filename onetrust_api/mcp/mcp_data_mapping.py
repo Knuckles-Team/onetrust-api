@@ -8,6 +8,135 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_data_mapping_1(action, kwargs, client):
+    # get_data_categories_by_partial_name_using_get .. get_data_element_using_get (9 actions)
+    if action == "get_data_categories_by_partial_name_using_get":
+        return client.get_data_categories_by_partial_name_using_get(**kwargs)
+    elif action == "create_data_category_using_post":
+        return client.create_data_category_using_post(**kwargs)
+    elif action == "get_data_category_using_get":
+        return client.get_data_category_using_get(**kwargs)
+    elif action == "delete_data_category_using_delete":
+        return client.delete_data_category_using_delete(**kwargs)
+    elif action == "create_data_classification_using_post":
+        return client.create_data_classification_using_post(**kwargs)
+    elif action == "get_data_classification_using_get":
+        return client.get_data_classification_using_get(**kwargs)
+    elif action == "delete_data_classification_using_delete":
+        return client.delete_data_classification_using_delete(**kwargs)
+    elif action == "create_data_element_using_post":
+        return client.create_data_element_using_post(**kwargs)
+    elif action == "get_data_element_using_get":
+        return client.get_data_element_using_get(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_data_mapping_2(action, kwargs, client):
+    # delete_data_element_using_delete .. delete_relations_using_delete (9 actions)
+    if action == "delete_data_element_using_delete":
+        return client.delete_data_element_using_delete(**kwargs)
+    elif action == "get_data_subjects_by_partial_name_using_get":
+        return client.get_data_subjects_by_partial_name_using_get(**kwargs)
+    elif action == "create_data_subject_using_post":
+        return client.create_data_subject_using_post(**kwargs)
+    elif action == "get_data_subject_using_get":
+        return client.get_data_subject_using_get(**kwargs)
+    elif action == "delete_data_subject_using_delete":
+        return client.delete_data_subject_using_delete(**kwargs)
+    elif action == "update_inventory_association_using_put":
+        return client.update_inventory_association_using_put(**kwargs)
+    elif action == "update_relations_using_put":
+        return client.update_relations_using_put(**kwargs)
+    elif action == "create_relations_using_post":
+        return client.create_relations_using_post(**kwargs)
+    elif action == "delete_relations_using_delete":
+        return client.delete_relations_using_delete(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_data_mapping_3(action, kwargs, client):
+    # get_inventory_relations_by_id_using_get .. create_inventory_using_post (9 actions)
+    if action == "get_inventory_relations_by_id_using_get":
+        return client.get_inventory_relations_by_id_using_get(**kwargs)
+    elif action == "set_inventory_as_parent_inventory_using_put":
+        return client.set_inventory_as_parent_inventory_using_put(**kwargs)
+    elif action == "unset_inventory_as_parent_inventory_using_put":
+        return client.unset_inventory_as_parent_inventory_using_put(**kwargs)
+    elif action == "link_asset_inventory_to_parent_asset_id_using_post":
+        return client.link_asset_inventory_to_parent_asset_id_using_post(**kwargs)
+    elif action == "link_legal_entity_inventory_to_parent_legal_entity_id_using_post":
+        return client.link_legal_entity_inventory_to_parent_legal_entity_id_using_post(
+            **kwargs
+        )
+    elif (
+        action
+        == "link_processing_activity_inventory_to_parent_processing_activity_id_using_post"
+    ):
+        return client.link_processing_activity_inventory_to_parent_processing_activity_id_using_post(
+            **kwargs
+        )
+    elif action == "link_vendor_inventory_to_parent_vendor_id_using_post":
+        return client.link_vendor_inventory_to_parent_vendor_id_using_post(**kwargs)
+    elif action == "get_list_of_inventories_using_get":
+        return client.get_list_of_inventories_using_get(**kwargs)
+    elif action == "create_inventory_using_post":
+        return client.create_inventory_using_post(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_data_mapping_4(action, kwargs, client):
+    # upsert_inventory_using_put .. add_controls_to_inventory_using_post (9 actions)
+    if action == "upsert_inventory_using_put":
+        return client.upsert_inventory_using_put(**kwargs)
+    elif action == "get_list_of_inventories_by_filter_criteria_using_post":
+        return client.get_list_of_inventories_by_filter_criteria_using_post(**kwargs)
+    elif action == "get_inventory_by_external_id_using_get":
+        return client.get_inventory_by_external_id_using_get(**kwargs)
+    elif action == "get_inventory_by_id_using_get":
+        return client.get_inventory_by_id_using_get(**kwargs)
+    elif action == "update_inventory_using_put":
+        return client.update_inventory_using_put(**kwargs)
+    elif action == "delete_inventory_using_delete":
+        return client.delete_inventory_using_delete(**kwargs)
+    elif action == "copy_inventory_using_post":
+        return client.copy_inventory_using_post(**kwargs)
+    elif action == "update_inventory_status_by_id_using_put":
+        return client.update_inventory_status_by_id_using_put(**kwargs)
+    elif action == "add_controls_to_inventory_using_post":
+        return client.add_controls_to_inventory_using_post(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_data_mapping_5(action, kwargs, client):
+    # update_advanced_attributes_for_personal_data_association_using_put .. get_schema_details_using_field_name (5 actions)
+    if action == "update_advanced_attributes_for_personal_data_association_using_put":
+        return (
+            client.update_advanced_attributes_for_personal_data_association_using_put(
+                **kwargs
+            )
+        )
+    elif action == "get_hierarchy_for_inventory_id_using_get":
+        return client.get_hierarchy_for_inventory_id_using_get(**kwargs)
+    elif action == "unlink_child_inventory_from_hierarchy_using_delete":
+        return client.unlink_child_inventory_from_hierarchy_using_delete(**kwargs)
+    elif action == "get_all_schemas_using_get":
+        return client.get_all_schemas_using_get(**kwargs)
+    elif action == "get_schema_details_using_field_name":
+        return client.get_schema_details_using_field_name(**kwargs)
+    return _UNHANDLED
+
+
+_DATA_MAPPING_DISPATCHERS = (
+    _dispatch_data_mapping_1,
+    _dispatch_data_mapping_2,
+    _dispatch_data_mapping_3,
+    _dispatch_data_mapping_4,
+    _dispatch_data_mapping_5,
+)
+
 
 def register_data_mapping_tools(mcp: FastMCP):
     @mcp.tool(tags={"data_mapping"})
@@ -31,110 +160,14 @@ def register_data_mapping_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "get_data_categories_by_partial_name_using_get":
-            return client.get_data_categories_by_partial_name_using_get(**kwargs)
-        elif action == "create_data_category_using_post":
-            return client.create_data_category_using_post(**kwargs)
-        elif action == "get_data_category_using_get":
-            return client.get_data_category_using_get(**kwargs)
-        elif action == "delete_data_category_using_delete":
-            return client.delete_data_category_using_delete(**kwargs)
-        elif action == "create_data_classification_using_post":
-            return client.create_data_classification_using_post(**kwargs)
-        elif action == "get_data_classification_using_get":
-            return client.get_data_classification_using_get(**kwargs)
-        elif action == "delete_data_classification_using_delete":
-            return client.delete_data_classification_using_delete(**kwargs)
-        elif action == "create_data_element_using_post":
-            return client.create_data_element_using_post(**kwargs)
-        elif action == "get_data_element_using_get":
-            return client.get_data_element_using_get(**kwargs)
-        elif action == "delete_data_element_using_delete":
-            return client.delete_data_element_using_delete(**kwargs)
-        elif action == "get_data_subjects_by_partial_name_using_get":
-            return client.get_data_subjects_by_partial_name_using_get(**kwargs)
-        elif action == "create_data_subject_using_post":
-            return client.create_data_subject_using_post(**kwargs)
-        elif action == "get_data_subject_using_get":
-            return client.get_data_subject_using_get(**kwargs)
-        elif action == "delete_data_subject_using_delete":
-            return client.delete_data_subject_using_delete(**kwargs)
-        elif action == "update_inventory_association_using_put":
-            return client.update_inventory_association_using_put(**kwargs)
-        elif action == "update_relations_using_put":
-            return client.update_relations_using_put(**kwargs)
-        elif action == "create_relations_using_post":
-            return client.create_relations_using_post(**kwargs)
-        elif action == "delete_relations_using_delete":
-            return client.delete_relations_using_delete(**kwargs)
-        elif action == "get_inventory_relations_by_id_using_get":
-            return client.get_inventory_relations_by_id_using_get(**kwargs)
-        elif action == "set_inventory_as_parent_inventory_using_put":
-            return client.set_inventory_as_parent_inventory_using_put(**kwargs)
-        elif action == "unset_inventory_as_parent_inventory_using_put":
-            return client.unset_inventory_as_parent_inventory_using_put(**kwargs)
-        elif action == "link_asset_inventory_to_parent_asset_id_using_post":
-            return client.link_asset_inventory_to_parent_asset_id_using_post(**kwargs)
-        elif (
-            action == "link_legal_entity_inventory_to_parent_legal_entity_id_using_post"
-        ):
-            return (
-                client.link_legal_entity_inventory_to_parent_legal_entity_id_using_post(
-                    **kwargs
-                )
-            )
-        elif (
-            action
-            == "link_processing_activity_inventory_to_parent_processing_activity_id_using_post"
-        ):
-            return client.link_processing_activity_inventory_to_parent_processing_activity_id_using_post(
-                **kwargs
-            )
-        elif action == "link_vendor_inventory_to_parent_vendor_id_using_post":
-            return client.link_vendor_inventory_to_parent_vendor_id_using_post(**kwargs)
-        elif action == "get_list_of_inventories_using_get":
-            return client.get_list_of_inventories_using_get(**kwargs)
-        elif action == "create_inventory_using_post":
-            return client.create_inventory_using_post(**kwargs)
-        elif action == "upsert_inventory_using_put":
-            return client.upsert_inventory_using_put(**kwargs)
-        elif action == "get_list_of_inventories_by_filter_criteria_using_post":
-            return client.get_list_of_inventories_by_filter_criteria_using_post(
-                **kwargs
-            )
-        elif action == "get_inventory_by_external_id_using_get":
-            return client.get_inventory_by_external_id_using_get(**kwargs)
-        elif action == "get_inventory_by_id_using_get":
-            return client.get_inventory_by_id_using_get(**kwargs)
-        elif action == "update_inventory_using_put":
-            return client.update_inventory_using_put(**kwargs)
-        elif action == "delete_inventory_using_delete":
-            return client.delete_inventory_using_delete(**kwargs)
-        elif action == "copy_inventory_using_post":
-            return client.copy_inventory_using_post(**kwargs)
-        elif action == "update_inventory_status_by_id_using_put":
-            return client.update_inventory_status_by_id_using_put(**kwargs)
-        elif action == "add_controls_to_inventory_using_post":
-            return client.add_controls_to_inventory_using_post(**kwargs)
-        elif (
-            action
-            == "update_advanced_attributes_for_personal_data_association_using_put"
-        ):
-            return client.update_advanced_attributes_for_personal_data_association_using_put(
-                **kwargs
-            )
-        elif action == "get_hierarchy_for_inventory_id_using_get":
-            return client.get_hierarchy_for_inventory_id_using_get(**kwargs)
-        elif action == "unlink_child_inventory_from_hierarchy_using_delete":
-            return client.unlink_child_inventory_from_hierarchy_using_delete(**kwargs)
-        elif action == "get_all_schemas_using_get":
-            return client.get_all_schemas_using_get(**kwargs)
-        elif action == "get_schema_details_using_field_name":
-            return client.get_schema_details_using_field_name(**kwargs)
+        for _dispatch in _DATA_MAPPING_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

@@ -8,6 +8,46 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_audit_management_1(action, kwargs, client):
+    # delete_scope_using_delete .. validate_and_update_audit_using_put (9 actions)
+    if action == "delete_scope_using_delete":
+        return client.delete_scope_using_delete(**kwargs)
+    elif action == "get_audit_workpaper_list_view_using_post":
+        return client.get_audit_workpaper_list_view_using_post(**kwargs)
+    elif action == "edit_workpaper_details_using_post":
+        return client.edit_workpaper_details_using_post(**kwargs)
+    elif action == "get_workpaper_result_using_get":
+        return client.get_workpaper_result_using_get(**kwargs)
+    elif action == "get_workpaper_basic_detail_information_using_get":
+        return client.get_workpaper_basic_detail_information_using_get(**kwargs)
+    elif action == "validate_and_create_audit_using_post":
+        return client.validate_and_create_audit_using_post(**kwargs)
+    elif action == "get_audit_list_page_using_post":
+        return client.get_audit_list_page_using_post(**kwargs)
+    elif action == "get_audit_detail_using_get":
+        return client.get_audit_detail_using_get(**kwargs)
+    elif action == "validate_and_update_audit_using_put":
+        return client.validate_and_update_audit_using_put(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_audit_management_2(action, kwargs, client):
+    # delete_audit_using_delete .. validate_and_reassign_scopes_using_put (2 actions)
+    if action == "delete_audit_using_delete":
+        return client.delete_audit_using_delete(**kwargs)
+    elif action == "validate_and_reassign_scopes_using_put":
+        return client.validate_and_reassign_scopes_using_put(**kwargs)
+    return _UNHANDLED
+
+
+_AUDIT_MANAGEMENT_DISPATCHERS = (
+    _dispatch_audit_management_1,
+    _dispatch_audit_management_2,
+)
+
 
 def register_audit_management_tools(mcp: FastMCP):
     @mcp.tool(tags={"audit_management"})
@@ -31,32 +71,14 @@ def register_audit_management_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "delete_scope_using_delete":
-            return client.delete_scope_using_delete(**kwargs)
-        elif action == "get_audit_workpaper_list_view_using_post":
-            return client.get_audit_workpaper_list_view_using_post(**kwargs)
-        elif action == "edit_workpaper_details_using_post":
-            return client.edit_workpaper_details_using_post(**kwargs)
-        elif action == "get_workpaper_result_using_get":
-            return client.get_workpaper_result_using_get(**kwargs)
-        elif action == "get_workpaper_basic_detail_information_using_get":
-            return client.get_workpaper_basic_detail_information_using_get(**kwargs)
-        elif action == "validate_and_create_audit_using_post":
-            return client.validate_and_create_audit_using_post(**kwargs)
-        elif action == "get_audit_list_page_using_post":
-            return client.get_audit_list_page_using_post(**kwargs)
-        elif action == "get_audit_detail_using_get":
-            return client.get_audit_detail_using_get(**kwargs)
-        elif action == "validate_and_update_audit_using_put":
-            return client.validate_and_update_audit_using_put(**kwargs)
-        elif action == "delete_audit_using_delete":
-            return client.delete_audit_using_delete(**kwargs)
-        elif action == "validate_and_reassign_scopes_using_put":
-            return client.validate_and_reassign_scopes_using_put(**kwargs)
+        for _dispatch in _AUDIT_MANAGEMENT_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

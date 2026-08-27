@@ -8,6 +8,22 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_consent_receipts_1(action, kwargs, client):
+    # create_consent_receipt_using_post .. create_identified_consent_receipt_using_post (3 actions)
+    if action == "create_consent_receipt_using_post":
+        return client.create_consent_receipt_using_post(**kwargs)
+    elif action == "create_bulk_consent_receipt_using_post":
+        return client.create_bulk_consent_receipt_using_post(**kwargs)
+    elif action == "create_identified_consent_receipt_using_post":
+        return client.create_identified_consent_receipt_using_post(**kwargs)
+    return _UNHANDLED
+
+
+_CONSENT_RECEIPTS_DISPATCHERS = (_dispatch_consent_receipts_1,)
+
 
 def register_consent_receipts_tools(mcp: FastMCP):
     @mcp.tool(tags={"consent_receipts"})
@@ -31,16 +47,14 @@ def register_consent_receipts_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "create_consent_receipt_using_post":
-            return client.create_consent_receipt_using_post(**kwargs)
-        elif action == "create_bulk_consent_receipt_using_post":
-            return client.create_bulk_consent_receipt_using_post(**kwargs)
-        elif action == "create_identified_consent_receipt_using_post":
-            return client.create_identified_consent_receipt_using_post(**kwargs)
+        for _dispatch in _CONSENT_RECEIPTS_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

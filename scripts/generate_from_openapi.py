@@ -312,6 +312,45 @@ def emit_client_module(domain: str, ops: list[dict]) -> None:
     (API_DIR / f"api_client_{domain}.py").write_text("\n".join(lines) + "\n")
 
 
+# Cap on branches per generated ``_dispatch_<domain>_<n>`` helper -- 9 elif
+# branches + the implicit function-entry edge keeps each helper's cyclomatic
+# complexity at exactly 10 (the fleet's ``check_complexity.py`` cap), so a
+# freshly generated file never needs a follow-up decomposition pass.
+_DISPATCH_GROUP_SIZE = 9
+
+
+def _chunk(items: list, size: int) -> list[list]:
+    return [items[i : i + size] for i in range(0, len(items), size)]
+
+
+def _emit_dispatch_helpers(lines: list[str], domain: str, ops: list[dict]) -> list[str]:
+    """Append grouped ``_dispatch_<domain>_<n>`` helpers to ``lines`` in place.
+
+    Each helper keeps the exact same ``if/elif action == "<name>": return
+    client.<method>(**kwargs)`` textual shape as a flat dispatch chain would --
+    just chunked into groups of <= ``_DISPATCH_GROUP_SIZE`` branches -- so the
+    coverage test that regex-scans generated source for literal
+    ``action == "value"`` occurrences (``test_every_action_is_routed_in_its_mcp_tool``)
+    keeps working unmodified. Returns the helper names in emission order.
+    """
+    names = []
+    for i, group in enumerate(_chunk(ops, _DISPATCH_GROUP_SIZE), start=1):
+        name = f"_dispatch_{domain}_{i}"
+        names.append(name)
+        lines.append(f"def {name}(action, kwargs, client):")
+        lines.append(
+            f"    # {group[0]['action']} .. {group[-1]['action']} ({len(group)} actions)"
+        )
+        for j, op in enumerate(group):
+            kw = "if" if j == 0 else "elif"
+            lines.append(f'    {kw} action == "{op["action"]}":')
+            lines.append(f"        return client.{op['method']}(**kwargs)")
+        lines.append("    return _UNHANDLED")
+        lines.append("")
+        lines.append("")
+    return names
+
+
 def emit_mcp_module(domain: str, ops: list[dict]) -> None:
     tag = domain
     actions = ", ".join(f"'{op['action']}'" for op in ops)
@@ -326,7 +365,19 @@ def emit_mcp_module(domain: str, ops: list[dict]) -> None:
         "",
         "from onetrust_api.auth import get_client",
         "",
+        "_UNHANDLED = object()",
         "",
+        "",
+    ]
+    dispatcher_names = _emit_dispatch_helpers(lines, domain, ops)
+    dispatchers_var = f"_{domain.upper()}_DISPATCHERS"
+    lines.append(f"{dispatchers_var} = (")
+    for name in dispatcher_names:
+        lines.append(f"    {name},")
+    lines.append(")")
+    lines.append("")
+    lines.append("")
+    lines += [
         f"def register_{domain}_tools(mcp: FastMCP):",
         f'    @mcp.tool(tags={{"{tag}"}})',
         f"    async def onetrust_{domain}(",
@@ -357,14 +408,10 @@ def emit_mcp_module(domain: str, ops: list[dict]) -> None:
         '            return {"error": "params_json must decode to a JSON object"}',
         "        kwargs = {k: v for k, v in kwargs.items() if v is not None}",
         "",
-    ]
-    first = True
-    for op in ops:
-        kw = "if" if first else "elif"
-        first = False
-        lines.append(f'        {kw} action == "{op["action"]}":')
-        lines.append(f"            return client.{op['method']}(**kwargs)")
-    lines += [
+        f"        for _dispatch in {dispatchers_var}:",
+        "            _result = _dispatch(action, kwargs, client)",
+        "            if _result is not _UNHANDLED:",
+        "                return _result",
         '        raise ValueError(f"Unknown action: {action}")',
         "",
     ]

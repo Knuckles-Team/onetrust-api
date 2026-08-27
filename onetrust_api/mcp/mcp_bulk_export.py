@@ -8,6 +8,30 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_bulk_export_1(action, kwargs, client):
+    # get_export_runs_get .. get_paginated_attachment_download_commands_get (7 actions)
+    if action == "get_export_runs_get":
+        return client.get_export_runs_get(**kwargs)
+    elif action == "start_export_run_post":
+        return client.start_export_run_post(**kwargs)
+    elif action == "get_credits_information_get":
+        return client.get_credits_information_get(**kwargs)
+    elif action == "get_export_run_details_get":
+        return client.get_export_run_details_get(**kwargs)
+    elif action == "cancel_bulk_export_delete":
+        return client.cancel_bulk_export_delete(**kwargs)
+    elif action == "get_attachment_download_commands_get":
+        return client.get_attachment_download_commands_get(**kwargs)
+    elif action == "get_paginated_attachment_download_commands_get":
+        return client.get_paginated_attachment_download_commands_get(**kwargs)
+    return _UNHANDLED
+
+
+_BULK_EXPORT_DISPATCHERS = (_dispatch_bulk_export_1,)
+
 
 def register_bulk_export_tools(mcp: FastMCP):
     @mcp.tool(tags={"bulk_export"})
@@ -31,24 +55,14 @@ def register_bulk_export_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "get_export_runs_get":
-            return client.get_export_runs_get(**kwargs)
-        elif action == "start_export_run_post":
-            return client.start_export_run_post(**kwargs)
-        elif action == "get_credits_information_get":
-            return client.get_credits_information_get(**kwargs)
-        elif action == "get_export_run_details_get":
-            return client.get_export_run_details_get(**kwargs)
-        elif action == "cancel_bulk_export_delete":
-            return client.cancel_bulk_export_delete(**kwargs)
-        elif action == "get_attachment_download_commands_get":
-            return client.get_attachment_download_commands_get(**kwargs)
-        elif action == "get_paginated_attachment_download_commands_get":
-            return client.get_paginated_attachment_download_commands_get(**kwargs)
+        for _dispatch in _BULK_EXPORT_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

@@ -8,6 +8,82 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_data_discovery_1(action, kwargs, client):
+    # get_credentials .. cancel_job_using_patch (9 actions)
+    if action == "get_credentials":
+        return client.get_credentials(**kwargs)
+    elif action == "update_credential":
+        return client.update_credential(**kwargs)
+    elif action == "create_credential":
+        return client.create_credential(**kwargs)
+    elif action == "get_credential_by_id":
+        return client.get_credential_by_id(**kwargs)
+    elif action == "delete_credential":
+        return client.delete_credential(**kwargs)
+    elif action == "create_job_using_post":
+        return client.create_job_using_post_x(**kwargs)
+    elif action == "get_scan_jobs_by_data_source_using_get_1":
+        return client.get_scan_jobs_by_data_source_using_get_1(**kwargs)
+    elif action == "get_job_by_id_using_get":
+        return client.get_job_by_id_using_get(**kwargs)
+    elif action == "cancel_job_using_patch":
+        return client.cancel_job_using_patch(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_data_discovery_2(action, kwargs, client):
+    # get_all_using_get_2 .. get_all_using_get_1 (9 actions)
+    if action == "get_all_using_get_2":
+        return client.get_all_using_get_2(**kwargs)
+    elif action == "update_v2_using_put":
+        return client.update_v2_using_put(**kwargs)
+    elif action == "create_v2_using_post":
+        return client.create_v2_using_post(**kwargs)
+    elif action == "get_scan_profile_using_get_1":
+        return client.get_scan_profile_using_get_1(**kwargs)
+    elif action == "delete_scan_profile_using_delete_1":
+        return client.delete_scan_profile_using_delete_1(**kwargs)
+    elif action == "get_job_using_get_1":
+        return client.get_job_using_get_1(**kwargs)
+    elif action == "cancel_scan_job":
+        return client.cancel_scan_job(**kwargs)
+    elif action == "get_docker_repository_tags_using_get":
+        return client.get_docker_repository_tags_using_get(**kwargs)
+    elif action == "get_all_using_get_1":
+        return client.get_all_using_get_1(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_data_discovery_3(action, kwargs, client):
+    # upsert_source_system_v3_using_put .. delete_detector (8 actions)
+    if action == "upsert_source_system_v3_using_put":
+        return client.upsert_source_system_v3_using_put(**kwargs)
+    elif action == "get_data_source_by_id_using_get_1":
+        return client.get_data_source_by_id_using_get_1(**kwargs)
+    elif action == "delete_system_using_delete_1":
+        return client.delete_system_using_delete_1(**kwargs)
+    elif action == "list_detectors":
+        return client.list_detectors(**kwargs)
+    elif action == "create_detector":
+        return client.create_detector(**kwargs)
+    elif action == "get_detector_by_classifier_name":
+        return client.get_detector_by_classifier_name(**kwargs)
+    elif action == "update_detector":
+        return client.update_detector(**kwargs)
+    elif action == "delete_detector":
+        return client.delete_detector(**kwargs)
+    return _UNHANDLED
+
+
+_DATA_DISCOVERY_DISPATCHERS = (
+    _dispatch_data_discovery_1,
+    _dispatch_data_discovery_2,
+    _dispatch_data_discovery_3,
+)
+
 
 def register_data_discovery_tools(mcp: FastMCP):
     @mcp.tool(tags={"data_discovery"})
@@ -31,62 +107,14 @@ def register_data_discovery_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "get_credentials":
-            return client.get_credentials(**kwargs)
-        elif action == "update_credential":
-            return client.update_credential(**kwargs)
-        elif action == "create_credential":
-            return client.create_credential(**kwargs)
-        elif action == "get_credential_by_id":
-            return client.get_credential_by_id(**kwargs)
-        elif action == "delete_credential":
-            return client.delete_credential(**kwargs)
-        elif action == "create_job_using_post":
-            return client.create_job_using_post_x(**kwargs)
-        elif action == "get_scan_jobs_by_data_source_using_get_1":
-            return client.get_scan_jobs_by_data_source_using_get_1(**kwargs)
-        elif action == "get_job_by_id_using_get":
-            return client.get_job_by_id_using_get(**kwargs)
-        elif action == "cancel_job_using_patch":
-            return client.cancel_job_using_patch(**kwargs)
-        elif action == "get_all_using_get_2":
-            return client.get_all_using_get_2(**kwargs)
-        elif action == "update_v2_using_put":
-            return client.update_v2_using_put(**kwargs)
-        elif action == "create_v2_using_post":
-            return client.create_v2_using_post(**kwargs)
-        elif action == "get_scan_profile_using_get_1":
-            return client.get_scan_profile_using_get_1(**kwargs)
-        elif action == "delete_scan_profile_using_delete_1":
-            return client.delete_scan_profile_using_delete_1(**kwargs)
-        elif action == "get_job_using_get_1":
-            return client.get_job_using_get_1(**kwargs)
-        elif action == "cancel_scan_job":
-            return client.cancel_scan_job(**kwargs)
-        elif action == "get_docker_repository_tags_using_get":
-            return client.get_docker_repository_tags_using_get(**kwargs)
-        elif action == "get_all_using_get_1":
-            return client.get_all_using_get_1(**kwargs)
-        elif action == "upsert_source_system_v3_using_put":
-            return client.upsert_source_system_v3_using_put(**kwargs)
-        elif action == "get_data_source_by_id_using_get_1":
-            return client.get_data_source_by_id_using_get_1(**kwargs)
-        elif action == "delete_system_using_delete_1":
-            return client.delete_system_using_delete_1(**kwargs)
-        elif action == "list_detectors":
-            return client.list_detectors(**kwargs)
-        elif action == "create_detector":
-            return client.create_detector(**kwargs)
-        elif action == "get_detector_by_classifier_name":
-            return client.get_detector_by_classifier_name(**kwargs)
-        elif action == "update_detector":
-            return client.update_detector(**kwargs)
-        elif action == "delete_detector":
-            return client.delete_detector(**kwargs)
+        for _dispatch in _DATA_DISCOVERY_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

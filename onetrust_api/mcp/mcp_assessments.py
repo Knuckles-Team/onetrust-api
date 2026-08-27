@@ -8,6 +8,100 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_assessments_1(action, kwargs, client):
+    # review_assessment_using_post .. create_bulk_assessment_using_post (9 actions)
+    if action == "review_assessment_using_post":
+        return client.review_assessment_using_post(**kwargs)
+    elif action == "get_tags_using_get":
+        return client.get_tags_using_get(**kwargs)
+    elif action == "get_all_assessment_basic_details_using_get":
+        return client.get_all_assessment_basic_details_using_get(**kwargs)
+    elif action == "create_assessment_using_post_1":
+        return client.create_assessment_using_post_1(**kwargs)
+    elif action == "get_assessment_delete_logs_using_get":
+        return client.get_assessment_delete_logs_using_get(**kwargs)
+    elif action == "archive_assessments_using_put":
+        return client.archive_assessments_using_put(**kwargs)
+    elif action == "add_manual_assessment_links_using_post":
+        return client.add_manual_assessment_links_using_post(**kwargs)
+    elif action == "get_assessment_results_using_get":
+        return client.get_assessment_results_using_get(**kwargs)
+    elif action == "create_bulk_assessment_using_post":
+        return client.create_bulk_assessment_using_post(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_assessments_2(action, kwargs, client):
+    # get_linked_assessments_information_using_get .. soft_delete_assessment_using_put (9 actions)
+    if action == "get_linked_assessments_information_using_get":
+        return client.get_linked_assessments_information_using_get(**kwargs)
+    elif action == "unarchive_assessments_using_put":
+        return client.unarchive_assessments_using_put(**kwargs)
+    elif action == "export_assessment_using_get":
+        return client.export_assessment_using_get(**kwargs)
+    elif action == "update_basic_assessment_details_using_patch":
+        return client.update_basic_assessment_details_using_patch(**kwargs)
+    elif action == "update_primary_record_using_put":
+        return client.update_primary_record_using_put(**kwargs)
+    elif action == "reassign_assessment_using_put":
+        return client.reassign_assessment_using_put(**kwargs)
+    elif action == "submit_responses_using_post":
+        return client.submit_responses_using_post(**kwargs)
+    elif action == "create_assessment_risk_using_post":
+        return client.create_assessment_risk_using_post(**kwargs)
+    elif action == "soft_delete_assessment_using_put":
+        return client.soft_delete_assessment_using_put(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_assessments_3(action, kwargs, client):
+    # submit_assessment_using_post .. get_assessments_using_post (9 actions)
+    if action == "submit_assessment_using_post":
+        return client.submit_assessment_using_post(**kwargs)
+    elif action == "add_or_update_tags_using_put":
+        return client.add_or_update_tags_using_put(**kwargs)
+    elif action == "create_task_using_post":
+        return client.create_task_using_post_x(**kwargs)
+    elif action == "get_workflow_details_for_assessment_using_get":
+        return client.get_workflow_details_for_assessment_using_get(**kwargs)
+    elif action == "reassess_assessment_using_post":
+        return client.reassess_assessment_using_post(**kwargs)
+    elif action == "reopen_assessment_using_post":
+        return client.reopen_assessment_using_post(**kwargs)
+    elif action == "send_back_assessment_to_in_progress_using_post":
+        return client.send_back_assessment_to_in_progress_using_post(**kwargs)
+    elif action == "create_assessment_using_post":
+        return client.create_assessment_using_post(**kwargs)
+    elif action == "get_assessments_using_post":
+        return client.get_assessments_using_post(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_assessments_4(action, kwargs, client):
+    # approve_assessment_using_post .. export_template_with_business_keys_using_get (5 actions)
+    if action == "approve_assessment_using_post":
+        return client.approve_assessment_using_post(**kwargs)
+    elif action == "get_all_basic_template_details_using_get":
+        return client.get_all_basic_template_details_using_get(**kwargs)
+    elif action == "import_template_by_id_using_post":
+        return client.import_template_by_id_using_post(**kwargs)
+    elif action == "delete_template_versions_using_delete":
+        return client.delete_template_versions_using_delete(**kwargs)
+    elif action == "export_template_with_business_keys_using_get":
+        return client.export_template_with_business_keys_using_get(**kwargs)
+    return _UNHANDLED
+
+
+_ASSESSMENTS_DISPATCHERS = (
+    _dispatch_assessments_1,
+    _dispatch_assessments_2,
+    _dispatch_assessments_3,
+    _dispatch_assessments_4,
+)
+
 
 def register_assessments_tools(mcp: FastMCP):
     @mcp.tool(tags={"assessments"})
@@ -31,74 +125,14 @@ def register_assessments_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "review_assessment_using_post":
-            return client.review_assessment_using_post(**kwargs)
-        elif action == "get_tags_using_get":
-            return client.get_tags_using_get(**kwargs)
-        elif action == "get_all_assessment_basic_details_using_get":
-            return client.get_all_assessment_basic_details_using_get(**kwargs)
-        elif action == "create_assessment_using_post_1":
-            return client.create_assessment_using_post_1(**kwargs)
-        elif action == "get_assessment_delete_logs_using_get":
-            return client.get_assessment_delete_logs_using_get(**kwargs)
-        elif action == "archive_assessments_using_put":
-            return client.archive_assessments_using_put(**kwargs)
-        elif action == "add_manual_assessment_links_using_post":
-            return client.add_manual_assessment_links_using_post(**kwargs)
-        elif action == "get_assessment_results_using_get":
-            return client.get_assessment_results_using_get(**kwargs)
-        elif action == "create_bulk_assessment_using_post":
-            return client.create_bulk_assessment_using_post(**kwargs)
-        elif action == "get_linked_assessments_information_using_get":
-            return client.get_linked_assessments_information_using_get(**kwargs)
-        elif action == "unarchive_assessments_using_put":
-            return client.unarchive_assessments_using_put(**kwargs)
-        elif action == "export_assessment_using_get":
-            return client.export_assessment_using_get(**kwargs)
-        elif action == "update_basic_assessment_details_using_patch":
-            return client.update_basic_assessment_details_using_patch(**kwargs)
-        elif action == "update_primary_record_using_put":
-            return client.update_primary_record_using_put(**kwargs)
-        elif action == "reassign_assessment_using_put":
-            return client.reassign_assessment_using_put(**kwargs)
-        elif action == "submit_responses_using_post":
-            return client.submit_responses_using_post(**kwargs)
-        elif action == "create_assessment_risk_using_post":
-            return client.create_assessment_risk_using_post(**kwargs)
-        elif action == "soft_delete_assessment_using_put":
-            return client.soft_delete_assessment_using_put(**kwargs)
-        elif action == "submit_assessment_using_post":
-            return client.submit_assessment_using_post(**kwargs)
-        elif action == "add_or_update_tags_using_put":
-            return client.add_or_update_tags_using_put(**kwargs)
-        elif action == "create_task_using_post":
-            return client.create_task_using_post_x(**kwargs)
-        elif action == "get_workflow_details_for_assessment_using_get":
-            return client.get_workflow_details_for_assessment_using_get(**kwargs)
-        elif action == "reassess_assessment_using_post":
-            return client.reassess_assessment_using_post(**kwargs)
-        elif action == "reopen_assessment_using_post":
-            return client.reopen_assessment_using_post(**kwargs)
-        elif action == "send_back_assessment_to_in_progress_using_post":
-            return client.send_back_assessment_to_in_progress_using_post(**kwargs)
-        elif action == "create_assessment_using_post":
-            return client.create_assessment_using_post(**kwargs)
-        elif action == "get_assessments_using_post":
-            return client.get_assessments_using_post(**kwargs)
-        elif action == "approve_assessment_using_post":
-            return client.approve_assessment_using_post(**kwargs)
-        elif action == "get_all_basic_template_details_using_get":
-            return client.get_all_basic_template_details_using_get(**kwargs)
-        elif action == "import_template_by_id_using_post":
-            return client.import_template_by_id_using_post(**kwargs)
-        elif action == "delete_template_versions_using_delete":
-            return client.delete_template_versions_using_delete(**kwargs)
-        elif action == "export_template_with_business_keys_using_get":
-            return client.export_template_with_business_keys_using_get(**kwargs)
+        for _dispatch in _ASSESSMENTS_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

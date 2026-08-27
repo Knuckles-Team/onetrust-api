@@ -8,6 +8,180 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_it_risk_management_1(action, kwargs, client):
+    # find_all_control_implementations_attributes_and_options_by_using_post .. update_control_using_put_1 (9 actions)
+    if (
+        action
+        == "find_all_control_implementations_attributes_and_options_by_using_post"
+    ):
+        return client.find_all_control_implementations_attributes_and_options_by_using_post(
+            **kwargs
+        )
+    elif action == "find_all_control_implementations_using_post":
+        return client.find_all_control_implementations_using_post(**kwargs)
+    elif action == "get_control_implementation_details_using_get":
+        return client.get_control_implementation_details_using_get(**kwargs)
+    elif action == "update_control_implementation_by_implementation_id_using_put":
+        return client.update_control_implementation_by_implementation_id_using_put(
+            **kwargs
+        )
+    elif (
+        action
+        == "remove_control_implementation_by_entity_and_implementation_id_using_delete"
+    ):
+        return client.remove_control_implementation_by_entity_and_implementation_id_using_delete(
+            **kwargs
+        )
+    elif action == "add_attachments_to_implementation_using_post":
+        return client.add_attachments_to_implementation_using_post(**kwargs)
+    elif action == "add_control_using_post":
+        return client.add_control_using_post(**kwargs)
+    elif action == "find_controls_by_criteria_using_post_1":
+        return client.find_controls_by_criteria_using_post_1(**kwargs)
+    elif action == "update_control_using_put_1":
+        return client.update_control_using_put_1(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_it_risk_management_2(action, kwargs, client):
+    # remove_control_using_delete_1 .. remove_threat_using_delete (9 actions)
+    if action == "remove_control_using_delete_1":
+        return client.remove_control_using_delete_1(**kwargs)
+    elif action == "find_associated_control_implementations_using_post":
+        return client.find_associated_control_implementations_using_post(**kwargs)
+    elif action == "find_all_evidences_by_search_criteria_1":
+        return client.find_all_evidences_by_search_criteria_1(**kwargs)
+    elif action == "find_evidence_implementations_by_id_1":
+        return client.find_evidence_implementations_by_id_1(**kwargs)
+    elif action == "add_evidence_implementation_attachment":
+        return client.add_evidence_implementation_attachment(**kwargs)
+    elif action == "bulk_create_links_using_post":
+        return client.bulk_create_links_using_post(**kwargs)
+    elif action == "add_threat_using_post_1":
+        return client.add_threat_using_post_1(**kwargs)
+    elif action == "find_threats_by_criteria_using_post":
+        return client.find_threats_by_criteria_using_post(**kwargs)
+    elif action == "remove_threat_using_delete":
+        return client.remove_threat_using_delete(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_it_risk_management_3(action, kwargs, client):
+    # add_vulnerability_using_post_1 .. add_vulnerabilities_using_post (9 actions)
+    if action == "add_vulnerability_using_post_1":
+        return client.add_vulnerability_using_post_1(**kwargs)
+    elif action == "find_vulnerabilities_by_criteria_using_post":
+        return client.find_vulnerabilities_by_criteria_using_post(**kwargs)
+    elif action == "remove_vulnerability_using_delete":
+        return client.remove_vulnerability_using_delete(**kwargs)
+    elif action == "get_all_enabled_control_entity_types_using_get":
+        return client.get_all_enabled_control_entity_types_using_get(**kwargs)
+    elif action == "get_all_related_control_entity_types_using_get":
+        return client.get_all_related_control_entity_types_using_get(**kwargs)
+    elif action == "update_threats_using_put":
+        return client.update_threats_using_put(**kwargs)
+    elif action == "add_threats_using_post":
+        return client.add_threats_using_post(**kwargs)
+    elif action == "update_vulnerabilities_using_put":
+        return client.update_vulnerabilities_using_put(**kwargs)
+    elif action == "add_vulnerabilities_using_post":
+        return client.add_vulnerabilities_using_post(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_it_risk_management_4(action, kwargs, client):
+    # get_risk_template_using_get .. get_all_enabled_source_entity_types_using_get (9 actions)
+    if action == "get_risk_template_using_get":
+        return client.get_risk_template_using_get(**kwargs)
+    elif action == "unlink_risks_from_entity_using_post":
+        return client.unlink_risks_from_entity_using_post(**kwargs)
+    elif action == "get_active_categories_using_get":
+        return client.get_active_categories_using_get(**kwargs)
+    elif action == "get_matrix_score_setting_using_get":
+        return client.get_matrix_score_setting_using_get(**kwargs)
+    elif action == "get_standard_score_setting_using_get":
+        return client.get_standard_score_setting_using_get(**kwargs)
+    elif action == "create_risk_using_post":
+        return client.create_risk_using_post(**kwargs)
+    elif action == "get_risk_page_view_using_post":
+        return client.get_risk_page_view_using_post(**kwargs)
+    elif action == "get_all_enabled_risk_entity_types_using_get":
+        return client.get_all_enabled_risk_entity_types_using_get(**kwargs)
+    elif action == "get_all_enabled_source_entity_types_using_get":
+        return client.get_all_enabled_source_entity_types_using_get(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_it_risk_management_5(action, kwargs, client):
+    # create_update_risk_using_put .. approve_risk_using_put (9 actions)
+    if action == "create_update_risk_using_put":
+        return client.create_update_risk_using_put(**kwargs)
+    elif action == "change_risk_stage_using_post":
+        return client.change_risk_stage_using_post(**kwargs)
+    elif action == "get_linked_risks_information_using_post":
+        return client.get_linked_risks_information_using_post(**kwargs)
+    elif action == "get_risk_using_get":
+        return client.get_risk_using_get(**kwargs)
+    elif action == "update_risk_using_put":
+        return client.update_risk_using_put(**kwargs)
+    elif action == "delete_risk_using_delete":
+        return client.delete_risk_using_delete(**kwargs)
+    elif action == "update_risk_using_patch":
+        return client.update_risk_using_patch(**kwargs)
+    elif action == "perform_risk_action_using_put":
+        return client.perform_risk_action_using_put(**kwargs)
+    elif action == "approve_risk_using_put":
+        return client.approve_risk_using_put(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_it_risk_management_6(action, kwargs, client):
+    # update_risk_approvers_using_put .. submit_risk_using_put (9 actions)
+    if action == "update_risk_approvers_using_put":
+        return client.update_risk_approvers_using_put(**kwargs)
+    elif action == "update_risk_categories_using_put":
+        return client.update_risk_categories_using_put(**kwargs)
+    elif action == "add_controls_to_risk_using_post":
+        return client.add_controls_to_risk_using_post(**kwargs)
+    elif action == "grant_risk_exception_using_put":
+        return client.grant_risk_exception_using_put(**kwargs)
+    elif action == "update_risk_owners_using_put":
+        return client.update_risk_owners_using_put(**kwargs)
+    elif action == "reopen_risk_using_put":
+        return client.reopen_risk_using_put(**kwargs)
+    elif action == "request_risk_exception_using_put":
+        return client.request_risk_exception_using_put(**kwargs)
+    elif action == "send_back_risk_using_put":
+        return client.send_back_risk_using_put(**kwargs)
+    elif action == "submit_risk_using_put":
+        return client.submit_risk_using_put(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_it_risk_management_7(action, kwargs, client):
+    # add_threat_to_risk .. create_stand_alone_risk_using_post (3 actions)
+    if action == "add_threat_to_risk":
+        return client.add_threat_to_risk(**kwargs)
+    elif action == "add_vulnerabilities_to_risk":
+        return client.add_vulnerabilities_to_risk(**kwargs)
+    elif action == "create_stand_alone_risk_using_post":
+        return client.create_stand_alone_risk_using_post(**kwargs)
+    return _UNHANDLED
+
+
+_IT_RISK_MANAGEMENT_DISPATCHERS = (
+    _dispatch_it_risk_management_1,
+    _dispatch_it_risk_management_2,
+    _dispatch_it_risk_management_3,
+    _dispatch_it_risk_management_4,
+    _dispatch_it_risk_management_5,
+    _dispatch_it_risk_management_6,
+    _dispatch_it_risk_management_7,
+)
+
 
 def register_it_risk_management_tools(mcp: FastMCP):
     @mcp.tool(tags={"it_risk_management"})
@@ -31,136 +205,14 @@ def register_it_risk_management_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if (
-            action
-            == "find_all_control_implementations_attributes_and_options_by_using_post"
-        ):
-            return client.find_all_control_implementations_attributes_and_options_by_using_post(
-                **kwargs
-            )
-        elif action == "find_all_control_implementations_using_post":
-            return client.find_all_control_implementations_using_post(**kwargs)
-        elif action == "get_control_implementation_details_using_get":
-            return client.get_control_implementation_details_using_get(**kwargs)
-        elif action == "update_control_implementation_by_implementation_id_using_put":
-            return client.update_control_implementation_by_implementation_id_using_put(
-                **kwargs
-            )
-        elif (
-            action
-            == "remove_control_implementation_by_entity_and_implementation_id_using_delete"
-        ):
-            return client.remove_control_implementation_by_entity_and_implementation_id_using_delete(
-                **kwargs
-            )
-        elif action == "add_attachments_to_implementation_using_post":
-            return client.add_attachments_to_implementation_using_post(**kwargs)
-        elif action == "add_control_using_post":
-            return client.add_control_using_post(**kwargs)
-        elif action == "find_controls_by_criteria_using_post_1":
-            return client.find_controls_by_criteria_using_post_1(**kwargs)
-        elif action == "update_control_using_put_1":
-            return client.update_control_using_put_1(**kwargs)
-        elif action == "remove_control_using_delete_1":
-            return client.remove_control_using_delete_1(**kwargs)
-        elif action == "find_associated_control_implementations_using_post":
-            return client.find_associated_control_implementations_using_post(**kwargs)
-        elif action == "find_all_evidences_by_search_criteria_1":
-            return client.find_all_evidences_by_search_criteria_1(**kwargs)
-        elif action == "find_evidence_implementations_by_id_1":
-            return client.find_evidence_implementations_by_id_1(**kwargs)
-        elif action == "add_evidence_implementation_attachment":
-            return client.add_evidence_implementation_attachment(**kwargs)
-        elif action == "bulk_create_links_using_post":
-            return client.bulk_create_links_using_post(**kwargs)
-        elif action == "add_threat_using_post_1":
-            return client.add_threat_using_post_1(**kwargs)
-        elif action == "find_threats_by_criteria_using_post":
-            return client.find_threats_by_criteria_using_post(**kwargs)
-        elif action == "remove_threat_using_delete":
-            return client.remove_threat_using_delete(**kwargs)
-        elif action == "add_vulnerability_using_post_1":
-            return client.add_vulnerability_using_post_1(**kwargs)
-        elif action == "find_vulnerabilities_by_criteria_using_post":
-            return client.find_vulnerabilities_by_criteria_using_post(**kwargs)
-        elif action == "remove_vulnerability_using_delete":
-            return client.remove_vulnerability_using_delete(**kwargs)
-        elif action == "get_all_enabled_control_entity_types_using_get":
-            return client.get_all_enabled_control_entity_types_using_get(**kwargs)
-        elif action == "get_all_related_control_entity_types_using_get":
-            return client.get_all_related_control_entity_types_using_get(**kwargs)
-        elif action == "update_threats_using_put":
-            return client.update_threats_using_put(**kwargs)
-        elif action == "add_threats_using_post":
-            return client.add_threats_using_post(**kwargs)
-        elif action == "update_vulnerabilities_using_put":
-            return client.update_vulnerabilities_using_put(**kwargs)
-        elif action == "add_vulnerabilities_using_post":
-            return client.add_vulnerabilities_using_post(**kwargs)
-        elif action == "get_risk_template_using_get":
-            return client.get_risk_template_using_get(**kwargs)
-        elif action == "unlink_risks_from_entity_using_post":
-            return client.unlink_risks_from_entity_using_post(**kwargs)
-        elif action == "get_active_categories_using_get":
-            return client.get_active_categories_using_get(**kwargs)
-        elif action == "get_matrix_score_setting_using_get":
-            return client.get_matrix_score_setting_using_get(**kwargs)
-        elif action == "get_standard_score_setting_using_get":
-            return client.get_standard_score_setting_using_get(**kwargs)
-        elif action == "create_risk_using_post":
-            return client.create_risk_using_post(**kwargs)
-        elif action == "get_risk_page_view_using_post":
-            return client.get_risk_page_view_using_post(**kwargs)
-        elif action == "get_all_enabled_risk_entity_types_using_get":
-            return client.get_all_enabled_risk_entity_types_using_get(**kwargs)
-        elif action == "get_all_enabled_source_entity_types_using_get":
-            return client.get_all_enabled_source_entity_types_using_get(**kwargs)
-        elif action == "create_update_risk_using_put":
-            return client.create_update_risk_using_put(**kwargs)
-        elif action == "change_risk_stage_using_post":
-            return client.change_risk_stage_using_post(**kwargs)
-        elif action == "get_linked_risks_information_using_post":
-            return client.get_linked_risks_information_using_post(**kwargs)
-        elif action == "get_risk_using_get":
-            return client.get_risk_using_get(**kwargs)
-        elif action == "update_risk_using_put":
-            return client.update_risk_using_put(**kwargs)
-        elif action == "delete_risk_using_delete":
-            return client.delete_risk_using_delete(**kwargs)
-        elif action == "update_risk_using_patch":
-            return client.update_risk_using_patch(**kwargs)
-        elif action == "perform_risk_action_using_put":
-            return client.perform_risk_action_using_put(**kwargs)
-        elif action == "approve_risk_using_put":
-            return client.approve_risk_using_put(**kwargs)
-        elif action == "update_risk_approvers_using_put":
-            return client.update_risk_approvers_using_put(**kwargs)
-        elif action == "update_risk_categories_using_put":
-            return client.update_risk_categories_using_put(**kwargs)
-        elif action == "add_controls_to_risk_using_post":
-            return client.add_controls_to_risk_using_post(**kwargs)
-        elif action == "grant_risk_exception_using_put":
-            return client.grant_risk_exception_using_put(**kwargs)
-        elif action == "update_risk_owners_using_put":
-            return client.update_risk_owners_using_put(**kwargs)
-        elif action == "reopen_risk_using_put":
-            return client.reopen_risk_using_put(**kwargs)
-        elif action == "request_risk_exception_using_put":
-            return client.request_risk_exception_using_put(**kwargs)
-        elif action == "send_back_risk_using_put":
-            return client.send_back_risk_using_put(**kwargs)
-        elif action == "submit_risk_using_put":
-            return client.submit_risk_using_put(**kwargs)
-        elif action == "add_threat_to_risk":
-            return client.add_threat_to_risk(**kwargs)
-        elif action == "add_vulnerabilities_to_risk":
-            return client.add_vulnerabilities_to_risk(**kwargs)
-        elif action == "create_stand_alone_risk_using_post":
-            return client.create_stand_alone_risk_using_post(**kwargs)
+        for _dispatch in _IT_RISK_MANAGEMENT_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

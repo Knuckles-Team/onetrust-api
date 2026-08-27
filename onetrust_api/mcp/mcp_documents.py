@@ -8,6 +8,20 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_documents_1(action, kwargs, client):
+    # file_upload .. file_location (2 actions)
+    if action == "file_upload":
+        return client.file_upload(**kwargs)
+    elif action == "file_location":
+        return client.file_location(**kwargs)
+    return _UNHANDLED
+
+
+_DOCUMENTS_DISPATCHERS = (_dispatch_documents_1,)
+
 
 def register_documents_tools(mcp: FastMCP):
     @mcp.tool(tags={"documents"})
@@ -31,14 +45,14 @@ def register_documents_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "file_upload":
-            return client.file_upload(**kwargs)
-        elif action == "file_location":
-            return client.file_location(**kwargs)
+        for _dispatch in _DOCUMENTS_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

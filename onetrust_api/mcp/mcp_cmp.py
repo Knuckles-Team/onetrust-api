@@ -8,6 +8,26 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_cmp_1(action, kwargs, client):
+    # get_banner .. get_vendors (5 actions)
+    if action == "get_banner":
+        return client.get_banner(**kwargs)
+    elif action == "get_preferences":
+        return client.get_preferences(**kwargs)
+    elif action == "post_log_consent":
+        return client.post_log_consent(**kwargs)
+    elif action == "get_ucpurposes":
+        return client.get_ucpurposes(**kwargs)
+    elif action == "get_vendors":
+        return client.get_vendors(**kwargs)
+    return _UNHANDLED
+
+
+_CMP_DISPATCHERS = (_dispatch_cmp_1,)
+
 
 def register_cmp_tools(mcp: FastMCP):
     @mcp.tool(tags={"cmp"})
@@ -31,20 +51,14 @@ def register_cmp_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "get_banner":
-            return client.get_banner(**kwargs)
-        elif action == "get_preferences":
-            return client.get_preferences(**kwargs)
-        elif action == "post_log_consent":
-            return client.post_log_consent(**kwargs)
-        elif action == "get_ucpurposes":
-            return client.get_ucpurposes(**kwargs)
-        elif action == "get_vendors":
-            return client.get_vendors(**kwargs)
+        for _dispatch in _CMP_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

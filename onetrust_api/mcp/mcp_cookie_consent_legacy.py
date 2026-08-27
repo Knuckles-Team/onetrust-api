@@ -8,6 +8,46 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_cookie_consent_legacy_1(action, kwargs, client):
+    # download_to_local_using_get .. get_categorized_cookies_with_cookie_ids_using_get (9 actions)
+    if action == "download_to_local_using_get":
+        return client.download_to_local_using_get(**kwargs)
+    elif action == "request_bulk_add_domain_using_post":
+        return client.request_bulk_add_domain_using_post(**kwargs)
+    elif action == "get_domains_scanned_by_sort_using_get":
+        return client.get_domains_scanned_by_sort_using_get(**kwargs)
+    elif action == "get_script_for_website_using_get":
+        return client.get_script_for_website_using_get(**kwargs)
+    elif action == "publish_to_site_using_put":
+        return client.publish_to_site_using_put(**kwargs)
+    elif action == "create_new_cookie":
+        return client.create_new_cookie(**kwargs)
+    elif action == "update_cookie":
+        return client.update_cookie(**kwargs)
+    elif action == "get_categorized_cookies_using_get":
+        return client.get_categorized_cookies_using_get(**kwargs)
+    elif action == "get_categorized_cookies_with_cookie_ids_using_get":
+        return client.get_categorized_cookies_with_cookie_ids_using_get(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_cookie_consent_legacy_2(action, kwargs, client):
+    # create_domain_group_using_post .. get_cookie_reports_using_post (2 actions)
+    if action == "create_domain_group_using_post":
+        return client.create_domain_group_using_post(**kwargs)
+    elif action == "get_cookie_reports_using_post":
+        return client.get_cookie_reports_using_post(**kwargs)
+    return _UNHANDLED
+
+
+_COOKIE_CONSENT_LEGACY_DISPATCHERS = (
+    _dispatch_cookie_consent_legacy_1,
+    _dispatch_cookie_consent_legacy_2,
+)
+
 
 def register_cookie_consent_legacy_tools(mcp: FastMCP):
     @mcp.tool(tags={"cookie_consent_legacy"})
@@ -31,32 +71,14 @@ def register_cookie_consent_legacy_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "download_to_local_using_get":
-            return client.download_to_local_using_get(**kwargs)
-        elif action == "request_bulk_add_domain_using_post":
-            return client.request_bulk_add_domain_using_post(**kwargs)
-        elif action == "get_domains_scanned_by_sort_using_get":
-            return client.get_domains_scanned_by_sort_using_get(**kwargs)
-        elif action == "get_script_for_website_using_get":
-            return client.get_script_for_website_using_get(**kwargs)
-        elif action == "publish_to_site_using_put":
-            return client.publish_to_site_using_put(**kwargs)
-        elif action == "create_new_cookie":
-            return client.create_new_cookie(**kwargs)
-        elif action == "update_cookie":
-            return client.update_cookie(**kwargs)
-        elif action == "get_categorized_cookies_using_get":
-            return client.get_categorized_cookies_using_get(**kwargs)
-        elif action == "get_categorized_cookies_with_cookie_ids_using_get":
-            return client.get_categorized_cookies_with_cookie_ids_using_get(**kwargs)
-        elif action == "create_domain_group_using_post":
-            return client.create_domain_group_using_post(**kwargs)
-        elif action == "get_cookie_reports_using_post":
-            return client.get_cookie_reports_using_post(**kwargs)
+        for _dispatch in _COOKIE_CONSENT_LEGACY_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

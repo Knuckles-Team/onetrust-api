@@ -8,6 +8,22 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_privacy_notices_1(action, kwargs, client):
+    # get_privacy_notices_using_get .. get_privacy_notice_versions_using_get (3 actions)
+    if action == "get_privacy_notices_using_get":
+        return client.get_privacy_notices_using_get(**kwargs)
+    elif action == "get_privacy_notice_version_by_published_date_using_get":
+        return client.get_privacy_notice_version_by_published_date_using_get(**kwargs)
+    elif action == "get_privacy_notice_versions_using_get":
+        return client.get_privacy_notice_versions_using_get(**kwargs)
+    return _UNHANDLED
+
+
+_PRIVACY_NOTICES_DISPATCHERS = (_dispatch_privacy_notices_1,)
+
 
 def register_privacy_notices_tools(mcp: FastMCP):
     @mcp.tool(tags={"privacy_notices"})
@@ -31,18 +47,14 @@ def register_privacy_notices_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "get_privacy_notices_using_get":
-            return client.get_privacy_notices_using_get(**kwargs)
-        elif action == "get_privacy_notice_version_by_published_date_using_get":
-            return client.get_privacy_notice_version_by_published_date_using_get(
-                **kwargs
-            )
-        elif action == "get_privacy_notice_versions_using_get":
-            return client.get_privacy_notice_versions_using_get(**kwargs)
+        for _dispatch in _PRIVACY_NOTICES_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

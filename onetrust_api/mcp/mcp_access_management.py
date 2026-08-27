@@ -8,6 +8,108 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_access_management_1(action, kwargs, client):
+    # organization_tree_structure_using_get .. update_user_group_using_put (9 actions)
+    if action == "organization_tree_structure_using_get":
+        return client.organization_tree_structure_using_get(**kwargs)
+    elif action == "create_organization_using_post":
+        return client.create_organization_using_post(**kwargs)
+    elif action == "update_organization_using_put":
+        return client.update_organization_using_put(**kwargs)
+    elif action == "delete_organization_post":
+        return client.delete_organization_post(**kwargs)
+    elif action == "login_history":
+        return client.login_history(**kwargs)
+    elif action == "get_oauth_token":
+        return client.get_oauth_token(**kwargs)
+    elif action == "retrieve_user_groups_using_get":
+        return client.retrieve_user_groups_using_get(**kwargs)
+    elif action == "create_user_group_using_post":
+        return client.create_user_group_using_post(**kwargs)
+    elif action == "update_user_group_using_put":
+        return client.update_user_group_using_put(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_access_management_2(action, kwargs, client):
+    # delete_user_group_using_delete .. delete_user_group_by_id_v2 (9 actions)
+    if action == "delete_user_group_using_delete":
+        return client.delete_user_group_using_delete(**kwargs)
+    elif action == "retrieve_members_using_get":
+        return client.retrieve_members_using_get(**kwargs)
+    elif action == "add_members_using_post":
+        return client.add_members_using_post(**kwargs)
+    elif action == "remove_members_using_delete":
+        return client.remove_members_using_delete(**kwargs)
+    elif action == "get_all_user_group_with_filters_v2":
+        return client.get_all_user_group_with_filters_v2(**kwargs)
+    elif action == "create_user_group_v2":
+        return client.create_user_group_v2(**kwargs)
+    elif action == "get_user_group_by_id_v2":
+        return client.get_user_group_by_id_v2(**kwargs)
+    elif action == "update_user_group_by_id_v2":
+        return client.update_user_group_by_id_v2(**kwargs)
+    elif action == "delete_user_group_by_id_v2":
+        return client.delete_user_group_by_id_v2(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_access_management_3(action, kwargs, client):
+    # get_access_levels_for_user_group_by_id_v2 .. remove_amember_for_user_group_by_id_v2 (9 actions)
+    if action == "get_access_levels_for_user_group_by_id_v2":
+        return client.get_access_levels_for_user_group_by_id_v2(**kwargs)
+    elif action == "update_access_level_for_user_group_by_id_v2":
+        return client.update_access_level_for_user_group_by_id_v2(**kwargs)
+    elif action == "add_access_levels_for_user_group_by_id_v2":
+        return client.add_access_levels_for_user_group_by_id_v2(**kwargs)
+    elif action == "remove_access_level_for_user_group_by_id_v2":
+        return client.remove_access_level_for_user_group_by_id_v2(**kwargs)
+    elif action == "get_members_from_auser_group_by_id_v2":
+        return client.get_members_from_auser_group_by_id_v2(**kwargs)
+    elif action == "add_multiple_members_for_user_group_by_id_v2":
+        return client.add_multiple_members_for_user_group_by_id_v2(**kwargs)
+    elif action == "remove_multiple_members_for_user_group_by_id_v2":
+        return client.remove_multiple_members_for_user_group_by_id_v2(**kwargs)
+    elif action == "add_amember_for_user_group_by_id_v2":
+        return client.add_amember_for_user_group_by_id_v2(**kwargs)
+    elif action == "remove_amember_for_user_group_by_id_v2":
+        return client.remove_amember_for_user_group_by_id_v2(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_access_management_4(action, kwargs, client):
+    # get_all_user_details_v2 .. user_activity (9 actions)
+    if action == "get_all_user_details_v2":
+        return client.get_all_user_details_v2(**kwargs)
+    elif action == "create_user_v2":
+        return client.create_user_v2(**kwargs)
+    elif action == "get_user_v2":
+        return client.get_user_v2(**kwargs)
+    elif action == "update_user_v2":
+        return client.update_user_v2(**kwargs)
+    elif action == "get_user_access_levels_v2":
+        return client.get_user_access_levels_v2(**kwargs)
+    elif action == "add_user_access_level_v2":
+        return client.add_user_access_level_v2(**kwargs)
+    elif action == "remove_user_access_level_v2":
+        return client.remove_user_access_level_v2(**kwargs)
+    elif action == "set_user_default_organization_v2":
+        return client.set_user_default_organization_v2(**kwargs)
+    elif action == "user_activity":
+        return client.user_activity(**kwargs)
+    return _UNHANDLED
+
+
+_ACCESS_MANAGEMENT_DISPATCHERS = (
+    _dispatch_access_management_1,
+    _dispatch_access_management_2,
+    _dispatch_access_management_3,
+    _dispatch_access_management_4,
+)
+
 
 def register_access_management_tools(mcp: FastMCP):
     @mcp.tool(tags={"access_management"})
@@ -31,82 +133,14 @@ def register_access_management_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "organization_tree_structure_using_get":
-            return client.organization_tree_structure_using_get(**kwargs)
-        elif action == "create_organization_using_post":
-            return client.create_organization_using_post(**kwargs)
-        elif action == "update_organization_using_put":
-            return client.update_organization_using_put(**kwargs)
-        elif action == "delete_organization_post":
-            return client.delete_organization_post(**kwargs)
-        elif action == "login_history":
-            return client.login_history(**kwargs)
-        elif action == "get_oauth_token":
-            return client.get_oauth_token(**kwargs)
-        elif action == "retrieve_user_groups_using_get":
-            return client.retrieve_user_groups_using_get(**kwargs)
-        elif action == "create_user_group_using_post":
-            return client.create_user_group_using_post(**kwargs)
-        elif action == "update_user_group_using_put":
-            return client.update_user_group_using_put(**kwargs)
-        elif action == "delete_user_group_using_delete":
-            return client.delete_user_group_using_delete(**kwargs)
-        elif action == "retrieve_members_using_get":
-            return client.retrieve_members_using_get(**kwargs)
-        elif action == "add_members_using_post":
-            return client.add_members_using_post(**kwargs)
-        elif action == "remove_members_using_delete":
-            return client.remove_members_using_delete(**kwargs)
-        elif action == "get_all_user_group_with_filters_v2":
-            return client.get_all_user_group_with_filters_v2(**kwargs)
-        elif action == "create_user_group_v2":
-            return client.create_user_group_v2(**kwargs)
-        elif action == "get_user_group_by_id_v2":
-            return client.get_user_group_by_id_v2(**kwargs)
-        elif action == "update_user_group_by_id_v2":
-            return client.update_user_group_by_id_v2(**kwargs)
-        elif action == "delete_user_group_by_id_v2":
-            return client.delete_user_group_by_id_v2(**kwargs)
-        elif action == "get_access_levels_for_user_group_by_id_v2":
-            return client.get_access_levels_for_user_group_by_id_v2(**kwargs)
-        elif action == "update_access_level_for_user_group_by_id_v2":
-            return client.update_access_level_for_user_group_by_id_v2(**kwargs)
-        elif action == "add_access_levels_for_user_group_by_id_v2":
-            return client.add_access_levels_for_user_group_by_id_v2(**kwargs)
-        elif action == "remove_access_level_for_user_group_by_id_v2":
-            return client.remove_access_level_for_user_group_by_id_v2(**kwargs)
-        elif action == "get_members_from_auser_group_by_id_v2":
-            return client.get_members_from_auser_group_by_id_v2(**kwargs)
-        elif action == "add_multiple_members_for_user_group_by_id_v2":
-            return client.add_multiple_members_for_user_group_by_id_v2(**kwargs)
-        elif action == "remove_multiple_members_for_user_group_by_id_v2":
-            return client.remove_multiple_members_for_user_group_by_id_v2(**kwargs)
-        elif action == "add_amember_for_user_group_by_id_v2":
-            return client.add_amember_for_user_group_by_id_v2(**kwargs)
-        elif action == "remove_amember_for_user_group_by_id_v2":
-            return client.remove_amember_for_user_group_by_id_v2(**kwargs)
-        elif action == "get_all_user_details_v2":
-            return client.get_all_user_details_v2(**kwargs)
-        elif action == "create_user_v2":
-            return client.create_user_v2(**kwargs)
-        elif action == "get_user_v2":
-            return client.get_user_v2(**kwargs)
-        elif action == "update_user_v2":
-            return client.update_user_v2(**kwargs)
-        elif action == "get_user_access_levels_v2":
-            return client.get_user_access_levels_v2(**kwargs)
-        elif action == "add_user_access_level_v2":
-            return client.add_user_access_level_v2(**kwargs)
-        elif action == "remove_user_access_level_v2":
-            return client.remove_user_access_level_v2(**kwargs)
-        elif action == "set_user_default_organization_v2":
-            return client.set_user_default_organization_v2(**kwargs)
-        elif action == "user_activity":
-            return client.user_activity(**kwargs)
+        for _dispatch in _ACCESS_MANAGEMENT_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

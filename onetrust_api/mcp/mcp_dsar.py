@@ -8,6 +8,120 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_dsar_1(action, kwargs, client):
+    # get_all_group_and_attachment_details_using_get .. search_for_request_using_post (9 actions)
+    if action == "get_all_group_and_attachment_details_using_get":
+        return client.get_all_group_and_attachment_details_using_get(**kwargs)
+    elif action == "get_all_group_by_request_using_get":
+        return client.get_all_group_by_request_using_get(**kwargs)
+    elif action == "data_discovery_updates_using_post":
+        return client.data_discovery_updates_using_post(**kwargs)
+    elif action == "create_request_queue_from_message_using_post":
+        return client.create_request_queue_from_message_using_post(**kwargs)
+    elif action == "bulk_delete_using_put":
+        return client.bulk_delete_using_put(**kwargs)
+    elif action == "get_deletion_certificate_using_get":
+        return client.get_deletion_certificate_using_get(**kwargs)
+    elif action == "get_request_history_by_id_using_get":
+        return client.get_request_history_by_id_using_get(**kwargs)
+    elif action == "share_results_summary_using_post":
+        return client.share_results_summary_using_post(**kwargs)
+    elif action == "search_for_request_using_post":
+        return client.search_for_request_using_post(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_dsar_2(action, kwargs, client):
+    # get_request_creation_logs_using_get .. get_request_history (9 actions)
+    if action == "get_request_creation_logs_using_get":
+        return client.get_request_creation_logs_using_get(**kwargs)
+    elif action == "get_all_request_queues_v2_using_get":
+        return client.get_all_request_queues_v2_using_get(**kwargs)
+    elif action == "add_comments_using_put":
+        return client.add_comments_using_put(**kwargs)
+    elif action == "update_custom_fields_using_put":
+        return client.update_custom_fields_using_put(**kwargs)
+    elif action == "get_request_by_id_using_get":
+        return client.get_request_by_id_using_get(**kwargs)
+    elif action == "link_requests_using_put":
+        return client.link_requests_using_put(**kwargs)
+    elif action == "move_status_by_request_ref_id_using_put":
+        return client.move_status_by_request_ref_id_using_put(**kwargs)
+    elif action == "pause_or_resume_deadline_using_put":
+        return client.pause_or_resume_deadline_using_put(**kwargs)
+    elif action == "get_request_history":
+        return client.get_request_history(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_dsar_3(action, kwargs, client):
+    # get_all_sub_task_by_ref_id_using_get .. get_all_v2_resolutions_using_get (9 actions)
+    if action == "get_all_sub_task_by_ref_id_using_get":
+        return client.get_all_sub_task_by_ref_id_using_get(**kwargs)
+    elif action == "create_sub_task_using_post":
+        return client.create_sub_task_using_post(**kwargs)
+    elif action == "create_sub_task_from_template_using_post":
+        return client.create_sub_task_from_template_using_post(**kwargs)
+    elif action == "get_all_v2_verification_methods_using_get":
+        return client.get_all_v2_verification_methods_using_get(**kwargs)
+    elif action == "update_v2_verification_method_using_put":
+        return client.update_v2_verification_method_using_put(**kwargs)
+    elif action == "create_v2_verification_method_using_post":
+        return client.create_v2_verification_method_using_post(**kwargs)
+    elif action == "get_all_v2_verification_methods_by_id_using_get":
+        return client.get_all_v2_verification_methods_by_id_using_get(**kwargs)
+    elif action == "create_request_queue_v2_using_post":
+        return client.create_request_queue_v2_using_post(**kwargs)
+    elif action == "get_all_v2_resolutions_using_get":
+        return client.get_all_v2_resolutions_using_get(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_dsar_4(action, kwargs, client):
+    # add_new_resolution_using_post .. reprocess_subtask_using_put (9 actions)
+    if action == "add_new_resolution_using_post":
+        return client.add_new_resolution_using_post(**kwargs)
+    elif action == "update_resolution_using_put":
+        return client.update_resolution_using_put(**kwargs)
+    elif action == "delete_resolution_using_delete":
+        return client.delete_resolution_using_delete(**kwargs)
+    elif action == "subtasks_using_get":
+        return client.subtasks_using_get(**kwargs)
+    elif action == "get_subtask_by_idusing_get":
+        return client.get_subtask_by_idusing_get(**kwargs)
+    elif action == "update_sub_task_using_put":
+        return client.update_sub_task_using_put(**kwargs)
+    elif action == "add_data_discovery_using_put":
+        return client.add_data_discovery_using_put(**kwargs)
+    elif action == "complete_sub_task_using_put":
+        return client.complete_sub_task_using_put(**kwargs)
+    elif action == "reprocess_subtask_using_put":
+        return client.reprocess_subtask_using_put(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_dsar_5(action, kwargs, client):
+    # update_subtask_status_using_put .. get_all_subtasks_v3_using_post (3 actions)
+    if action == "update_subtask_status_using_put":
+        return client.update_subtask_status_using_put(**kwargs)
+    elif action == "unstructured_data_discovery_updates_using_post":
+        return client.unstructured_data_discovery_updates_using_post(**kwargs)
+    elif action == "get_all_subtasks_v3_using_post":
+        return client.get_all_subtasks_v3_using_post(**kwargs)
+    return _UNHANDLED
+
+
+_DSAR_DISPATCHERS = (
+    _dispatch_dsar_1,
+    _dispatch_dsar_2,
+    _dispatch_dsar_3,
+    _dispatch_dsar_4,
+    _dispatch_dsar_5,
+)
+
 
 def register_dsar_tools(mcp: FastMCP):
     @mcp.tool(tags={"dsar"})
@@ -31,88 +145,14 @@ def register_dsar_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "get_all_group_and_attachment_details_using_get":
-            return client.get_all_group_and_attachment_details_using_get(**kwargs)
-        elif action == "get_all_group_by_request_using_get":
-            return client.get_all_group_by_request_using_get(**kwargs)
-        elif action == "data_discovery_updates_using_post":
-            return client.data_discovery_updates_using_post(**kwargs)
-        elif action == "create_request_queue_from_message_using_post":
-            return client.create_request_queue_from_message_using_post(**kwargs)
-        elif action == "bulk_delete_using_put":
-            return client.bulk_delete_using_put(**kwargs)
-        elif action == "get_deletion_certificate_using_get":
-            return client.get_deletion_certificate_using_get(**kwargs)
-        elif action == "get_request_history_by_id_using_get":
-            return client.get_request_history_by_id_using_get(**kwargs)
-        elif action == "share_results_summary_using_post":
-            return client.share_results_summary_using_post(**kwargs)
-        elif action == "search_for_request_using_post":
-            return client.search_for_request_using_post(**kwargs)
-        elif action == "get_request_creation_logs_using_get":
-            return client.get_request_creation_logs_using_get(**kwargs)
-        elif action == "get_all_request_queues_v2_using_get":
-            return client.get_all_request_queues_v2_using_get(**kwargs)
-        elif action == "add_comments_using_put":
-            return client.add_comments_using_put(**kwargs)
-        elif action == "update_custom_fields_using_put":
-            return client.update_custom_fields_using_put(**kwargs)
-        elif action == "get_request_by_id_using_get":
-            return client.get_request_by_id_using_get(**kwargs)
-        elif action == "link_requests_using_put":
-            return client.link_requests_using_put(**kwargs)
-        elif action == "move_status_by_request_ref_id_using_put":
-            return client.move_status_by_request_ref_id_using_put(**kwargs)
-        elif action == "pause_or_resume_deadline_using_put":
-            return client.pause_or_resume_deadline_using_put(**kwargs)
-        elif action == "get_request_history":
-            return client.get_request_history(**kwargs)
-        elif action == "get_all_sub_task_by_ref_id_using_get":
-            return client.get_all_sub_task_by_ref_id_using_get(**kwargs)
-        elif action == "create_sub_task_using_post":
-            return client.create_sub_task_using_post(**kwargs)
-        elif action == "create_sub_task_from_template_using_post":
-            return client.create_sub_task_from_template_using_post(**kwargs)
-        elif action == "get_all_v2_verification_methods_using_get":
-            return client.get_all_v2_verification_methods_using_get(**kwargs)
-        elif action == "update_v2_verification_method_using_put":
-            return client.update_v2_verification_method_using_put(**kwargs)
-        elif action == "create_v2_verification_method_using_post":
-            return client.create_v2_verification_method_using_post(**kwargs)
-        elif action == "get_all_v2_verification_methods_by_id_using_get":
-            return client.get_all_v2_verification_methods_by_id_using_get(**kwargs)
-        elif action == "create_request_queue_v2_using_post":
-            return client.create_request_queue_v2_using_post(**kwargs)
-        elif action == "get_all_v2_resolutions_using_get":
-            return client.get_all_v2_resolutions_using_get(**kwargs)
-        elif action == "add_new_resolution_using_post":
-            return client.add_new_resolution_using_post(**kwargs)
-        elif action == "update_resolution_using_put":
-            return client.update_resolution_using_put(**kwargs)
-        elif action == "delete_resolution_using_delete":
-            return client.delete_resolution_using_delete(**kwargs)
-        elif action == "subtasks_using_get":
-            return client.subtasks_using_get(**kwargs)
-        elif action == "get_subtask_by_idusing_get":
-            return client.get_subtask_by_idusing_get(**kwargs)
-        elif action == "update_sub_task_using_put":
-            return client.update_sub_task_using_put(**kwargs)
-        elif action == "add_data_discovery_using_put":
-            return client.add_data_discovery_using_put(**kwargs)
-        elif action == "complete_sub_task_using_put":
-            return client.complete_sub_task_using_put(**kwargs)
-        elif action == "reprocess_subtask_using_put":
-            return client.reprocess_subtask_using_put(**kwargs)
-        elif action == "update_subtask_status_using_put":
-            return client.update_subtask_status_using_put(**kwargs)
-        elif action == "unstructured_data_discovery_updates_using_post":
-            return client.unstructured_data_discovery_updates_using_post(**kwargs)
-        elif action == "get_all_subtasks_v3_using_post":
-            return client.get_all_subtasks_v3_using_post(**kwargs)
+        for _dispatch in _DSAR_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

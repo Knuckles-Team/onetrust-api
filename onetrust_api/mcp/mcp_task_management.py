@@ -8,6 +8,22 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_task_management_1(action, kwargs, client):
+    # create_task_using_post .. update_task_using_put (3 actions)
+    if action == "create_task_using_post":
+        return client.create_task_using_post(**kwargs)
+    elif action == "get_task_by_id_and_task_type_name_key_using_get":
+        return client.get_task_by_id_and_task_type_name_key_using_get(**kwargs)
+    elif action == "update_task_using_put":
+        return client.update_task_using_put(**kwargs)
+    return _UNHANDLED
+
+
+_TASK_MANAGEMENT_DISPATCHERS = (_dispatch_task_management_1,)
+
 
 def register_task_management_tools(mcp: FastMCP):
     @mcp.tool(tags={"task_management"})
@@ -31,16 +47,14 @@ def register_task_management_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "create_task_using_post":
-            return client.create_task_using_post(**kwargs)
-        elif action == "get_task_by_id_and_task_type_name_key_using_get":
-            return client.get_task_by_id_and_task_type_name_key_using_get(**kwargs)
-        elif action == "update_task_using_put":
-            return client.update_task_using_put(**kwargs)
+        for _dispatch in _TASK_MANAGEMENT_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

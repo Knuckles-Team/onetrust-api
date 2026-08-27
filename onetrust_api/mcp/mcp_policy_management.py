@@ -8,6 +8,28 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_policy_management_1(action, kwargs, client):
+    # create_policy .. create_policy_versions (6 actions)
+    if action == "create_policy":
+        return client.create_policy(**kwargs)
+    elif action == "get_latest_policies":
+        return client.get_latest_policies(**kwargs)
+    elif action == "get_policy":
+        return client.get_policy(**kwargs)
+    elif action == "get_published_policy_version":
+        return client.get_published_policy_version(**kwargs)
+    elif action == "add_document_to_policy":
+        return client.add_document_to_policy(**kwargs)
+    elif action == "create_policy_versions":
+        return client.create_policy_versions(**kwargs)
+    return _UNHANDLED
+
+
+_POLICY_MANAGEMENT_DISPATCHERS = (_dispatch_policy_management_1,)
+
 
 def register_policy_management_tools(mcp: FastMCP):
     @mcp.tool(tags={"policy_management"})
@@ -31,22 +53,14 @@ def register_policy_management_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "create_policy":
-            return client.create_policy(**kwargs)
-        elif action == "get_latest_policies":
-            return client.get_latest_policies(**kwargs)
-        elif action == "get_policy":
-            return client.get_policy(**kwargs)
-        elif action == "get_published_policy_version":
-            return client.get_published_policy_version(**kwargs)
-        elif action == "add_document_to_policy":
-            return client.add_document_to_policy(**kwargs)
-        elif action == "create_policy_versions":
-            return client.create_policy_versions(**kwargs)
+        for _dispatch in _POLICY_MANAGEMENT_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

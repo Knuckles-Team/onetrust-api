@@ -8,6 +8,24 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_integrations_1(action, kwargs, client):
+    # update_v2_using_put .. import_workflow_using_post_1 (4 actions)
+    if action == "update_v2_using_put":
+        return client.update_v2_using_put_x(**kwargs)
+    elif action == "create_v2_using_post":
+        return client.create_v2_using_post_x(**kwargs)
+    elif action == "export_workflow_using_get_1":
+        return client.export_workflow_using_get_1(**kwargs)
+    elif action == "import_workflow_using_post_1":
+        return client.import_workflow_using_post_1(**kwargs)
+    return _UNHANDLED
+
+
+_INTEGRATIONS_DISPATCHERS = (_dispatch_integrations_1,)
+
 
 def register_integrations_tools(mcp: FastMCP):
     @mcp.tool(tags={"integrations"})
@@ -31,18 +49,14 @@ def register_integrations_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "update_v2_using_put":
-            return client.update_v2_using_put_x(**kwargs)
-        elif action == "create_v2_using_post":
-            return client.create_v2_using_post_x(**kwargs)
-        elif action == "export_workflow_using_get_1":
-            return client.export_workflow_using_get_1(**kwargs)
-        elif action == "import_workflow_using_post_1":
-            return client.import_workflow_using_post_1(**kwargs)
+        for _dispatch in _INTEGRATIONS_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

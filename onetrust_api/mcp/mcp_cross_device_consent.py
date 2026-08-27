@@ -8,6 +8,18 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_cross_device_consent_1(action, kwargs, client):
+    # get_preferences_using_get .. get_preferences_using_get (1 actions)
+    if action == "get_preferences_using_get":
+        return client.get_preferences_using_get(**kwargs)
+    return _UNHANDLED
+
+
+_CROSS_DEVICE_CONSENT_DISPATCHERS = (_dispatch_cross_device_consent_1,)
+
 
 def register_cross_device_consent_tools(mcp: FastMCP):
     @mcp.tool(tags={"cross_device_consent"})
@@ -31,12 +43,14 @@ def register_cross_device_consent_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "get_preferences_using_get":
-            return client.get_preferences_using_get(**kwargs)
+        for _dispatch in _CROSS_DEVICE_CONSENT_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

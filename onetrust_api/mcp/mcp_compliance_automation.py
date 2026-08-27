@@ -8,6 +8,22 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_compliance_automation_1(action, kwargs, client):
+    # find_all_initiatives_by_filter_using_post .. update_initiative_using_put (3 actions)
+    if action == "find_all_initiatives_by_filter_using_post":
+        return client.find_all_initiatives_by_filter_using_post(**kwargs)
+    elif action == "get_initiative_using_get":
+        return client.get_initiative_using_get(**kwargs)
+    elif action == "update_initiative_using_put":
+        return client.update_initiative_using_put(**kwargs)
+    return _UNHANDLED
+
+
+_COMPLIANCE_AUTOMATION_DISPATCHERS = (_dispatch_compliance_automation_1,)
+
 
 def register_compliance_automation_tools(mcp: FastMCP):
     @mcp.tool(tags={"compliance_automation"})
@@ -31,16 +47,14 @@ def register_compliance_automation_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "find_all_initiatives_by_filter_using_post":
-            return client.find_all_initiatives_by_filter_using_post(**kwargs)
-        elif action == "get_initiative_using_get":
-            return client.get_initiative_using_get(**kwargs)
-        elif action == "update_initiative_using_put":
-            return client.update_initiative_using_put(**kwargs)
+        for _dispatch in _COMPLIANCE_AUTOMATION_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

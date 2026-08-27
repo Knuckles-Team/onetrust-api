@@ -8,6 +8,87 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_ai_governance_1(action, kwargs, client):
+    # assign_stage_by_name .. get_entity_type_information_using_get_1 (9 actions)
+    if action == "assign_stage_by_name":
+        return client.assign_stage_by_name(**kwargs)
+    elif action == "add_entity_using_entity_type_id_or_entity_type_name_using_post":
+        return client.add_entity_using_entity_type_id_or_entity_type_name_using_post(
+            **kwargs
+        )
+    elif action == "find_all_by_type_id_and_criteria_using_post":
+        return client.find_all_by_type_id_and_criteria_using_post(**kwargs)
+    elif (
+        action
+        == "get_entity_information_using_entity_type_id_or_entity_type_name_using_get"
+    ):
+        return client.get_entity_information_using_entity_type_id_or_entity_type_name_using_get(
+            **kwargs
+        )
+    elif action == "delete_using_entity_type_id_or_entity_type_name_using_delete":
+        return client.delete_using_entity_type_id_or_entity_type_name_using_delete(
+            **kwargs
+        )
+    elif action == "update_using_entity_type_id_or_entity_type_name_using_patch":
+        return client.update_using_entity_type_id_or_entity_type_name_using_patch(
+            **kwargs
+        )
+    elif action == "find_entity_basic_details_by_type_and_criteria_using_post":
+        return client.find_entity_basic_details_by_type_and_criteria_using_post(
+            **kwargs
+        )
+    elif action == "find_all_by_type_and_criteria_using_post_1":
+        return client.find_all_by_type_and_criteria_using_post_1(**kwargs)
+    elif action == "get_entity_type_information_using_get_1":
+        return client.get_entity_type_information_using_get_1(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_ai_governance_2(action, kwargs, client):
+    # get_related_entities_for_an_entity_using_post .. create_task_using_post_1 (9 actions)
+    if action == "get_related_entities_for_an_entity_using_post":
+        return client.get_related_entities_for_an_entity_using_post(**kwargs)
+    elif action == "create_link_record_between_entities_using_link_type_id_using_post":
+        return client.create_link_record_between_entities_using_link_type_id_using_post(
+            **kwargs
+        )
+    elif action == "get_link_record_information_using_link_type_id_using_get":
+        return client.get_link_record_information_using_link_type_id_using_get(**kwargs)
+    elif action == "delete_link_record_by_id_and_type_using_link_type_id_using_delete":
+        return client.delete_link_record_by_id_and_type_using_link_type_id_using_delete(
+            **kwargs
+        )
+    elif action == "add_options_using_post":
+        return client.add_options_using_post(**kwargs)
+    elif action == "add_attribute_using_post":
+        return client.add_attribute_using_post(**kwargs)
+    elif action == "disable_attribute_using_put":
+        return client.disable_attribute_using_put(**kwargs)
+    elif action == "enable_attribute_using_put":
+        return client.enable_attribute_using_put(**kwargs)
+    elif action == "create_task_using_post_1":
+        return client.create_task_using_post_1(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_ai_governance_3(action, kwargs, client):
+    # find_task_using_get_1 .. update_task_using_put_1 (2 actions)
+    if action == "find_task_using_get_1":
+        return client.find_task_using_get_1(**kwargs)
+    elif action == "update_task_using_put_1":
+        return client.update_task_using_put_1(**kwargs)
+    return _UNHANDLED
+
+
+_AI_GOVERNANCE_DISPATCHERS = (
+    _dispatch_ai_governance_1,
+    _dispatch_ai_governance_2,
+    _dispatch_ai_governance_3,
+)
+
 
 def register_ai_governance_tools(mcp: FastMCP):
     @mcp.tool(tags={"ai_governance"})
@@ -31,77 +112,14 @@ def register_ai_governance_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "assign_stage_by_name":
-            return client.assign_stage_by_name(**kwargs)
-        elif action == "add_entity_using_entity_type_id_or_entity_type_name_using_post":
-            return (
-                client.add_entity_using_entity_type_id_or_entity_type_name_using_post(
-                    **kwargs
-                )
-            )
-        elif action == "find_all_by_type_id_and_criteria_using_post":
-            return client.find_all_by_type_id_and_criteria_using_post(**kwargs)
-        elif (
-            action
-            == "get_entity_information_using_entity_type_id_or_entity_type_name_using_get"
-        ):
-            return client.get_entity_information_using_entity_type_id_or_entity_type_name_using_get(
-                **kwargs
-            )
-        elif action == "delete_using_entity_type_id_or_entity_type_name_using_delete":
-            return client.delete_using_entity_type_id_or_entity_type_name_using_delete(
-                **kwargs
-            )
-        elif action == "update_using_entity_type_id_or_entity_type_name_using_patch":
-            return client.update_using_entity_type_id_or_entity_type_name_using_patch(
-                **kwargs
-            )
-        elif action == "find_entity_basic_details_by_type_and_criteria_using_post":
-            return client.find_entity_basic_details_by_type_and_criteria_using_post(
-                **kwargs
-            )
-        elif action == "find_all_by_type_and_criteria_using_post_1":
-            return client.find_all_by_type_and_criteria_using_post_1(**kwargs)
-        elif action == "get_entity_type_information_using_get_1":
-            return client.get_entity_type_information_using_get_1(**kwargs)
-        elif action == "get_related_entities_for_an_entity_using_post":
-            return client.get_related_entities_for_an_entity_using_post(**kwargs)
-        elif (
-            action
-            == "create_link_record_between_entities_using_link_type_id_using_post"
-        ):
-            return client.create_link_record_between_entities_using_link_type_id_using_post(
-                **kwargs
-            )
-        elif action == "get_link_record_information_using_link_type_id_using_get":
-            return client.get_link_record_information_using_link_type_id_using_get(
-                **kwargs
-            )
-        elif (
-            action
-            == "delete_link_record_by_id_and_type_using_link_type_id_using_delete"
-        ):
-            return client.delete_link_record_by_id_and_type_using_link_type_id_using_delete(
-                **kwargs
-            )
-        elif action == "add_options_using_post":
-            return client.add_options_using_post(**kwargs)
-        elif action == "add_attribute_using_post":
-            return client.add_attribute_using_post(**kwargs)
-        elif action == "disable_attribute_using_put":
-            return client.disable_attribute_using_put(**kwargs)
-        elif action == "enable_attribute_using_put":
-            return client.enable_attribute_using_put(**kwargs)
-        elif action == "create_task_using_post_1":
-            return client.create_task_using_post_1(**kwargs)
-        elif action == "find_task_using_get_1":
-            return client.find_task_using_get_1(**kwargs)
-        elif action == "update_task_using_put_1":
-            return client.update_task_using_put_1(**kwargs)
+        for _dispatch in _AI_GOVERNANCE_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

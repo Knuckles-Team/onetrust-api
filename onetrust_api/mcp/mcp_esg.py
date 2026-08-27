@@ -8,6 +8,26 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_esg_1(action, kwargs, client):
+    # get_all_emission_factors_basic_entity_details .. fetch_metrics_details (5 actions)
+    if action == "get_all_emission_factors_basic_entity_details":
+        return client.get_all_emission_factors_basic_entity_details(**kwargs)
+    elif action == "add_emission_factor":
+        return client.add_emission_factor(**kwargs)
+    elif action == "add_emission_transaction":
+        return client.add_emission_transaction(**kwargs)
+    elif action == "find_all_by_type_and_criteria":
+        return client.find_all_by_type_and_criteria(**kwargs)
+    elif action == "fetch_metrics_details":
+        return client.fetch_metrics_details(**kwargs)
+    return _UNHANDLED
+
+
+_ESG_DISPATCHERS = (_dispatch_esg_1,)
+
 
 def register_esg_tools(mcp: FastMCP):
     @mcp.tool(tags={"esg"})
@@ -31,20 +51,14 @@ def register_esg_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "get_all_emission_factors_basic_entity_details":
-            return client.get_all_emission_factors_basic_entity_details(**kwargs)
-        elif action == "add_emission_factor":
-            return client.add_emission_factor(**kwargs)
-        elif action == "add_emission_transaction":
-            return client.add_emission_transaction(**kwargs)
-        elif action == "find_all_by_type_and_criteria":
-            return client.find_all_by_type_and_criteria(**kwargs)
-        elif action == "fetch_metrics_details":
-            return client.fetch_metrics_details(**kwargs)
+        for _dispatch in _ESG_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

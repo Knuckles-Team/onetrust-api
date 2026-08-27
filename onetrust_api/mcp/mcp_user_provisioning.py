@@ -8,6 +8,82 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_user_provisioning_1(action, kwargs, client):
+    # list_groups_using_get .. delete_user_using_delete (9 actions)
+    if action == "list_groups_using_get":
+        return client.list_groups_using_get(**kwargs)
+    elif action == "get_group_resource_using_get":
+        return client.get_group_resource_using_get(**kwargs)
+    elif action == "update_group_members_using_put":
+        return client.update_group_members_using_put(**kwargs)
+    elif action == "update_group_members_using_patch":
+        return client.update_group_members_using_patch(**kwargs)
+    elif action == "get_all_users_using_get":
+        return client.get_all_users_using_get(**kwargs)
+    elif action == "create_user_using_post":
+        return client.create_user_using_post(**kwargs)
+    elif action == "get_user_using_get":
+        return client.get_user_using_get(**kwargs)
+    elif action == "update_user_using_put":
+        return client.update_user_using_put(**kwargs)
+    elif action == "delete_user_using_delete":
+        return client.delete_user_using_delete(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_user_provisioning_2(action, kwargs, client):
+    # patch_user_using_patch .. get_resource_types_by_name_using_get (9 actions)
+    if action == "patch_user_using_patch":
+        return client.patch_user_using_patch(**kwargs)
+    elif action == "get_groups":
+        return client.get_groups(**kwargs)
+    elif action == "create_group":
+        return client.create_group(**kwargs)
+    elif action == "get_group_by_id":
+        return client.get_group_by_id(**kwargs)
+    elif action == "update_group":
+        return client.update_group(**kwargs)
+    elif action == "delete_group":
+        return client.delete_group(**kwargs)
+    elif action == "modify_group":
+        return client.modify_group(**kwargs)
+    elif action == "get_resource_types_using_get":
+        return client.get_resource_types_using_get(**kwargs)
+    elif action == "get_resource_types_by_name_using_get":
+        return client.get_resource_types_by_name_using_get(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_user_provisioning_3(action, kwargs, client):
+    # get_schemas_using_get .. modify_user (8 actions)
+    if action == "get_schemas_using_get":
+        return client.get_schemas_using_get(**kwargs)
+    elif action == "get_schemas_by_name_using_get":
+        return client.get_schemas_by_name_using_get(**kwargs)
+    elif action == "get_service_provider_config_using_get":
+        return client.get_service_provider_config_using_get(**kwargs)
+    elif action == "get_users":
+        return client.get_users(**kwargs)
+    elif action == "create_user":
+        return client.create_user(**kwargs)
+    elif action == "get_user_by_id":
+        return client.get_user_by_id(**kwargs)
+    elif action == "update_user":
+        return client.update_user(**kwargs)
+    elif action == "modify_user":
+        return client.modify_user(**kwargs)
+    return _UNHANDLED
+
+
+_USER_PROVISIONING_DISPATCHERS = (
+    _dispatch_user_provisioning_1,
+    _dispatch_user_provisioning_2,
+    _dispatch_user_provisioning_3,
+)
+
 
 def register_user_provisioning_tools(mcp: FastMCP):
     @mcp.tool(tags={"user_provisioning"})
@@ -31,62 +107,14 @@ def register_user_provisioning_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "list_groups_using_get":
-            return client.list_groups_using_get(**kwargs)
-        elif action == "get_group_resource_using_get":
-            return client.get_group_resource_using_get(**kwargs)
-        elif action == "update_group_members_using_put":
-            return client.update_group_members_using_put(**kwargs)
-        elif action == "update_group_members_using_patch":
-            return client.update_group_members_using_patch(**kwargs)
-        elif action == "get_all_users_using_get":
-            return client.get_all_users_using_get(**kwargs)
-        elif action == "create_user_using_post":
-            return client.create_user_using_post(**kwargs)
-        elif action == "get_user_using_get":
-            return client.get_user_using_get(**kwargs)
-        elif action == "update_user_using_put":
-            return client.update_user_using_put(**kwargs)
-        elif action == "delete_user_using_delete":
-            return client.delete_user_using_delete(**kwargs)
-        elif action == "patch_user_using_patch":
-            return client.patch_user_using_patch(**kwargs)
-        elif action == "get_groups":
-            return client.get_groups(**kwargs)
-        elif action == "create_group":
-            return client.create_group(**kwargs)
-        elif action == "get_group_by_id":
-            return client.get_group_by_id(**kwargs)
-        elif action == "update_group":
-            return client.update_group(**kwargs)
-        elif action == "delete_group":
-            return client.delete_group(**kwargs)
-        elif action == "modify_group":
-            return client.modify_group(**kwargs)
-        elif action == "get_resource_types_using_get":
-            return client.get_resource_types_using_get(**kwargs)
-        elif action == "get_resource_types_by_name_using_get":
-            return client.get_resource_types_by_name_using_get(**kwargs)
-        elif action == "get_schemas_using_get":
-            return client.get_schemas_using_get(**kwargs)
-        elif action == "get_schemas_by_name_using_get":
-            return client.get_schemas_by_name_using_get(**kwargs)
-        elif action == "get_service_provider_config_using_get":
-            return client.get_service_provider_config_using_get(**kwargs)
-        elif action == "get_users":
-            return client.get_users(**kwargs)
-        elif action == "create_user":
-            return client.create_user(**kwargs)
-        elif action == "get_user_by_id":
-            return client.get_user_by_id(**kwargs)
-        elif action == "update_user":
-            return client.update_user(**kwargs)
-        elif action == "modify_user":
-            return client.modify_user(**kwargs)
+        for _dispatch in _USER_PROVISIONING_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

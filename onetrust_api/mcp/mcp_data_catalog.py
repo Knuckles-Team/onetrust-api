@@ -8,6 +8,78 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_data_catalog_1(action, kwargs, client):
+    # get_all_glossaries_names .. retrieve_terms_name (9 actions)
+    if action == "get_all_glossaries_names":
+        return client.get_all_glossaries_names(**kwargs)
+    elif action == "get_all_glossaries_by_names":
+        return client.get_all_glossaries_by_names(**kwargs)
+    elif action == "retrieve_all_tags_name":
+        return client.retrieve_all_tags_name(**kwargs)
+    elif action == "get_tag_details_with_associated_terms":
+        return client.get_tag_details_with_associated_terms(**kwargs)
+    elif action == "retrieve_all_terms":
+        return client.retrieve_all_terms(**kwargs)
+    elif action == "get_term_attribute_by_name":
+        return client.get_term_attribute_by_name(**kwargs)
+    elif action == "get_all_term_attribute_names":
+        return client.get_all_term_attribute_names(**kwargs)
+    elif action == "retrieve_terms_by_name":
+        return client.retrieve_terms_by_name(**kwargs)
+    elif action == "retrieve_terms_name":
+        return client.retrieve_terms_name(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_data_catalog_2(action, kwargs, client):
+    # create_tag_v2 .. create_data_asset_term_associations_v1 (9 actions)
+    if action == "create_tag_v2":
+        return client.create_tag_v2(**kwargs)
+    elif action == "create_term_using_post":
+        return client.create_term_using_post(**kwargs)
+    elif action == "create_or_upsert_data_asset_v1":
+        return client.create_or_upsert_data_asset_v1(**kwargs)
+    elif action == "get_data_asset_v1":
+        return client.get_data_asset_v1(**kwargs)
+    elif action == "delete_data_asset_v1":
+        return client.delete_data_asset_v1(**kwargs)
+    elif action == "update_data_asset_v1":
+        return client.update_data_asset_v1(**kwargs)
+    elif action == "create_data_asset_tag_associations_v1":
+        return client.create_data_asset_tag_associations_v1(**kwargs)
+    elif action == "delete_data_asset_tag_associations_v1":
+        return client.delete_data_asset_tag_associations_v1(**kwargs)
+    elif action == "create_data_asset_term_associations_v1":
+        return client.create_data_asset_term_associations_v1(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_data_catalog_3(action, kwargs, client):
+    # delete_data_asset_term_associations_v1 .. external_search_using_continuationtoken (6 actions)
+    if action == "delete_data_asset_term_associations_v1":
+        return client.delete_data_asset_term_associations_v1(**kwargs)
+    elif action == "get_data_asset_attribute_by_name":
+        return client.get_data_asset_attribute_by_name(**kwargs)
+    elif action == "get_all_data_asset_attribute_names":
+        return client.get_all_data_asset_attribute_names(**kwargs)
+    elif action == "external_search":
+        return client.external_search(**kwargs)
+    elif action == "get_v1_field_details":
+        return client.get_v1_field_details(**kwargs)
+    elif action == "external_search_using_continuationtoken":
+        return client.external_search_using_continuationtoken(**kwargs)
+    return _UNHANDLED
+
+
+_DATA_CATALOG_DISPATCHERS = (
+    _dispatch_data_catalog_1,
+    _dispatch_data_catalog_2,
+    _dispatch_data_catalog_3,
+)
+
 
 def register_data_catalog_tools(mcp: FastMCP):
     @mcp.tool(tags={"data_catalog"})
@@ -31,58 +103,14 @@ def register_data_catalog_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "get_all_glossaries_names":
-            return client.get_all_glossaries_names(**kwargs)
-        elif action == "get_all_glossaries_by_names":
-            return client.get_all_glossaries_by_names(**kwargs)
-        elif action == "retrieve_all_tags_name":
-            return client.retrieve_all_tags_name(**kwargs)
-        elif action == "get_tag_details_with_associated_terms":
-            return client.get_tag_details_with_associated_terms(**kwargs)
-        elif action == "retrieve_all_terms":
-            return client.retrieve_all_terms(**kwargs)
-        elif action == "get_term_attribute_by_name":
-            return client.get_term_attribute_by_name(**kwargs)
-        elif action == "get_all_term_attribute_names":
-            return client.get_all_term_attribute_names(**kwargs)
-        elif action == "retrieve_terms_by_name":
-            return client.retrieve_terms_by_name(**kwargs)
-        elif action == "retrieve_terms_name":
-            return client.retrieve_terms_name(**kwargs)
-        elif action == "create_tag_v2":
-            return client.create_tag_v2(**kwargs)
-        elif action == "create_term_using_post":
-            return client.create_term_using_post(**kwargs)
-        elif action == "create_or_upsert_data_asset_v1":
-            return client.create_or_upsert_data_asset_v1(**kwargs)
-        elif action == "get_data_asset_v1":
-            return client.get_data_asset_v1(**kwargs)
-        elif action == "delete_data_asset_v1":
-            return client.delete_data_asset_v1(**kwargs)
-        elif action == "update_data_asset_v1":
-            return client.update_data_asset_v1(**kwargs)
-        elif action == "create_data_asset_tag_associations_v1":
-            return client.create_data_asset_tag_associations_v1(**kwargs)
-        elif action == "delete_data_asset_tag_associations_v1":
-            return client.delete_data_asset_tag_associations_v1(**kwargs)
-        elif action == "create_data_asset_term_associations_v1":
-            return client.create_data_asset_term_associations_v1(**kwargs)
-        elif action == "delete_data_asset_term_associations_v1":
-            return client.delete_data_asset_term_associations_v1(**kwargs)
-        elif action == "get_data_asset_attribute_by_name":
-            return client.get_data_asset_attribute_by_name(**kwargs)
-        elif action == "get_all_data_asset_attribute_names":
-            return client.get_all_data_asset_attribute_names(**kwargs)
-        elif action == "external_search":
-            return client.external_search(**kwargs)
-        elif action == "get_v1_field_details":
-            return client.get_v1_field_details(**kwargs)
-        elif action == "external_search_using_continuationtoken":
-            return client.external_search_using_continuationtoken(**kwargs)
+        for _dispatch in _DATA_CATALOG_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

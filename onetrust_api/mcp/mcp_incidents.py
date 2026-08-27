@@ -8,6 +8,30 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_incidents_1(action, kwargs, client):
+    # assign_stage_by_name .. create_inventory_links (7 actions)
+    if action == "assign_stage_by_name":
+        return client.assign_stage_by_name_x(**kwargs)
+    elif action == "assign_stage_by_name_1":
+        return client.assign_stage_by_name_1(**kwargs)
+    elif action == "create_incident_using_post":
+        return client.create_incident_using_post(**kwargs)
+    elif action == "search_incidents_using_post":
+        return client.search_incidents_using_post(**kwargs)
+    elif action == "get_incident_detail_by_incident_id_using_get":
+        return client.get_incident_detail_by_incident_id_using_get(**kwargs)
+    elif action == "update_incident_using_put":
+        return client.update_incident_using_put(**kwargs)
+    elif action == "create_inventory_links":
+        return client.create_inventory_links(**kwargs)
+    return _UNHANDLED
+
+
+_INCIDENTS_DISPATCHERS = (_dispatch_incidents_1,)
+
 
 def register_incidents_tools(mcp: FastMCP):
     @mcp.tool(tags={"incidents"})
@@ -31,24 +55,14 @@ def register_incidents_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "assign_stage_by_name":
-            return client.assign_stage_by_name_x(**kwargs)
-        elif action == "assign_stage_by_name_1":
-            return client.assign_stage_by_name_1(**kwargs)
-        elif action == "create_incident_using_post":
-            return client.create_incident_using_post(**kwargs)
-        elif action == "search_incidents_using_post":
-            return client.search_incidents_using_post(**kwargs)
-        elif action == "get_incident_detail_by_incident_id_using_get":
-            return client.get_incident_detail_by_incident_id_using_get(**kwargs)
-        elif action == "update_incident_using_put":
-            return client.update_incident_using_put(**kwargs)
-        elif action == "create_inventory_links":
-            return client.create_inventory_links(**kwargs)
+        for _dispatch in _INCIDENTS_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

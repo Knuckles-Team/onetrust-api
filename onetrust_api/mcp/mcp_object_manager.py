@@ -8,6 +8,141 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_object_manager_1(action, kwargs, client):
+    # create_project_using_post .. find_models_by_list_criteria_using_post (9 actions)
+    if action == "create_project_using_post":
+        return client.create_project_using_post(**kwargs)
+    elif action == "find_project_basic_details_by_query_criteria_using_post":
+        return client.find_project_basic_details_by_query_criteria_using_post(**kwargs)
+    elif action == "find_projects_by_list_criteria_using_post":
+        return client.find_projects_by_list_criteria_using_post(**kwargs)
+    elif action == "get_project_using_get":
+        return client.get_project_using_get(**kwargs)
+    elif action == "update_project_using_put":
+        return client.update_project_using_put(**kwargs)
+    elif action == "delete_project_using_delete":
+        return client.delete_project_using_delete(**kwargs)
+    elif action == "create_model_using_post":
+        return client.create_model_using_post(**kwargs)
+    elif action == "find_model_basic_details_by_query_criteria_using_post":
+        return client.find_model_basic_details_by_query_criteria_using_post(**kwargs)
+    elif action == "find_models_by_list_criteria_using_post":
+        return client.find_models_by_list_criteria_using_post(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_object_manager_2(action, kwargs, client):
+    # get_model_using_get .. find_entity_basic_details_by_type_and_criteria_using_post (9 actions)
+    if action == "get_model_using_get":
+        return client.get_model_using_get(**kwargs)
+    elif action == "update_model_using_put":
+        return client.update_model_using_put(**kwargs)
+    elif action == "delete_model_using_delete":
+        return client.delete_model_using_delete(**kwargs)
+    elif action == "add_entity_using_entity_type_id_or_entity_type_name_using_post":
+        return client.add_entity_using_entity_type_id_or_entity_type_name_using_post_x(
+            **kwargs
+        )
+    elif action == "find_all_by_type_id_and_criteria_using_post":
+        return client.find_all_by_type_id_and_criteria_using_post_x(**kwargs)
+    elif (
+        action
+        == "get_entity_information_using_entity_type_id_or_entity_type_name_using_get"
+    ):
+        return client.get_entity_information_using_entity_type_id_or_entity_type_name_using_get_x(
+            **kwargs
+        )
+    elif action == "delete_using_entity_type_id_or_entity_type_name_using_delete":
+        return client.delete_using_entity_type_id_or_entity_type_name_using_delete_x(
+            **kwargs
+        )
+    elif action == "update_using_entity_type_id_or_entity_type_name_using_patch":
+        return client.update_using_entity_type_id_or_entity_type_name_using_patch_x(
+            **kwargs
+        )
+    elif action == "find_entity_basic_details_by_type_and_criteria_using_post":
+        return client.find_entity_basic_details_by_type_and_criteria_using_post_x(
+            **kwargs
+        )
+    return _UNHANDLED
+
+
+def _dispatch_object_manager_3(action, kwargs, client):
+    # create_custom_link_type_using_post .. update_custom_entity_type_using_patch (9 actions)
+    if action == "create_custom_link_type_using_post":
+        return client.create_custom_link_type_using_post(**kwargs)
+    elif action == "find_all_by_link_type_and_criteria_using_post":
+        return client.find_all_by_link_type_and_criteria_using_post(**kwargs)
+    elif action == "get_link_type_using_get":
+        return client.get_link_type_using_get(**kwargs)
+    elif action == "get_entity_type_information_using_get_1":
+        return client.get_entity_type_information_using_get_1_x(**kwargs)
+    elif action == "update_custom_entity_type_using_patch_1":
+        return client.update_custom_entity_type_using_patch_1(**kwargs)
+    elif action == "enabled_custom_entity_type_using_put_1":
+        return client.enabled_custom_entity_type_using_put_1(**kwargs)
+    elif action == "find_all_by_type_and_criteria_using_post":
+        return client.find_all_by_type_and_criteria_using_post(**kwargs)
+    elif action == "get_entity_type_information_using_get":
+        return client.get_entity_type_information_using_get(**kwargs)
+    elif action == "update_custom_entity_type_using_patch":
+        return client.update_custom_entity_type_using_patch(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_object_manager_4(action, kwargs, client):
+    # enabled_custom_entity_type_using_put .. create_task_using_post_1 (9 actions)
+    if action == "enabled_custom_entity_type_using_put":
+        return client.enabled_custom_entity_type_using_put(**kwargs)
+    elif action == "create_link_record_between_entities_using_link_type_id_using_post":
+        return (
+            client.create_link_record_between_entities_using_link_type_id_using_post_x(
+                **kwargs
+            )
+        )
+    elif action == "get_link_record_information_using_link_type_id_using_get":
+        return client.get_link_record_information_using_link_type_id_using_get_x(
+            **kwargs
+        )
+    elif action == "delete_link_record_by_id_and_type_using_link_type_id_using_delete":
+        return (
+            client.delete_link_record_by_id_and_type_using_link_type_id_using_delete_x(
+                **kwargs
+            )
+        )
+    elif action == "add_options_using_post":
+        return client.add_options_using_post_x(**kwargs)
+    elif action == "add_attribute_using_post":
+        return client.add_attribute_using_post_x(**kwargs)
+    elif action == "disable_attribute_using_put":
+        return client.disable_attribute_using_put_x(**kwargs)
+    elif action == "enable_attribute_using_put":
+        return client.enable_attribute_using_put_x(**kwargs)
+    elif action == "create_task_using_post_1":
+        return client.create_task_using_post_1_x(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_object_manager_5(action, kwargs, client):
+    # find_task_using_get_1 .. update_task_using_put_1 (2 actions)
+    if action == "find_task_using_get_1":
+        return client.find_task_using_get_1_x(**kwargs)
+    elif action == "update_task_using_put_1":
+        return client.update_task_using_put_1_x(**kwargs)
+    return _UNHANDLED
+
+
+_OBJECT_MANAGER_DISPATCHERS = (
+    _dispatch_object_manager_1,
+    _dispatch_object_manager_2,
+    _dispatch_object_manager_3,
+    _dispatch_object_manager_4,
+    _dispatch_object_manager_5,
+)
+
 
 def register_object_manager_tools(mcp: FastMCP):
     @mcp.tool(tags={"object_manager"})
@@ -31,119 +166,14 @@ def register_object_manager_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "create_project_using_post":
-            return client.create_project_using_post(**kwargs)
-        elif action == "find_project_basic_details_by_query_criteria_using_post":
-            return client.find_project_basic_details_by_query_criteria_using_post(
-                **kwargs
-            )
-        elif action == "find_projects_by_list_criteria_using_post":
-            return client.find_projects_by_list_criteria_using_post(**kwargs)
-        elif action == "get_project_using_get":
-            return client.get_project_using_get(**kwargs)
-        elif action == "update_project_using_put":
-            return client.update_project_using_put(**kwargs)
-        elif action == "delete_project_using_delete":
-            return client.delete_project_using_delete(**kwargs)
-        elif action == "create_model_using_post":
-            return client.create_model_using_post(**kwargs)
-        elif action == "find_model_basic_details_by_query_criteria_using_post":
-            return client.find_model_basic_details_by_query_criteria_using_post(
-                **kwargs
-            )
-        elif action == "find_models_by_list_criteria_using_post":
-            return client.find_models_by_list_criteria_using_post(**kwargs)
-        elif action == "get_model_using_get":
-            return client.get_model_using_get(**kwargs)
-        elif action == "update_model_using_put":
-            return client.update_model_using_put(**kwargs)
-        elif action == "delete_model_using_delete":
-            return client.delete_model_using_delete(**kwargs)
-        elif action == "add_entity_using_entity_type_id_or_entity_type_name_using_post":
-            return (
-                client.add_entity_using_entity_type_id_or_entity_type_name_using_post_x(
-                    **kwargs
-                )
-            )
-        elif action == "find_all_by_type_id_and_criteria_using_post":
-            return client.find_all_by_type_id_and_criteria_using_post_x(**kwargs)
-        elif (
-            action
-            == "get_entity_information_using_entity_type_id_or_entity_type_name_using_get"
-        ):
-            return client.get_entity_information_using_entity_type_id_or_entity_type_name_using_get_x(
-                **kwargs
-            )
-        elif action == "delete_using_entity_type_id_or_entity_type_name_using_delete":
-            return (
-                client.delete_using_entity_type_id_or_entity_type_name_using_delete_x(
-                    **kwargs
-                )
-            )
-        elif action == "update_using_entity_type_id_or_entity_type_name_using_patch":
-            return client.update_using_entity_type_id_or_entity_type_name_using_patch_x(
-                **kwargs
-            )
-        elif action == "find_entity_basic_details_by_type_and_criteria_using_post":
-            return client.find_entity_basic_details_by_type_and_criteria_using_post_x(
-                **kwargs
-            )
-        elif action == "create_custom_link_type_using_post":
-            return client.create_custom_link_type_using_post(**kwargs)
-        elif action == "find_all_by_link_type_and_criteria_using_post":
-            return client.find_all_by_link_type_and_criteria_using_post(**kwargs)
-        elif action == "get_link_type_using_get":
-            return client.get_link_type_using_get(**kwargs)
-        elif action == "get_entity_type_information_using_get_1":
-            return client.get_entity_type_information_using_get_1_x(**kwargs)
-        elif action == "update_custom_entity_type_using_patch_1":
-            return client.update_custom_entity_type_using_patch_1(**kwargs)
-        elif action == "enabled_custom_entity_type_using_put_1":
-            return client.enabled_custom_entity_type_using_put_1(**kwargs)
-        elif action == "find_all_by_type_and_criteria_using_post":
-            return client.find_all_by_type_and_criteria_using_post(**kwargs)
-        elif action == "get_entity_type_information_using_get":
-            return client.get_entity_type_information_using_get(**kwargs)
-        elif action == "update_custom_entity_type_using_patch":
-            return client.update_custom_entity_type_using_patch(**kwargs)
-        elif action == "enabled_custom_entity_type_using_put":
-            return client.enabled_custom_entity_type_using_put(**kwargs)
-        elif (
-            action
-            == "create_link_record_between_entities_using_link_type_id_using_post"
-        ):
-            return client.create_link_record_between_entities_using_link_type_id_using_post_x(
-                **kwargs
-            )
-        elif action == "get_link_record_information_using_link_type_id_using_get":
-            return client.get_link_record_information_using_link_type_id_using_get_x(
-                **kwargs
-            )
-        elif (
-            action
-            == "delete_link_record_by_id_and_type_using_link_type_id_using_delete"
-        ):
-            return client.delete_link_record_by_id_and_type_using_link_type_id_using_delete_x(
-                **kwargs
-            )
-        elif action == "add_options_using_post":
-            return client.add_options_using_post_x(**kwargs)
-        elif action == "add_attribute_using_post":
-            return client.add_attribute_using_post_x(**kwargs)
-        elif action == "disable_attribute_using_put":
-            return client.disable_attribute_using_put_x(**kwargs)
-        elif action == "enable_attribute_using_put":
-            return client.enable_attribute_using_put_x(**kwargs)
-        elif action == "create_task_using_post_1":
-            return client.create_task_using_post_1_x(**kwargs)
-        elif action == "find_task_using_get_1":
-            return client.find_task_using_get_1_x(**kwargs)
-        elif action == "update_task_using_put_1":
-            return client.update_task_using_put_1_x(**kwargs)
+        for _dispatch in _OBJECT_MANAGER_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

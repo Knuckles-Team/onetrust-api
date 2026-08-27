@@ -8,6 +8,54 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_tprm_1(action, kwargs, client):
+    # create_vendor_contract_using_post .. load_engagement_by_engagement_id_using_get (9 actions)
+    if action == "create_vendor_contract_using_post":
+        return client.create_vendor_contract_using_post(**kwargs)
+    elif action == "get_contract_schema_using_get":
+        return client.get_contract_schema_using_get(**kwargs)
+    elif action == "fetch_all_contract_types_using_get":
+        return client.fetch_all_contract_types_using_get(**kwargs)
+    elif action == "search_contract_by_vendor_and_criteria_using_post":
+        return client.search_contract_by_vendor_and_criteria_using_post(**kwargs)
+    elif action == "remove_vendor_contract_using_delete":
+        return client.remove_vendor_contract_using_delete(**kwargs)
+    elif action == "load_vendor_contract_by_contract_id_using_get":
+        return client.load_vendor_contract_by_contract_id_using_get(**kwargs)
+    elif action == "update_vendor_contract_using_put":
+        return client.update_vendor_contract_using_put(**kwargs)
+    elif action == "get_engagement_schema_using_get":
+        return client.get_engagement_schema_using_get(**kwargs)
+    elif action == "load_engagement_by_engagement_id_using_get":
+        return client.load_engagement_by_engagement_id_using_get(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_tprm_2(action, kwargs, client):
+    # update_engagement_using_put .. create_engagement_using_post (6 actions)
+    if action == "update_engagement_using_put":
+        return client.update_engagement_using_put(**kwargs)
+    elif action == "remove_engagement_using_delete":
+        return client.remove_engagement_using_delete(**kwargs)
+    elif action == "update_engagement_using_patch":
+        return client.update_engagement_using_patch(**kwargs)
+    elif action == "update_engagement_status":
+        return client.update_engagement_status(**kwargs)
+    elif action == "load_engagement_using_get":
+        return client.load_engagement_using_get(**kwargs)
+    elif action == "create_engagement_using_post":
+        return client.create_engagement_using_post(**kwargs)
+    return _UNHANDLED
+
+
+_TPRM_DISPATCHERS = (
+    _dispatch_tprm_1,
+    _dispatch_tprm_2,
+)
+
 
 def register_tprm_tools(mcp: FastMCP):
     @mcp.tool(tags={"tprm"})
@@ -31,40 +79,14 @@ def register_tprm_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "create_vendor_contract_using_post":
-            return client.create_vendor_contract_using_post(**kwargs)
-        elif action == "get_contract_schema_using_get":
-            return client.get_contract_schema_using_get(**kwargs)
-        elif action == "fetch_all_contract_types_using_get":
-            return client.fetch_all_contract_types_using_get(**kwargs)
-        elif action == "search_contract_by_vendor_and_criteria_using_post":
-            return client.search_contract_by_vendor_and_criteria_using_post(**kwargs)
-        elif action == "remove_vendor_contract_using_delete":
-            return client.remove_vendor_contract_using_delete(**kwargs)
-        elif action == "load_vendor_contract_by_contract_id_using_get":
-            return client.load_vendor_contract_by_contract_id_using_get(**kwargs)
-        elif action == "update_vendor_contract_using_put":
-            return client.update_vendor_contract_using_put(**kwargs)
-        elif action == "get_engagement_schema_using_get":
-            return client.get_engagement_schema_using_get(**kwargs)
-        elif action == "load_engagement_by_engagement_id_using_get":
-            return client.load_engagement_by_engagement_id_using_get(**kwargs)
-        elif action == "update_engagement_using_put":
-            return client.update_engagement_using_put(**kwargs)
-        elif action == "remove_engagement_using_delete":
-            return client.remove_engagement_using_delete(**kwargs)
-        elif action == "update_engagement_using_patch":
-            return client.update_engagement_using_patch(**kwargs)
-        elif action == "update_engagement_status":
-            return client.update_engagement_status(**kwargs)
-        elif action == "load_engagement_using_get":
-            return client.load_engagement_using_get(**kwargs)
-        elif action == "create_engagement_using_post":
-            return client.create_engagement_using_post(**kwargs)
+        for _dispatch in _TPRM_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")

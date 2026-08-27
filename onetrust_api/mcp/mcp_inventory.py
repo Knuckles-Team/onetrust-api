@@ -8,6 +8,65 @@ from pydantic import Field
 
 from onetrust_api.auth import get_client
 
+_UNHANDLED = object()
+
+
+def _dispatch_inventory_1(action, kwargs, client):
+    # list_all_inventory_relationships_using_post .. add_relationship_between_entities_using_post (9 actions)
+    if action == "list_all_inventory_relationships_using_post":
+        return client.list_all_inventory_relationships_using_post(**kwargs)
+    elif action == "update_inventory_relations_using_entity_type_name_1":
+        return client.update_inventory_relations_using_entity_type_name_1(**kwargs)
+    elif (
+        action
+        == "link_or_unlink_inventory_relationships_using_relationship_using_put_1"
+    ):
+        return client.link_or_unlink_inventory_relationships_using_relationship_using_put_1(
+            **kwargs
+        )
+    elif action == "get_personal_data_for_relationships_using_post_1":
+        return client.get_personal_data_for_relationships_using_post_1(**kwargs)
+    elif action == "update_inventory_relations_using_entity_type_name":
+        return client.update_inventory_relations_using_entity_type_name(**kwargs)
+    elif (
+        action == "link_or_unlink_inventory_relationships_using_relationship_using_put"
+    ):
+        return (
+            client.link_or_unlink_inventory_relationships_using_relationship_using_put(
+                **kwargs
+            )
+        )
+    elif action == "get_personal_data_for_relationships_using_post":
+        return client.get_personal_data_for_relationships_using_post(**kwargs)
+    elif action == "create_inventory_relations_using_post":
+        return client.create_inventory_relations_using_post(**kwargs)
+    elif action == "add_relationship_between_entities_using_post":
+        return client.add_relationship_between_entities_using_post(**kwargs)
+    return _UNHANDLED
+
+
+def _dispatch_inventory_2(action, kwargs, client):
+    # get_inventory_relationship_using_relationship_type_name_1 .. delete_inventory_relations_using_relationship_type_name (4 actions)
+    if action == "get_inventory_relationship_using_relationship_type_name_1":
+        return client.get_inventory_relationship_using_relationship_type_name_1(
+            **kwargs
+        )
+    elif action == "delete_inventory_relations_using_relationship_type_name_1":
+        return client.delete_inventory_relations_using_relationship_type_name_1(
+            **kwargs
+        )
+    elif action == "get_inventory_relationship_using_relationship_type_name":
+        return client.get_inventory_relationship_using_relationship_type_name(**kwargs)
+    elif action == "delete_inventory_relations_using_relationship_type_name":
+        return client.delete_inventory_relations_using_relationship_type_name(**kwargs)
+    return _UNHANDLED
+
+
+_INVENTORY_DISPATCHERS = (
+    _dispatch_inventory_1,
+    _dispatch_inventory_2,
+)
+
 
 def register_inventory_tools(mcp: FastMCP):
     @mcp.tool(tags={"inventory"})
@@ -31,54 +90,14 @@ def register_inventory_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json) if params_json else {}
-        except Exception:
-            return {"error": "Operation failed"}
+        except Exception as e:
+            return {"error": f"Invalid params_json: {type(e).__name__}"}
         if not isinstance(kwargs, dict):
             return {"error": "params_json must decode to a JSON object"}
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "list_all_inventory_relationships_using_post":
-            return client.list_all_inventory_relationships_using_post(**kwargs)
-        elif action == "update_inventory_relations_using_entity_type_name_1":
-            return client.update_inventory_relations_using_entity_type_name_1(**kwargs)
-        elif (
-            action
-            == "link_or_unlink_inventory_relationships_using_relationship_using_put_1"
-        ):
-            return client.link_or_unlink_inventory_relationships_using_relationship_using_put_1(
-                **kwargs
-            )
-        elif action == "get_personal_data_for_relationships_using_post_1":
-            return client.get_personal_data_for_relationships_using_post_1(**kwargs)
-        elif action == "update_inventory_relations_using_entity_type_name":
-            return client.update_inventory_relations_using_entity_type_name(**kwargs)
-        elif (
-            action
-            == "link_or_unlink_inventory_relationships_using_relationship_using_put"
-        ):
-            return client.link_or_unlink_inventory_relationships_using_relationship_using_put(
-                **kwargs
-            )
-        elif action == "get_personal_data_for_relationships_using_post":
-            return client.get_personal_data_for_relationships_using_post(**kwargs)
-        elif action == "create_inventory_relations_using_post":
-            return client.create_inventory_relations_using_post(**kwargs)
-        elif action == "add_relationship_between_entities_using_post":
-            return client.add_relationship_between_entities_using_post(**kwargs)
-        elif action == "get_inventory_relationship_using_relationship_type_name_1":
-            return client.get_inventory_relationship_using_relationship_type_name_1(
-                **kwargs
-            )
-        elif action == "delete_inventory_relations_using_relationship_type_name_1":
-            return client.delete_inventory_relations_using_relationship_type_name_1(
-                **kwargs
-            )
-        elif action == "get_inventory_relationship_using_relationship_type_name":
-            return client.get_inventory_relationship_using_relationship_type_name(
-                **kwargs
-            )
-        elif action == "delete_inventory_relations_using_relationship_type_name":
-            return client.delete_inventory_relations_using_relationship_type_name(
-                **kwargs
-            )
+        for _dispatch in _INVENTORY_DISPATCHERS:
+            _result = _dispatch(action, kwargs, client)
+            if _result is not _UNHANDLED:
+                return _result
         raise ValueError(f"Unknown action: {action}")
