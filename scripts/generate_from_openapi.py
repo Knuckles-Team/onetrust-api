@@ -18,6 +18,8 @@ Re-run after refreshing the specs:  ``python scripts/generate_from_openapi.py``
 
 from __future__ import annotations
 
+import argparse
+import ast
 import json
 import keyword
 import re
@@ -508,18 +510,453 @@ def emit_mcp_init(by_domain: dict[str, list[dict]]) -> None:
     (MCP_DIR / "__init__.py").write_text("\n".join(lines) + "\n")
 
 
-def main() -> None:
+# --------------------------------------------------------------- reconciler
+#
+# Regenerating whole files on every run is the defect this reconciler exists
+# to remove: it silently overwrites hand-maintained code (the very refactor
+# that decomposed these dispatch chains under the complexity cap). So the
+# default mode of this script is now READ-ONLY reconciliation -- it diffs the
+# vendored spec against the committed source and reports drift, never writes.
+# ``--scaffold`` is the old full-generation behavior, kept only for a
+# brand-new repo with no MCP module yet (it refuses to touch anything that
+# already exists). ``--apply`` inserts ONLY the additive delta (new handlers
+# for actions the spec added) in the exact shape the file already uses, and
+# never touches an existing line; renames, signature changes, and removals
+# are reported for a human, never auto-applied.
+
+
+class Finding:
+    __slots__ = ("kind", "domain", "action", "detail")
+
+    def __init__(self, kind: str, domain: str, detail: str, action: str | None = None):
+        self.kind = kind
+        self.domain = domain
+        self.action = action
+        self.detail = detail
+
+    def __str__(self) -> str:
+        return f"[{self.kind}] {self.domain}: {self.detail}"
+
+
+def _extract_handled_actions(src: str) -> set[str]:
+    """Extract the set of action strings a module's dispatch chain handles.
+
+    Matches the literal comparison text regardless of whether it sits in one
+    flat chain or many grouped ``_dispatch_<domain>_<n>`` helpers -- the exact
+    same text test_onetrust_coverage.py::test_every_action_is_routed_in_its_mcp_tool
+    regex-scans for, so this extraction and that test agree by construction.
+    """
+    return set(re.findall(r'action\s*==\s*"([^"]+)"', src))
+
+
+def _extract_client_signatures(src: str) -> dict[str, tuple]:
+    """Parse an ``api_client_<domain>.py`` module and return
+    ``{method_name: (http, url_template, path_params, query_params, has_body)}``
+    by reading each method's ``self._call(...)`` keyword arguments via ``ast``
+    -- never by re-deriving it, so a hand-edited call still reconciles
+    honestly against what the code actually does.
+    """
+    sigs: dict[str, tuple] = {}
+    tree = ast.parse(src)
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.FunctionDef):
+            continue
+        call = None
+        for n in ast.walk(node):
+            if (
+                isinstance(n, ast.Call)
+                and isinstance(n.func, ast.Attribute)
+                and n.func.attr == "_call"
+            ):
+                call = n
+                break
+        if call is None:
+            continue
+        kwargs = {kw.arg: kw.value for kw in call.keywords if kw.arg}
+        try:
+            http = ast.literal_eval(kwargs["http"])
+            url_template = ast.literal_eval(kwargs["url_template"])
+            path_params = tuple(ast.literal_eval(kwargs["path_params"]))
+            query_params = tuple(sorted(ast.literal_eval(kwargs["query_params"])))
+            has_body = ast.literal_eval(kwargs["has_body"])
+        except (KeyError, ValueError):
+            continue
+        sigs[node.name] = (http, url_template, path_params, query_params, has_body)
+    return sigs
+
+
+def _op_signature(op: dict) -> tuple:
+    return (
+        op["http"],
+        op["url_template"],
+        tuple(op["path_params"]),
+        tuple(sorted(op["query_params"])),
+        op["has_body"],
+    )
+
+
+def reconcile(by_domain: dict[str, list[dict]]) -> list[Finding]:
+    """Compare the current spec against the existing hand-maintained source.
+
+    Read-only -- never writes anything. Detects: actions the spec has that no
+    handler routes to (added upstream), handlers that route an action the
+    spec no longer has (removed/renamed upstream -- a likely dead branch),
+    operations whose (http, url_template, path_params, query_params,
+    has_body) signature changed, and whole domains that appeared or vanished.
+    """
+    findings: list[Finding] = []
+    existing_mcp_domains = {
+        p.stem[len("mcp_") :]
+        for p in MCP_DIR.glob("mcp_*.py")
+        if p.stem not in ("mcp_custom_api", "__init__")
+        and p.read_text(errors="ignore").startswith(AUTOGEN)
+    }
+    spec_domains = set(by_domain)
+
+    for domain in sorted(spec_domains - existing_mcp_domains):
+        findings.append(
+            Finding(
+                "NEW DOMAIN",
+                domain,
+                f"{len(by_domain[domain])} action(s) in the spec, no mcp_{domain}.py "
+                f"yet -- scaffold is for a brand-new repo only "
+                f"(refuses if any mcp_*.py already exists); hand-author this domain's "
+                f"file once, then reconcile/--apply will track it going forward.",
+            )
+        )
+
+    for domain in sorted(existing_mcp_domains - spec_domains):
+        findings.append(
+            Finding(
+                "ORPHANED DOMAIN",
+                domain,
+                f"mcp_{domain}.py exists but the domain no longer appears in the spec "
+                f"at all -- likely dropped upstream. Not auto-removed.",
+            )
+        )
+
+    for domain in sorted(spec_domains & existing_mcp_domains):
+        ops = by_domain[domain]
+        spec_actions = {op["action"]: op for op in ops}
+        mcp_path = MCP_DIR / f"mcp_{domain}.py"
+        mcp_src = mcp_path.read_text()
+        handled = _extract_handled_actions(mcp_src)
+
+        for action in sorted(set(spec_actions) - handled):
+            op = spec_actions[action]
+            findings.append(
+                Finding(
+                    "MISSING HANDLER",
+                    domain,
+                    f"action '{action}' ({op['operation_id']}) is in the spec but no "
+                    f"branch in mcp_{domain}.py routes to it.",
+                    action=action,
+                )
+            )
+
+        for action in sorted(handled - set(spec_actions)):
+            findings.append(
+                Finding(
+                    "ORPHANED HANDLER",
+                    domain,
+                    f"mcp_{domain}.py routes action '{action}' but the spec no longer "
+                    f"has a matching operation -- likely renamed or removed upstream.",
+                    action=action,
+                )
+            )
+
+        client_path = API_DIR / f"api_client_{domain}.py"
+        if client_path.exists():
+            client_sigs = _extract_client_signatures(client_path.read_text())
+            for action in sorted(set(spec_actions) & handled):
+                op = spec_actions[action]
+                method = op["method"]
+                if method not in client_sigs:
+                    continue
+                if client_sigs[method] != _op_signature(op):
+                    findings.append(
+                        Finding(
+                            "SIGNATURE DRIFT",
+                            domain,
+                            f"operation '{op['operation_id']}' (method {method}) "
+                            f"parameters changed: code has {client_sigs[method]}, spec "
+                            f"now has {_op_signature(op)}.",
+                            action=action,
+                        )
+                    )
+    return findings
+
+
+def print_report(findings: list[Finding]) -> None:
+    if not findings:
+        print(
+            "reconcile: OK -- no drift between the vendored spec and the committed "
+            "source."
+        )
+        return
+    by_kind: dict[str, int] = {}
+    for f in findings:
+        by_kind[f.kind] = by_kind.get(f.kind, 0) + 1
+        print(str(f))
+    print()
+    print(
+        "reconcile: DRIFT FOUND -- "
+        + ", ".join(f"{n} {k}" for k, n in sorted(by_kind.items()))
+    )
+
+
+def scaffold(by_domain: dict[str, list[dict]]) -> None:
+    """One-time bootstrap for a brand-new repo with no MCP module yet.
+
+    Refuses outright if any mcp_<domain>.py already exists -- scaffold never
+    overwrites hand-maintained code. Use the default reconcile mode (or
+    --apply) on an established repo instead.
+    """
     API_DIR.mkdir(exist_ok=True)
     MCP_DIR.mkdir(exist_ok=True)
-    by_domain = collect_operations()
+    existing = [
+        p
+        for p in MCP_DIR.glob("mcp_*.py")
+        if p.stem not in ("mcp_custom_api", "__init__")
+        and p.read_text(errors="ignore").startswith(AUTOGEN)
+    ]
+    if existing:
+        print(
+            f"scaffold: refusing -- {len(existing)} mcp_*.py file(s) already exist "
+            f"({', '.join(sorted(p.name for p in existing))}). scaffold is for a "
+            f"brand-new repo only; use the default reconcile mode (or --apply) "
+            f"instead."
+        )
+        raise SystemExit(1)
+
     for domain, ops in by_domain.items():
         emit_client_module(domain, ops)
         emit_mcp_module(domain, ops)
     emit_manifest(by_domain)
     emit_api_client(by_domain)
     emit_mcp_init(by_domain)
-    tools = len(by_domain) + 1  # + custom_api
-    print(f"Generated {len(by_domain)} client modules, {tools} MCP tools.")
+    tools = len(by_domain) + 1
+    print(f"scaffold: generated {len(by_domain)} client modules, {tools} MCP tools.")
+
+
+_DISPATCH_DEF_RE = re.compile(
+    r"^def (_dispatch_(\w+)_(\d+))\(action, kwargs, client\):$"
+)
+_BRANCH_RE = re.compile(r'^\s*(?:if|elif) action == "([^"]+)":$')
+
+
+def _parse_dispatch_helpers(lines: list[str], domain: str) -> list[dict]:
+    """Return an ordered list of ``{name, start, end, branches}`` for each
+    ``_dispatch_<domain>_<n>`` helper in ``lines`` (0-indexed; ``end`` is
+    exclusive, one past the helper's ``return _UNHANDLED`` line)."""
+    helpers = []
+    i, n = 0, len(lines)
+    while i < n:
+        m = _DISPATCH_DEF_RE.match(lines[i])
+        if m and m.group(2) == domain:
+            start = i
+            branch_count = 0
+            j = i + 1
+            while j < n and lines[j].strip() != "return _UNHANDLED":
+                if _BRANCH_RE.match(lines[j]):
+                    branch_count += 1
+                j += 1
+            end = j + 1
+            helpers.append(
+                {
+                    "name": m.group(1),
+                    "start": start,
+                    "end": end,
+                    "branches": branch_count,
+                }
+            )
+            i = end
+        else:
+            i += 1
+    return helpers
+
+
+def _apply_domain(domain: str, ops: list[dict], missing_actions: set[str]) -> bool:
+    """Additively insert handlers for ``missing_actions`` into
+    ``mcp_<domain>.py`` and ``api_client_<domain>.py``. Never rewrites,
+    reorders, or deletes an existing line -- only splices new lines in.
+    Returns True if anything changed.
+    """
+    mcp_path = MCP_DIR / f"mcp_{domain}.py"
+    client_path = API_DIR / f"api_client_{domain}.py"
+    if not mcp_path.exists() or not client_path.exists():
+        return False
+
+    ops_by_action = {op["action"]: op for op in ops}
+    new_ops = [ops_by_action[a] for a in sorted(missing_actions) if a in ops_by_action]
+    if not new_ops:
+        return False
+
+    # 1. api_client_<domain>.py -- append new methods at the end of the class.
+    client_lines = client_path.read_text().splitlines()
+    insertion: list[str] = []
+    for op in new_ops:
+        doc = op["summary"].replace('"', "'")
+        insertion += [
+            f"    def {op['method']}(self, **kwargs) -> Response:",
+            f'        """{doc}"""',
+            "        return self._call(",
+            f"            http={op['http']!r},",
+            f"            url_template={op['url_template']!r},",
+            f"            path_params={op['path_params']!r},",
+            f"            query_params={op['query_params']!r},",
+            f"            has_body={op['has_body']!r},",
+            f"            paginate={op['paginate']!r},",
+            "            kwargs=kwargs,",
+            "        )",
+            "",
+        ]
+    while client_lines and client_lines[-1] == "":
+        client_lines.pop()
+    client_lines += [""] + insertion
+    client_path.write_text("\n".join(client_lines) + "\n")
+
+    # 2. mcp_<domain>.py -- fill the last helper's spare capacity (<=9
+    #    branches), then add new helper(s) for any remainder, then register
+    #    the new helper(s) in the dispatcher tuple.
+    mcp_lines = mcp_path.read_text().splitlines()
+    helpers = _parse_dispatch_helpers(mcp_lines, domain)
+    remaining = list(new_ops)
+
+    if helpers and remaining:
+        last = helpers[-1]
+        spare = _DISPATCH_GROUP_SIZE - last["branches"]
+        if spare > 0:
+            take, remaining = remaining[:spare], remaining[spare:]
+            new_branch_lines = []
+            for op in take:
+                new_branch_lines.append(f'    elif action == "{op["action"]}":')
+                new_branch_lines.append(
+                    f"        return client.{op['method']}(**kwargs)"
+                )
+            insert_at = last["end"] - 1  # the 'return _UNHANDLED' line itself
+            mcp_lines = mcp_lines[:insert_at] + new_branch_lines + mcp_lines[insert_at:]
+            helpers = _parse_dispatch_helpers(mcp_lines, domain)
+
+    new_helper_names: list[str] = []
+    if remaining:
+        next_n = 0
+        for h in helpers:
+            m = re.match(rf"_dispatch_{re.escape(domain)}_(\d+)$", h["name"])
+            if m:
+                next_n = max(next_n, int(m.group(1)))
+        addition_lines: list[str] = []
+        for group in _chunk(remaining, _DISPATCH_GROUP_SIZE):
+            next_n += 1
+            name = f"_dispatch_{domain}_{next_n}"
+            new_helper_names.append(name)
+            addition_lines.append(f"def {name}(action, kwargs, client):")
+            addition_lines.append(
+                f"    # {group[0]['action']} .. {group[-1]['action']} ({len(group)} actions)"
+            )
+            for j, op in enumerate(group):
+                kw = "if" if j == 0 else "elif"
+                addition_lines.append(f'    {kw} action == "{op["action"]}":')
+                addition_lines.append(f"        return client.{op['method']}(**kwargs)")
+            addition_lines.append("    return _UNHANDLED")
+            addition_lines.append("")
+            addition_lines.append("")
+        if helpers:
+            insert_at = helpers[-1]["end"]
+        else:
+            insert_at = (
+                next(
+                    i
+                    for i, line in enumerate(mcp_lines)
+                    if line.strip() == "_UNHANDLED = object()"
+                )
+                + 3
+            )
+        mcp_lines = mcp_lines[:insert_at] + addition_lines + mcp_lines[insert_at:]
+
+        dispatchers_var = f"_{domain.upper()}_DISPATCHERS"
+        tuple_open = next(
+            i
+            for i, line in enumerate(mcp_lines)
+            if line.strip() == f"{dispatchers_var} = ("
+        )
+        tuple_close = next(
+            i
+            for i in range(tuple_open + 1, len(mcp_lines))
+            if mcp_lines[i].strip() == ")"
+        )
+        mcp_lines = (
+            mcp_lines[:tuple_close]
+            + [f"    {name}," for name in new_helper_names]
+            + mcp_lines[tuple_close:]
+        )
+
+    # 3. Keep the "Action to perform. One of: ..." Field description in sync
+    #    -- purely additive text appended before the closing quote.
+    for i, line in enumerate(mcp_lines):
+        if 'description="Action to perform. One of:' in line:
+            already_listed = set(re.findall(r"'([^']+)'", line))
+            still_new = [op for op in new_ops if op["action"] not in already_listed]
+            if still_new:
+                added = ", ".join(f"'{op['action']}'" for op in still_new)
+                mcp_lines[i] = line.rstrip()[:-1] + f', {added}"'
+            break
+
+    mcp_path.write_text("\n".join(mcp_lines) + "\n")
+    return True
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Reconcile (default, read-only) the vendored OpenAPI spec against "
+            "the committed, hand-maintained MCP source; --scaffold bootstraps a "
+            "brand-new repo once; --apply additively inserts new handlers only."
+        )
+    )
+    parser.add_argument(
+        "--scaffold",
+        action="store_true",
+        help="One-time bootstrap for a brand-new repo with no MCP module yet. "
+        "Refuses to touch anything that already exists.",
+    )
+    parser.add_argument(
+        "--apply",
+        action="store_true",
+        help="Additively insert handlers for actions the spec has but the code "
+        "doesn't. Never touches an existing line; renames, signature changes, "
+        "and removals are reported for a human, never auto-applied.",
+    )
+    args = parser.parse_args()
+
+    by_domain = collect_operations()
+
+    if args.scaffold:
+        scaffold(by_domain)
+        return
+
+    findings = reconcile(by_domain)
+
+    if args.apply:
+        missing_by_domain: dict[str, set[str]] = {}
+        for f in findings:
+            if f.kind == "MISSING HANDLER":
+                missing_by_domain.setdefault(f.domain, set()).add(f.action)
+        changed_any = False
+        for domain, actions in missing_by_domain.items():
+            if _apply_domain(domain, by_domain[domain], actions):
+                changed_any = True
+                print(
+                    f"apply: inserted {len(actions)} handler(s) into domain '{domain}'."
+                )
+        if changed_any:
+            emit_manifest(by_domain)
+            print("apply: regenerated _operation_manifest.py (pure derived data).")
+        findings = reconcile(by_domain)
+
+    print_report(findings)
+    if findings:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
