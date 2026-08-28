@@ -98,27 +98,9 @@ class OneTrustApiBase:
         self._client_id = client_id
         self._client_secret = client_secret
 
-        # Resolve the primary tenant host.
-        host = (url or REGION_HOSTS.get(region, REGION_HOSTS["us"])).strip()
-        host = host.replace("https://", "").replace("http://", "").rstrip("/")
-        self.hostname = host
-        self.url = f"https://{host}"
-
-        # Known service-host literals declared in the specs → configurable overrides.
-        # Default behaviour keeps the spec host except the tenant-pod placeholder,
-        # which always routes to the configured tenant host. The ``{hostname}`` spec
-        # variable is emitted by the generator as the ``__HOSTNAME__`` sentinel.
-        consent_host = (consent_url or "").replace("https://", "").rstrip("/")
-        worker_host = (worker_url or "").replace("https://", "").rstrip("/")
-        self._host_map = {
-            "__HOSTNAME__": self.hostname,
-            "customer.my.onetrust.com": self.hostname,
-        }
-        if consent_host:
-            self._host_map["privacyportal.onetrust.com"] = consent_host
-            self._host_map["consent-api.onetrust.com"] = consent_host
-        if worker_host:
-            self._host_map["localhost:8080"] = worker_host
+        self.hostname = self._resolve_tenant_host(url, region)
+        self.url = f"https://{self.hostname}"
+        self._host_map = self._build_host_map(self.hostname, consent_url, worker_url)
 
         if not self._token and not (self._client_id and self._client_secret):
             raise MissingParameterError(
@@ -126,46 +108,83 @@ class OneTrustApiBase:
                 "ONETRUST_CLIENT_SECRET for the client-credentials flow."
             )
 
+    @staticmethod
+    def _resolve_tenant_host(url: str | None, region: str) -> str:
+        """Resolve the primary tenant host from an explicit URL or a region code."""
+        host = (url or REGION_HOSTS.get(region, REGION_HOSTS["us"])).strip()
+        return host.replace("https://", "").replace("http://", "").rstrip("/")
+
+    @staticmethod
+    def _build_host_map(
+        hostname: str, consent_url: str | None, worker_url: str | None
+    ) -> dict[str, str]:
+        """Map spec host literals (and the ``__HOSTNAME__`` sentinel) to configured hosts.
+
+        Default behaviour keeps the spec host except the tenant-pod placeholder, which
+        always routes to the configured tenant host. The ``{hostname}`` spec variable is
+        emitted by the generator as the ``__HOSTNAME__`` sentinel.
+        """
+        host_map = {
+            "__HOSTNAME__": hostname,
+            "customer.my.onetrust.com": hostname,
+        }
+        consent_host = (consent_url or "").replace("https://", "").rstrip("/")
+        worker_host = (worker_url or "").replace("https://", "").rstrip("/")
+        if consent_host:
+            host_map["privacyportal.onetrust.com"] = consent_host
+            host_map["consent-api.onetrust.com"] = consent_host
+        if worker_host:
+            host_map["localhost:8080"] = worker_host
+        return host_map
+
     # ------------------------------------------------------------------ auth
     def _ensure_token(self) -> str:
         """Return a valid bearer token, refreshing via client-credentials if needed."""
-        if self._token and (
-            not self._client_id or time.monotonic() < self._token_expiry
-        ):
+        if self._token_is_fresh():
             return self._token
         with self._token_lock:
-            if self._token and time.monotonic() < self._token_expiry:
+            if self._token_is_fresh():
                 return self._token
-            token_url = f"{self.url}/api/access/v1/oauth/token"
-            try:
-                resp = self._session.post(
-                    url=token_url,
-                    data={"grant_type": "client_credentials"},
-                    auth=(self._client_id or "", self._client_secret or ""),
-                    headers={"Accept": "application/json"},
-                    timeout=30,
-                )
-            except requests.RequestException as e:
-                raise AuthError(
-                    f"OneTrust token request failed: {type(e).__name__}"
-                ) from e
-            if resp.status_code in (401, 403):
-                raise UnauthorizedError(
-                    f"OneTrust client-credentials rejected ({resp.status_code})."
-                )
-            if not resp.ok:
-                raise AuthError(
-                    f"OneTrust token endpoint returned {resp.status_code}: {resp.text}"
-                )
-            payload = resp.json()
-            self._token = payload.get("access_token") or payload.get("token")
-            if not self._token:
-                raise AuthError("OneTrust token response contained no access_token.")
+            token, expires_in = self._exchange_client_credentials()
+            self._token = token
             # Refresh 60s before the stated expiry.
-            self._token_expiry = (
-                time.monotonic() + int(payload.get("expires_in", 3600)) - 60
-            )
+            self._token_expiry = time.monotonic() + expires_in - 60
             return self._token
+
+    def _token_is_fresh(self) -> bool:
+        """True if the cached bearer token can be used without a refresh."""
+        return bool(self._token) and (
+            not self._client_id or time.monotonic() < self._token_expiry
+        )
+
+    def _exchange_client_credentials(self) -> tuple[str, int]:
+        """Perform the OAuth2 client-credentials exchange and return (token, expires_in)."""
+        token_url = f"{self.url}/api/access/v1/oauth/token"
+        try:
+            resp = self._session.post(
+                url=token_url,
+                data={"grant_type": "client_credentials"},
+                auth=(self._client_id or "", self._client_secret or ""),
+                headers={"Accept": "application/json"},
+                timeout=30,
+            )
+        except requests.RequestException as e:
+            raise AuthError(
+                f"OneTrust token request failed: {type(e).__name__}"
+            ) from e
+        if resp.status_code in (401, 403):
+            raise UnauthorizedError(
+                f"OneTrust client-credentials rejected ({resp.status_code})."
+            )
+        if not resp.ok:
+            raise AuthError(
+                f"OneTrust token endpoint returned {resp.status_code}: {resp.text}"
+            )
+        payload = resp.json()
+        token = payload.get("access_token") or payload.get("token")
+        if not token:
+            raise AuthError("OneTrust token response contained no access_token.")
+        return token, int(payload.get("expires_in", 3600))
 
     def _auth_headers(self, content_type: str | None = "application/json") -> dict:
         headers = {
@@ -266,33 +285,62 @@ class OneTrustApiBase:
         """Collect every page of a paginated collection (offset or cursor)."""
         params = dict(params or {})
         first = self._request(method, url, params=params)
-        items = self._extract_items(self._decode(first))
-        all_data = list(items)
+        all_data = list(self._extract_items(self._decode(first)))
         max_pages = max_pages if max_pages and max_pages > 0 else 10
 
         if paginate == "offset":
-            body = self._decode(first) or {}
-            total_pages = self._total_pages(body)
-            page = int(params.get("page", 0))
-            while page + 1 < min(total_pages, max_pages):
-                page += 1
-                params["page"] = page
-                resp = self._request(method, url, params=params)
-                all_data.extend(self._extract_items(self._decode(resp)))
+            all_data.extend(
+                self._fetch_offset_pages(method, url, params, first, max_pages)
+            )
         elif paginate == "cursor":
-            cursor = self._extract_cursor(self._decode(first))
-            fetched = 1
-            while cursor and fetched < max_pages:
-                for key in _CURSOR_KEYS:
-                    if key in params or cursor:
-                        params[key] = cursor
-                        break
-                resp = self._request(method, url, params=params)
-                body = self._decode(resp)
-                all_data.extend(self._extract_items(body))
-                cursor = self._extract_cursor(body)
-                fetched += 1
+            all_data.extend(
+                self._fetch_cursor_pages(method, url, params, first, max_pages)
+            )
         return first, all_data
+
+    def _fetch_offset_pages(
+        self,
+        method: str,
+        url: str,
+        params: dict,
+        first: requests.Response,
+        max_pages: int,
+    ) -> list:
+        """Collect pages 2..N of an offset-paginated (``page``/``size``) collection."""
+        body = self._decode(first) or {}
+        total_pages = self._total_pages(body)
+        page = int(params.get("page", 0))
+        collected: list = []
+        while page + 1 < min(total_pages, max_pages):
+            page += 1
+            params["page"] = page
+            resp = self._request(method, url, params=params)
+            collected.extend(self._extract_items(self._decode(resp)))
+        return collected
+
+    def _fetch_cursor_pages(
+        self,
+        method: str,
+        url: str,
+        params: dict,
+        first: requests.Response,
+        max_pages: int,
+    ) -> list:
+        """Collect pages 2..N of a cursor/continuation-token-paginated collection."""
+        cursor = self._extract_cursor(self._decode(first))
+        fetched = 1
+        collected: list = []
+        while cursor and fetched < max_pages:
+            for key in _CURSOR_KEYS:
+                if key in params or cursor:
+                    params[key] = cursor
+                    break
+            resp = self._request(method, url, params=params)
+            body = self._decode(resp)
+            collected.extend(self._extract_items(body))
+            cursor = self._extract_cursor(body)
+            fetched += 1
+        return collected
 
     @staticmethod
     def _extract_items(body: Any) -> list:
@@ -336,20 +384,9 @@ class OneTrustApiBase:
     ) -> Response:
         """Dispatch a single generated operation. Used by every domain method."""
         try:
-            kwargs = {k: v for k, v in (kwargs or {}).items() if v is not None}
-            path_kwargs = {k: kwargs.pop(k) for k in path_params if k in kwargs}
-            url = self._resolve_url(url_template, path_kwargs)
-
-            params = {k: kwargs.pop(k) for k in query_params if k in kwargs}
-            body = None
-            if has_body:
-                # Anything left that isn't a query/path param is the request body.
-                body = kwargs.pop("body", None)
-                if body is None and kwargs:
-                    body = kwargs
-                    kwargs = {}
-            # Remaining kwargs (unknown to the spec) fold into query params.
-            params.update(kwargs)
+            url, params, body = self._prepare_call(
+                url_template, path_params, query_params, has_body, kwargs
+            )
 
             if http.upper() == "GET" and paginate in ("offset", "cursor"):
                 max_pages = int(params.pop("max_pages", 0) or 0)
@@ -368,6 +405,39 @@ class OneTrustApiBase:
         except requests.RequestException as e:
             logger.error("Operation failed: error_type=%s", type(e).__name__)
             raise
+
+    def _prepare_call(
+        self,
+        url_template: str,
+        path_params: list[str],
+        query_params: list[str],
+        has_body: bool,
+        kwargs: dict,
+    ) -> tuple[str, dict, Any]:
+        """Split raw call kwargs into the resolved URL, query params, and request body."""
+        kwargs = {k: v for k, v in (kwargs or {}).items() if v is not None}
+        path_kwargs = {k: kwargs.pop(k) for k in path_params if k in kwargs}
+        url = self._resolve_url(url_template, path_kwargs)
+
+        params = {k: kwargs.pop(k) for k in query_params if k in kwargs}
+        body, leftover = self._extract_body(has_body, kwargs)
+        # Remaining kwargs (unknown to the spec) fold into query params.
+        params.update(leftover)
+        return url, params, body
+
+    @staticmethod
+    def _extract_body(has_body: bool, kwargs: dict) -> tuple[Any, dict]:
+        """Split the request body out of leftover kwargs.
+
+        Anything left that isn't a query/path param is the request body. Returns the
+        body plus whatever leftover kwargs should fold into query params instead.
+        """
+        if not has_body:
+            return None, kwargs
+        body = kwargs.pop("body", None)
+        if body is None and kwargs:
+            return kwargs, {}
+        return body, kwargs
 
     # --------------------------------------------------------------- escape hatch
     def api_request(
