@@ -85,88 +85,108 @@ def ingest_assessments(
     entities: list[dict[str, Any]] = []
     relationships: list[dict[str, Any]] = []
     for a in assessments or []:
-        aid = a.get("assessmentId") or a.get("id")
-        if aid is None:
-            continue
-        node_id = f"onetrust:assessment:{aid}"
+        ent, rels = _assessment_entities(a)
+        entities.extend(ent)
+        relationships.extend(rels)
+    return ingest_entities(entities, relationships, client=client, graph=graph)
+
+
+def _assessment_entities(
+    a: dict[str, Any],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Map one assessment record to its ``:Assessment`` node plus related nodes/edges."""
+    aid = a.get("assessmentId") or a.get("id")
+    if aid is None:
+        return [], []
+    node_id = f"onetrust:assessment:{aid}"
+    entities: list[dict[str, Any]] = [
+        {
+            "id": node_id,
+            "node_type": "Assessment",
+            "name": a.get("name"),
+            "number": a.get("number"),
+            "status": a.get("status") or a.get("state"),
+            "result": a.get("result") or a.get("resultName"),
+            "riskScore": (
+                a.get("residualRiskScore")
+                if a.get("residualRiskScore") is not None
+                else a.get("inherentRiskScore")
+            ),
+            "riskLevel": a.get("assessmentRiskLevelName"),
+            "deadline": a.get("deadline"),
+            "externalId": _s(aid),
+        }
+    ]
+    relationships: list[dict[str, Any]] = []
+    tid = a.get("templateId") or a.get("templateRootVersionId")
+    if tid is not None:
         entities.append(
             {
-                "id": node_id,
-                "node_type": "Assessment",
-                "name": a.get("name"),
-                "number": a.get("number"),
-                "status": a.get("status") or a.get("state"),
-                "result": a.get("result") or a.get("resultName"),
-                "riskScore": (
-                    a.get("residualRiskScore")
-                    if a.get("residualRiskScore") is not None
-                    else a.get("inherentRiskScore")
-                ),
-                "riskLevel": a.get("assessmentRiskLevelName"),
-                "deadline": a.get("deadline"),
-                "externalId": _s(aid),
+                "id": f"onetrust:assessment_template:{tid}",
+                "node_type": "AssessmentTemplate",
+                "name": a.get("templateName"),
+                "externalId": _s(tid),
             }
         )
-        tid = a.get("templateId") or a.get("templateRootVersionId")
-        if tid is not None:
-            entities.append(
-                {
-                    "id": f"onetrust:assessment_template:{tid}",
-                    "node_type": "AssessmentTemplate",
-                    "name": a.get("templateName"),
-                    "externalId": _s(tid),
-                }
-            )
+        relationships.append(
+            {
+                "source": node_id,
+                "target": f"onetrust:assessment_template:{tid}",
+                "relationship": "usesTemplate",
+            }
+        )
+    for person, rel in (
+        (a.get("respondent"), "respondedBy"),
+        (a.get("approver"), "approvedBy"),
+    ):
+        pid = _person_id(person)
+        if pid:
+            entities.append(_person_node(person, pid))
             relationships.append(
-                {
-                    "source": node_id,
-                    "target": f"onetrust:assessment_template:{tid}",
-                    "relationship": "usesTemplate",
-                }
+                {"source": node_id, "target": pid, "relationship": rel}
             )
-        for person, rel in (
-            (a.get("respondent"), "respondedBy"),
-            (a.get("approver"), "approvedBy"),
-        ):
-            pid = _person_id(person)
-            if pid:
-                entities.append(_person_node(person, pid))
-                relationships.append(
-                    {"source": node_id, "target": pid, "relationship": rel}
-                )
-    return ingest_entities(entities, relationships, client=client, graph=graph)
+    return entities, relationships
 
 
 def assessment_documents(assessments: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Build ``:Document`` payloads (semantic-search summaries) for assessments."""
     docs: list[dict[str, Any]] = []
     for a in assessments or []:
-        aid = a.get("assessmentId") or a.get("id")
-        if aid is None:
-            continue
-        parts = [
-            a.get("name"),
-            f"Number: {a.get('number')}" if a.get("number") else None,
-            f"Template: {a.get('templateName')}" if a.get("templateName") else None,
-            f"Status: {a.get('status') or a.get('state')}",
-            (
-                f"Result: {a.get('result') or a.get('resultName')}"
-                if (a.get("result") or a.get("resultName"))
-                else None
-            ),
-        ]
-        text = "\n".join(p for p in parts if p)
-        if not text.strip():
-            continue
-        docs.append(
-            {
-                "id": f"onetrust:assessment_doc:{aid}",
-                "title": a.get("name"),
-                "text": text,
-                "assessment_id": _s(aid),
-            }
-        )
+        doc = _assessment_document(a)
+        if doc is not None:
+            docs.append(doc)
     return docs
+
+
+def _assessment_document(a: dict[str, Any]) -> dict[str, Any] | None:
+    """Build one assessment's ``:Document`` payload, or ``None`` if it has no text."""
+    aid = a.get("assessmentId") or a.get("id")
+    if aid is None:
+        return None
+    text = "\n".join(p for p in _assessment_document_parts(a) if p)
+    if not text.strip():
+        return None
+    return {
+        "id": f"onetrust:assessment_doc:{aid}",
+        "title": a.get("name"),
+        "text": text,
+        "assessment_id": _s(aid),
+    }
+
+
+def _assessment_document_parts(a: dict[str, Any]) -> list[str | None]:
+    """Build the summary text fragments for one assessment's ``:Document`` payload."""
+    return [
+        a.get("name"),
+        f"Number: {a.get('number')}" if a.get("number") else None,
+        f"Template: {a.get('templateName')}" if a.get("templateName") else None,
+        f"Status: {a.get('status') or a.get('state')}",
+        (
+            f"Result: {a.get('result') or a.get('resultName')}"
+            if (a.get("result") or a.get("resultName"))
+            else None
+        ),
+    ]
 
 
 def ingest_cookies(
@@ -224,34 +244,45 @@ def ingest_inventories(
     entities: list[dict[str, Any]] = []
     relationships: list[dict[str, Any]] = []
     for inv in inventories or []:
-        iid = inv.get("id") or inv.get("externalId")
-        if iid is None:
-            continue
-        node_id = f"onetrust:inventory:{iid}"
-        entities.append(
-            {
-                "id": node_id,
-                "node_type": "Inventory",
-                "name": inv.get("name"),
-                "number": inv.get("number"),
-                "inventoryType": inv.get("inventoryType"),
-                "status": inv.get("status"),
-                "externalId": _s(iid),
-            }
-        )
-        owners = inv.get("businessOwners") or []
-        for owner in owners if isinstance(owners, list) else []:
-            pid = _person_id(owner)
-            if pid:
-                entities.append(_person_node(owner, pid))
-                relationships.append(
-                    {"source": node_id, "target": pid, "relationship": "ownedBy"}
-                )
-        for de in inv.get("dataElements") or []:
-            de_ent, de_rels = _data_element_entities(de, parent=node_id)
-            entities.extend(de_ent)
-            relationships.extend(de_rels)
+        ent, rels = _inventory_entities(inv)
+        entities.extend(ent)
+        relationships.extend(rels)
     return ingest_entities(entities, relationships, client=client, graph=graph)
+
+
+def _inventory_entities(
+    inv: dict[str, Any],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Map one inventory record to its ``:Inventory`` node plus owners/data elements."""
+    iid = inv.get("id") or inv.get("externalId")
+    if iid is None:
+        return [], []
+    node_id = f"onetrust:inventory:{iid}"
+    entities: list[dict[str, Any]] = [
+        {
+            "id": node_id,
+            "node_type": "Inventory",
+            "name": inv.get("name"),
+            "number": inv.get("number"),
+            "inventoryType": inv.get("inventoryType"),
+            "status": inv.get("status"),
+            "externalId": _s(iid),
+        }
+    ]
+    relationships: list[dict[str, Any]] = []
+    owners = inv.get("businessOwners") or []
+    for owner in owners if isinstance(owners, list) else []:
+        pid = _person_id(owner)
+        if pid:
+            entities.append(_person_node(owner, pid))
+            relationships.append(
+                {"source": node_id, "target": pid, "relationship": "ownedBy"}
+            )
+    for de in inv.get("dataElements") or []:
+        de_ent, de_rels = _data_element_entities(de, parent=node_id)
+        entities.extend(de_ent)
+        relationships.extend(de_rels)
+    return entities, relationships
 
 
 def ingest_data_elements(
