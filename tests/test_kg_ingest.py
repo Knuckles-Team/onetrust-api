@@ -13,10 +13,10 @@ from typing import Any
 
 import msgpack
 import pytest
-from agent_utilities.knowledge_graph.memory.native_ingest import NativeIngestError
-from agent_utilities.security.brain_context import ActorContext, use_actor
-from agent_utilities.models.company_brain import ActorType
 from agent_utilities.knowledge_graph.core.session import GraphSession, use_session
+from agent_utilities.knowledge_graph.memory.native_ingest import NativeIngestError
+from agent_utilities.security.actor_identity import ActorType
+from agent_utilities.security.brain_context import ActorContext, use_actor
 
 from onetrust_api.kg_ingest import (
     assessment_documents,
@@ -205,11 +205,12 @@ def test_ingest_cookies_maps_cookie_and_domain():
     assert res == {"nodes": 2, "edges": 1}
     ck = c.nodes.values["onetrust:cookie:CK1"]
     assert ck["node_type"] == "Cookie"
-    assert ck["host"] == "example.com"
+    assert ck["host"] == "[REDACTED_LOCATION]"
     assert ck["cookieCategory"] == "Performance"
     assert ck["thirdParty"] is True
     assert (
-        c.nodes.values["onetrust:cookie_domain:example.com"]["node_type"] == "CookieDomain"
+        c.nodes.values["onetrust:cookie_domain:example.com"]["node_type"]
+        == "CookieDomain"
     )
     assert c.changes.edges == [
         (

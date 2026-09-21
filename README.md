@@ -76,8 +76,8 @@ so you can scope the surface (e.g. set `ESGTOOL=False` to drop ESG).
 | `ONETRUST_CLIENT_SECRET` | secret-injected |  |
 | `ONETRUST_CONSENT_URL` | — | ─── Optional service hosts ──────────────────────────────────────────── Consent transaction / privacy-portal host (consent_receipts, universal_consent ...) |
 | `ONETRUST_WORKER_URL` | — | On-prem Data Discovery worker-node host |
-| `TLS_PROFILE` | `private-pki` | ─── HTTP behaviour ──────────────────────────────────────────────────── TLS verification is mandatory. Select a named runtime profile from AgentConfig. |
-| `TLS_PROFILES_REF` | `secret://runtime/tls-profiles` |  |
+| `ONETRUST_TLS_PROFILE` | `private-pki` | ─── HTTP behaviour ──────────────────────────────────────────────────── TLS verification is mandatory. Select a named runtime profile from AgentConfig. |
+| `ONETRUST_TLS_PROFILE_REF` | `secret://runtime/tls-profiles` |  |
 | `FASTMCP_LOG_LEVEL` | `INFO` | ─── MCP transport / auth (agent-utilities) ──────────────────────────── |
 | `TRANSPORT` | `stdio` |  |
 | `AUTH_TYPE` | `none` |  |
@@ -117,6 +117,9 @@ so you can scope the surface (e.g. set `ESGTOOL=False` to drop ESG).
 | `TRAININGTOOL` | `True` |  |
 | `UNIVERSAL_CONSENTTOOL` | `True` |  |
 | `USER_PROVISIONINGTOOL` | `True` |  |
+| `INGESTTOOL` | `True` |  |
+| `ONETRUST_API_MCP_IMAGE` | `registry.example.invalid/onetrust-api-mcp@sha256:<digest>` | ─── Published image references (required by the compose manifests) ──── |
+| `ONETRUST_API_AGENT_IMAGE` | `registry.example.invalid/onetrust-api-agent@sha256:<digest>` |  |
 
 #### Inherited agent-utilities variables (apply to every connector)
 
@@ -142,11 +145,11 @@ so you can scope the surface (e.g. set `ESGTOOL=False` to drop ESG).
 | `DEBUG` | `False` | Verbose logging |
 | `PYTHONUNBUFFERED` | `1` | Unbuffered stdout (recommended in containers) |
 | `MCP_URL` | `http://localhost:8000/mcp` | URL of the MCP server the agent connects to |
-| `PROVIDER` | `openai` | LLM provider for the agent |
-| `MODEL_ID` | `gpt-4o` | Model id for the agent |
+| `PROVIDER` | — | Operator-configured LLM provider for the agent |
+| `MODEL_ID` | — | Operator-configured model id for the agent |
 | `ENABLE_WEB_UI` | `True` | Serve the AG-UI web interface |
 
-_48 package + 23 inherited variable(s). Auto-generated from `.env.example` + the shared agent-utilities set — do not edit._
+_51 package + 23 inherited variable(s). Auto-generated from `.env.example` + the shared agent-utilities set — do not edit._
 <!-- ENV-VARS-TABLE:END -->
 
 
@@ -194,7 +197,7 @@ onetrust-mcp --transport "streamable-http" --host "0.0.0.0" --port "8000"
 
 <!-- MCP-TOOLS-TABLE:START -->
 
-#### Condensed action-routed tools (default — `MCP_TOOL_MODE=condensed`)
+#### Condensed action-routed tools (`MCP_TOOL_MODE=condensed`)
 
 | MCP Tool | Toggle Env Var | Description |
 |----------|----------------|-------------|
@@ -221,6 +224,9 @@ onetrust-mcp --transport "streamable-http" --host "0.0.0.0" --port "8000"
 | `onetrust_dsar` | `DSARTOOL` | Manage OneTrust dsar operations. |
 | `onetrust_esg` | `ESGTOOL` | Manage OneTrust esg operations. |
 | `onetrust_incidents` | `INCIDENTSTOOL` | Manage OneTrust incidents operations. |
+| `onetrust_ingest_assessments` | `INGESTTOOL` | Ingest OneTrust assessments into the KG as typed :Assessment nodes + :Document summaries. |
+| `onetrust_ingest_cookies` | `INGESTTOOL` | Ingest OneTrust cookie-scan results into the KG as typed :Cookie (+ :CookieDomain) nodes. |
+| `onetrust_ingest_inventories` | `INGESTTOOL` | Ingest OneTrust data-inventory records into the KG as typed :Inventory (+ :DataElement) nodes. |
 | `onetrust_integrations` | `INTEGRATIONSTOOL` | Manage OneTrust integrations operations. |
 | `onetrust_inventory` | `INVENTORYTOOL` | Manage OneTrust inventory operations. |
 | `onetrust_issues_management` | `ISSUES_MANAGEMENTTOOL` | Manage OneTrust issues management operations. |
@@ -842,7 +848,7 @@ onetrust-mcp --transport "streamable-http" --host "0.0.0.0" --port "8000"
 
 </details>
 
-_36 action-routed tool(s) (default) · 597 verbose 1:1 tool(s). Each is enabled unless its `<DOMAIN>TOOL` toggle is set false; `MCP_TOOL_MODE` selects the surface (`condensed` default · `verbose` 1:1 · `both`). Auto-generated — do not edit._
+_39 action-routed tool(s) · 597 verbose 1:1 tool(s). Each is enabled unless its `<DOMAIN>TOOL` toggle is set false; `MCP_TOOL_MODE` selects the surface (**`intent` default** — the six verb-tools, granular set loaded on demand · `condensed` action-routed · `verbose` 1:1 · `both`). Auto-generated — do not edit._
 <!-- MCP-TOOLS-TABLE:END -->
 
 ### MCP Configuration Examples
@@ -891,6 +897,7 @@ _36 action-routed tool(s) (default) · 597 verbose 1:1 tool(s). Each is enabled 
         "DSARTOOL": "True",
         "ESGTOOL": "True",
         "INCIDENTSTOOL": "True",
+        "INGESTTOOL": "True",
         "INTEGRATIONSTOOL": "True",
         "INVENTORYTOOL": "True",
         "ISSUES_MANAGEMENTTOOL": "True",
@@ -959,6 +966,7 @@ own runtime secret boundary.
         "DSARTOOL": "True",
         "ESGTOOL": "True",
         "INCIDENTSTOOL": "True",
+        "INGESTTOOL": "True",
         "INTEGRATIONSTOOL": "True",
         "INVENTORYTOOL": "True",
         "ISSUES_MANAGEMENTTOOL": "True",
@@ -1026,6 +1034,7 @@ docker run -i --rm \
   -e DSARTOOL=True \
   -e ESGTOOL=True \
   -e INCIDENTSTOOL=True \
+  -e INGESTTOOL=True \
   -e INTEGRATIONSTOOL=True \
   -e INVENTORYTOOL=True \
   -e ISSUES_MANAGEMENTTOOL=True \

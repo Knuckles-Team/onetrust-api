@@ -37,8 +37,12 @@ from onetrust_api.mcp.mcp_it_risk_management import register_it_risk_management_
 from onetrust_api.mcp.mcp_universal_consent import register_universal_consent_tools
 
 TARGETS = [
-    pytest.param(register_universal_consent_tools, "universal_consent", id="universal_consent"),
-    pytest.param(register_it_risk_management_tools, "it_risk_management", id="it_risk_management"),
+    pytest.param(
+        register_universal_consent_tools, "universal_consent", id="universal_consent"
+    ),
+    pytest.param(
+        register_it_risk_management_tools, "it_risk_management", id="it_risk_management"
+    ),
 ]
 
 
@@ -100,9 +104,7 @@ def test_action_list_matches_manifest_exactly(register_fn, domain):
     manifest_actions = set(ACTIONS_BY_DOMAIN[domain])
     for action in manifest_actions:
         mock_client = MagicMock(spec=Api)
-        asyncio.run(
-            fn(action=action, params_json="{}", client=mock_client, ctx=None)
-        )
+        asyncio.run(fn(action=action, params_json="{}", client=mock_client, ctx=None))
         # Every manifest action must be handled without raising ValueError.
 
 
@@ -177,9 +179,7 @@ def test_empty_params_json_defaults_to_empty_kwargs(register_fn, domain):
     fn = _register(register_fn)
     mock_client = MagicMock(spec=Api)
     action = ACTIONS_BY_DOMAIN[domain][0]
-    asyncio.run(
-        fn(action=action, params_json="", client=mock_client, ctx=None)
-    )
+    asyncio.run(fn(action=action, params_json="", client=mock_client, ctx=None))
     getattr(mock_client, action).assert_called_once_with()
 
 
