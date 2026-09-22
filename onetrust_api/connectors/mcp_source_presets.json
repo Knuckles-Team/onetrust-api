@@ -10,7 +10,7 @@
     "text_field": "templateName",
     "updated_field": "lastUpdated",
     "pagination": "page",
-    "page_kind": "page",
+    "page_kind": "number",
     "page_param": "page",
     "page_size_param": "size",
     "doc_type": "assessment"
@@ -25,7 +25,7 @@
     "text_field": "description",
     "updated_field": "lastUpdated",
     "pagination": "page",
-    "page_kind": "page",
+    "page_kind": "number",
     "page_param": "page",
     "page_size_param": "size",
     "doc_type": "inventory"
