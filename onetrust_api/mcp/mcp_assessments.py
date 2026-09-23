@@ -104,7 +104,18 @@ _ASSESSMENTS_DISPATCHERS = (
 
 
 def register_assessments_tools(mcp: FastMCP):
-    @mcp.tool(tags={"assessments"})
+    @mcp.tool(
+        tags={"assessments"},
+        annotations={
+            "readOnlyHint": False,
+            "destructiveHint": True,
+            "idempotentHint": False,
+            "openWorldHint": True,
+        },
+        meta={
+            "eg.annotations": {"modalities_in": ["text"], "modalities_out": ["text"]}
+        },
+    )
     async def onetrust_assessments(
         action: Literal[
             "add_manual_assessment_links_using_post",

@@ -139,7 +139,18 @@ _DATA_MAPPING_DISPATCHERS = (
 
 
 def register_data_mapping_tools(mcp: FastMCP):
-    @mcp.tool(tags={"data_mapping"})
+    @mcp.tool(
+        tags={"data_mapping"},
+        annotations={
+            "readOnlyHint": False,
+            "destructiveHint": True,
+            "idempotentHint": False,
+            "openWorldHint": True,
+        },
+        meta={
+            "eg.annotations": {"modalities_in": ["text"], "modalities_out": ["text"]}
+        },
+    )
     async def onetrust_data_mapping(
         action: Literal[
             "add_controls_to_inventory_using_post",
