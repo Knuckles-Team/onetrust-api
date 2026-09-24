@@ -78,7 +78,7 @@ def _delegated_client(
     instance: str | None, region: str | None, config: dict | None, common: dict
 ) -> Api:
     """Path 1: OIDC Delegation (RFC 8693 Token Exchange)."""
-    from onetrust_api._delegated_auth_compat import get_delegated_token
+    from agent_utilities.mcp.delegated_auth import get_delegated_token
 
     try:
         delegated_token = get_delegated_token(
@@ -143,7 +143,7 @@ def get_client(
     Supports OIDC delegation, a fixed bearer token, and the OAuth2
     client-credentials flow via the shared ``delegated_auth`` helper.
     """
-    from onetrust_api._delegated_auth_compat import is_delegation_enabled
+    from agent_utilities.mcp.delegated_auth import is_delegation_enabled
 
     resolved = _resolve_client_config(
         _ClientOverrides(

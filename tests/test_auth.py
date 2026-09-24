@@ -1,7 +1,7 @@
 """Authentication factory tests."""
 
 import pytest
-from agent_utilities.core.exceptions import AuthError
+from agent_connector_sdk.exceptions import AuthError
 
 from onetrust_api.api_client import Api
 

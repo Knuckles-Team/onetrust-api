@@ -6,7 +6,7 @@ def test_package_imports():
 
     assert hasattr(onetrust_api, "Api")
     assert onetrust_api._MCP_AVAILABLE is True
-    assert onetrust_api._AGENT_AVAILABLE is True
+    assert onetrust_api._AGENT_AVAILABLE is False
 
 
 def test_api_composes_all_domains():
@@ -27,7 +27,7 @@ def test_client_constructs_with_token():
 
 def test_client_requires_credentials():
     import pytest
-    from agent_utilities.core.exceptions import MissingParameterError
+    from agent_connector_sdk.exceptions import MissingParameterError
 
     from onetrust_api.api_client import Api
 

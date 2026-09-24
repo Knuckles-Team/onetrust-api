@@ -24,9 +24,3 @@ def test_tool_toggles_disable_domains(monkeypatch):
 
     _mcp, _args, _mw, tags = get_mcp_instance()
     assert "incidents" not in tags
-
-
-def test_agent_server_importable():
-    from onetrust_api.agent_server import agent_server
-
-    assert callable(agent_server)
