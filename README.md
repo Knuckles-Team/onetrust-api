@@ -149,7 +149,6 @@ so you can scope the surface (e.g. set `ESGTOOL=False` to drop ESG).
 _48 package + 23 inherited variable(s). Auto-generated from `.env.example` + the shared agent-utilities set — do not edit._
 <!-- ENV-VARS-TABLE:END -->
 
-
 | Variable | Description |
 | --- | --- |
 | `ONETRUST_URL` | Tenant host URL, e.g. `https://acme.my.onetrust.com` (overrides region). |
@@ -851,8 +850,6 @@ _36 action-routed tool(s) (default) · 597 verbose 1:1 tool(s). Each is enabled 
 
 > **Install the connector-focused `[mcp]` extra.** Examples use `onetrust-api[mcp]` to add
 > FastMCP / FastAPI through `agent-utilities[mcp]`; the required Agent Utilities core
-> still carries `epistemic-graph[full]`. The `[agent-runtime]` extra additionally
-> enables model orchestration.
 
 #### stdio Transport (local IDEs — Cursor, Claude Desktop, VS Code)
 
@@ -1053,13 +1050,6 @@ _Auto-generated from the code-read env surface (`MCP_TOOL_MODE` + package vars) 
 
 ## A2A Agent
 
-### Run A2A Server
-```bash
-export ONETRUST_URL="https://acme.my.onetrust.com"
-export ONETRUST_TOKEN="your_token"
-onetrust-agent --provider openai --model-id gpt-4o --api-key sk-...
-```
-
 ## Docker
 
 ### Build
@@ -1083,7 +1073,6 @@ docker run -d \
 
 > The `:mcp` tag is the **MCP-serving image** (built from
 > `docker/Dockerfile --target mcp`, installing `onetrust-api[mcp]`). The default
-> the immutable agent image is the **full agent image** (`--target agent`, `onetrust-api[agent]`)
 > which also bundles the Pydantic AI agent and the epistemic-graph engine — use it
 > when you run `onetrust-agent` (the agent), not just the MCP server. See
 > [Container images](#container-images-mcp-vs-agent).
@@ -1111,7 +1100,6 @@ Pick the extra that matches what you want to run:
 | Extra | Installs | Use when |
 |-------|----------|----------|
 | `onetrust-api[mcp]` | Connector-focused MCP server (`agent-utilities[mcp]` — FastMCP/FastAPI + `epistemic-graph[full]`) | You only run the **MCP server** (smallest install / image) |
-| `onetrust-api[agent]` | Agent runtime (`agent-utilities[agent-runtime,logfire]` — model orchestration + `epistemic-graph[full]`) | You run the **integrated agent** |
 | `onetrust-api[all]` | Everything (`mcp` + `agent`) | Development / both surfaces |
 
 ```bash
@@ -1119,24 +1107,21 @@ Pick the extra that matches what you want to run:
 uv pip install "onetrust-api[mcp]"
 
 # Agent runtime (adds model orchestration to the shared graph engine)
-uv pip install "onetrust-api[agent]"
 
 # Everything (development)
 uv pip install "onetrust-api[all]"      # or: python -m pip install "onetrust-api[all]"
 ```
 
-### Container images (`:mcp` vs `:agent`)
+### Container image
 
-One multi-stage `docker/Dockerfile` builds two right-sized images, selected by `--target`:
+One multi-stage `docker/Dockerfile` builds a single, right-sized image:
 
 | Image tag | Build target | Contents | Entrypoint |
 |-----------|--------------|----------|------------|
 | `example/onetrust-api:mcp` | `--target mcp` | `onetrust-api[mcp]` — **connector-focused**, includes `epistemic-graph[full]`; no model-orchestration stack | `onetrust-mcp` |
-| `example/onetrust-api@sha256:<digest>` | `--target agent` (default) | `onetrust-api[agent]` — **agent runtime**, model orchestration + `epistemic-graph[full]` | `onetrust-agent` |
 
 ```bash
 docker build --target mcp   -t example/onetrust-api:mcp    docker/   # connector-focused MCP server
-docker build --target agent -t example/onetrust-api:agent-local docker/   # agent runtime
 ```
 
 `docker/mcp.compose.yml` runs the connector-focused `:mcp` server; `docker/agent.compose.yml` runs the
@@ -1144,10 +1129,8 @@ agent (`immutable agent digest`) with a co-located `:mcp` sidecar.
 
 ### Knowledge-graph database (`epistemic-graph`)
 
-Both `[mcp]` and `[agent]` carry the **epistemic-graph** engine through the required
-Agent Utilities core dependency (`epistemic-graph[full]`). The `[mcp]` extra keeps
-the server connector-focused; `[agent]` additionally enables model orchestration. Local
-deployments can use the bundled engine. For production or shared state, run
+`[mcp]` carries the **epistemic-graph** engine through the required Agent Utilities
+core dependency (`epistemic-graph[full]`). Local deployments can use the bundled engine. For production or shared state, run
 **epistemic-graph as a dedicated database service** and configure the runtime to use it.
 Deployment recipes (single-node + Raft HA), connection configuration, and architecture
 diagrams are documented in the
@@ -1201,14 +1184,6 @@ above (e.g. `INCIDENTSTOOL`, `DSARTOOL`, `CONSENT_RECEIPTSTOOL`, `ESGTOOL`).
 | `EUNOMIA_POLICY_FILE` | Embedded policy file | `mcp_policies.json` |
 | `EUNOMIA_REMOTE_URL` | Remote Eunomia server URL | — |
 
-### Agent CLI (full `[agent]` runtime only)
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `MCP_URL` | URL of the MCP server the agent connects to | `http://localhost:8000/mcp` |
-| `PROVIDER` | LLM provider (e.g. `openai`) | `openai` |
-| `MODEL_ID` | Model id (e.g. `gpt-4o`) | `gpt-4o` |
-| `ENABLE_WEB_UI` | Serve the AG-UI web interface | `True` |
-
 ## Documentation
 
 The complete documentation is published as the
@@ -1229,7 +1204,6 @@ the source of truth for installation, usage, and deployment.
 ![GitHub followers](https://img.shields.io/github/followers/example)
 ![GitHub User's stars](https://img.shields.io/github/stars/example)
 
-
 <!-- BEGIN agent-utilities-deployment (generated; do not edit between markers) -->
 
 ## Deploy with `agent-utilities-deployment`
@@ -1243,7 +1217,7 @@ to **"deploy `onetrust-api` with agent-utilities-deployment"**.
 | Install mode | Command |
 |------|---------|
 | Installed package | `uv tool install "onetrust-api[mcp]"`, then run `onetrust-mcp` |
-| Editable source | `uv pip install -e ".[agent]"`, then run `onetrust-mcp` |
+| Editable source | `uv pip install -e ".[mcp]"`, then run `onetrust-mcp` |
 | Immutable container | deploy `registry.example.invalid/onetrust-api@sha256:<digest>` through the operator-selected orchestrator |
 
 The repository embeds no deployment profile, credential value, certificate path, or

@@ -52,7 +52,7 @@ WORKDIR /app
 COPY . /app
 RUN apt-get update \
     && apt-get install -y --no-install-recommends default-jre ripgrep tree fd-find curl nano \
-    && uv pip install --system --no-cache --break-system-packages .[agent] \
+    && uv pip install --system --no-cache --break-system-packages .[mcp] \
     && rm -rf /var/lib/apt/lists/*
 
 
