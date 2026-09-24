@@ -16,13 +16,11 @@ import threading
 from dataclasses import dataclass
 from typing import Any
 
-from agent_utilities.base_utilities import get_logger
-from agent_utilities.core.config import setting
-from agent_utilities.core.exceptions import AuthError, UnauthorizedError
-from agent_utilities.core.transport_security import (
-    ResolvedTLSProfile,
-    resolve_configured_tls_profile,
-)
+from agent_connector_sdk.utilities import get_logger
+from agent_connector_sdk.config import setting
+from agent_connector_sdk.exceptions import AuthError, UnauthorizedError
+from agent_connector_sdk.tls.profile import ResolvedTLSProfile
+from agent_connector_sdk.tls.resolve import resolve_tls_profile
 
 local = threading.local()
 from onetrust_api.api_client import Api
@@ -72,8 +70,7 @@ def _resolve_client_config(overrides: _ClientOverrides) -> dict[str, Any]:
         "worker_url": overrides.worker_url
         if overrides.worker_url is not None
         else setting("ONETRUST_WORKER_URL"),
-        "tls_profile": overrides.tls_profile
-        or resolve_configured_tls_profile("onetrust"),
+        "tls_profile": overrides.tls_profile or resolve_tls_profile("onetrust"),
     }
 
 
@@ -81,7 +78,7 @@ def _delegated_client(
     instance: str | None, region: str | None, config: dict | None, common: dict
 ) -> Api:
     """Path 1: OIDC Delegation (RFC 8693 Token Exchange)."""
-    from agent_utilities.mcp.delegated_auth import get_delegated_token
+    from onetrust_api._delegated_auth_compat import get_delegated_token
 
     try:
         delegated_token = get_delegated_token(
@@ -146,7 +143,7 @@ def get_client(
     Supports OIDC delegation, a fixed bearer token, and the OAuth2
     client-credentials flow via the shared ``delegated_auth`` helper.
     """
-    from agent_utilities.mcp.delegated_auth import is_delegation_enabled
+    from onetrust_api._delegated_auth_compat import is_delegation_enabled
 
     resolved = _resolve_client_config(
         _ClientOverrides(
@@ -168,7 +165,9 @@ def get_client(
     )
 
     if is_delegation_enabled(config):
-        return _delegated_client(resolved["instance"], resolved["region"], config, common)
+        return _delegated_client(
+            resolved["instance"], resolved["region"], config, common
+        )
 
     return _fixed_credentials_client(
         resolved["instance"],

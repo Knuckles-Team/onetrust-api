@@ -24,17 +24,15 @@ import time
 from typing import Any, TypeVar
 
 import requests
-from agent_utilities.base_utilities import get_logger
-from agent_utilities.core.exceptions import (
+from agent_connector_sdk.utilities import get_logger
+from agent_connector_sdk.exceptions import (
     AuthError,
     MissingParameterError,
     ParameterError,
     UnauthorizedError,
 )
-from agent_utilities.core.transport_security import (
-    ResolvedTLSProfile,
-    resolve_configured_tls_profile,
-)
+from agent_connector_sdk.tls.profile import ResolvedTLSProfile
+from agent_connector_sdk.tls.resolve import resolve_tls_profile
 from pydantic import ValidationError
 
 from onetrust_api.onetrust_models import Response
@@ -88,7 +86,7 @@ class OneTrustApiBase:
     ):
         logger.setLevel(logging.DEBUG if debug else logging.ERROR)
 
-        self.tls_profile = tls_profile or resolve_configured_tls_profile("onetrust")
+        self.tls_profile = tls_profile or resolve_tls_profile("onetrust")
         self.debug = debug
         self.max_retries = max_retries
         self._session = self.tls_profile.configure_requests_session(requests.Session())
@@ -169,9 +167,7 @@ class OneTrustApiBase:
                 timeout=30,
             )
         except requests.RequestException as e:
-            raise AuthError(
-                f"OneTrust token request failed: {type(e).__name__}"
-            ) from e
+            raise AuthError(f"OneTrust token request failed: {type(e).__name__}") from e
         if resp.status_code in (401, 403):
             raise UnauthorizedError(
                 f"OneTrust client-credentials rejected ({resp.status_code})."
