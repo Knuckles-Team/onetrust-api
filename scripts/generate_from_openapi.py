@@ -234,7 +234,9 @@ def collect_operations() -> dict[str, list[dict]]:
     synthetic = 0
 
     for spec_path in sorted(SPECS_DIR.glob("*.json")):
-        domain, ops, spec_synthetic = _collect_spec_operations(spec_path, global_methods)
+        domain, ops, spec_synthetic = _collect_spec_operations(
+            spec_path, global_methods
+        )
         synthetic += spec_synthetic
         if ops:
             by_domain.setdefault(domain, []).extend(ops)

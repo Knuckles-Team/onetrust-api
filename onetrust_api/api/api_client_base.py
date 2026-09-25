@@ -169,9 +169,7 @@ class OneTrustApiBase:
                 timeout=30,
             )
         except requests.RequestException as e:
-            raise AuthError(
-                f"OneTrust token request failed: {type(e).__name__}"
-            ) from e
+            raise AuthError(f"OneTrust token request failed: {type(e).__name__}") from e
         if resp.status_code in (401, 403):
             raise UnauthorizedError(
                 f"OneTrust client-credentials rejected ({resp.status_code})."

@@ -15,7 +15,9 @@ from pathlib import Path
 
 import pytest
 
-_MODULE_PATH = Path(__file__).resolve().parent.parent / "scripts" / "generate_from_openapi.py"
+_MODULE_PATH = (
+    Path(__file__).resolve().parent.parent / "scripts" / "generate_from_openapi.py"
+)
 
 
 def _load_module():
@@ -42,9 +44,18 @@ def gen(tmp_path, monkeypatch):
     return module
 
 
-def _op(action="do_thing", method="do_thing", http="GET", url="https://x/{id}",
-        path_params=("id",), query_params=(), has_body=False, paginate="none",
-        summary="Do the thing.", domain="widgets"):
+def _op(
+    action="do_thing",
+    method="do_thing",
+    http="GET",
+    url="https://x/{id}",
+    path_params=("id",),
+    query_params=(),
+    has_body=False,
+    paginate="none",
+    summary="Do the thing.",
+    domain="widgets",
+):
     return {
         "operation_id": action,
         "method": method,
@@ -69,7 +80,11 @@ def test_normalize_params_dedupes_path_and_query(gen):
         {"name": "id", "in": "path", "schema": {"type": "string"}},
         {"name": "id", "in": "path", "schema": {"type": "string"}},  # dupe, dropped
         {"name": "size", "in": "query", "schema": {"type": "integer"}},
-        {"name": "unused", "in": "header", "schema": {"type": "string"}},  # not path/query
+        {
+            "name": "unused",
+            "in": "header",
+            "schema": {"type": "string"},
+        },  # not path/query
     ]
     out = gen.normalize_params(params, {}, {})
     names = [p["name"] for p in out]
@@ -138,7 +153,8 @@ def test_normalize_params_request_body_property_shadowed_by_path_param_is_skippe
 
 def _write_spec(specs_dir, stem, paths, servers=None):
     spec = {
-        "servers": servers or [{"url": "https://{hostname}", "variables": {"hostname": {}}}],
+        "servers": servers
+        or [{"url": "https://{hostname}", "variables": {"hostname": {}}}],
         "paths": paths,
     }
     (specs_dir / f"{stem}.json").write_text(json.dumps(spec))
@@ -152,7 +168,9 @@ def test_collect_operations_builds_domain_with_synthetic_and_declared_ids(gen):
             "/widgets/{id}": {
                 "get": {
                     "operationId": "getWidget",
-                    "parameters": [{"name": "id", "in": "path", "schema": {"type": "string"}}],
+                    "parameters": [
+                        {"name": "id", "in": "path", "schema": {"type": "string"}}
+                    ],
                 },
                 "post": {},  # no operationId -> synthesized
             }
@@ -239,11 +257,11 @@ class OneTrustWidgets:
 
 
 def test_extract_client_signatures_skips_malformed_call(gen):
-    src = '''
+    src = """
 class OneTrustWidgets:
     def broken(self, **kwargs):
         return self._call(http='GET')
-'''
+"""
     assert gen._extract_client_signatures(src) == {}
 
 
@@ -270,7 +288,9 @@ def test_reconcile_reports_missing_and_orphaned_handlers(gen):
     gen.emit_mcp_module("widgets", original)
 
     # spec now has a different action; get_widget disappeared, add_widget appeared
-    by_domain = {"widgets": [_op(action="add_widget", method="add_widget", http="POST")]}
+    by_domain = {
+        "widgets": [_op(action="add_widget", method="add_widget", http="POST")]
+    }
     findings = gen.reconcile(by_domain)
     kinds = {f.kind: f.action for f in findings}
     assert kinds["MISSING HANDLER"] == "add_widget"
@@ -278,11 +298,17 @@ def test_reconcile_reports_missing_and_orphaned_handlers(gen):
 
 
 def test_reconcile_reports_signature_drift(gen):
-    original = [_op(action="get_widget", method="get_widget", url="__HOSTNAME__/widgets/{id}")]
+    original = [
+        _op(action="get_widget", method="get_widget", url="__HOSTNAME__/widgets/{id}")
+    ]
     gen.emit_client_module("widgets", original)
     gen.emit_mcp_module("widgets", original)
 
-    drifted = [_op(action="get_widget", method="get_widget", url="__HOSTNAME__/v2/widgets/{id}")]
+    drifted = [
+        _op(
+            action="get_widget", method="get_widget", url="__HOSTNAME__/v2/widgets/{id}"
+        )
+    ]
     findings = gen.reconcile({"widgets": drifted})
     assert [f.kind for f in findings] == ["SIGNATURE DRIFT"]
 
@@ -369,7 +395,9 @@ def test_main_apply_inserts_missing_handlers_then_reports_clean(gen, monkeypatch
     original = [_op(action="get_widget", method="get_widget")]
     gen.emit_client_module("widgets", original)
     gen.emit_mcp_module("widgets", original)
-    all_ops = original + [_op(action="delete_widget", method="delete_widget", http="DELETE")]
+    all_ops = original + [
+        _op(action="delete_widget", method="delete_widget", http="DELETE")
+    ]
 
     monkeypatch.setattr(gen, "collect_operations", lambda: {"widgets": all_ops})
     monkeypatch.setattr(sys, "argv", ["generate_from_openapi.py", "--apply"])

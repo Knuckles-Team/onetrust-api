@@ -46,7 +46,7 @@ repos:
     rev: 63c8f8312b7559622c0d82815639671ae42132ac # v2.4.1
     hooks:
       - id: codespell
-        args: ["-L", "ans,linar,nam,tread,ot,"]
+        args: ["-L", "ans,linar,nam,tread,ot,thirdParty,"]
         exclude: |
             (?x)^(
               \./test/.*|
