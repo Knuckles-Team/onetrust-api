@@ -50,6 +50,6 @@ endpoint not yet wrapped:
 onetrust-agent --provider openai --model-id gpt-4o --api-key sk-...
 ```
 
-The agent auto-discovers the MCP tools from `mcp_config.json`; with this many
+The agent auto-discovers the MCP tools from `mcp_config.json`; with this multiple
 domains the agent-utilities graph router engages automatically to keep the active
 tool set focused per turn.

@@ -59,7 +59,7 @@ and a coverage test asserts the three sets stay in lock-step.
 
 The MCP Server runs in `stdio` (local) or `streamable-http` (networked) mode.
 Each domain is a tool gated by a `{TAG}TOOL` environment variable (default `True`),
-so you can scope the surface (e.g. set `ESGTOOL=False` to drop ESG).
+so the operator can scope the surface (e.g. set `ESGTOOL=False` to drop ESG).
 
 #### Environment Variables
 
@@ -1085,7 +1085,7 @@ docker run -d \
 > `docker/Dockerfile --target mcp`, installing `onetrust-api[mcp]`). The default
 > the immutable agent image is the **full agent image** (`--target agent`, `onetrust-api[agent]`)
 > which also bundles the Pydantic AI agent and the epistemic-graph engine — use it
-> when you run `onetrust-agent` (the agent), not just the MCP server. See
+> when the operator run `onetrust-agent` (the agent), not just the MCP server. See
 > [Container images](#container-images-mcp-vs-agent).
 
 ### Deploy with Docker Compose
@@ -1106,12 +1106,12 @@ services:
 
 ## Installation
 
-Pick the extra that matches what you want to run:
+Pick the extra that matches what the operator want to run:
 
 | Extra | Installs | Use when |
 |-------|----------|----------|
-| `onetrust-api[mcp]` | Connector-focused MCP server (`agent-utilities[mcp]` — FastMCP/FastAPI + `epistemic-graph[full]`) | You only run the **MCP server** (smallest install / image) |
-| `onetrust-api[agent]` | Agent runtime (`agent-utilities[agent-runtime,logfire]` — model orchestration + `epistemic-graph[full]`) | You run the **integrated agent** |
+| `onetrust-api[mcp]` | Connector-focused MCP server (`agent-utilities[mcp]` — FastMCP/FastAPI + `epistemic-graph[full]`) | The operator only run the **MCP server** (smallest install / image) |
+| `onetrust-api[agent]` | Agent runtime (`agent-utilities[agent-runtime,logfire]` — model orchestration + `epistemic-graph[full]`) | The operator run the **integrated agent** |
 | `onetrust-api[all]` | Everything (`mcp` + `agent`) | Development / both surfaces |
 
 ```bash
@@ -1146,7 +1146,7 @@ agent (`immutable agent digest`) with a co-located `:mcp` sidecar.
 
 Both `[mcp]` and `[agent]` carry the **epistemic-graph** engine through the required
 Agent Utilities core dependency (`epistemic-graph[full]`). The `[mcp]` extra keeps
-the server connector-focused; `[agent]` additionally enables model orchestration. Local
+the server connector-focused; `[agent]` also enables model orchestration. Local
 deployments can use the bundled engine. For production or shared state, run
 **epistemic-graph as a dedicated database service** and configure the runtime to use it.
 Deployment recipes (single-node + Raft HA), connection configuration, and architecture
