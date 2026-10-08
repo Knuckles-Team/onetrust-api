@@ -2,7 +2,7 @@
 name: onetrust-privacy-assessments
 skill_type: skill
 description: >-
-  Privacy & risk assessment operations on the OneTrust Assessment Automation API
+  Privacy and risk assessment operations on the OneTrust Assessment Automation API
   via the onetrust-api MCP server — list, launch, read, complete, and approve
   PIAs/DPIAs/TRAs with the domain-typed tool. Use when the agent must triage
   in-flight assessments, launch an assessment from a template, submit or review

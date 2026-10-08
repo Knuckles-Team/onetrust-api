@@ -2,7 +2,7 @@
 name: onetrust-data-mapping
 skill_type: skill
 description: >-
-  Data inventory & data-mapping operations on the OneTrust Data Mapping /
+  Data inventory and data-mapping operations on the OneTrust Data Mapping /
   Inventory API via the onetrust-api MCP server — list and read inventory records
   (assets, vendors, legal entities, processing activities) and their data elements
   with the domain-typed tool. Use when the agent must enumerate the data map, read
