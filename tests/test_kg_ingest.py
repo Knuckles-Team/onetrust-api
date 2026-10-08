@@ -15,7 +15,7 @@ import msgpack
 import pytest
 from agent_utilities.knowledge_graph.memory.native_ingest import NativeIngestError
 from agent_utilities.security.brain_context import ActorContext, use_actor
-from agent_utilities.models.company_brain import ActorType
+from agent_utilities.security.actor_identity import ActorType
 from agent_utilities.knowledge_graph.core.session import GraphSession, use_session
 
 from onetrust_api.kg_ingest import (
@@ -209,7 +209,8 @@ def test_ingest_cookies_maps_cookie_and_domain():
     assert ck["cookieCategory"] == "Performance"
     assert ck["thirdParty"] is True
     assert (
-        c.nodes.values["onetrust:cookie_domain:example.com"]["node_type"] == "CookieDomain"
+        c.nodes.values["onetrust:cookie_domain:example.com"]["node_type"]
+        == "CookieDomain"
     )
     assert c.changes.edges == [
         (
