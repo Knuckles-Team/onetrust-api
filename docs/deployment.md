@@ -32,5 +32,5 @@ services:
 
 ## Scoping the tool surface
 
-Disable domains you don't need with `{TAG}TOOL=False` (e.g. `ESGTOOL=False`,
+Disable domains the operator don't need with `{TAG}TOOL=False` (e.g. `ESGTOOL=False`,
 `TRAININGTOOL=False`). All domains default to `True`.

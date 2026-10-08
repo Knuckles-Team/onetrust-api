@@ -20,7 +20,7 @@ OneTrust uses OAuth2. Use **one** of:
 
 ## Host configuration
 
-Set `ONETRUST_URL` to your tenant pod (e.g. `https://acme.my.onetrust.com`), or
+Set `ONETRUST_URL` to the operator's tenant pod (e.g. `https://acme.my.onetrust.com`), or
 set `ONETRUST_REGION` to use a shared regional pod (`us`, `eu`, `de`, `uk`, `au`,
 `ca`, `fr`, `in`, `jp`, `trial`, `uat`, …). Consent-transaction and on-prem worker
 endpoints can be pointed elsewhere with `ONETRUST_CONSENT_URL` and
