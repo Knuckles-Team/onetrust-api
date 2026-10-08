@@ -51,27 +51,41 @@ def _resolve_client_config(overrides: _ClientOverrides) -> dict[str, Any]:
     ``config.json`` / env — an explicit override always wins over the setting.
     """
     return {
-        "instance": overrides.instance
-        if overrides.instance is not None
-        else setting("ONETRUST_URL"),
-        "token": overrides.token
-        if overrides.token is not None
-        else setting("ONETRUST_TOKEN"),
-        "client_id": overrides.client_id
-        if overrides.client_id is not None
-        else setting("ONETRUST_CLIENT_ID"),
-        "client_secret": overrides.client_secret
-        if overrides.client_secret is not None
-        else setting("ONETRUST_CLIENT_SECRET"),
-        "region": overrides.region
-        if overrides.region is not None
-        else setting("ONETRUST_REGION", "us"),
-        "consent_url": overrides.consent_url
-        if overrides.consent_url is not None
-        else setting("ONETRUST_CONSENT_URL"),
-        "worker_url": overrides.worker_url
-        if overrides.worker_url is not None
-        else setting("ONETRUST_WORKER_URL"),
+        "instance": (
+            overrides.instance
+            if overrides.instance is not None
+            else setting("ONETRUST_URL")
+        ),
+        "token": (
+            overrides.token
+            if overrides.token is not None
+            else setting("ONETRUST_TOKEN")
+        ),
+        "client_id": (
+            overrides.client_id
+            if overrides.client_id is not None
+            else setting("ONETRUST_CLIENT_ID")
+        ),
+        "client_secret": (
+            overrides.client_secret
+            if overrides.client_secret is not None
+            else setting("ONETRUST_CLIENT_SECRET")
+        ),
+        "region": (
+            overrides.region
+            if overrides.region is not None
+            else setting("ONETRUST_REGION", "us")
+        ),
+        "consent_url": (
+            overrides.consent_url
+            if overrides.consent_url is not None
+            else setting("ONETRUST_CONSENT_URL")
+        ),
+        "worker_url": (
+            overrides.worker_url
+            if overrides.worker_url is not None
+            else setting("ONETRUST_WORKER_URL")
+        ),
         "tls_profile": overrides.tls_profile
         or resolve_configured_tls_profile("onetrust"),
     }
@@ -168,7 +182,9 @@ def get_client(
     )
 
     if is_delegation_enabled(config):
-        return _delegated_client(resolved["instance"], resolved["region"], config, common)
+        return _delegated_client(
+            resolved["instance"], resolved["region"], config, common
+        )
 
     return _fixed_credentials_client(
         resolved["instance"],
