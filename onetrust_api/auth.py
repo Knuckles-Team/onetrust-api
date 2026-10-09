@@ -4,30 +4,26 @@ Authentication priority:
 
 1. **OIDC Delegation** — If ``ENABLE_DELEGATION`` is active, exchanges the
    IdP-issued user token for a downstream OneTrust access token via RFC 8693
-   Token Exchange using the shared ``delegated_auth`` helper.
+   Token Exchange using ``agent_connector_sdk.auth.delegation``.
 2. **Fixed Credentials** — Falls back to a pre-minted bearer token
    (``ONETRUST_TOKEN``) or an OAuth2 client-credentials pair
    (``ONETRUST_CLIENT_ID`` / ``ONETRUST_CLIENT_SECRET``).
-
-See ``docs/guides/oauth_sso.md`` in agent-utilities for full details.
 """
 
+import logging
 import threading
 from dataclasses import dataclass
 from typing import Any
 
-from agent_utilities.base_utilities import get_logger
-from agent_utilities.core.config import setting
-from agent_utilities.core.exceptions import AuthError, UnauthorizedError
-from agent_utilities.core.transport_security import (
-    ResolvedTLSProfile,
-    resolve_configured_tls_profile,
-)
+from agent_connector_sdk.config import setting
+from agent_connector_sdk.exceptions import AuthError, UnauthorizedError
+from agent_connector_sdk.tls.profile import ResolvedTLSProfile
+from agent_connector_sdk.tls.resolve import resolve_tls_profile
 
 local = threading.local()
 from onetrust_api.api_client import Api
 
-logger = get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -86,25 +82,55 @@ def _resolve_client_config(overrides: _ClientOverrides) -> dict[str, Any]:
             if overrides.worker_url is not None
             else setting("ONETRUST_WORKER_URL")
         ),
-        "tls_profile": overrides.tls_profile
-        or resolve_configured_tls_profile("onetrust"),
+        "tls_profile": overrides.tls_profile or resolve_tls_profile("onetrust"),
     }
+
+
+def _is_delegation_enabled(config: dict[str, Any] | None) -> bool:
+    """Whether the OIDC delegation path should be attempted.
+
+    An explicit ``config`` dict (test injection only -- no production caller
+    passes one) wins outright; otherwise reads the real ``ENABLE_DELEGATION``
+    setting through ``agent_connector_sdk.auth.delegation.DelegationSettings``.
+    """
+    if config is not None:
+        return bool(config.get("enable_delegation", False))
+    from agent_connector_sdk.auth.delegation import DelegationSettings
+
+    return DelegationSettings.from_settings().enabled
 
 
 def _delegated_client(
     instance: str | None, region: str | None, config: dict | None, common: dict
 ) -> Api:
-    """Path 1: OIDC Delegation (RFC 8693 Token Exchange)."""
-    from agent_utilities.mcp.delegated_auth import get_delegated_token
+    """Path 1: OIDC Delegation (RFC 8693 Token Exchange).
+
+    Reads delegation settings (``OIDC_TOKEN_URL``/``OIDC_CLIENT_ID``/
+    ``OIDC_CLIENT_SECRET_REF``/``AUDIENCE``/``DELEGATED_SCOPES``) from the
+    process settings via ``agent_connector_sdk.auth.delegation.DelegationSettings``;
+    unlike the old ``agent_utilities`` helper, this has no per-call ``config``
+    override for those fields, only for whether delegation is attempted at all
+    (see :func:`_is_delegation_enabled`).
+    """
+    import httpx
+    from agent_connector_sdk.auth.delegation import (
+        DelegationSettings,
+        current_user_token,
+        exchange_token,
+    )
+    from agent_connector_sdk.exceptions import LoginRequiredError
 
     try:
-        delegated_token = get_delegated_token(
-            config=config,
-            audience=(config or {}).get("audience", instance or region),
-            scopes=(config or {}).get("delegated_scopes", "api"),
-        )
+        settings = DelegationSettings.from_settings()
+        subject_token = current_user_token()
+        if not subject_token:
+            raise LoginRequiredError("no verified caller token to delegate")
+        with httpx.Client(timeout=30) as http_client:
+            access_token = exchange_token(
+                settings, subject_token=subject_token, http_client=http_client
+            )
         logger.info("Using OIDC delegated token for OneTrust API")
-        return Api(url=instance, token=delegated_token, **common)
+        return Api(url=instance, token=access_token.value, **common)
     except Exception as e:
         logger.error(
             "OIDC delegation failed for OneTrust",
@@ -158,10 +184,8 @@ def get_client(
     Credentials resolve live through the shared config layer (the one XDG
     ``config.json`` / env), read at call time rather than frozen at import.
     Supports OIDC delegation, a fixed bearer token, and the OAuth2
-    client-credentials flow via the shared ``delegated_auth`` helper.
+    client-credentials flow via ``agent_connector_sdk.auth.delegation``.
     """
-    from agent_utilities.mcp.delegated_auth import is_delegation_enabled
-
     resolved = _resolve_client_config(
         _ClientOverrides(
             instance=instance,
@@ -181,7 +205,7 @@ def get_client(
         tls_profile=resolved["tls_profile"],
     )
 
-    if is_delegation_enabled(config):
+    if _is_delegation_enabled(config):
         return _delegated_client(
             resolved["instance"], resolved["region"], config, common
         )

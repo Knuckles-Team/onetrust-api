@@ -1,22 +1,23 @@
-"""Native epistemic-graph typed-node ingestion — Wire-First coverage.
+"""Epistemic-graph typed-node ingestion -- Wire-First coverage for onetrust-api.
 
 Exercises the real ``ingest_entities`` / ``ingest_documents`` seam and the OneTrust
 domain mappers (``ingest_assessments`` / ``ingest_cookies`` / ``ingest_inventories`` /
-``ingest_data_elements``) with a fake engine client (no engine required), asserting the
-txn add_node/commit + edge calls and the record → typed-node mapping.
+``ingest_data_elements``) against a fake ``agent_connector_sdk.ingest`` transport (no
+engine required). The real SDK request builder
+(``agent_connector_sdk.ingest.request.build_request``) and privacy guard still run, so
+a malformed change set and the PII redaction contract are still exercised by the SDK's
+own code, not re-derived here; only the final network commit is faked.
 CONCEPT:AU-KG.ingest.enterprise-source-extractor.
 """
 
 from __future__ import annotations
 
+from types import SimpleNamespace
 from typing import Any
 
-import msgpack
 import pytest
-from agent_utilities.knowledge_graph.memory.native_ingest import NativeIngestError
-from agent_utilities.security.brain_context import ActorContext, use_actor
-from agent_utilities.security.actor_identity import ActorType
-from agent_utilities.knowledge_graph.core.session import GraphSession, use_session
+from agent_connector_sdk.ingest import IngestError, KnowledgeIngest
+from epistemic_graph.generated.source_ingestion import SourceIngestionRequest
 
 from onetrust_api.kg_ingest import (
     assessment_documents,
@@ -29,115 +30,59 @@ from onetrust_api.kg_ingest import (
 )
 
 
-@pytest.fixture(autouse=True)
-def _governed_session():
-    actor = ActorContext(
-        actor_id="subject:opaque:synthetic",
-        actor_type=ActorType.AUTOMATED_SERVICE,
-        roles=(),
-        tenant_id="tenant:opaque:synthetic",
-        authenticated=True,
-    )
-    session = GraphSession(
-        actor=actor,
-        tenant=actor.tenant_id,
-        scopes=frozenset({"kg:write"}),
-        graph="graph:opaque:synthetic",
-        policy_version="policy:opaque:synthetic",
-        audience="epistemic-graph",
-    )
-    with use_actor(actor), use_session(session):
-        yield
+class _FakeTransport:
+    """Records every submitted request; no epistemic-graph engine required."""
 
-
-class _FakeNodes:
     def __init__(self) -> None:
-        self.values: dict[str, dict[str, Any]] = {}
+        self.requests: list[SourceIngestionRequest] = []
 
-    def properties(self, node_id: str) -> dict[str, Any] | None:
-        return self.values.get(node_id)
+    async def source_status(self, _connector: str, _stream: str) -> Any:
+        return SimpleNamespace(accepted_checkpoint=None)
 
-    def list(self) -> list[tuple[str, dict[str, Any]]]:
-        return list(self.values.items())
+    async def submit(self, request: SourceIngestionRequest) -> Any:
+        self.requests.append(request)
+        return SimpleNamespace(
+            affected_count=len(request.records),
+            relationship_count=len(request.relationships),
+        )
 
-
-class _FakeChanges:
-    def __init__(self, nodes: _FakeNodes) -> None:
-        self.nodes = nodes
-        self.edges: list[tuple[str, str, dict[str, Any]]] = []
-        self.applied: list[dict[str, Any]] = []
-        self.records: dict[str, dict[str, Any]] = {}
-        self.versions: dict[str, dict[str, Any]] = {}
-
-    def get(self, envelope_id: str) -> dict[str, Any] | None:
-        return self.records.get(envelope_id)
-
-    def content_version(self, object_id: str) -> dict[str, Any] | None:
-        return self.versions.get(object_id)
-
-    def cursor(self, _source: str, _partition: str = "") -> None:
-        return None
-
-    def apply(self, envelope: dict[str, Any]) -> dict[str, Any]:
-        self.applied.append(envelope)
-        mutation = envelope["mutation"]
-        for operation in mutation["operations"]:
-            method = operation["method"]
-            params = method["params"]
-            properties = msgpack.unpackb(params["properties_msgpack"], raw=False)
-            if method["method"] == "AddNode":
-                self.nodes.values[params["node_id"]] = properties
-            elif method["method"] == "AddEdge":
-                self.edges.append(
-                    (params["source_id"], params["target_id"], properties)
-                )
-        version = envelope["content_version"]
-        self.versions[version["object_id"]] = version
-        self.records[envelope["envelope_id"]] = envelope
-        return {
-            "batch_id": mutation["batch_id"],
-            "replayed": False,
-            "projection_pending": False,
-        }
+    async def store_blob(self, _data: bytes) -> str:
+        raise AssertionError("onetrust-api ingestion carries no media")
 
 
-class _FakeRdf:
-    def validate_shacl(self, _shapes: str, _data_graph: str) -> dict[str, Any]:
-        return {"conforms": True, "results": []}
+@pytest.fixture
+def ingest() -> tuple[KnowledgeIngest, _FakeTransport]:
+    transport = _FakeTransport()
+    return KnowledgeIngest(transport, loop=None), transport
 
 
-class _FakeClient:
-    def __init__(self) -> None:
-        self.nodes = _FakeNodes()
-        self.changes = _FakeChanges(self.nodes)
-        self.rdf = _FakeRdf()
-
-    @staticmethod
-    def supports(operation: str) -> bool:
-        return operation == "ApplyChangeEnvelope"
-
-
-def test_ingest_entities_writes_nodes_and_edges():
-    c = _FakeClient()
-    res = ingest_entities(
+@pytest.mark.asyncio
+async def test_ingest_entities_writes_nodes_and_edges(ingest):
+    service, transport = ingest
+    res = await ingest_entities(
         [
             {"id": "a", "node_type": "Assessment", "name": "PIA"},
             {"id": "b", "node_type": "AssessmentTemplate"},
         ],
         [{"source": "a", "target": "b", "relationship": "usesTemplate"}],
-        client=c,
+        ingest=service,
     )
     assert res == {"nodes": 2, "edges": 1}
-    assert len(c.changes.applied) == 1
-    assert set(c.nodes.values) == {"a", "b"}
-    assert c.nodes.values["a"]["source"] == "onetrust-api"
-    assert c.nodes.values["a"]["domain"] == "onetrust"
-    assert c.changes.edges == [("a", "b", {"relationship": "usesTemplate"})]
+    assert len(transport.requests) == 1
+    request = transport.requests[0]
+    record_ids = {record.record_id for record in request.records}
+    assert record_ids == {"a", "b"}
+    a_record = next(r for r in request.records if r.record_id == "a")
+    assert a_record.payload["name"] == "PIA"
+    assert request.relationships[0].relation_reference.endswith(
+        "resources/Assessment/relations/usesTemplate"
+    )
 
 
-def test_ingest_assessments_maps_assessment_template_and_person():
-    c = _FakeClient()
-    res = ingest_assessments(
+@pytest.mark.asyncio
+async def test_ingest_assessments_maps_assessment_template_and_person(ingest):
+    service, transport = ingest
+    res = await ingest_assessments(
         [
             {
                 "assessmentId": "A1",
@@ -151,45 +96,47 @@ def test_ingest_assessments_maps_assessment_template_and_person():
                 "respondent": {"id": "u1", "fullName": "Ada", "email": "ada@x.io"},
             }
         ],
-        client=c,
+        ingest=service,
     )
     assert res == {"nodes": 3, "edges": 2}
-    assert c.nodes.values["onetrust:assessment:A1"]["node_type"] == "Assessment"
-    assert c.nodes.values["onetrust:assessment:A1"]["number"] == "AS-7"
-    assert c.nodes.values["onetrust:assessment:A1"]["externalId"] == "A1"
-    assert (
-        c.nodes.values["onetrust:assessment_template:T9"]["node_type"]
-        == "AssessmentTemplate"
+    request = transport.requests[0]
+    assessment = next(
+        r for r in request.records if r.record_id == "onetrust:assessment:A1"
     )
-    assert c.nodes.values["onetrust:person:u1"]["node_type"] == "Person"
-    assert (
-        "onetrust:assessment:A1",
-        "onetrust:assessment_template:T9",
-        {"relationship": "usesTemplate"},
-    ) in c.changes.edges
-    assert (
-        "onetrust:assessment:A1",
-        "onetrust:person:u1",
-        {"relationship": "respondedBy"},
-    ) in c.changes.edges
+    assert assessment.payload["number"] == "AS-7"
+    assert assessment.payload["externalId"] == "A1"
+    template = next(
+        r
+        for r in request.records
+        if r.record_id == "onetrust:assessment_template:T9"
+    )
+    assert template.mapping_reference.endswith("AssessmentTemplate")
+    person = next(
+        r for r in request.records if r.record_id == "onetrust:person:u1"
+    )
+    assert person.mapping_reference.endswith("Person")
+    relations = {r.relation_reference.rsplit("/", 1)[-1] for r in request.relationships}
+    assert relations == {"usesTemplate", "respondedBy"}
 
 
-def test_assessment_documents_and_ingest_documents():
+@pytest.mark.asyncio
+async def test_assessment_documents_and_ingest_documents(ingest):
+    service, transport = ingest
     docs = assessment_documents(
         [{"assessmentId": "A1", "name": "Vendor PIA", "status": "COMPLETED"}]
     )
     assert docs and docs[0]["id"] == "onetrust:assessment_doc:A1"
-    c = _FakeClient()
-    res = ingest_documents(docs, client=c)
+    res = await ingest_documents(docs, ingest=service)
     assert res == {"nodes": 1, "edges": 0}
-    node = c.nodes.values["onetrust:assessment_doc:A1"]
-    assert node["node_type"] == "Document"
-    assert "Vendor PIA" in node["text"]
+    record = transport.requests[0].records[0]
+    assert record.record_id == "onetrust:assessment_doc:A1"
+    assert "Vendor PIA" in record.payload["text"]
 
 
-def test_ingest_cookies_maps_cookie_and_domain():
-    c = _FakeClient()
-    res = ingest_cookies(
+@pytest.mark.asyncio
+async def test_ingest_cookies_maps_cookie_and_domain(ingest):
+    service, transport = ingest
+    res = await ingest_cookies(
         [
             {
                 "cookieId": "CK1",
@@ -200,30 +147,29 @@ def test_ingest_cookies_maps_cookie_and_domain():
                 "thirdParty": True,
             }
         ],
-        client=c,
+        ingest=service,
     )
     assert res == {"nodes": 2, "edges": 1}
-    ck = c.nodes.values["onetrust:cookie:CK1"]
-    assert ck["node_type"] == "Cookie"
-    assert ck["host"] == "example.com"
-    assert ck["cookieCategory"] == "Performance"
-    assert ck["thirdParty"] is True
-    assert (
-        c.nodes.values["onetrust:cookie_domain:example.com"]["node_type"]
-        == "CookieDomain"
+    request = transport.requests[0]
+    cookie = next(r for r in request.records if r.record_id == "onetrust:cookie:CK1")
+    # "host" is a recognized location field: the SDK's PersistencePrivacyGuard
+    # redacts it outright (by field name, not just a value pattern match).
+    assert cookie.payload["host"] == "[REDACTED_LOCATION]"
+    assert cookie.payload["cookieCategory"] == "Performance"
+    assert cookie.payload["thirdParty"] is True
+    domain = next(
+        r
+        for r in request.records
+        if r.record_id == "onetrust:cookie_domain:example.com"
     )
-    assert c.changes.edges == [
-        (
-            "onetrust:cookie:CK1",
-            "onetrust:cookie_domain:example.com",
-            {"relationship": "scannedOnDomain"},
-        )
-    ]
+    assert domain.mapping_reference.endswith("CookieDomain")
+    assert request.relationships[0].relation_reference.endswith("scannedOnDomain")
 
 
-def test_ingest_inventories_extracts_data_elements_and_owner():
-    c = _FakeClient()
-    res = ingest_inventories(
+@pytest.mark.asyncio
+async def test_ingest_inventories_extracts_data_elements_and_owner(ingest):
+    service, transport = ingest
+    res = await ingest_inventories(
         [
             {
                 "id": "INV1",
@@ -241,20 +187,29 @@ def test_ingest_inventories_extracts_data_elements_and_owner():
                 ],
             }
         ],
-        client=c,
+        ingest=service,
     )
     # Inventory + Person + DataElement + DataSubject = 4 nodes
     assert res == {"nodes": 4, "edges": 3}
-    assert c.nodes.values["onetrust:inventory:INV1"]["inventoryType"] == "ASSETS"
-    assert c.nodes.values["onetrust:data_element:DE1"]["node_type"] == "DataElement"
-    assert c.nodes.values["onetrust:data_subject:DS1"]["node_type"] == "DataSubject"
-    edge_types = {e[2]["relationship"] for e in c.changes.edges}
-    assert edge_types == {"ownedBy", "hasDataElement", "concernsDataSubject"}
+    request = transport.requests[0]
+    inventory = next(
+        r for r in request.records if r.record_id == "onetrust:inventory:INV1"
+    )
+    assert inventory.payload["inventoryType"] == "ASSETS"
+    assert any(
+        r.record_id == "onetrust:data_element:DE1" for r in request.records
+    )
+    assert any(
+        r.record_id == "onetrust:data_subject:DS1" for r in request.records
+    )
+    relations = {r.relation_reference.rsplit("/", 1)[-1] for r in request.relationships}
+    assert relations == {"ownedBy", "hasDataElement", "concernsDataSubject"}
 
 
-def test_ingest_data_elements_standalone():
-    c = _FakeClient()
-    res = ingest_data_elements(
+@pytest.mark.asyncio
+async def test_ingest_data_elements_standalone(ingest):
+    service, transport = ingest
+    res = await ingest_data_elements(
         [
             {
                 "id": "DE9",
@@ -263,20 +218,25 @@ def test_ingest_data_elements_standalone():
                 "status": "ACTIVE",
             }
         ],
-        client=c,
+        ingest=service,
     )
     assert res == {"nodes": 1, "edges": 0}
-    assert c.nodes.values["onetrust:data_element:DE9"]["name"] == "SSN"
+    record = transport.requests[0].records[0]
+    assert record.record_id == "onetrust:data_element:DE9"
+    assert record.payload["name"] == "SSN"
 
 
-def test_retired_node_type_alias_is_rejected():
-    with pytest.raises(NativeIngestError, match="canonical node_type"):
-        ingest_entities(
-            [{"id": "retired", "type": "RetiredAlias"}],
-            client=_FakeClient(),
+@pytest.mark.asyncio
+async def test_retired_node_type_alias_is_rejected(ingest):
+    service, _transport = ingest
+    with pytest.raises(IngestError, match="node_type"):
+        await ingest_entities(
+            [{"id": "retired", "type": "RetiredAlias"}], ingest=service
         )
 
 
-def test_empty_native_ingest_is_rejected():
-    with pytest.raises(NativeIngestError, match="at least one entity"):
-        ingest_entities([], client=_FakeClient())
+@pytest.mark.asyncio
+async def test_empty_ingest_is_rejected(ingest):
+    service, _transport = ingest
+    with pytest.raises(IngestError, match="at least one entity"):
+        await ingest_entities([], ingest=service)
