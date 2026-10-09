@@ -1,42 +1,65 @@
 """Authentication factory tests."""
 
 import pytest
-from agent_utilities.core.exceptions import AuthError
+from agent_connector_sdk.exceptions import AuthError
 
 from onetrust_api.api_client import Api
 
+_DELEGATION_SETTINGS_ENV = {
+    "ENABLE_DELEGATION": "true",
+    "OIDC_TOKEN_URL": "https://idp.example.invalid/token",
+    "OIDC_CLIENT_ID": "onetrust-connector",
+    "OIDC_CLIENT_SECRET_REF": "env://TEST_ONETRUST_OIDC_SECRET_UNUSED",
+    "AUDIENCE": "https://onetrust.example.invalid",
+}
+
+
+def _set_delegation_settings_env(monkeypatch) -> None:
+    for key, value in _DELEGATION_SETTINGS_ENV.items():
+        monkeypatch.setenv(key, value)
+
 
 def test_get_client_uses_delegated_token_when_enabled(monkeypatch):
-    """Delegation path: get_delegated_token's return becomes the client's bearer token."""
+    """Delegation path: exchange_token's return becomes the client's bearer token."""
     monkeypatch.setenv("ONETRUST_URL", "https://acme.my.onetrust.com")
+    _set_delegation_settings_env(monkeypatch)
 
-    import agent_utilities.mcp.delegated_auth as delegated_auth
+    import agent_connector_sdk.auth.delegation as delegation
+    from agent_connector_sdk.auth.tokens import AccessToken
 
+    monkeypatch.setattr(delegation, "current_user_token", lambda: "caller-token")
     monkeypatch.setattr(
-        delegated_auth, "get_delegated_token", lambda **kwargs: "delegated-tok"
+        delegation,
+        "exchange_token",
+        lambda settings, *, subject_token, http_client, resolver=None: AccessToken(
+            value="delegated-tok", ttl_seconds=3600, expires_at=0.0
+        ),
     )
 
     from onetrust_api.auth import get_client
 
-    client = get_client(config={"enable_delegation": True})
+    client = get_client()
     assert isinstance(client, Api)
     assert client._token == "delegated-tok"
 
 
 def test_get_client_wraps_delegation_failure_as_runtime_error(monkeypatch):
     monkeypatch.setenv("ONETRUST_URL", "https://acme.my.onetrust.com")
+    _set_delegation_settings_env(monkeypatch)
 
-    import agent_utilities.mcp.delegated_auth as delegated_auth
+    import agent_connector_sdk.auth.delegation as delegation
 
-    def _boom(**kwargs):
+    monkeypatch.setattr(delegation, "current_user_token", lambda: "caller-token")
+
+    def _boom(settings, *, subject_token, http_client, resolver=None):
         raise ValueError("no token exchange available")
 
-    monkeypatch.setattr(delegated_auth, "get_delegated_token", _boom)
+    monkeypatch.setattr(delegation, "exchange_token", _boom)
 
     from onetrust_api.auth import get_client
 
     with pytest.raises(RuntimeError, match="Token exchange failed"):
-        get_client(config={"enable_delegation": True})
+        get_client()
 
 
 def test_get_client_wraps_bad_fixed_credentials_as_runtime_error(monkeypatch):

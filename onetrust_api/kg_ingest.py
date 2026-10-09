@@ -1,81 +1,121 @@
-"""Native epistemic-graph ingestion for OneTrust records.
+"""Epistemic-graph ingestion for OneTrust records.
 
 CONCEPT:AU-KG.ingest.enterprise-source-extractor. Connector-specific mappers emit
-canonical node_type nodes and relationship edges. The required agent-utilities
-native-ingest primitive owns the transaction and raises NativeIngestError when the
-authoritative engine cannot commit.
+canonical node_type nodes and relationship edges. ``agent_connector_sdk.ingest`` --
+the generated ``SourceIngest`` client, not a local ingestion helper -- owns the
+transaction and raises ``IngestError`` when epistemic-graph cannot commit.
 """
 
 from __future__ import annotations
 
 from typing import Any
 
-from agent_utilities.knowledge_graph.memory.native_ingest import (
-    ingest_documents as _native_ingest_documents,
-)
-from agent_utilities.knowledge_graph.memory.native_ingest import (
-    ingest_entities as _native_ingest_entities,
-)
-from agent_utilities.knowledge_graph.memory.native_ingest import (
-    media_store as _native_media_store,
+from agent_connector_sdk.ingest import (
+    ChangeSet,
+    Document,
+    Entity,
+    IngestBinding,
+    IngestError,
+    KnowledgeIngest,
+    Relationship,
+    current_ingest,
 )
 
-_SOURCE = "onetrust-api"
-_DOMAIN = "onetrust"
+_BINDING = IngestBinding(connector="onetrust-api", stream="onetrust")
+
+_ENTITY_RESERVED_KEYS = frozenset({"id", "node_type"})
+_RELATIONSHIP_RESERVED_KEYS = frozenset({"source", "target", "relationship"})
+_DOCUMENT_RESERVED_KEYS = frozenset({"id", "text", "title", "source_uri"})
 
 
-def ingest_entities(
+def _to_entity(record: dict[str, Any]) -> Entity:
+    return Entity(
+        id=record.get("id"),
+        node_type=record.get("node_type"),
+        properties={
+            key: value
+            for key, value in record.items()
+            if key not in _ENTITY_RESERVED_KEYS
+        },
+    )
+
+
+def _to_relationship(record: dict[str, Any]) -> Relationship:
+    properties = {
+        key: value
+        for key, value in record.items()
+        if key not in _RELATIONSHIP_RESERVED_KEYS
+    }
+    return Relationship(
+        source=record["source"],
+        target=record["target"],
+        relationship=record["relationship"],
+        properties=properties or None,
+    )
+
+
+def _to_document(record: dict[str, Any]) -> Document:
+    return Document(
+        id=record["id"],
+        text=record["text"],
+        title=record.get("title"),
+        source_uri=record.get("source_uri"),
+        properties={
+            key: value
+            for key, value in record.items()
+            if key not in _DOCUMENT_RESERVED_KEYS
+        },
+    )
+
+
+async def ingest_entities(
     entities: list[dict[str, Any]],
     relationships: list[dict[str, Any]] | None = None,
     *,
-    source: str = _SOURCE,
-    domain: str = _DOMAIN,
-    client: Any | None = None,
-    graph: str | None = None,
+    ingest: KnowledgeIngest | None = None,
 ) -> dict[str, int]:
-    """Write canonical typed nodes and relationships through agent-utilities."""
-    return _native_ingest_entities(
-        entities,
-        relationships,
-        source=source,
-        domain=domain,
-        client=client,
-        graph=graph,
+    """Write typed OWL nodes (+ edges) into epistemic-graph via the SDK ingest facade.
+
+    Uses canonical ``node_type`` / ``relationship`` structural fields and surfaces
+    a malformed change set or a refused commit as ``IngestError``.
+    """
+    if not entities:
+        raise IngestError("ingest_entities needs at least one entity")
+    change_set = ChangeSet(
+        entities=tuple(_to_entity(entity) for entity in entities),
+        relationships=tuple(
+            _to_relationship(relationship) for relationship in relationships or ()
+        ),
     )
+    service = ingest or current_ingest()
+    receipt = await service.submit(_BINDING, change_set)
+    return {"nodes": receipt.affected_count, "edges": receipt.relationship_count}
 
 
-def ingest_documents(
+async def ingest_documents(
     documents: list[dict[str, Any]],
     *,
-    source: str = _SOURCE,
-    domain: str = _DOMAIN,
-    client: Any | None = None,
-    graph: str | None = None,
+    ingest: KnowledgeIngest | None = None,
 ) -> dict[str, int]:
-    """Write searchable documents through the authoritative native-ingest path."""
-    return _native_ingest_documents(
-        documents,
-        source=source,
-        domain=domain,
-        client=client,
-        graph=graph,
+    """Write text records as canonical ``:Document`` nodes."""
+    if not documents:
+        raise IngestError("ingest_documents needs at least one document")
+    change_set = ChangeSet(
+        documents=tuple(_to_document(document) for document in documents)
     )
-
-
-def media_store() -> Any:
-    """Return the authoritative native media store."""
-    return _native_media_store()
+    service = ingest or current_ingest()
+    receipt = await service.submit(_BINDING, change_set)
+    return {"nodes": receipt.affected_count, "edges": receipt.relationship_count}
 
 
 def _s(value: Any) -> str | None:
     return str(value) if value is not None else None
 
 
-def ingest_assessments(
+async def ingest_assessments(
     assessments: list[dict[str, Any]],
     *,
-    client: Any | None = None,
-    graph: str | None = None,
+    ingest: KnowledgeIngest | None = None,
 ) -> dict[str, int]:
     """Map assessment records → ``:Assessment`` (+ ``:AssessmentTemplate``/``:Person``) nodes.
 
@@ -88,7 +128,7 @@ def ingest_assessments(
         ent, rels = _assessment_entities(a)
         entities.extend(ent)
         relationships.extend(rels)
-    return ingest_entities(entities, relationships, client=client, graph=graph)
+    return await ingest_entities(entities, relationships, ingest=ingest)
 
 
 def _assessment_entities(
@@ -189,11 +229,10 @@ def _assessment_document_parts(a: dict[str, Any]) -> list[str | None]:
     ]
 
 
-def ingest_cookies(
+async def ingest_cookies(
     cookies: list[dict[str, Any]],
     *,
-    client: Any | None = None,
-    graph: str | None = None,
+    ingest: KnowledgeIngest | None = None,
 ) -> dict[str, int]:
     """Map cookie scan records → ``:Cookie`` (+ ``:CookieDomain``) nodes.
 
@@ -227,14 +266,13 @@ def ingest_cookies(
             relationships.append(
                 {"source": node_id, "target": dom_id, "relationship": "scannedOnDomain"}
             )
-    return ingest_entities(entities, relationships, client=client, graph=graph)
+    return await ingest_entities(entities, relationships, ingest=ingest)
 
 
-def ingest_inventories(
+async def ingest_inventories(
     inventories: list[dict[str, Any]],
     *,
-    client: Any | None = None,
-    graph: str | None = None,
+    ingest: KnowledgeIngest | None = None,
 ) -> dict[str, int]:
     """Map inventory records → ``:Inventory`` (+ embedded ``:DataElement``/``:Person``) nodes.
 
@@ -247,7 +285,7 @@ def ingest_inventories(
         ent, rels = _inventory_entities(inv)
         entities.extend(ent)
         relationships.extend(rels)
-    return ingest_entities(entities, relationships, client=client, graph=graph)
+    return await ingest_entities(entities, relationships, ingest=ingest)
 
 
 def _inventory_entities(
@@ -285,11 +323,10 @@ def _inventory_entities(
     return entities, relationships
 
 
-def ingest_data_elements(
+async def ingest_data_elements(
     data_elements: list[dict[str, Any]],
     *,
-    client: Any | None = None,
-    graph: str | None = None,
+    ingest: KnowledgeIngest | None = None,
 ) -> dict[str, int]:
     """Map data-element records → ``:DataElement`` (+ ``:DataSubject``) nodes.
 
@@ -302,7 +339,7 @@ def ingest_data_elements(
         ent, rels = _data_element_entities(de, parent=None)
         entities.extend(ent)
         relationships.extend(rels)
-    return ingest_entities(entities, relationships, client=client, graph=graph)
+    return await ingest_entities(entities, relationships, ingest=ingest)
 
 
 def _data_element_entities(

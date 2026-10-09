@@ -4,9 +4,9 @@ import logging
 import sys
 from typing import Any
 
-from agent_utilities.core.config import load_config
-from agent_utilities.mcp.server_factory import create_mcp_server
-from agent_utilities.mcp.verbose_tools import register_tool_surface
+from agent_connector_sdk.config import load_config
+from agent_connector_sdk.mcp.server import create_mcp_server
+from agent_connector_sdk.mcp.tool_surface import register_tool_surface
 from fastmcp import FastMCP
 from fastmcp.utilities.logging import get_logger
 
@@ -72,10 +72,10 @@ def register_ingest_tools(mcp: FastMCP):
         records = _records(result)
         if ctx:
             await ctx.info(f"Ingesting {len(records)} assessments into the KG")
-        nodes = kg_ingest.ingest_assessments(records)
+        nodes = await kg_ingest.ingest_assessments(records)
         documents = kg_ingest.assessment_documents(records)
         docs = (
-            kg_ingest.ingest_documents(documents)
+            await kg_ingest.ingest_documents(documents)
             if documents
             else {"nodes": 0, "edges": 0}
         )
@@ -98,7 +98,7 @@ def register_ingest_tools(mcp: FastMCP):
         records = _records(result)
         if ctx:
             await ctx.info(f"Ingesting {len(records)} cookies into the KG")
-        nodes = kg_ingest.ingest_cookies(records)
+        nodes = await kg_ingest.ingest_cookies(records)
         return {"listed": len(records), "ingested": nodes}
 
     @mcp.tool(tags={"ingest"})
@@ -118,7 +118,7 @@ def register_ingest_tools(mcp: FastMCP):
         records = _records(result)
         if ctx:
             await ctx.info(f"Ingesting {len(records)} inventory records into the KG")
-        nodes = kg_ingest.ingest_inventories(records)
+        nodes = await kg_ingest.ingest_inventories(records)
         return {"listed": len(records), "ingested": nodes}
 
 
