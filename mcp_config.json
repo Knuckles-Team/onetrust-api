@@ -7,7 +7,6 @@
         "onetrust-mcp"
       ],
       "env": {
-        "MCP_TOOL_MODE": "intent",
         "ACCESS_MANAGEMENTTOOL": "True",
         "AI_GOVERNANCETOOL": "True",
         "ASSESSMENTSTOOL": "True",

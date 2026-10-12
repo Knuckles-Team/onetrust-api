@@ -106,14 +106,10 @@ async def test_ingest_assessments_maps_assessment_template_and_person(ingest):
     assert assessment.payload["number"] == "AS-7"
     assert assessment.payload["externalId"] == "A1"
     template = next(
-        r
-        for r in request.records
-        if r.record_id == "onetrust:assessment_template:T9"
+        r for r in request.records if r.record_id == "onetrust:assessment_template:T9"
     )
     assert template.mapping_reference.endswith("AssessmentTemplate")
-    person = next(
-        r for r in request.records if r.record_id == "onetrust:person:u1"
-    )
+    person = next(r for r in request.records if r.record_id == "onetrust:person:u1")
     assert person.mapping_reference.endswith("Person")
     relations = {r.relation_reference.rsplit("/", 1)[-1] for r in request.relationships}
     assert relations == {"usesTemplate", "respondedBy"}
@@ -196,12 +192,8 @@ async def test_ingest_inventories_extracts_data_elements_and_owner(ingest):
         r for r in request.records if r.record_id == "onetrust:inventory:INV1"
     )
     assert inventory.payload["inventoryType"] == "ASSETS"
-    assert any(
-        r.record_id == "onetrust:data_element:DE1" for r in request.records
-    )
-    assert any(
-        r.record_id == "onetrust:data_subject:DS1" for r in request.records
-    )
+    assert any(r.record_id == "onetrust:data_element:DE1" for r in request.records)
+    assert any(r.record_id == "onetrust:data_subject:DS1" for r in request.records)
     relations = {r.relation_reference.rsplit("/", 1)[-1] for r in request.relationships}
     assert relations == {"ownedBy", "hasDataElement", "concernsDataSubject"}
 
