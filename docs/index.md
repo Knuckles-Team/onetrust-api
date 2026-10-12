@@ -15,3 +15,8 @@ all generated from the vendored specs and verified by a coverage test.
 ```bash
 pip install onetrust-api[all]
 ```
+
+## Spec delivery
+
+[Spec delivery dashboard](spec-delivery/). No owned specs are recorded yet.
+Missing requirement and code mappings remain unknown.

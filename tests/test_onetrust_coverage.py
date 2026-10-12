@@ -93,18 +93,22 @@ def test_manifest_operations_carry_typed_params():
 
 
 @pytest.mark.asyncio
-async def test_verbose_mode_registers_one_tool_per_method(monkeypatch):
-    """verbose mode exposes exactly one 1:1 tool per manifest method."""
+@pytest.mark.parametrize("legacy_mode", ["condensed", "verbose", "both", "intent"])
+async def test_legacy_modes_keep_current_gated_domain_surface(monkeypatch, legacy_mode):
+    """The supported SDK always registers action-routed, gated domain tools."""
     from unittest.mock import patch
 
     from onetrust_api.mcp_server import get_mcp_instance
 
-    monkeypatch.setenv("MCP_TOOL_MODE", "verbose")
-    with patch("sys.argv", ["onetrust-mcp"]):
+    monkeypatch.setenv("MCP_TOOL_MODE", legacy_mode)
+    with patch("sys.argv", ["onetrust-mcp", "--transport", "stdio"]):
         mcp, *_ = get_mcp_instance()
-        names = {t.name for t in await mcp.list_tools()}
-    expected = {f"onetrust_{op['method']}" for op in OPERATIONS}
-    # every manifest method is reachable as a verbose 1:1 tool
-    assert expected <= names
-    # and condensed action tools are not present in verbose-only mode
-    assert "onetrust_audit_management" not in names
+        tools = {tool.name: tool for tool in await mcp.list_tools()}
+    expected = {f"onetrust_{domain}" for domain in DOMAINS} | {"onetrust_api_request"}
+    assert set(tools) == expected | {
+        "onetrust_ingest_assessments",
+        "onetrust_ingest_cookies",
+        "onetrust_ingest_inventories",
+    }
+    for name in expected:
+        assert {"granular", "gated"} <= tools[name].tags
