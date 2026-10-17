@@ -51,5 +51,5 @@ onetrust-agent --provider openai --model-id gpt-4o --api-key sk-...
 ```
 
 The agent auto-discovers the MCP tools from `mcp_config.json`; with this multiple
-domains the agent-utilities graph router engages automatically to keep the active
+domains the agent-connector-sdk graph router engages automatically to keep the active
 tool set focused per turn.
