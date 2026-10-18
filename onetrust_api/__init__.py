@@ -15,7 +15,6 @@ CORE_MODULES = [
 ]
 
 OPTIONAL_MODULES = {
-    "onetrust_api.agent_server": "agent",
     "onetrust_api.mcp_server": "mcp",
 }
 

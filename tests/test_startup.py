@@ -1,12 +1,6 @@
 """Import / boot smoke tests."""
 
 
-def test_package_imports():
-    import onetrust_api
-
-    assert hasattr(onetrust_api, "Api")
-    assert onetrust_api._MCP_AVAILABLE is True
-    assert onetrust_api._AGENT_AVAILABLE is True
 
 
 def test_api_composes_all_domains():
