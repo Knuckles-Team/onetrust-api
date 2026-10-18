@@ -1,9 +1,9 @@
 {
-  "algorithm": "agent-connector-sdk:mcp-tool-schema-compat:v1",
+  "algorithm": "agent-connector-sdk:mcp-tool-contract-compat:v2",
   "connector": "onetrust-api",
   "schema_version": "1",
   "tools": {
-    "onetrust_assessments": "9551d768e3dad678a55328cd2594c83f58286f8246743eee21113b27487619bd",
-    "onetrust_data_mapping": "e20b4770c98fcab26dedff89b0b5a50cf5fc274959e97f76d118af235dee6833"
+    "onetrust_get_all_assessment_basic_details_using_get": "70b39bc71d145fcf42efa9d84304d49aa033b51b8054b8a91ee758e6dbb584ed",
+    "onetrust_get_list_of_inventories_using_get": "e502ef38b55a3d9a58534022a1cbcd2139bbddff9e44f122267675ffbb137b8e"
   }
 }

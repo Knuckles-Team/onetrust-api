@@ -72,9 +72,23 @@ actions:
   description: 'Answers epistemic_status/why/what_changed queries over the shared knowledge graph: calibrated
     confidence, evidence/source citations, belief justification trees, bitemporal valid/tx history, and
     policy-redaction-aware provenance.'
+  label: ''
+  parameters: []
+  target_resource: null
+  conflict_policy: null
+  requires_approval: true
+  approval_class: unclassified
+  effects: []
 - id: run_graph_flow
   name: Graph Flow Execution
   description: Execute a workflow through the agent's graph orchestration engine
+  label: ''
+  parameters: []
+  target_resource: null
+  conflict_policy: null
+  requires_approval: true
+  approval_class: unclassified
+  effects: []
 events:
 - name: onetrust-assessments.updated
   resource: assessment
@@ -223,8 +237,8 @@ schema_mappings:
 sync:
 - preset: onetrust-assessments
   server: onetrust-mcp
-  tool: onetrust_assessments
-  action: get_all_assessment_basic_details_using_get
+  tool: onetrust_get_all_assessment_basic_details_using_get
+  action: null
   records_path: data
   id_field: assessmentId
   title_field: name
@@ -232,25 +246,25 @@ sync:
   updated_field: lastUpdated
   pagination: page
   doc_type: assessment
-  tool_schema_sha256: 9551d768e3dad678a55328cd2594c83f58286f8246743eee21113b27487619bd
+  tool_schema_sha256: 70b39bc71d145fcf42efa9d84304d49aa033b51b8054b8a91ee758e6dbb584ed
   raw:
     server: onetrust-mcp
-    tool: onetrust_assessments
-    action: get_all_assessment_basic_details_using_get
+    tool: onetrust_get_all_assessment_basic_details_using_get
     records_path: data
     id_field: assessmentId
     title_field: name
     text_field: templateName
     updated_field: lastUpdated
     pagination: page
-    page_kind: page
+    page_kind: number
     page_param: page
     page_size_param: size
     doc_type: assessment
+    params_style: args
 - preset: onetrust-inventory
   server: onetrust-mcp
-  tool: onetrust_data_mapping
-  action: get_list_of_inventories_using_get
+  tool: onetrust_get_list_of_inventories_using_get
+  action: null
   records_path: data
   id_field: id
   title_field: name
@@ -258,37 +272,37 @@ sync:
   updated_field: lastUpdated
   pagination: page
   doc_type: inventory
-  tool_schema_sha256: e20b4770c98fcab26dedff89b0b5a50cf5fc274959e97f76d118af235dee6833
+  tool_schema_sha256: e502ef38b55a3d9a58534022a1cbcd2139bbddff9e44f122267675ffbb137b8e
   raw:
     server: onetrust-mcp
-    tool: onetrust_data_mapping
-    action: get_list_of_inventories_using_get
+    tool: onetrust_get_list_of_inventories_using_get
     records_path: data
     id_field: id
     title_field: name
     text_field: description
     updated_field: lastUpdated
     pagination: page
-    page_kind: page
+    page_kind: number
     page_param: page
     page_size_param: size
     doc_type: inventory
+    params_style: args
 provenance:
   generated_by: scripts/generate_connector_manifests.py
-  generated_at: '2026-08-26T13:42:55Z'
+  generated_at: '2026-10-18T00:00:00Z'
   source_artifacts:
   - onetrust_api/connectors/mcp_source_presets.json
   - onetrust_api/connectors/tool_schema_fingerprints.json
   - onetrust_api/ontology/onetrust.ttl
   integrity:
     algorithm: urdna2015-sha256
-    hash: a462ef0407cbc22d9c73e5052db5c194a2b29b78478492379370cfb8228c72b0
+    hash: 00a325a4c25af4c2d5eb088365b1945cd71c652e80da0aa58a10e164ae122a70
     triple_count: 96
   signer: UNSIGNED-PREVIEW
   signature_algorithm: none
   signing_public_key: ''
   signature: null
-  source_commit: 637fd0acecb9db8719e2ec4e5405c396625501af
+  source_commit: a7d350368fb475add8fd96a2bd971cc8ee67a28f
 policy:
   pii_fields: {}
   tenant_boundary: null
