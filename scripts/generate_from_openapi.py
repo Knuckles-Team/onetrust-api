@@ -491,6 +491,28 @@ def emit_mcp_module(domain: str, ops: list[dict]) -> None:
     (MCP_DIR / f"mcp_{domain}.py").write_text("\n".join(lines) + "\n")
 
 
+def _sdk_parameters(op: dict) -> list[dict]:
+    """OpenAPI-shaped parameters (SDK >=0.3.0), deduped by their snake_case name."""
+    seen: set[str] = set()
+    out: list[dict] = []
+    for p in op["params"]:
+        key = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", "_", p["name"]).lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        in_path = "{" + p["name"] + "}" in op["url_template"]
+        entry = {
+            "name": p["name"],
+            "in": "path" if in_path else "query",
+            "required": bool(p.get("required")) or in_path,
+            "schema": {"type": p.get("type") or "string"},
+        }
+        if p.get("description"):
+            entry["description"] = p["description"]
+        out.append(entry)
+    return out
+
+
 def emit_manifest(by_domain: dict[str, list[dict]]) -> None:
     # A LIST (not a dict): operationIds are NOT globally unique across specs
     # (22 collisions), so keying by operationId would silently drop operations.
@@ -506,6 +528,7 @@ def emit_manifest(by_domain: dict[str, list[dict]]) -> None:
             "paginate": op["paginate"],
             "summary": op["summary"],
             "params": op["params"],
+            "parameters": _sdk_parameters(op),
         }
         for domain in sorted(by_domain)
         for op in by_domain[domain]

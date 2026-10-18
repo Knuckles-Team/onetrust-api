@@ -27,9 +27,9 @@ commits.
 
 import asyncio
 import json
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-from unittest.mock import AsyncMock, MagicMock
 
 from onetrust_api.api._operation_manifest import ACTIONS_BY_DOMAIN
 from onetrust_api.api_client import Api

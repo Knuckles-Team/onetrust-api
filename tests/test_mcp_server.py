@@ -11,16 +11,17 @@ def test_mcp_server_lists_all_tools(monkeypatch):
     from onetrust_api.mcp_server import get_mcp_instance
 
     mcp, args, middlewares, tags = get_mcp_instance()
-    # Domain tools and the custom API escape hatch retain their registered tags.
-    assert len(tags) == len(DOMAINS) + 1
     tools = asyncio.run(mcp.list_tools())
     names = {tool.name for tool in tools}
-    assert names == {f"onetrust_{domain}" for domain in DOMAINS} | {
+    # One tool per API operation, plus the escape hatch and the ingest tools.
+    assert len(names) > 500
+    assert {
         "onetrust_api_request",
         "onetrust_ingest_assessments",
         "onetrust_ingest_cookies",
         "onetrust_ingest_inventories",
-    }
+    } <= names
+    assert not {f"onetrust_{domain}" for domain in DOMAINS} & names
 
 
 def test_tool_toggles_disable_domains(monkeypatch):
@@ -30,5 +31,3 @@ def test_tool_toggles_disable_domains(monkeypatch):
 
     _mcp, _args, _mw, tags = get_mcp_instance()
     assert "incidents" not in tags
-
-

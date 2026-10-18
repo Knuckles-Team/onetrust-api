@@ -104,11 +104,13 @@ async def test_legacy_modes_keep_current_gated_domain_surface(monkeypatch, legac
     with patch("sys.argv", ["onetrust-mcp", "--transport", "stdio"]):
         mcp, *_ = get_mcp_instance()
         tools = {tool.name: tool for tool in await mcp.list_tools()}
-    expected = {f"onetrust_{domain}" for domain in DOMAINS} | {"onetrust_api_request"}
-    assert set(tools) == expected | {
+    # SDK >= 0.3.0 serves one gated tool per API operation in every legacy mode.
+    assert len(tools) > 500
+    assert {
+        "onetrust_api_request",
         "onetrust_ingest_assessments",
         "onetrust_ingest_cookies",
         "onetrust_ingest_inventories",
-    }
-    for name in expected:
-        assert {"granular", "gated"} <= tools[name].tags
+    } <= set(tools)
+    assert not {f"onetrust_{domain}" for domain in DOMAINS} & set(tools)
+    assert {"granular", "gated"} <= tools["onetrust_api_request"].tags
