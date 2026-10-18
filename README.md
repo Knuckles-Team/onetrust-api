@@ -21,7 +21,7 @@
 ![PyPI - Wheel](https://img.shields.io/pypi/wheel/onetrust-api)
 ![PyPI - Implementation](https://img.shields.io/pypi/implementation/onetrust-api)
 
-*Version: 1.2.0*
+*Version: 1.2.1*
 
 ## Overview
 
