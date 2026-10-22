@@ -1,6 +1,6 @@
 {
   "algorithm": "agent-connector-sdk:mcp-tool-contract-compat:v2",
-  "connector": "onetrust-api",
+  "connector": "onetrust-mcp",
   "schema_version": "1",
   "tools": {
     "onetrust_get_all_assessment_basic_details_using_get": "70b39bc71d145fcf42efa9d84304d49aa033b51b8054b8a91ee758e6dbb584ed",

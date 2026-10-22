@@ -1,9 +1,9 @@
 {
   "api_version": "arbora.io/v1",
   "artifacts": {
-    "connector_manifest.yml": "f6ec3f3ddec72ccf7f646db43a7c585cce199e76c155c8f4fd7477a8804f6d6e",
+    "connector_manifest.yml": "1a8b73faace7484546029f7106e1f2f8d1068f32405b57541909519415f6fbb9",
     "onetrust_api/connectors/mcp_source_presets.json": "468df6da898dd721ccdd65a5d418c569f1607c984a8e2397c002e086c9b01296",
-    "onetrust_api/connectors/tool_schema_fingerprints.json": "90b93ea4b12d1571586778eb3db2b7876dc6b0f6f61b730c1e04440e63dbd8e4",
+    "onetrust_api/connectors/tool_schema_fingerprints.json": "283f2cc283103148a312741a4bb60e94a58dc3693cefbdd2c6ef2a0b57d34c9d",
     "onetrust_api/ontology/fixtures/records.json": "2477764beb1371ec2a6644e015135e2f7088a2bec6697052a4a402e06cb5b87d",
     "onetrust_api/ontology/mappings/source.yaml": "6aaaf1e64fcd9c12284a3f6121be43c6086d626b277fd5056949c3a022354074",
     "onetrust_api/ontology/migrations/manifest.json": "3a2a2b64f7038569b8e096313e70789bad95387e2b97ecb2f17c00d993c4d894",
@@ -22,7 +22,7 @@
     "bundle_schema": "2",
     "epistemic_graph": ">=2.27.0,<3"
   },
-  "connector": "onetrust-api",
+  "connector": "onetrust-mcp",
   "kind": "ConnectorSourceAttestation",
   "live_certified": false,
   "mode": "offline-source",

@@ -38,6 +38,10 @@ onetrust-api = "onetrust_api.connectors"
 [project.entry-points."agent_connector_sdk.prompt_providers"]
 onetrust-api = "onetrust_api.prompts"
 
+# The one declared connector identity: the fleet name (SDK-CONNECTOR-CONTROL-R071).
+[project.entry-points."agent_connector_sdk.connector"]
+onetrust-mcp = "onetrust_api"
+
 [tool.uv.workspace]
 members = ["."]
 
