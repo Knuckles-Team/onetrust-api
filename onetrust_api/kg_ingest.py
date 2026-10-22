@@ -21,7 +21,7 @@ from agent_connector_sdk.ingest import (
     current_ingest,
 )
 
-_BINDING = IngestBinding(connector="onetrust-api", stream="onetrust")
+_BINDING = IngestBinding(connector="onetrust-mcp", stream="onetrust")
 
 _ENTITY_RESERVED_KEYS = frozenset({"id", "node_type"})
 _RELATIONSHIP_RESERVED_KEYS = frozenset({"source", "target", "relationship"})
