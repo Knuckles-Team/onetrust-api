@@ -12,8 +12,8 @@
       "title": "Fleet name",
       "delivery_state": "VERIFIED",
       "landed_in": [
-        "04743cfa7ea0",
-        "2332db2777b1"
+        "237a8d06efb7",
+        "c8d2725455be"
       ],
       "verified_by": [
         "tests/test_fleet_name.py:35"
