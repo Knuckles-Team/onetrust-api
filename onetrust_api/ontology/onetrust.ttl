@@ -15,9 +15,8 @@
 
 # --- classes (owl:Class) ---
 
-:Assessment a owl:Class ;
-    rdfs:label "Assessment" ;
-    rdfs:comment "A OneTrust privacy/risk assessment instance (PIA/DPIA/TRA) launched from a template (onetrust_assessments)." .
+:Assessment a owl:Class .
+
 
 :AssessmentTemplate a owl:Class ;
     rdfs:label "Assessment Template" ;
@@ -164,5 +163,11 @@
     rdfs:comment """OneTrust trust-governance model — privacy/risk assessments (PIA/DPIA)
     and their templates, the data inventory and its data elements + data subjects, and
     cookie-consent scan results (cookies and the domains they were found on) — federated
-    into the agent-connector-sdk knowledge-graph hub's enterprise layer.""" ;
-    owl:imports <http://knuckles.team/kg/enterprise> .
+    into the agent-connector-sdk knowledge-graph hub's enterprise layer.""" .
+
+# ontology-codemod R3
+<http://knuckles.team/kg#AssessmentTemplate> rdfs:subClassOf <http://knuckles.team/kg#Template> .
+
+# ontology-codemod R4
+<http://knuckles.team/kg#Cookie> rdfs:subClassOf <http://knuckles.team/kg#Artifact> .
+<http://knuckles.team/kg#CookieDomain> rdfs:subClassOf <http://knuckles.team/kg#Place> .

@@ -4,8 +4,6 @@
   "schema_version": "1.0",
   "prompt_version": "0.1.0",
   "source": "onetrust-api",
-  "extends": "agent-connector-sdk:base",
-  "compose": "append",
   "description": "OneTrust privacy-governance specialist: privacy/risk assessments and the data inventory over the onetrust-api MCP server.",
   "metadata": {
     "topic": "OneTrust Privacy Governance",
