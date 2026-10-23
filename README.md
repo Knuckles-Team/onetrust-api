@@ -21,7 +21,7 @@
 ![PyPI - Wheel](https://img.shields.io/pypi/wheel/onetrust-api)
 ![PyPI - Implementation](https://img.shields.io/pypi/implementation/onetrust-api)
 
-*Version: 1.3.0*
+*Version: 1.3.1*
 
 ## Overview
 
@@ -146,9 +146,6 @@ so the operator can scope the surface (e.g. set `ESGTOOL=False` to drop ESG).
 | `DEBUG` | `False` | Verbose logging |
 | `PYTHONUNBUFFERED` | `1` | Unbuffered stdout (recommended in containers) |
 | `MCP_URL` | `http://localhost:8000/mcp` | URL of the MCP server the agent connects to |
-| `PROVIDER` | — | Operator-configured LLM provider for the agent |
-| `MODEL_ID` | — | Operator-configured model id for the agent |
-| `ENABLE_WEB_UI` | `True` | Serve the AG-UI web interface |
 
 _53 package + 22 inherited variable(s). Auto-generated from `.env.example` + the shared agent-connector-sdk set — do not edit._
 <!-- ENV-VARS-TABLE:END -->
@@ -602,9 +599,6 @@ above (e.g. `INCIDENTSTOOL`, `DSARTOOL`, `CONSENT_RECEIPTSTOOL`, `ESGTOOL`).
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `MCP_URL` | URL of the MCP server the agent connects to | `http://localhost:8000/mcp` |
-| `PROVIDER` | LLM provider (e.g. `openai`) | `openai` |
-| `MODEL_ID` | Model id (e.g. `gpt-4o`) | `gpt-4o` |
-| `ENABLE_WEB_UI` | Serve the AG-UI web interface | `True` |
 
 ## Documentation
 

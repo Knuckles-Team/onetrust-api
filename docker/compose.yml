@@ -36,12 +36,7 @@ services:
       - "TRANSPORT=stdio"
       - "ONETRUST_URL=${ONETRUST_URL}"
       - "ONETRUST_TOKEN=${ONETRUST_TOKEN}"
-      - "PROVIDER=openai"
-      - "LLM_BASE_URL=${LLM_BASE_URL:-http://host.docker.internal:1234/v1}"
-      - "LLM_API_KEY=${LLM_API_KEY:-llama}"
-      - "MODEL_ID=${MODEL_ID:-qwen/qwen3.5-9b}"
       - "DEBUG=False"
-      - "ENABLE_WEB_UI=True"
       - "ENABLE_OTEL=True"
     ports:
       - "127.0.0.1:9001:9001"
