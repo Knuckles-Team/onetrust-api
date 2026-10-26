@@ -5,7 +5,8 @@ import sys
 from typing import Any
 
 from agent_connector_sdk.config import load_config
-from agent_connector_sdk.mcp.server import create_mcp_server
+from agent_connector_sdk.connector import build_server
+from agent_connector_sdk.connector_identity import connector_version
 from agent_connector_sdk.mcp.tool_surface import register_tool_surface
 from fastmcp import FastMCP
 from fastmcp.utilities.logging import get_logger
@@ -14,7 +15,7 @@ from onetrust_api.api._operation_manifest import OPERATIONS
 from onetrust_api.api_client import Api
 from onetrust_api.auth import get_client
 
-__version__ = "1.3.3"
+__version__ = connector_version("onetrust_api")
 
 # Redirect logging to stderr to prevent MCP stdout corruption
 logger = get_logger(name="onetrust_mcp")
@@ -122,16 +123,16 @@ def register_ingest_tools(mcp: FastMCP):
         return {"listed": len(records), "ingested": nodes}
 
 
-def get_mcp_instance() -> tuple[Any, Any, Any, Any]:
+def get_mcp_instance(*, command_args=None) -> tuple[Any, Any, Any, Any]:
     """Initialize and return the OneTrust Api MCP instance, args, and middlewares."""
     load_config()
 
-    args, mcp, middlewares = create_mcp_server(
-        name="OneTrust Api MCP",
-        version=__version__,
-        instructions="OneTrust Api MCP Server",
-    )
+    args, mcp = build_server("onetrust_api", command_args=command_args)
+    return mcp, args, list(mcp.middleware), vars(mcp)["_onetrust_registered_tags"]
 
+
+def register_server_surface(mcp: FastMCP) -> list[str]:
+    """Reuse the manifest-backed surface, prompts and ingest tools in order."""
     # One central call selects the surface per MCP_TOOL_MODE: condensed gates each
     # generated TOOL_REGISTRY domain via setting("<TAG>TOOL", True); verbose adds
     # the fully-typed 1:1 tools sourced from the OpenAPI manifest (OPERATIONS).
@@ -149,10 +150,7 @@ def get_mcp_instance() -> tuple[Any, Any, Any, Any]:
     register_prompts(mcp)
     register_ingest_tools(mcp)
 
-    for mw in middlewares:
-        mcp.add_middleware(mw)
-
-    return mcp, args, middlewares, registered_tags
+    return registered_tags
 
 
 def mcp_server():

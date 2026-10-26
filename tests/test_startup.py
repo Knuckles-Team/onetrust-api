@@ -1,8 +1,6 @@
 """Import / boot smoke tests."""
 
 
-
-
 def test_api_composes_all_domains():
     from onetrust_api.api._operation_manifest import DOMAINS
     from onetrust_api.api_client import Api

@@ -58,3 +58,21 @@ onetrust-api
 
 Python OneTrust API client + MCP server + A2A agent with 100% API coverage
 """
+
+
+from agent_connector_sdk.connector import Connector
+from agent_connector_sdk.connector_hooks import RegistrationContext
+
+
+def _register_legacy_surface(context: RegistrationContext) -> None:
+    from onetrust_api.mcp_server import register_server_surface
+
+    vars(context.server)["_onetrust_registered_tags"] = register_server_surface(
+        context.server
+    )
+
+
+connector = Connector(
+    instructions="OneTrust Api MCP Server",
+    extra_registrations=(_register_legacy_surface,),
+)
