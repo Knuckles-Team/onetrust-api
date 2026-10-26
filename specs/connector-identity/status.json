@@ -13,10 +13,11 @@
       "delivery_state": "VERIFIED",
       "landed_in": [
         "237a8d06efb7",
+        "72f5f319c20a",
         "c8d2725455be"
       ],
       "verified_by": [
-        "tests/test_fleet_name.py:35"
+        "tests/test_fleet_name.py:34"
       ]
     }
   ]
