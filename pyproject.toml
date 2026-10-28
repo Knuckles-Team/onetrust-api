@@ -71,5 +71,8 @@ override-dependencies = [
     "fastmcp-slim[client,server]>=4.1.0",
 ]
 
+[tool.pipelines.codespell]
+ignore_words = ["inbetween", "thirdparty"]
+
 [tool.pipelines_hooks.ste]
 exempt = ["specs/*", "specs/**/*"]
