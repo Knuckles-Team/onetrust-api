@@ -1882,7 +1882,7 @@ OPERATIONS = [
                 "name": "userId",
                 "type": "string",
                 "required": True,
-                "description": ">- `userId` can be retireved using the [Retrieve list of Users](https://{$$.env.developer}/api-reference/general/user-provisioning/user-provisioning-apis/users/getallusersusingget) API",
+                "description": ">- `userId` can be retrieved using the [Retrieve list of Users](https://{$$.env.developer}/api-reference/general/user-provisioning/user-provisioning-apis/users/getallusersusingget) API",
             },
             {
                 "name": "includeChildObjects",
@@ -1909,7 +1909,7 @@ OPERATIONS = [
                 "in": "path",
                 "required": True,
                 "schema": {"type": "string"},
-                "description": ">- `userId` can be retireved using the [Retrieve list of Users](https://{$$.env.developer}/api-reference/general/user-provisioning/user-provisioning-apis/users/getallusersusingget) API",
+                "description": ">- `userId` can be retrieved using the [Retrieve list of Users](https://{$$.env.developer}/api-reference/general/user-provisioning/user-provisioning-apis/users/getallusersusingget) API",
             },
             {
                 "name": "includeChildObjects",
@@ -7085,7 +7085,7 @@ OPERATIONS = [
                 "name": "deleteFinding",
                 "type": "boolean",
                 "required": False,
-                "description": "Boolean which determines if associated findings to be deleted. If TRUE, findings associated with the Audit will be deleted. If FALSE, findings will have that relationship removed but still be availabl",
+                "description": "Boolean which determines if associated findings to be deleted. If TRUE, findings associated with the Audit will be deleted. If FALSE, findings will have that relationship removed but still be available",
             },
         ],
         "parameters": [
@@ -7101,7 +7101,7 @@ OPERATIONS = [
                 "in": "query",
                 "required": False,
                 "schema": {"type": "boolean"},
-                "description": "Boolean which determines if associated findings to be deleted. If TRUE, findings associated with the Audit will be deleted. If FALSE, findings will have that relationship removed but still be availabl",
+                "description": "Boolean which determines if associated findings to be deleted. If TRUE, findings associated with the Audit will be deleted. If FALSE, findings will have that relationship removed but still be available",
             },
         ],
     },
@@ -8801,7 +8801,7 @@ OPERATIONS = [
                 "name": "publishVersion",
                 "type": "string",
                 "required": False,
-                "description": "Version to publish, by default the lastest version will be used.",
+                "description": "Version to publish, by default the latest version will be used.",
             },
             {
                 "name": "production",
@@ -8847,7 +8847,7 @@ OPERATIONS = [
                 "in": "query",
                 "required": False,
                 "schema": {"type": "string"},
-                "description": "Version to publish, by default the lastest version will be used.",
+                "description": "Version to publish, by default the latest version will be used.",
             },
             {
                 "name": "production",
@@ -10787,7 +10787,7 @@ OPERATIONS = [
                 "name": "website",
                 "type": "string",
                 "required": True,
-                "description": "ID of the webiste or URL of the website.",
+                "description": "ID of the website or URL of the website.",
             },
             {
                 "name": "scriptType",
@@ -10802,7 +10802,7 @@ OPERATIONS = [
                 "in": "query",
                 "required": True,
                 "schema": {"type": "string"},
-                "description": "ID of the webiste or URL of the website.",
+                "description": "ID of the website or URL of the website.",
             },
             {
                 "name": "scriptType",
@@ -10827,7 +10827,7 @@ OPERATIONS = [
                 "name": "website",
                 "type": "string",
                 "required": True,
-                "description": "ID of the webiste or URL of the website.",
+                "description": "ID of the website or URL of the website.",
             },
             {
                 "name": "scriptType",
@@ -10857,13 +10857,13 @@ OPERATIONS = [
                 "name": "languageDetectionHtml",
                 "type": "boolean",
                 "required": False,
-                "description": "Indicates the script should detect the website visitors langauge based on the webpages language.",
+                "description": "Indicates the script should detect the website visitors language based on the webpages language.",
             },
             {
                 "name": "languageDetectionVisitor",
                 "type": "boolean",
                 "required": False,
-                "description": "Indicates the script should detect the website visitors langauge based on their browser language. By default this is ’True’.",
+                "description": "Indicates the script should detect the website visitors language based on their browser language. By default this is ’True’.",
             },
             {
                 "name": "languages",
@@ -10875,7 +10875,7 @@ OPERATIONS = [
                 "name": "publishIndividualLanguages",
                 "type": "boolean",
                 "required": False,
-                "description": "By default, this flag is ‘False’. Setting to ’True’ indicates you only wish to publish a subset of langauges.",
+                "description": "By default, this flag is ‘False’. Setting to ’True’ indicates you only wish to publish a subset of languages.",
             },
             {
                 "name": "requireReconsent",
@@ -10902,7 +10902,7 @@ OPERATIONS = [
                 "in": "query",
                 "required": True,
                 "schema": {"type": "string"},
-                "description": "ID of the webiste or URL of the website.",
+                "description": "ID of the website or URL of the website.",
             },
             {
                 "name": "scriptType",
@@ -10937,14 +10937,14 @@ OPERATIONS = [
                 "in": "query",
                 "required": False,
                 "schema": {"type": "boolean"},
-                "description": "Indicates the script should detect the website visitors langauge based on the webpages language.",
+                "description": "Indicates the script should detect the website visitors language based on the webpages language.",
             },
             {
                 "name": "languageDetectionVisitor",
                 "in": "query",
                 "required": False,
                 "schema": {"type": "boolean"},
-                "description": "Indicates the script should detect the website visitors langauge based on their browser language. By default this is ’True’.",
+                "description": "Indicates the script should detect the website visitors language based on their browser language. By default this is ’True’.",
             },
             {
                 "name": "languages",
@@ -10958,7 +10958,7 @@ OPERATIONS = [
                 "in": "query",
                 "required": False,
                 "schema": {"type": "boolean"},
-                "description": "By default, this flag is ‘False’. Setting to ’True’ indicates you only wish to publish a subset of langauges.",
+                "description": "By default, this flag is ‘False’. Setting to ’True’ indicates you only wish to publish a subset of languages.",
             },
             {
                 "name": "requireReconsent",
@@ -17851,7 +17851,7 @@ OPERATIONS = [
                 "name": "showAll",
                 "type": "string",
                 "required": False,
-                "description": "When set to `true`, returns the complete schema including all attribute details such as allowed values, validation rules, and metadata. When `false` or omitted, returns only basic attribute informatio",
+                "description": "When set to `true`, returns the complete schema including all attribute details such as allowed values, validation rules, and metadata. When `false` or omitted, returns only basic attribute information",
             },
         ],
         "parameters": [
@@ -17867,7 +17867,7 @@ OPERATIONS = [
                 "in": "query",
                 "required": False,
                 "schema": {"type": "string"},
-                "description": "When set to `true`, returns the complete schema including all attribute details such as allowed values, validation rules, and metadata. When `false` or omitted, returns only basic attribute informatio",
+                "description": "When set to `true`, returns the complete schema including all attribute details such as allowed values, validation rules, and metadata. When `false` or omitted, returns only basic attribute information",
             },
         ],
     },
@@ -35193,7 +35193,7 @@ OPERATIONS = [
                 "name": "DOISendConfirmationEmail",
                 "type": "boolean",
                 "required": False,
-                "description": "Double Opt In child setting to send the confirmation email or not. Note: the confirmation link is included in the Data Subject Profile Updated integrations event, which can be used to send custom emai",
+                "description": "Double Opt In child setting to send the confirmation email or not. Note: the confirmation link is included in the Data Subject Profile Updated integrations event, which can be used to send custom email",
             },
             {
                 "name": "DoiEmailToParent",
@@ -35580,7 +35580,7 @@ OPERATIONS = [
                 "in": "query",
                 "required": False,
                 "schema": {"type": "boolean"},
-                "description": "Double Opt In child setting to send the confirmation email or not. Note: the confirmation link is included in the Data Subject Profile Updated integrations event, which can be used to send custom emai",
+                "description": "Double Opt In child setting to send the confirmation email or not. Note: the confirmation link is included in the Data Subject Profile Updated integrations event, which can be used to send custom email",
             },
             {
                 "name": "DoiEmailToParent",
@@ -36064,7 +36064,7 @@ OPERATIONS = [
                 "name": "DOISendConfirmationEmail",
                 "type": "boolean",
                 "required": False,
-                "description": "Double Opt In child setting to send the confirmation email or not. Note: the confirmation link is included in the Data Subject Profile Updated integrations event, which can be used to send custom emai",
+                "description": "Double Opt In child setting to send the confirmation email or not. Note: the confirmation link is included in the Data Subject Profile Updated integrations event, which can be used to send custom email",
             },
             {
                 "name": "DoiEmailToParent",
@@ -36513,7 +36513,7 @@ OPERATIONS = [
                 "in": "query",
                 "required": False,
                 "schema": {"type": "boolean"},
-                "description": "Double Opt In child setting to send the confirmation email or not. Note: the confirmation link is included in the Data Subject Profile Updated integrations event, which can be used to send custom emai",
+                "description": "Double Opt In child setting to send the confirmation email or not. Note: the confirmation link is included in the Data Subject Profile Updated integrations event, which can be used to send custom email",
             },
             {
                 "name": "DoiEmailToParent",
