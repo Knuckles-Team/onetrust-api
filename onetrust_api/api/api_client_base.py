@@ -24,15 +24,15 @@ import time
 from typing import Any, TypeVar
 
 import requests
-from agent_connector_sdk.exceptions import (
+from pydantic import ValidationError
+from scion_sdk.exceptions import (
     AuthError,
     MissingParameterError,
     ParameterError,
     UnauthorizedError,
 )
-from agent_connector_sdk.tls.profile import ResolvedTLSProfile
-from agent_connector_sdk.tls.resolve import resolve_tls_profile
-from pydantic import ValidationError
+from scion_sdk.tls.profile import ResolvedTLSProfile
+from scion_sdk.tls.resolve import resolve_tls_profile
 
 from onetrust_api.onetrust_models import Response
 

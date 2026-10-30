@@ -1,7 +1,7 @@
 """Authentication factory tests."""
 
 import pytest
-from agent_connector_sdk.exceptions import AuthError
+from scion_sdk.exceptions import AuthError
 
 from onetrust_api.api_client import Api
 
@@ -24,8 +24,8 @@ def test_get_client_uses_delegated_token_when_enabled(monkeypatch):
     monkeypatch.setenv("ONETRUST_URL", "https://acme.my.onetrust.com")
     _set_delegation_settings_env(monkeypatch)
 
-    import agent_connector_sdk.auth.delegation as delegation
-    from agent_connector_sdk.auth.tokens import AccessToken
+    import scion_sdk.auth.delegation as delegation
+    from scion_sdk.auth.tokens import AccessToken
 
     monkeypatch.setattr(delegation, "current_user_token", lambda: "caller-token")
     monkeypatch.setattr(
@@ -47,7 +47,7 @@ def test_get_client_wraps_delegation_failure_as_runtime_error(monkeypatch):
     monkeypatch.setenv("ONETRUST_URL", "https://acme.my.onetrust.com")
     _set_delegation_settings_env(monkeypatch)
 
-    import agent_connector_sdk.auth.delegation as delegation
+    import scion_sdk.auth.delegation as delegation
 
     monkeypatch.setattr(delegation, "current_user_token", lambda: "caller-token")
 
