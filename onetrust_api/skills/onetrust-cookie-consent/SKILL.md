@@ -12,7 +12,7 @@ description: >-
 license: MIT
 tags: [onetrust, cookies, consent, cmp, scanning, privacy, mcp]
 metadata:
-  author: Genius
+  author: Knuckles-Team
   version: '0.1.0'
 ---
 # OneTrust Cookie Consent

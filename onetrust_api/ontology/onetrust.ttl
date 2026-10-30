@@ -163,7 +163,7 @@
     rdfs:comment """OneTrust trust-governance model — privacy/risk assessments (PIA/DPIA)
     and their templates, the data inventory and its data elements + data subjects, and
     cookie-consent scan results (cookies and the domains they were found on) — federated
-    into the agent-connector-sdk knowledge-graph hub's enterprise layer.""" .
+    into the scion-sdk knowledge-graph hub's enterprise layer.""" .
 
 # ontology-codemod R3
 <http://knuckles.team/kg#AssessmentTemplate> rdfs:subClassOf <http://knuckles.team/kg#Template> .

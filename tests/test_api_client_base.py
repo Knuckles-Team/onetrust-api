@@ -12,7 +12,7 @@ import json
 
 import pytest
 import requests
-from agent_connector_sdk.exceptions import AuthError, UnauthorizedError
+from scion_sdk.exceptions import AuthError, UnauthorizedError
 
 from onetrust_api.api.api_client_base import OneTrustApiBase
 

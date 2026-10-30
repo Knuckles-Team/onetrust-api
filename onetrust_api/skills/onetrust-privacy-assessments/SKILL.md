@@ -12,7 +12,7 @@ description: >-
 license: MIT
 tags: [onetrust, privacy, assessment, pia, dpia, risk, grc, mcp]
 metadata:
-  author: Genius
+  author: Knuckles-Team
   version: '0.1.0'
 ---
 # OneTrust Privacy Assessments

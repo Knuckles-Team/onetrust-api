@@ -2,9 +2,9 @@
 
 Exercises the real ``ingest_entities`` / ``ingest_documents`` seam and the OneTrust
 domain mappers (``ingest_assessments`` / ``ingest_cookies`` / ``ingest_inventories`` /
-``ingest_data_elements``) against a fake ``agent_connector_sdk.ingest`` transport (no
+``ingest_data_elements``) against a fake ``scion_sdk.ingest`` transport (no
 engine required). The real SDK request builder
-(``agent_connector_sdk.ingest.request.build_request``) and privacy guard still run, so
+(``scion_sdk.ingest.request.build_request``) and privacy guard still run, so
 a malformed change set and the PII redaction contract are still exercised by the SDK's
 own code, not re-derived here; only the final network commit is faked.
 CONCEPT:AU-KG.ingest.enterprise-source-extractor.
@@ -16,8 +16,8 @@ from types import SimpleNamespace
 from typing import Any
 
 import pytest
-from agent_connector_sdk.ingest import IngestError, KnowledgeIngest
 from epistemic_graph.generated.source_ingestion import SourceIngestionRequest
+from scion_sdk.ingest import IngestError, KnowledgeIngest
 
 from onetrust_api.kg_ingest import (
     assessment_documents,

@@ -19,7 +19,7 @@ def test_client_constructs_with_token():
 
 def test_client_requires_credentials():
     import pytest
-    from agent_connector_sdk.exceptions import MissingParameterError
+    from scion_sdk.exceptions import MissingParameterError
 
     from onetrust_api.api_client import Api
 
