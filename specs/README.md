@@ -13,3 +13,5 @@ Read the existing specs first. Extend the spec that owns the behavior. Create a 
 ## Local specifications
 
 This repository has no local spec yet.
+- [`CONN-ONETRUST-API-CONNECTOR-CONTENT`](connector-content/spec.md) — The connector serves its packaged content
+- [`CONN-ONETRUST-API-CONNECTOR-IDENTITY`](connector-identity/spec.md) — The connector is filed under its fleet name
