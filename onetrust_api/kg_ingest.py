@@ -3,7 +3,7 @@
 CONCEPT:AU-KG.ingest.enterprise-source-extractor. Connector-specific mappers emit
 canonical node_type nodes and relationship edges. ``scion_sdk.ingest`` --
 the generated ``SourceIngest`` client, not a local ingestion helper -- owns the
-transaction and raises ``IngestError`` when epistemic-graph cannot commit.
+transaction and raises ``IngestError`` when medulla cannot commit.
 """
 
 from __future__ import annotations
@@ -74,7 +74,7 @@ async def ingest_entities(
     *,
     ingest: KnowledgeIngest | None = None,
 ) -> dict[str, int]:
-    """Write typed OWL nodes (+ edges) into epistemic-graph via the SDK ingest facade.
+    """Write typed OWL nodes (+ edges) into medulla via the SDK ingest facade.
 
     Uses canonical ``node_type`` / ``relationship`` structural fields and surfaces
     a malformed change set or a refused commit as ``IngestError``.

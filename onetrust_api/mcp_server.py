@@ -46,7 +46,7 @@ def register_ingest_tools(mcp: FastMCP):
     """Wire-First native KG ingestion tools — list via the real client, push typed nodes.
 
     CONCEPT:AU-KG.ingest.enterprise-source-extractor. Each tool lists OneTrust records
-    through the composite ``Api`` client and pushes them into the epistemic-graph as typed
+    through the composite ``Api`` client and pushes them into the medulla as typed
     OWL nodes (matching onetrust.ttl). Native-ingest failures propagate to the caller.
     """
     from fastmcp import Context
