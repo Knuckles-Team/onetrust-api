@@ -4498,7 +4498,7 @@ CONTRACTS = (
     ),
     ToolUseContract(
         task="data-mapping-inventory-inventories-2",
-        description="Data Mapping / inventory-inventories: Create Inventory; Link Inventory; Add Asset Inventory as Child to Parent Inventory; Add Legal Entity Inventory as Child to Parent Inventory; Add Processing Activity Inventory as Child to Parent Inventory; Add Vendor Inventory as C...",
+        description="Data Mapping / inventory-inventories: Create Inventory; Link Inventory; Add Asset Inventory as Child to Parent Inventory; Add Legal Entity Inventory as Child to Parent Inventory; Add Processing Activity Inventory as Child to Parent Inventory; Add Vendor Inventory as...",
         steps=(
             ToolStep(
                 tool="onetrust_create_inventory_using_post",
@@ -5867,7 +5867,7 @@ CONTRACTS = (
     ),
     ToolUseContract(
         task="inventory-inventory-linking-contextual-entities",
-        description="Inventory / inventory-linking-contextual-entities: Get Personal Data for Relationship by Type ID; Get Personal Data for Relationship by Type Name; Get List of Relationships; Link or Unlink Personal Data to Relationship by Type ID; Link or Unlink Personal Data to Relationship by Ty...",
+        description="Inventory / inventory-linking-contextual-entities: Get Personal Data for Relationship by Type ID; Get Personal Data for Relationship by Type Name; Get List of Relationships; Link or Unlink Personal Data to Relationship by Type ID; Link or Unlink Personal Data to Relationship by...",
         steps=(
             ToolStep(
                 tool="onetrust_get_personal_data_for_relationships_using_post",
@@ -7189,7 +7189,7 @@ CONTRACTS = (
     ),
     ToolUseContract(
         task="knowledge-graph-ingest-root",
-        description="Knowledge Graph Ingest / root: Mirror assessments into the knowledge graph as Assessment nodes with a summary Document; Mirror scanned cookies into the knowledge graph as Cookie and CookieDomain nodes; Mirror data-inventory records into the knowledge graph as I...",
+        description="Knowledge Graph Ingest / root: Mirror assessments into the knowledge graph as Assessment nodes with a summary Document; Mirror scanned cookies into the knowledge graph as Cookie and CookieDomain nodes; Mirror data-inventory records into the knowledge graph as...",
         steps=(
             ToolStep(
                 tool="onetrust_ingest_assessments",
@@ -8446,7 +8446,7 @@ CONTRACTS = (
     ),
     ToolUseContract(
         task="universal-consent-consent-consent-groups-1",
-        description="Universal Consent / consent-consent-groups: Get List of Consent Groups; Get Priority Scores for Purpose Statuses; Get Consent Group; Add Consent Groups to Parent Consent Group; Add Data Subjects to Parent Consent Group; Add Purpose Rules to Consent Group; Create Consent Gro...",
+        description="Universal Consent / consent-consent-groups: Get List of Consent Groups; Get Priority Scores for Purpose Statuses; Get Consent Group; Add Consent Groups to Parent Consent Group; Add Data Subjects to Parent Consent Group; Add Purpose Rules to Consent Group; Create Consent...",
         steps=(
             ToolStep(
                 tool="onetrust_get_consent_group_list_using_get",
@@ -8676,7 +8676,7 @@ CONTRACTS = (
     ),
     ToolUseContract(
         task="universal-consent-consent-datasubjects-1",
-        description="Universal Consent / consent-datasubjects: Get List of All Purpose Details by Data Subject; Get Data Subject; Get Data Subject Details; Get Purpose Details by Data Subject; Get Optimized List of All Purpose Details for All Data Subjects; Get List of All Purpose Details for...",
+        description="Universal Consent / consent-datasubjects: Get List of All Purpose Details by Data Subject; Get Data Subject; Get Data Subject Details; Get Purpose Details by Data Subject; Get Optimized List of All Purpose Details for All Data Subjects; Get List of All Purpose Details...",
         steps=(
             ToolStep(
                 tool="onetrust_get_all_profiles_by_data_subject_v4",
@@ -9558,7 +9558,7 @@ CONTRACTS = (
     ),
     ToolUseContract(
         task="universal-consent-consentmanager-preferencecenters",
-        description="Universal Consent / consentmanager-preferencecenters: Get Data Subject's Preferences in a Preference Center; Get Preference Center Schema; Get List of Preference Centers; Get Preference Center Root Schema; Update Data Subject's Preferences in a Preference Center; Withdraw Data Subjec...",
+        description="Universal Consent / consentmanager-preferencecenters: Get Data Subject's Preferences in a Preference Center; Get Preference Center Schema; Get List of Preference Centers; Get Preference Center Root Schema; Update Data Subject's Preferences in a Preference Center; Withdraw Data...",
         steps=(
             ToolStep(
                 tool="onetrust_get_data_subject_purposes_by_identifier_using_get_1",
