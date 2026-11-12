@@ -1,7 +1,8 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix core: <https://knuckles-team.github.io/ontology/core#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dc: <http://purl.org/dc/terms/> .
-@prefix : <http://knuckles.team/kg#> .
+@prefix : <https://knuckles-team.github.io/ontology/connector/onetrust#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -15,7 +16,8 @@
 
 # --- classes (owl:Class) ---
 
-:Assessment a owl:Class .
+:Assessment a owl:Class ;
+    rdfs:subClassOf core:Assessment .
 
 
 :AssessmentTemplate a owl:Class ;
@@ -64,13 +66,13 @@
     rdfs:label "responded by" ;
     rdfs:comment "Links an Assessment to the Person who is its respondent." ;
     rdfs:domain :Assessment ;
-    rdfs:range :Person .
+    rdfs:range core:Person .
 
 :approvedBy a owl:ObjectProperty ;
     rdfs:label "approved by" ;
     rdfs:comment "Links an Assessment to the Person who approves it." ;
     rdfs:domain :Assessment ;
-    rdfs:range :Person .
+    rdfs:range core:Person .
 
 :hasDataElement a owl:ObjectProperty ;
     rdfs:label "has data element" ;
@@ -88,7 +90,7 @@
     rdfs:label "owned by" ;
     rdfs:comment "Links an Inventory record to the Person who is its business owner." ;
     rdfs:domain :Inventory ;
-    rdfs:range :Person .
+    rdfs:range core:Person .
 
 :scannedOnDomain a owl:ObjectProperty ;
     rdfs:label "scanned on domain" ;
@@ -158,7 +160,7 @@
     rdfs:comment "Whether a Cookie is set by a third party." ;
     rdfs:range xsd:boolean .
 
-<http://knuckles.team/kg/onetrust> a owl:Ontology ;
+<https://knuckles-team.github.io/ontology/connector/onetrust> a owl:Ontology ;
     rdfs:label "OneTrust Privacy & Trust Governance Ontology" ;
     rdfs:comment """OneTrust trust-governance model — privacy/risk assessments (PIA/DPIA)
     and their templates, the data inventory and its data elements + data subjects, and
@@ -166,34 +168,34 @@
     into the scion-sdk knowledge-graph hub's enterprise layer.""" .
 
 # ontology-codemod R3
-<http://knuckles.team/kg#AssessmentTemplate> rdfs:subClassOf <http://knuckles.team/kg#Template> .
+<https://knuckles-team.github.io/ontology/connector/onetrust#AssessmentTemplate> rdfs:subClassOf <https://knuckles-team.github.io/ontology/core#Template> .
 
 # ontology-codemod R4
-<http://knuckles.team/kg#Cookie> rdfs:subClassOf <http://knuckles.team/kg#Artifact> .
-<http://knuckles.team/kg#CookieDomain> rdfs:subClassOf <http://knuckles.team/kg#Place> .
+<https://knuckles-team.github.io/ontology/connector/onetrust#Cookie> rdfs:subClassOf <https://knuckles-team.github.io/ontology/core#Artifact> .
+<https://knuckles-team.github.io/ontology/connector/onetrust#CookieDomain> rdfs:subClassOf <https://knuckles-team.github.io/ontology/core#Place> .
 
 # Surface roll-up: every class reaches a core class.
-<http://knuckles.team/kg#Inventory> rdfs:subClassOf <http://knuckles.team/kg#DataAsset> .
-<http://knuckles.team/kg#DataElement> rdfs:subClassOf <http://knuckles.team/kg#DataAsset> .
-<http://knuckles.team/kg#DataSubject> rdfs:subClassOf <http://knuckles.team/kg#Person> .
-<http://knuckles.team/kg#ConsentReceipt> rdfs:subClassOf <http://knuckles.team/kg#Document> .
+<https://knuckles-team.github.io/ontology/connector/onetrust#Inventory> rdfs:subClassOf <https://knuckles-team.github.io/ontology/core#DataAsset> .
+<https://knuckles-team.github.io/ontology/connector/onetrust#DataElement> rdfs:subClassOf <https://knuckles-team.github.io/ontology/core#DataAsset> .
+<https://knuckles-team.github.io/ontology/connector/onetrust#DataSubject> rdfs:subClassOf <https://knuckles-team.github.io/ontology/core#Person> .
+<https://knuckles-team.github.io/ontology/connector/onetrust#ConsentReceipt> rdfs:subClassOf <https://knuckles-team.github.io/ontology/core#Document> .
 
 :DataSubjectRequest a owl:Class ;
     rdfs:label "Data Subject Request" ;
     rdfs:comment "A privacy request (access, deletion, correction) raised by a data subject and worked to closure inside a deadline." ;
-    rdfs:subClassOf :Task .
+    rdfs:subClassOf core:Task .
 
 :PrivacyIncident a owl:Class ;
     rdfs:label "Privacy Incident" ;
     rdfs:comment "A recorded privacy or security incident that moves through a staged workflow and links to the inventory it affects." ;
-    rdfs:subClassOf :Incident .
+    rdfs:subClassOf core:Incident .
 
 :ComplianceIssue a owl:Class ;
     rdfs:label "Compliance Issue" ;
     rdfs:comment "A tracked issue raised against a risk, audit, vendor or other record." ;
-    rdfs:subClassOf :Task .
+    rdfs:subClassOf core:Task .
 
 :OneTrustUser a owl:Class ;
     rdfs:label "OneTrust User" ;
     rdfs:comment "A person with access to the tenant, with groups and access levels." ;
-    rdfs:subClassOf :Person .
+    rdfs:subClassOf core:Person .
