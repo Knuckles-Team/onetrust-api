@@ -27433,12 +27433,6 @@ OPERATIONS = [
                 "description": "number of days before the deadline when the reminder will be sent",
             },
             {
-                "name": "action",
-                "type": "string",
-                "required": False,
-                "description": "risk action",
-            },
-            {
                 "name": "probabilityLevelId",
                 "type": "integer",
                 "required": False,
@@ -27638,13 +27632,6 @@ OPERATIONS = [
                 "required": False,
                 "schema": {"type": "integer"},
                 "description": "number of days before the deadline when the reminder will be sent",
-            },
-            {
-                "name": "action",
-                "in": "query",
-                "required": False,
-                "schema": {"type": "string"},
-                "description": "risk action",
             },
             {
                 "name": "probabilityLevelId",
@@ -28115,46 +28102,6 @@ OPERATIONS = [
                 "required": False,
                 "schema": {"type": "array"},
                 "description": "list of manager ids",
-            },
-        ],
-    },
-    {
-        "operation_id": "performRiskActionUsingPUT",
-        "domain": "it_risk_management",
-        "method": "perform_risk_action_using_put",
-        "action": "perform_risk_action_using_put",
-        "http": "PUT",
-        "path": "https://__HOSTNAME__/api/risk/v2/risks/{riskId}/actions/{action}",
-        "paginate": "none",
-        "summary": "Perform Risk Action",
-        "params": [
-            {
-                "name": "riskId",
-                "type": "string",
-                "required": True,
-                "description": "Unique identifier of the risk",
-            },
-            {
-                "name": "action",
-                "type": "string",
-                "required": True,
-                "description": "Action to perform on the risk",
-            },
-        ],
-        "parameters": [
-            {
-                "name": "riskId",
-                "in": "path",
-                "required": True,
-                "schema": {"type": "string"},
-                "description": "Unique identifier of the risk",
-            },
-            {
-                "name": "action",
-                "in": "path",
-                "required": True,
-                "schema": {"type": "string"},
-                "description": "Action to perform on the risk",
             },
         ],
     },

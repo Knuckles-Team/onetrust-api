@@ -31,10 +31,10 @@ consent, data-governance, and risk platform.
 
 It provides **100% coverage of the OneTrust public API** — every operation across
 all **35 OpenAPI specifications** (~600 operations, 7 product areas) is exposed as
-both a typed client method and an action-routed MCP tool. The client, MCP tools,
-and a machine-readable coverage manifest are all **generated from the vendored
-OpenAPI specs** (`onetrust_api/specs/*.json`) by `scripts/generate_from_openapi.py`,
-and a coverage test asserts the three sets stay in lock-step.
+both a typed client method and its own typed MCP tool. The client and a
+machine-readable coverage manifest derive from the vendored OpenAPI specs
+(`onetrust_api/specs/*.json`), and a coverage test asserts the sets stay in
+lock-step.
 
 ### Key Features
 
@@ -572,17 +572,14 @@ starting point.
 | `HOST` | Bind host (HTTP transports) | `0.0.0.0` |
 | `PORT` | Bind port (HTTP transports) | `8000` |
 | `AUTH_TYPE` | MCP transport auth mode (`none`, …) | `none` |
-| `MCP_TOOL_MODE` | Tool surface: `condensed`, `verbose`, or `both` | `condensed` |
 | `MCP_ENABLED_TOOLS` / `MCP_DISABLED_TOOLS` | Comma-separated tool allow/deny list | — |
 | `MCP_ENABLED_TAGS` / `MCP_DISABLED_TAGS` | Comma-separated tag allow/deny list | — |
 | `FASTMCP_LOG_LEVEL` | FastMCP log level (e.g. `INFO`, `DEBUG`) | `INFO` |
 | `DEBUG` | Verbose logging | `False` |
 | `PYTHONUNBUFFERED` | Unbuffered stdout (recommended in containers) | `1` |
 
-### Tool toggles
-Each action-routed domain tool can be disabled individually via its `<DOMAIN>TOOL` toggle env
-var (set to `false`). The full list is in the [Available MCP Tools](#available-mcp-tools) table
-above (e.g. `INCIDENTSTOOL`, `DSARTOOL`, `CONSENT_RECEIPTSTOOL`, `ESGTOOL`).
+Every operation is its own tool. Use `MCP_ENABLED_TOOLS` / `MCP_DISABLED_TOOLS` or the tag
+lists above to narrow the surface.
 
 ### Telemetry & governance
 | Variable | Description | Default |

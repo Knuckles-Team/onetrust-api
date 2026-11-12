@@ -8,7 +8,6 @@ what guarantees nothing silently drops.
 """
 
 import json
-import re
 from pathlib import Path
 
 import pytest
@@ -41,8 +40,13 @@ def test_specs_present():
     assert len(list(SPECS.glob("*.json"))) == 35
 
 
+#: Operations deliberately not served: the endpoint is deprecated upstream and its
+#: ``{action}`` path parameter selects among thirteen workflow states.
+NOT_SERVED = 1
+
+
 def test_manifest_covers_every_spec_operation():
-    assert len(OPERATIONS) == _count_spec_operations()
+    assert len(OPERATIONS) == _count_spec_operations() - NOT_SERVED
     assert len(OPERATIONS) > 0
 
 
@@ -65,15 +69,25 @@ def test_actions_unique_within_each_domain():
         assert len(actions) == len(set(actions)), f"duplicate actions in {domain}"
 
 
-@pytest.mark.parametrize("domain", sorted(DOMAINS))
-def test_every_action_is_routed_in_its_mcp_tool(domain):
-    """Spec operations == manifest actions == actions routed in the generated tool."""
-    src = (MCP / f"mcp_{domain}.py").read_text()
-    # Whitespace-tolerant: the formatter wraps long ``elif action == "..."`` lines.
-    routed = set(re.findall(r'action\s*==\s*"([^"]+)"', src))
-    expected = set(ACTIONS_BY_DOMAIN[domain])
-    assert routed == expected, f"{domain}: {routed ^ expected}"
-    assert f"def onetrust_{domain}(" in src
+def test_no_action_routed_domain_module_remains():
+    """Every operation is its own tool; no per-domain action router is packaged."""
+    modules = {path.name for path in MCP.glob("mcp_*.py")}
+    assert modules == {"mcp_custom_api.py"}
+
+
+@pytest.mark.asyncio
+async def test_every_operation_is_its_own_tool(monkeypatch):
+    from unittest.mock import patch
+
+    from onetrust_api.mcp_server import get_mcp_instance
+
+    with patch("sys.argv", ["onetrust-mcp", "--transport", "stdio"]):
+        mcp, *_ = get_mcp_instance()
+        names = {tool.name for tool in await mcp.list_tools()}
+    missing = [
+        op["method"] for op in OPERATIONS if f"onetrust_{op['method']}" not in names
+    ]
+    assert not missing, missing[:5]
 
 
 def test_custom_api_escape_hatch_present():

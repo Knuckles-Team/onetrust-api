@@ -22,13 +22,6 @@ logger = get_logger(name="onetrust_mcp")
 logger.setLevel(logging.INFO)
 
 
-def register_prompts(mcp: FastMCP):
-    @mcp.prompt(name="example_prompt", description="Example prompt for OneTrust Api.")
-    def example_prompt(query: str) -> str:
-        """Example prompt."""
-        return f"Please help with '{query}' using OneTrust Api"
-
-
 def _records(result: Any) -> list[dict[str, Any]]:
     """Normalise a client Response / dict / list into a list of record dicts."""
     data = getattr(result, "data", result)
@@ -132,22 +125,18 @@ def get_mcp_instance(*, command_args=None) -> tuple[Any, Any, Any, Any]:
 
 
 def register_server_surface(mcp: FastMCP) -> list[str]:
-    """Reuse the manifest-backed surface, prompts and ingest tools in order."""
-    # One central call selects the surface per MCP_TOOL_MODE: condensed gates each
-    # generated TOOL_REGISTRY domain via setting("<TAG>TOOL", True); verbose adds
-    # the fully-typed 1:1 tools sourced from the OpenAPI manifest (OPERATIONS).
-    from onetrust_api.mcp import TOOL_REGISTRY
+    """Register one typed tool per API operation, the request tool and ingest tools."""
+    from onetrust_api.mcp import register_custom_api_tools
 
     registered_tags = register_tool_surface(
         mcp,
         client_cls=Api,
         get_client=get_client,
         service="onetrust-api",
-        tool_registry=TOOL_REGISTRY,
+        registrars=[register_custom_api_tools],
         manifest=OPERATIONS,
     )
 
-    register_prompts(mcp)
     register_ingest_tools(mcp)
 
     return registered_tags

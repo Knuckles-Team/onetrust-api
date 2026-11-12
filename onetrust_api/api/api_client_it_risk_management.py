@@ -528,18 +528,6 @@ class OneTrustItRiskManagement(OneTrustApiBase):
             kwargs=kwargs,
         )
 
-    def perform_risk_action_using_put(self, **kwargs) -> Response:
-        """Perform Risk Action"""
-        return self._call(
-            http="PUT",
-            url_template="https://__HOSTNAME__/api/risk/v2/risks/{riskId}/actions/{action}",
-            path_params=["riskId", "action"],
-            query_params=[],
-            has_body=False,
-            paginate="none",
-            kwargs=kwargs,
-        )
-
     def approve_risk_using_put(self, **kwargs) -> Response:
         """Approve Risk"""
         return self._call(
