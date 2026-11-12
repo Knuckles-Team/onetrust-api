@@ -247,7 +247,7 @@ _39 intent tool(s) · 0 operation(s). Call an operation as `act(action='<operati
 <!-- MCP-CONFIG-EXAMPLES:START -->
 
 > **Install the connector-focused `[mcp]` extra.** Examples use `onetrust-api[mcp]` to add
-> FastMCP / FastAPI through `scion-sdk[mcp]`; the required Agent Utilities core
+> FastMCP / FastAPI through `scion-sdk[mcp]`; the required Meristem core
 > still carries `medulla`. The `[agent-runtime]` extra additionally
 > enables model orchestration.
 
@@ -539,7 +539,7 @@ agent (`immutable agent digest`) with a co-located `:mcp` sidecar.
 ### Knowledge-graph database (`medulla`)
 
 Both `[mcp]` and `[agent]` carry the **medulla** engine through the required
-Agent Utilities core dependency (`medulla`). The `[mcp]` extra keeps
+Meristem core dependency (`medulla`). The `[mcp]` extra keeps
 the server connector-focused; `[agent]` also enables model orchestration. Local
 deployments can use the bundled engine. For production or shared state, run
 **medulla as a dedicated database service** and configure the runtime to use it.
