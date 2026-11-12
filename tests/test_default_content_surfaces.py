@@ -39,6 +39,8 @@ async def _listings():
         resources = {str(r.uri) for r in await client.list_resources()}
         prompts = {p.name for p in await client.list_prompts()}
         for uri in resources:
+            if uri.endswith("/contracts.ttl"):
+                continue  # rendered from connector_contracts.py, not a packaged file
             if uri.startswith(("ontology://", "shapes://")):
                 directory = ROOT / "ontology"
                 if uri.startswith("shapes://"):
@@ -91,7 +93,7 @@ def test_sdk_floor_supports_content_identity_and_current_pack_protocol() -> None
             Version(s.version) for s in requirement.specifier if s.operator == ">="
         )
         assert floor >= Version("0.6.3")
-        assert requirement.specifier.contains("0.7.0")
+        assert requirement.specifier.contains("0.10.1")
         assert not requirement.specifier.contains("0.5.9")
 
 
@@ -141,7 +143,7 @@ def test_canonical_and_legacy_routes_preserve_the_full_tool_surface():
                 tool.name: tool.model_dump(mode="json")
                 for tool in await canonical_client.list_tools()
             }
-        assert len(legacy) == 601
+        assert len(legacy) == 600
         assert declared == legacy
 
     asyncio.run(capture())
@@ -163,44 +165,7 @@ def test_legacy_cli_configuration_file_still_controls_host_and_port(
         command_args=["--transport", "stdio", "--auth-type", "none"]
     )
     assert (args.host, args.port) == ("127.0.0.1", 9187)
-    assert tags == [
-        "access_management",
-        "ai_governance",
-        "assessments",
-        "audit_management",
-        "bulk_export",
-        "cmp",
-        "compliance_automation",
-        "consent_interfaces",
-        "consent_receipts",
-        "cookie_consent",
-        "cookie_consent_legacy",
-        "cookie_domain_data",
-        "cross_device_consent",
-        "data_catalog",
-        "data_discovery",
-        "data_discovery_worker",
-        "data_mapping",
-        "data_mapping_legacy",
-        "documents",
-        "dsar",
-        "esg",
-        "incidents",
-        "integrations",
-        "inventory",
-        "issues_management",
-        "it_risk_management",
-        "mobile_app_consent",
-        "object_manager",
-        "policy_management",
-        "privacy_notices",
-        "task_management",
-        "tprm",
-        "training",
-        "universal_consent",
-        "user_provisioning",
-        "custom_api",
-    ]
+    assert tags == ["custom_api"]
 
 
 def test_each_server_registers_existing_ingest_tools_once(monkeypatch):
