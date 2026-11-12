@@ -21,11 +21,14 @@ admission, serving, and durable graph state belong to their owning
 repositories. Read `AGENTS.md` before changing code and keep provider
 credentials and endpoints out of source, logs, and skill content.
 
-Do not hand-edit generated files (`onetrust_api/api/api_client_<domain>.py`,
-`api_client.py`, `api/_operation_manifest.py`, `mcp/mcp_<domain>.py`,
-`mcp/__init__.py`). Change `scripts/generate_from_openapi.py` and re-run it.
-Hand-authored core: `api/api_client_base.py`, `auth.py`, `onetrust_models.py`,
-`mcp/mcp_custom_api.py`.
+Every API operation is served as its own typed tool by the SDK from
+`api/_operation_manifest.py` and the client methods in
+`api/api_client_<domain>.py`; there are no per-domain action-routed tool
+modules. Hand-authored: `api/api_client_base.py`, `auth.py`,
+`onetrust_models.py`, `mcp/mcp_custom_api.py` (the raw request tool) and
+`connector_contracts.py` (tool-use contracts, links, data locations, roles).
+A new operation needs a contract step, a link, and a mention in the skill of
+its domain.
 
 ## Rapid delivery: the 5-minute contract
 

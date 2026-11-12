@@ -1,78 +1,131 @@
-# Onetrust Cookie Consent
+# OneTrust Cookie Consent
 
-Cookie-consent scanning and categorization on the OneTrust Cookie Consent API via the onetrust-api MCP server — scan domains/apps, list discovered cookies, categorize/recategorize them, and publish consent scripts with the domain-typed tool. Use when the agent must launch or check a cookie scan, review the cookies found on a domain, bulk edit/categorize cookies, or publish a banner script. Do NOT use for privacy assessments (onetrust-privacy-assessments) or the data inventory (onetrust-data-mapping); prefer those.
+Cookie and consent-banner operations on OneTrust: scan domains and mobile apps, read and categorize discovered cookies, manage geolocation rule groups, templates and branding, publish consent scripts, and read consent-management-platform vendors and interfaces. Use when the agent must launch or check a scan, categorize cookies in bulk, or publish a banner script. Do NOT use for consent receipts and preferences (onetrust-consent-preferences) or assessments (onetrust-privacy-assessments).
 
 # OneTrust Cookie Consent
 
-Domain-typed access to the OneTrust **Cookie Consent** API for website/app cookie
-scanning, cookie categorization, and consent-script publishing. Prefer the
-condensed `onetrust_cookie_consent` tool over raw HTTP.
+A cookie programme scans each site or app, categorizes what it finds, and publishes a consent script that enforces those categories. Scans run asynchronously, so results are read only after the scan status reports completion.
 
 ## When to use
-- Kick off or check a cookie scan of a domain or mobile app.
-- List / filter the cookies discovered by scans and read scan result summaries.
-- Bulk add / edit / delete / recategorize cookies.
-- Publish a consent script to a site or app, or download the script file.
+- Create applications and domains, schedule or start scans and poll their status.
+- Read scan summaries, deltas and detailed results.
+- Search, add, edit, recategorize and delete cookies.
+- Manage geolocation rule groups, templates and branding attributes.
+- Publish or download consent scripts; mirror cookies into the graph.
 
 ## When NOT to use
-- Privacy / risk assessments → `onetrust-privacy-assessments`.
-- The data inventory (assets/vendors) and data elements → `onetrust-data-mapping`.
-- Consent **receipts** / universal consent transactions → `onetrust_consent_receipts`
-  / `onetrust_universal_consent`.
-- Legacy cookie endpoints → the `cookie_consent_legacy` tag if a tenant still uses it.
+- Consent transactions and preference centres: use onetrust-consent-preferences.
+- Data-subject requests: use onetrust-dsar-incident-response.
 
-## Prerequisites & environment
-Connect via the `mcp-client` skill against the **`onetrust-api`** MCP server.
+## Workflow
+1. Resolve the domain or application, then list its scans.
+2. Start or schedule a scan and poll the scan status until it completes.
+3. Read the scan summary, then the detailed results, before categorizing.
+4. Apply category changes in bulk, then publish the script only after the person approves.
 
-| Variable | Required | Notes |
-|----------|----------|-------|
-| `ONETRUST_HOSTNAME` | ✅ | Tenant host, e.g. `app.onetrust.com` |
-| `ONETRUST_API_TOKEN` | ✅ | Bearer OAuth token (or client-credentials pair) |
-| `ONETRUST_CLIENT_ID` / `ONETRUST_CLIENT_SECRET` | optional | OAuth2 client-credentials |
+## Safety
+- Publishing a script changes a live banner on a production site; ask first and name the site.
+- Bulk delete of cookies and domain deletion are not reversible from this connector.
 
-Enable the `cookie_consent` tag (default in the condensed surface). `MCP_TOOL_MODE`
-selects condensed vs. verbose.
+## Tools (58)
 
-## Tools & actions
-| Condensed tool | Key actions |
-|----------------|-------------|
-| `onetrust_cookie_consent` | `get_applications`, `create_application`, `scan_application`, `add_scans`, `schedule_scans`, `check_scans_status`, `get_domain_scans`, `get_scan_result_summary`, `get_detailed_scan_result_information`, `get_cookies_by_filter`, `get_categorized_cookies`, `bulk_add_cookies`, `bulk_edit_cookies`, `bulk_delete_cookies`, `recategorize_cookies_by_scan`, `publish_script_to_site`, `download_script_file` |
+Each tool is one API operation; pass its path, query and body fields as named arguments.
 
-### Key parameters
-- `get_cookies_by_filter` — filter/page body selecting cookies to return.
-- `add_scans` / `schedule_scans` — the domain(s) or app(s) to scan.
-- `recategorize_cookies_by_scan` — a scan id to re-run categorization against.
-- Cookie records expose `cookieId`, `cookieName`, `host`, `lifespan`,
-  `displayGroupName` (category), and `thirdParty`.
 
-## Recipes (`params_json`)
-List cookies via filter:
-```json
-{"action":"get_cookies_by_filter","params_json":"{\"page\":0,\"size\":100}"}
-```
-Check the status of running scans:
-```json
-{"action":"check_scans_status","params_json":"{\"scanIds\":[\"<scanId>\"]}"}
-```
-Get a scan's result summary:
-```json
-{"action":"get_scan_result_summary","params_json":"{\"scanId\":\"<scanId>\"}"}
-```
+### Cmp
 
-## Gotchas
-- `params_json` is a **string** of JSON, not an object — serialize it (note the
-  escaped inner JSON in the recipes above).
-- Scans are asynchronous: `add_scans`/`scan_application` return quickly; poll
-  `check_scans_status` before reading results.
-- Cookie category lives in `displayGroupName` (the OneTrust display group), while
-  `cookiepediaCategory` is the Cookiepedia-suggested category — they can differ.
-- `thirdParty` is a boolean flag; a missing value means "unknown", not "first party".
-- Publishing a script (`publish_script_to_site`) is a **write** that changes the
-  live banner — confirm the domain/app id before calling.
+| Tool | Method | Purpose |
+|---|---|---|
+| `onetrust_get_banner` | GET | Get Banner Data |
+| `onetrust_get_preferences` | GET | Get Preference Center Data |
+| `onetrust_get_ucpurposes` | GET | Get Universal Consent Purposes |
+| `onetrust_get_vendors` | GET | Get IAB and Google Vendors |
+| `onetrust_post_log_consent` | POST | Log Consent |
 
-## Related
-- **KG ingestion:** `onetrust_ingest_cookies` (Wire-First) lists cookies and pushes
-  them into the knowledge graph as typed `:Cookie` nodes with `:scannedOnDomain`
-  links to `:CookieDomain`. Use it for ingestion, not the scan/publish recipes.
-- **Prompt:** the `consent_cookie_specialist` prompt composes this skill.
-- **Sibling skills:** `onetrust-privacy-assessments`, `onetrust-data-mapping`.
+### Consent Interfaces
+
+| Tool | Method | Purpose |
+|---|---|---|
+| `onetrust_get_realtime_preferences` | GET | Get Data Subject's Preferences |
+
+### Cookie Consent
+
+| Tool | Method | Purpose |
+|---|---|---|
+| `onetrust_check_scans_status` | POST | Get Scan Statuses |
+| `onetrust_download_script_file` | GET | Download Script File |
+| `onetrust_get_app_script_details` | GET | Get Script for Application |
+| `onetrust_get_application_branding_attribute_list` | GET | Get Branding Attributes for Application |
+| `onetrust_get_applications` | GET | Get List of Applications |
+| `onetrust_get_branding_attribute_list` | GET | Get Branding Attributes for Domain |
+| `onetrust_get_categorized_cookies` | POST | Get Categorized Cookies |
+| `onetrust_get_cookies_by_filter` | POST | Get List of Cookies by Criteria |
+| `onetrust_get_detailed_scan_result_information` | GET | Get Scan Results |
+| `onetrust_get_domain_scans` | GET | Get List of Scans by Domain |
+| `onetrust_get_domains_scanned_by_sort` | GET | Get List of Websites |
+| `onetrust_get_geo_rule_group_details` | GET | Get Geolocation Rule Group |
+| `onetrust_get_geo_rule_groups` | GET | Get List of Geolocation Rule Groups |
+| `onetrust_get_scan_delta_details` | GET | Get List of Added or Removed Cookies |
+| `onetrust_get_scan_result_summary` | GET | Get Scan Result Summary |
+| `onetrust_get_script_details` | GET | Get Script for Domain |
+| `onetrust_get_script_for_website` | GET | Get Script for Website |
+| `onetrust_get_template_details` | GET | Get Template Details |
+| `onetrust_get_templates` | GET | Get List of Templates |
+| `onetrust_add_scans` | POST | Scan Websites |
+| `onetrust_archive_scans` | POST | Archive Scans |
+| `onetrust_bulk_add_cookies` | POST | Add Cookies |
+| `onetrust_bulk_cancel_domain_schedule` | POST | Cancel Scheduled Website Scans |
+| `onetrust_create_application` | POST | Create Application |
+| `onetrust_create_domain_group` | POST | Create or Update Domain Group |
+| `onetrust_schedule_scans` | POST | Schedule Website Scans |
+| `onetrust_assign_entities_to_geo_rule_group` | PUT | Assign Geolocation Rule Group |
+| `onetrust_bulk_edit_cookies` | PUT | Edit Cookies |
+| `onetrust_cancel_scan` | PUT | Cancel Scan |
+| `onetrust_publish_app_script` | PUT | Publish Application SDK |
+| `onetrust_publish_script_to_site` | PUT | Publish Script to Website |
+| `onetrust_recategorize_cookies_by_scan` | PUT | Recategorize Cookies |
+| `onetrust_scan_application` | PUT | Scan Application |
+| `onetrust_update_application_branding_attributes_for_public_api` | PUT | Update Branding Attributes for Application |
+| `onetrust_update_branding_attributes_for_public_api` | PUT | Update Branding Attributes for Domain |
+| `onetrust_bulk_delete_cookies` | DELETE | Delete Cookies |
+| `onetrust_delete_domain` | DELETE | Delete Domain |
+
+### Cookie Consent Legacy
+
+| Tool | Method | Purpose |
+|---|---|---|
+| `onetrust_download_to_local_using_get` | GET | Download Script File |
+| `onetrust_get_categorized_cookies_using_get` | POST | Categorize Cookies by Domain |
+| `onetrust_get_categorized_cookies_with_cookie_ids_using_get` | POST | Categorize Cookies by Domain and Cookie ID |
+| `onetrust_get_cookie_reports_using_post` | POST | Get List of Cookies by Criteria |
+| `onetrust_get_domains_scanned_by_sort_using_get` | GET | Get List of Websites |
+| `onetrust_get_script_for_website_using_get` | GET | Get Script for Website |
+| `onetrust_create_domain_group_using_post` | POST | Create or Update Domain Group |
+| `onetrust_create_new_cookie` | POST | Create Cookie |
+| `onetrust_request_bulk_add_domain_using_post` | POST | Add Websites to Scan |
+| `onetrust_publish_to_site_using_put` | PUT | Publish Script to Website |
+| `onetrust_update_cookie` | PUT | Update Cookie |
+
+### Cookie Domain Data
+
+| Tool | Method | Purpose |
+|---|---|---|
+| `onetrust_domaindata` | GET | Get Domain Data |
+
+### Cross Device Consent
+
+| Tool | Method | Purpose |
+|---|---|---|
+| `onetrust_get_preferences_using_get` | GET | Get Data Subject's Preferences |
+
+### Knowledge Graph Ingest
+
+| Tool | Method | Purpose |
+|---|---|---|
+| `onetrust_ingest_cookies` | POST | Mirror scanned cookies into the knowledge graph as Cookie and CookieDomain nodes |
+
+### Mobile App Consent
+
+| Tool | Method | Purpose |
+|---|---|---|
+| `onetrust_applicationdata` | GET | Get SDK Configuration |

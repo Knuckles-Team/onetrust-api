@@ -171,3 +171,29 @@
 # ontology-codemod R4
 <http://knuckles.team/kg#Cookie> rdfs:subClassOf <http://knuckles.team/kg#Artifact> .
 <http://knuckles.team/kg#CookieDomain> rdfs:subClassOf <http://knuckles.team/kg#Place> .
+
+# Surface roll-up: every class reaches a core class.
+<http://knuckles.team/kg#Inventory> rdfs:subClassOf <http://knuckles.team/kg#DataAsset> .
+<http://knuckles.team/kg#DataElement> rdfs:subClassOf <http://knuckles.team/kg#DataAsset> .
+<http://knuckles.team/kg#DataSubject> rdfs:subClassOf <http://knuckles.team/kg#Person> .
+<http://knuckles.team/kg#ConsentReceipt> rdfs:subClassOf <http://knuckles.team/kg#Document> .
+
+:DataSubjectRequest a owl:Class ;
+    rdfs:label "Data Subject Request" ;
+    rdfs:comment "A privacy request (access, deletion, correction) raised by a data subject and worked to closure inside a deadline." ;
+    rdfs:subClassOf :Task .
+
+:PrivacyIncident a owl:Class ;
+    rdfs:label "Privacy Incident" ;
+    rdfs:comment "A recorded privacy or security incident that moves through a staged workflow and links to the inventory it affects." ;
+    rdfs:subClassOf :Incident .
+
+:ComplianceIssue a owl:Class ;
+    rdfs:label "Compliance Issue" ;
+    rdfs:comment "A tracked issue raised against a risk, audit, vendor or other record." ;
+    rdfs:subClassOf :Task .
+
+:OneTrustUser a owl:Class ;
+    rdfs:label "OneTrust User" ;
+    rdfs:comment "A person with access to the tenant, with groups and access levels." ;
+    rdfs:subClassOf :Person .

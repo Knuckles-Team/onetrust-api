@@ -7,17 +7,15 @@ ways: a typed Python client, an MCP server, and an A2A agent.
 
 OneTrust publishes 35 machine-readable OpenAPI 3.x specifications. This package
 **vendors** all of them under `onetrust_api/specs/*.json` and runs
-`scripts/generate_from_openapi.py` to emit, from that single source of truth:
+the committed client and manifest below, which cover every operation:
 
 - `onetrust_api/api/api_client_<domain>.py` — one method per operation, composed
   into the single `Api` class via multiple inheritance.
-- `onetrust_api/api/_operation_manifest.py` — the `operationId → method → action`
-  map that drives coverage verification.
-- `onetrust_api/mcp/mcp_<domain>.py` — one consolidated, action-routed MCP tool
-  per domain.
+- `onetrust_api/api/_operation_manifest.py` — the `operationId → method` map that
+  drives coverage verification and the typed MCP tools (one per operation).
 
-`tests/test_onetrust_coverage.py` then asserts the three sets — spec operations,
-client methods, and MCP actions — are mutually consistent. If OneTrust revises a
+`tests/test_onetrust_coverage.py` asserts that spec operations, client methods and
+MCP tools are mutually consistent. If OneTrust revises a
 spec, re-running the generator and the test guarantees nothing silently drops.
 
 ## Product areas
@@ -39,7 +37,7 @@ spec, re-running the generator and the test guarantees nothing silently drops.
 graph TD
     User([User / A2A]) --> Agent[Pydantic-AI Agent]
     Agent --> MCP[FastMCP Server]
-    MCP --> Tools[36 action-routed domain tools]
+    MCP --> Tools[one typed tool per operation]
     Tools --> Api[Composite Api client]
     Api --> Base[OneTrustApiBase: auth / pagination / retry]
     Base --> OneTrust([OneTrust REST API])

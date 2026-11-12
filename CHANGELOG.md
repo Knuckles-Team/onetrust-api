@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.7] - 2026-11-12
+
+### Changed
+- Every API operation is served as its own typed tool; the per-domain action-routed
+  tools, their toggles and the generator that emitted them are removed. The tool
+  count is 600: 596 operations, the raw request tool and three knowledge-graph
+  ingest tools.
+- Declare tool-use contracts, links, data locations and business roles
+  (`connector_contracts.py`); ship an operator and five business-role agent
+  prompts and eight skills that name every tool; root every ontology class in a
+  core class.
+- Require `scion-sdk>=0.9.0,<1.0.0`.
+
+### Removed
+- `onetrust_perform_risk_action_using_put`: the operation is deprecated upstream and
+  its `{action}` path parameter selects among thirteen workflow states.
+- The `action` query parameter of `onetrust_update_risk_using_put`.
+
 ## [1.3.6] - 2026-10-30
 
 ### Changed

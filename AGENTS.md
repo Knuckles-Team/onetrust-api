@@ -17,30 +17,24 @@ Tool-neutral rules for any AI agent or human working in this repository. This bl
 
 ## OneTrust-Specific Notes (READ FIRST)
 
-This package achieves **100% OneTrust API coverage by code generation**, not by
-hand. The single source of truth is the vendored OpenAPI specs under
-`onetrust_api/specs/*.json`.
+This package covers the OneTrust API through one client method and one typed MCP
+tool per operation. The operation manifest in
+`onetrust_api/api/_operation_manifest.py` (with the vendored OpenAPI specs under
+`onetrust_api/specs/*.json`) is the source of the tool names, summaries and
+parameters; the SDK registers each operation as its own tool.
 
-- **Do not hand-edit generated files.** These are emitted by
-  `scripts/generate_from_openapi.py` and will be overwritten:
-  `onetrust_api/api/api_client_<domain>.py`, `onetrust_api/api_client.py`,
-  `onetrust_api/api/_operation_manifest.py`, `onetrust_api/mcp/mcp_<domain>.py`,
-  and `onetrust_api/mcp/__init__.py`. Change the **generator** instead, then
-  re-run it and `ruff format .`.
-- **Hand-authored core** (safe to edit): `onetrust_api/api/api_client_base.py`
-  (auth, pagination, retry, URL resolution), `onetrust_api/auth.py`,
-  `onetrust_api/onetrust_models.py`, `onetrust_api/mcp/mcp_custom_api.py`.
-- **Refresh flow** when OneTrust changes a spec: re-download specs →
-  `python scripts/generate_from_openapi.py` → `ruff format .` →
-  `pytest` (the coverage keystone in `tests/test_onetrust_coverage.py` proves
-  spec operations == client methods == MCP actions).
-- **Tool surface (`MCP_TOOL_MODE`).** `condensed` (default) registers the
-  per-domain action-routed tools; `verbose` registers one fully-typed 1:1 tool
-  per API method, with parameter types/descriptions sourced from
-  `_operation_manifest.py`'s `params`; `both` registers both. The manifest's
-  `params`/`summary` fields exist specifically to drive the shared
-  `register_verbose_tools` typed tier — generated, do not hand-edit.
-  (CONCEPT:AU-ECO.mcp.tool-mode-standardization)
+- **No action routing.** There are no per-domain `action` tools. A new operation
+  needs a client method in `onetrust_api/api/api_client_<domain>.py`, an entry in
+  the manifest, a tool-use contract step, a link and a mention in the skill of
+  its domain, all in `onetrust_api/connector_contracts.py` and
+  `onetrust_api/skills/`.
+- **Hand-authored core:** `onetrust_api/api/api_client_base.py` (auth,
+  pagination, retry, URL resolution), `onetrust_api/auth.py`,
+  `onetrust_api/onetrust_models.py`, `onetrust_api/mcp/mcp_custom_api.py` (the raw
+  request tool) and `onetrust_api/connector_contracts.py`.
+- **Surface gate.** `tests/test_connector_surface.py` runs the SDK surface check:
+  every tool is called by a contract step, linked to a prompt or skill, and
+  named in a skill; every prompt is a complete agent definition.
 
 ## Tech Stack & Architecture
 - Language/Version: Python 3.10+

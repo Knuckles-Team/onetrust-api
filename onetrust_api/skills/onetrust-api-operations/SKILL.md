@@ -2,7 +2,7 @@
 name: onetrust-api-operations
 skill_type: skill
 description: >-
-  Operate onetrust-api through its governed MCP and Arbora capabilities, including onetrust cookie consent, onetrust data mapping, onetrust privacy assessments. Use when a request requires this provider's read, change, automation, ingestion, troubleshooting, or evidence workflows.
+  Operate onetrust-api through its governed MCP and Arbora capabilities, including cookie consent, data mapping, privacy assessments, consent preferences, privacy requests, risk and compliance, governance content and platform administration. Use when a request requires this provider's read, change, automation, ingestion, troubleshooting, or evidence workflows.
 ---
 
 # Onetrust Api Operations
@@ -12,7 +12,7 @@ Use the provider's governed MCP tools through Arbora delegation.
 ## Workflow
 
 1. Establish the verified GraphSession and tenant before discovery or retrieval.
-2. Discover the current condensed tool surface; never assume a stale tool name or schema.
+2. Discover the current typed tool surface (one tool per API operation); never assume a stale tool name or schema.
 3. Prefer read-only inspection first. For changes, present impact and use the provider's
    dry-run or preview mode when available.
 4. Execute mutations as fenced WorkItems so retries remain idempotent and auditable.

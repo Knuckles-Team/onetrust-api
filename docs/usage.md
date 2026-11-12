@@ -20,20 +20,17 @@ Every call returns a `Response` wrapper exposing `.data` (decoded JSON) plus
 
 ## MCP server
 
-Each domain is a single action-routed tool. Pass an `action` and a `params_json`
-payload (path, query, and body fields all go in `params_json`):
+Each API operation is its own tool, named `onetrust_<operation>`. Pass the path,
+query and body fields as named arguments:
 
 ```jsonc
-// tool: onetrust_incidents
-{
-  "action": "create_incident_using_post",
-  "params_json": "{\"body\": {\"name\": \"Data breach\"}}"
-}
+// tool: onetrust_create_incident_using_post
+{ "name": "Data breach", "incidentTypeName": "Breach", "orgGroupId": "..." }
 ```
 
 ```jsonc
-// tool: onetrust_dsar
-{ "action": "get_request_queues", "params_json": "{\"page\": 0, \"size\": 50}" }
+// tool: onetrust_get_all_request_queues_v2_using_get
+{ "page": 0, "size": 50 }
 ```
 
 The `custom_api` tool (`onetrust_api_request`) issues arbitrary requests for any
