@@ -1,0 +1,14 @@
+{
+  "content": [
+    {
+      "id": "9a1b2c3d-0000-4000-8000-000000000001",
+      "name": "Fixture risk",
+      "serviceRef": "fixture-service",
+      "stage": "Identified"
+    }
+  ],
+  "totalElements": 1,
+  "totalPages": 1,
+  "number": 0,
+  "size": 20
+}

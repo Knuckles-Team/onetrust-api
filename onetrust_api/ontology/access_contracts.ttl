@@ -1,0 +1,22 @@
+@prefix ac: <https://knuckles-team.github.io/ontology/access#> .
+@prefix ot: <https://knuckles-team.github.io/ontology/connector/onetrust#> .
+@prefix oa: <https://knuckles-team.github.io/ontology/connector/onetrust-access#> .
+
+oa:riskAccess a ac:AccessContract ;
+    ac:classIri ot:Risk ;
+    ac:sourceId "onetrust-api" ;
+    ac:entity "risk" ;
+    ac:keyField "id" ;
+    ac:accessKind "mcp_tool" ;
+    ac:operation "onetrust_get_risk_page_view_using_post" ;
+    ac:pagination "page" ;
+    ac:recordsPath "data.content" ;
+    ac:paginationParam "page" ;
+    ac:pageSizeParam "size" ;
+    ac:freshnessSeconds 300 ;
+    ac:costHint "low" .
+
+oa:riskName a ac:PropertyBinding ;
+    ac:contract oa:riskAccess ; ac:property ot:name ; ac:field "name" .
+oa:riskServiceRef a ac:PropertyBinding ;
+    ac:contract oa:riskAccess ; ac:property ot:serviceRef ; ac:field "serviceRef" .

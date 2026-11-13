@@ -5,4 +5,4 @@ Governing spec: [spec.md](spec.md). Design: [plan.md](plan.md). Rows: [requireme
 Each task line reads `- [ ] T001 [P] [US1] <ID>-R012.4 description`. Tasks run producer first; a checked task has landed.
 
 - [x] T001 [US1] CONN-ONETRUST-API-CONNECTOR-CONTENT-R001 Default content.
-- [ ] T002 [US2] CONN-ONETRUST-API-CONNECTOR-CONTENT-R002 Declare access contracts for the competency reads of onetrust-api.
+- [x] T002 [US2] CONN-ONETRUST-API-CONNECTOR-CONTENT-R002 Declare access contracts for the competency reads of onetrust-api.
