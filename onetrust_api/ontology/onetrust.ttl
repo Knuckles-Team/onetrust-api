@@ -120,6 +120,23 @@
     rdfs:comment "Outcome/result label of a completed Assessment." ;
     rdfs:range xsd:string .
 
+:Risk a owl:Class ;
+    rdfs:subClassOf core:Assessment ;
+    rdfs:label "Risk" ;
+    rdfs:comment "A risk register entry of OneTrust IT risk management (onetrust_get_risk_page_view_using_post)." .
+
+:serviceRef a owl:DatatypeProperty ;
+    rdfs:label "service reference" ;
+    rdfs:comment "Reference to the service or asset a Risk concerns." ;
+    rdfs:domain :Risk ;
+    rdfs:range xsd:string .
+
+:name a owl:DatatypeProperty ;
+    rdfs:label "name" ;
+    rdfs:comment "Display name of a Risk." ;
+    rdfs:domain :Risk ;
+    rdfs:range xsd:string .
+
 :riskScore a owl:DatatypeProperty ;
     rdfs:label "risk score" ;
     rdfs:comment "Numeric residual/inherent risk score computed for an Assessment." ;
