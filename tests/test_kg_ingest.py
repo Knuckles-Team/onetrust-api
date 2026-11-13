@@ -1,4 +1,4 @@
-"""Epistemic-graph typed-node ingestion -- Wire-First coverage for onetrust-api.
+"""Medulla typed-node ingestion -- Wire-First coverage for onetrust-api.
 
 Exercises the real ``ingest_entities`` / ``ingest_documents`` seam and the OneTrust
 domain mappers (``ingest_assessments`` / ``ingest_cookies`` / ``ingest_inventories`` /
