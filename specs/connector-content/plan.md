@@ -16,7 +16,7 @@ This plan states how `onetrust-api` delivers the rows of `CONN-ONETRUST-API-CONN
 - **Project Type**: connector
 - **Performance Goals**: N/A, the vendor service sets the latency
 - **Constraints**: vendor calls go through the SDK governed client; no connector-local transport
-- **Scale/Scope**: 2 active row(s) in this spec
+- **Scale/Scope**: 3 active row(s) in this spec
 
 ## Constitution Check
 
@@ -51,7 +51,7 @@ This plan states how `onetrust-api` delivers the rows of `CONN-ONETRUST-API-CONN
 - **Project Type**: connector
 - **Performance Goals**: N/A, the vendor service sets the latency
 - **Constraints**: vendor calls go through the SDK governed client; no connector-local transport
-- **Scale/Scope**: 2 active row(s) in this spec
+- **Scale/Scope**: 3 active row(s) in this spec
 
 ### Constitution Check
 
@@ -86,7 +86,7 @@ This plan states how `onetrust-api` delivers the rows of `CONN-ONETRUST-API-CONN
 - **Project Type**: connector
 - **Performance Goals**: N/A, the vendor service sets the latency
 - **Constraints**: vendor calls go through the SDK governed client; no connector-local transport
-- **Scale/Scope**: 2 active row(s) in this spec
+- **Scale/Scope**: 3 active row(s) in this spec
 
 ### Constitution Check
 
@@ -121,7 +121,7 @@ This plan states how `onetrust-api` delivers the rows of `CONN-ONETRUST-API-CONN
 - **Project Type**: connector
 - **Performance Goals**: N/A, the vendor service sets the latency
 - **Constraints**: vendor calls go through the SDK governed client; no connector-local transport
-- **Scale/Scope**: 2 active row(s) in this spec
+- **Scale/Scope**: 3 active row(s) in this spec
 
 ### Constitution Check
 
@@ -156,7 +156,7 @@ This plan states how `onetrust-api` delivers the rows of `CONN-ONETRUST-API-CONN
 - **Project Type**: connector
 - **Performance Goals**: N/A, the vendor service sets the latency
 - **Constraints**: vendor calls go through the SDK governed client; no connector-local transport
-- **Scale/Scope**: 2 active row(s) in this spec
+- **Scale/Scope**: 3 active row(s) in this spec
 
 ### Constitution Check
 
@@ -291,6 +291,7 @@ None. The constitution check passed.
 
 - `CONN-ONETRUST-API-CONNECTOR-CONTENT-R001`: `onetrust-mcp` in `pyproject.toml` runs `onetrust_api.mcp_server:mcp_server`, which builds the server from the `scion_sdk.connector` entry point `onetrust_api:connector` (`onetrust_api/__init__.py:75`); the SDK `Connector` then lists the packaged skills, ontology and prompts.
 - `CONN-ONETRUST-API-CONNECTOR-CONTENT-R002`: arbora `fleet.call` reaches the existing read tool of `onetrust_api/mcp_server.py`, whose result is validated against the `ac:AccessContract` rows declared in `onetrust_api/ontology/access_contracts.ttl`.
+- `CONN-ONETRUST-API-CONNECTOR-CONTENT-R003`: the ontology loader reads `onetrust_api/ontology/` at server start; the engine imports the served pack and finds no redeclared core term.
 
 ## Cross-repo seams
 

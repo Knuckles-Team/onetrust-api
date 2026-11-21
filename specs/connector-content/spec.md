@@ -34,6 +34,14 @@ The fleet operator and the engine rely on this behaviour of `onetrust-api`: Subs
 
 1. **Given** the `onetrust-api` connector built from the default branch, **When** `tests/test_access_contracts.py::test_competency_contracts_certified` runs, **Then** test: `tests/test_access_contracts.py::test_competency_contracts_certified` (L2) runs the connector ontology certification and validates each recording against its contract.
 
+### User Story 3 - The pack extends only the core ontology (Priority: P1)
+
+The fleet operator and the engine rely on this behaviour of ``: its pack adds terms under the core ontology and declares no second copy of a core term. It is proven independently of the other stories.
+
+**Acceptance Scenarios**:
+
+1. **Given** the `` connector built from the default branch, **When** `tests/test_ontology_extends_core.py::test_pack_declares_no_core_term` runs, **Then** the served Turtle declares none of the listed core terms.
+
 ### Edge Cases
 
 - The vendor service is unreachable or rejects the credential: the connector returns the SDK typed error and never a partial result.
@@ -43,11 +51,13 @@ The fleet operator and the engine rely on this behaviour of `onetrust-api`: Subs
 
 - **FR-001**: Default content. Rows: `CONN-ONETRUST-API-CONNECTOR-CONTENT-R001`.
 - **FR-002**: Declare access contracts for the competency reads of onetrust-api. Rows: `CONN-ONETRUST-API-CONNECTOR-CONTENT-R002`.
+- **FR-003**: The pack extends only the core ontology. Rows: `CONN-ONETRUST-API-CONNECTOR-CONTENT-R003`.
 
 ## Success Criteria
 
 - **SC-001**: `resources/list` includes `skill://` and `ontology://`; `prompts/list` includes each packaged prompt. Rows: `CONN-ONETRUST-API-CONNECTOR-CONTENT-R001`.
 - **SC-002**: Test: `tests/test_access_contracts.py::test_competency_contracts_certified` (L2) runs the connector ontology certification and validates each recording against its contract. Rows: `CONN-ONETRUST-API-CONNECTOR-CONTENT-R002`.
+- **SC-003**: The served Turtle declares none of the listed core terms. Rows: `CONN-ONETRUST-API-CONNECTOR-CONTENT-R003`.
 
 ## Assumptions
 
@@ -60,3 +70,4 @@ The fleet operator and the engine rely on this behaviour of `onetrust-api`: Subs
 |---|---|---|---|---|
 | FR-001 | `CONN-ONETRUST-API-CONNECTOR-CONTENT-R001` | plan.md Production caller chain | T-001 | tests/test_default_content_surfaces.py::test_default_content_surfaces |
 | FR-002 | `CONN-ONETRUST-API-CONNECTOR-CONTENT-R002` | plan.md Production caller chain | T-002 | tests/test_access_contracts.py::test_competency_contracts_certified |
+| FR-003 | `CONN-ONETRUST-API-CONNECTOR-CONTENT-R003` | plan.md Production caller chain | T-003 | tests/test_ontology_extends_core.py::test_pack_declares_no_core_term |

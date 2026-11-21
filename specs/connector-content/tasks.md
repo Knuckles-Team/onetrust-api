@@ -6,3 +6,4 @@ Each task line reads `- [ ] T001 [P] [US1] <ID>-R012.4 description`. Tasks run p
 
 - [x] T001 [US1] CONN-ONETRUST-API-CONNECTOR-CONTENT-R001 Default content.
 - [x] T002 [US2] CONN-ONETRUST-API-CONNECTOR-CONTENT-R002 Declare access contracts for the competency reads of onetrust-api.
+- [x] T003 [US3] CONN-ONETRUST-API-CONNECTOR-CONTENT-R003 The pack extends only the core ontology.

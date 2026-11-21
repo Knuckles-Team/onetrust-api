@@ -16,10 +16,6 @@
 
 # --- classes (owl:Class) ---
 
-:Assessment a owl:Class ;
-    rdfs:subClassOf core:Assessment .
-
-
 :AssessmentTemplate a owl:Class ;
     rdfs:label "Assessment Template" ;
     rdfs:comment "A reusable questionnaire template an Assessment is launched from (onetrust_assessments templates)." .
@@ -53,25 +49,19 @@
 :usesTemplate a owl:ObjectProperty ;
     rdfs:label "uses template" ;
     rdfs:comment "Links an Assessment to the AssessmentTemplate it was launched from." ;
-    rdfs:domain :Assessment ;
+    rdfs:domain core:Assessment ;
     rdfs:range :AssessmentTemplate .
 
 :assessesInventory a owl:ObjectProperty ;
     rdfs:label "assesses inventory" ;
     rdfs:comment "Links an Assessment to the primary Inventory record it evaluates." ;
-    rdfs:domain :Assessment ;
+    rdfs:domain core:Assessment ;
     rdfs:range :Inventory .
 
 :respondedBy a owl:ObjectProperty ;
     rdfs:label "responded by" ;
     rdfs:comment "Links an Assessment to the Person who is its respondent." ;
-    rdfs:domain :Assessment ;
-    rdfs:range core:Person .
-
-:approvedBy a owl:ObjectProperty ;
-    rdfs:label "approved by" ;
-    rdfs:comment "Links an Assessment to the Person who approves it." ;
-    rdfs:domain :Assessment ;
+    rdfs:domain core:Assessment ;
     rdfs:range core:Person .
 
 :hasDataElement a owl:ObjectProperty ;
@@ -85,12 +75,6 @@
     rdfs:comment "Links a DataElement to a category of DataSubject it describes." ;
     rdfs:domain :DataElement ;
     rdfs:range :DataSubject .
-
-:ownedBy a owl:ObjectProperty ;
-    rdfs:label "owned by" ;
-    rdfs:comment "Links an Inventory record to the Person who is its business owner." ;
-    rdfs:domain :Inventory ;
-    rdfs:range core:Person .
 
 :scannedOnDomain a owl:ObjectProperty ;
     rdfs:label "scanned on domain" ;
