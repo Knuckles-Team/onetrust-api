@@ -37,6 +37,22 @@ Administration controls who can reach the tenant and how data leaves it. Users a
 - Never print tokens, client secrets or the OAuth token response.
 - Prefer a typed tool over the raw request tool whenever one exists.
 
+## Steps
+
+1. Identify the target with `onetrust_get_all_user_details_v2` and verify the response contains the id or name of exactly one record.
+2. Read the current state with `onetrust_get_user_v2` and verify the user lists groups and access levels.
+3. Describe the planned `onetrust_update_user_v2` call to the person and verify approval is explicit when the action is removing a user, group or access level.
+4. Apply the change with `onetrust_update_user_v2` and verify the response echoes the changed user.
+5. Read the record back with `onetrust_get_user_access_levels_v2` and verify the changed field holds the new value before you report.
+
+## Failure recovery
+
+| Failure | Cause | Recovery |
+|---|---|---|
+| 401 or 403 response | `ONETRUST_TOKEN` or the client id and secret pair is missing or expired, or `ONETRUST_URL` points at the wrong tenant | Set `ONETRUST_TOKEN` (or `ONETRUST_CLIENT_ID` with `ONETRUST_CLIENT_SECRET`) and `ONETRUST_URL` or `ONETRUST_REGION` in the environment, restart the server, and repeat the first read call |
+| Export job does not start | The tenant has too few export credits | Read `onetrust_get_credits_information_get` and ask the person to reduce the scope or add credits before calling `onetrust_start_export_run_post` |
+| User or group not found | The id is wrong or belongs to another organisation | List with `onetrust_get_all_user_details_v2` or `onetrust_get_all_user_group_with_filters_v2` and use the id returned |
+
 ## Tools (74)
 
 Each tool is one API operation; pass its path, query and body fields as named arguments.

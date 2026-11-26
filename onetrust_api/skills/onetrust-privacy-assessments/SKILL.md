@@ -2,12 +2,7 @@
 name: onetrust-privacy-assessments
 skill_type: skill
 description: >-
-  Run privacy, risk and AI-governance assessments on OneTrust: list and read assessments,
-  launch from a template, assign respondents, submit, review, approve, reopen and
-  reassess, and manage templates and AI-governance records. Use when the agent must triage
-  in-flight assessments, start a PIA/DPIA, record responses, or close one with a result.
-  Do NOT use for cookie scans (onetrust-cookie-consent), the data inventory (onetrust-
-  data-mapping) or vendor risk (onetrust-risk-compliance).
+  Run privacy, risk and AI-governance assessments on OneTrust: list and read assessments, launch from a template, assign respondents, submit, review, approve, reopen and reassess, and manage templates and AI-governance records. Use when the agent must triage in-flight assessments, start a PIA/DPIA, record responses, or close one with a result.
 license: MIT
 tags: [onetrust, assessments, pia, dpia, ai-governance, privacy, mcp]
 metadata:
@@ -15,6 +10,8 @@ metadata:
   version: '1.0.0'
 ---
 # OneTrust Privacy Assessments
+
+Scope: Run privacy, risk and AI-governance assessments on OneTrust: list and read assessments, launch from a template, assign respondents, submit, review, approve, reopen and reassess, and manage templates and AI-governance records. Use when the agent must triage in-flight assessments, start a PIA/DPIA, record responses, or close one with a result. Do NOT use for cookie scans (onetrust-cookie-consent), the data inventory (onetrust- data-mapping) or vendor risk (onetrust-risk-compliance).
 
 Assessments are the core evidence record of a privacy programme. Each assessment is launched from a template, answered by respondents, reviewed, and approved with a result. The AI-governance tools keep the register of AI systems and their risk evaluations next to those assessments.
 
@@ -39,6 +36,22 @@ Assessments are the core evidence record of a privacy programme. Each assessment
 ## Safety
 - Approve, delete, archive and template-version deletion change the record of compliance; ask the person first.
 - Never approve with force override unless the person named the override in the request.
+
+## Steps
+
+1. Identify the target with `onetrust_get_all_assessment_basic_details_using_get` and verify the response contains the id or name of exactly one record.
+2. Read the current state with `onetrust_get_assessment_results_using_get` and verify the stage, status and result of the assessment are shown.
+3. Describe the planned `onetrust_submit_assessment_using_post` call to the person and verify approval is explicit when the action is an approval, delete, archive or template-version delete.
+4. Apply the change with `onetrust_submit_assessment_using_post` and verify the response shows the assessment moved to the next stage.
+5. Read the record back with `onetrust_get_workflow_details_for_assessment_using_get` and verify the changed field holds the new value before you report.
+
+## Failure recovery
+
+| Failure | Cause | Recovery |
+|---|---|---|
+| 401 or 403 response | `ONETRUST_TOKEN` or the client id and secret pair is missing or expired, or `ONETRUST_URL` points at the wrong tenant | Set `ONETRUST_TOKEN` (or `ONETRUST_CLIENT_ID` with `ONETRUST_CLIENT_SECRET`) and `ONETRUST_URL` or `ONETRUST_REGION` in the environment, restart the server, and repeat the first read call |
+| Assessment not found | The id is wrong or the assessment is archived | List with `onetrust_get_all_assessment_basic_details_using_get` and use the id returned |
+| Stage transition rejected | A step was skipped, such as approving before review | Check the stage with `onetrust_get_workflow_details_for_assessment_using_get` and call the missing step first |
 
 ## Tools (53)
 

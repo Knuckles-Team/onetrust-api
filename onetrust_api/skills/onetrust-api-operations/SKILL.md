@@ -27,6 +27,23 @@ Use the provider's governed MCP tools through Arbora delegation.
 - Require explicit approval for destructive, externally visible, or irreversible actions.
 - Keep runtime traces policy-scoped and privacy-sanitized.
 
+## Steps
+
+1. Open `references/catalog.md` to pick the one OneTrust skill whose scope matches the request, and verify the request is not covered by a sibling skill's When NOT to use list.
+2. Discover the current typed tool surface through Arbora with `find` and verify the exact tool name and its parameter schema before any call.
+3. Run a read-only `ask` call for the target record and verify the response returns the record id and current status you expect.
+4. For a change, state the impact to the person and verify explicit approval exists before the `write` or `act` preview is executed with `execute=true`.
+5. Execute the single mutation as a fenced WorkItem with `act` and verify the call returned a success status and an evidence reference.
+6. Read the record back with the same `ask` read call and verify the changed field now holds the new value before reporting completion.
+
+## Failure recovery
+
+| Failure | Cause | Recovery |
+|---|---|---|
+| 401 or 403 response | `ONETRUST_TOKEN` or the client id and secret pair is missing or expired, or `ONETRUST_URL` points at the wrong tenant | Set `ONETRUST_TOKEN` (or `ONETRUST_CLIENT_ID` with `ONETRUST_CLIENT_SECRET`) and `ONETRUST_URL` or `ONETRUST_REGION` in the environment, restart the server, and repeat the first read call |
+| Tool not found or schema mismatch | The tool name came from memory and the surface changed | Call `find` again for the operation and use the name and parameters it returns |
+| Mutation rejected for missing approval | The destructive or externally visible action had no explicit approval recorded | Ask the person to approve the named action, record the approval, and resubmit the same WorkItem |
+
 ## Specialized workflows
 
 Read [the workflow catalog](references/catalog.md) only when the request needs a

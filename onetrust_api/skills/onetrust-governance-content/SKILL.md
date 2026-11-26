@@ -2,12 +2,7 @@
 name: onetrust-governance-content
 skill_type: skill
 description: >-
-  Governance content on OneTrust: policies and their versions, privacy notices, awareness-
-  training courses and enrollments, ESG disclosures and emission factors, documents and
-  attachments, tasks, and custom objects with their types, links and models. Use when the
-  agent must publish or version a policy, read a notice, track training, read ESG data,
-  fetch a document, or work with custom objects. Do NOT use for assessments (onetrust-
-  privacy-assessments) or users and access (onetrust-platform-administration).
+  Governance content on OneTrust: policies and their versions, privacy notices, awareness- training courses and enrollments, ESG disclosures and emission factors, documents and attachments, tasks, and custom objects with their types, links and models. Use when the agent must publish or version a policy, read a notice, track training, read ESG data, fetch a document, or work with custom objects.
 license: MIT
 tags: [onetrust, policy, notices, training, esg, documents, objects, mcp]
 metadata:
@@ -15,6 +10,8 @@ metadata:
   version: '1.0.0'
 ---
 # OneTrust Governance Content
+
+Scope: Governance content on OneTrust: policies and their versions, privacy notices, awareness- training courses and enrollments, ESG disclosures and emission factors, documents and attachments, tasks, and custom objects with their types, links and models. Use when the agent must publish or version a policy, read a notice, track training, read ESG data, fetch a document, or work with custom objects. Do NOT use for assessments (onetrust- privacy-assessments) or users and access (onetrust-platform-administration).
 
 Governance content is the written side of the programme: the policies staff must follow, the notices shown to the public, the training that proves awareness, and the custom objects an organisation adds for its own records.
 
@@ -36,6 +33,22 @@ Governance content is the written side of the programme: the policies staff must
 
 ## Safety
 - Publishing a policy version or deleting a custom object type changes what staff and the public see; ask first.
+
+## Steps
+
+1. Identify the target with `onetrust_get_latest_policies` and verify the response contains the id or name of exactly one record.
+2. Read the current state with `onetrust_get_policy` and verify the policy lists its version and status.
+3. Describe the planned `onetrust_create_policy_versions` call to the person and verify approval is explicit when the action is a policy publish or the delete of a custom object type.
+4. Apply the change with `onetrust_create_policy_versions` and verify the response returns the new version id.
+5. Read the record back with `onetrust_get_published_policy_version` and verify the changed field holds the new value before you report.
+
+## Failure recovery
+
+| Failure | Cause | Recovery |
+|---|---|---|
+| 401 or 403 response | `ONETRUST_TOKEN` or the client id and secret pair is missing or expired, or `ONETRUST_URL` points at the wrong tenant | Set `ONETRUST_TOKEN` (or `ONETRUST_CLIENT_ID` with `ONETRUST_CLIENT_SECRET`) and `ONETRUST_URL` or `ONETRUST_REGION` in the environment, restart the server, and repeat the first read call |
+| Policy or notice not found | The id is wrong or the item is unpublished | List with `onetrust_get_latest_policies` or `onetrust_get_privacy_notices_using_get` and use the id returned |
+| Edit of a published version refused | Published versions are immutable | Create a new version with `onetrust_create_policy_versions` and edit that one |
 
 ## Tools (62)
 

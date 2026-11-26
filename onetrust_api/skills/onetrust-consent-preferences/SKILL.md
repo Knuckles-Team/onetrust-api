@@ -2,12 +2,7 @@
 name: onetrust-consent-preferences
 skill_type: skill
 description: >-
-  Consent and preference management on OneTrust: collection points, purposes, preference
-  centres, data subjects and their profiles, consent receipts and transactions, linked
-  identities, custom preferences and merge requests. Use when the agent must record or
-  read a consent, look up a data subject's purposes, withdraw consent, or administer
-  purposes and preference centres. Do NOT use for cookie banners (onetrust-cookie-consent)
-  or privacy requests (onetrust-dsar-incident-response).
+  Consent and preference management on OneTrust: collection points, purposes, preference centres, data subjects and their profiles, consent receipts and transactions, linked identities, custom preferences and merge requests. Use when the agent must record or read a consent, look up a data subject's purposes, withdraw consent, or administer purposes and preference centres.
 license: MIT
 tags: [onetrust, consent, preferences, receipts, data-subjects, privacy, mcp]
 metadata:
@@ -15,6 +10,8 @@ metadata:
   version: '1.0.0'
 ---
 # OneTrust Consent Preferences
+
+Scope: Consent and preference management on OneTrust: collection points, purposes, preference centres, data subjects and their profiles, consent receipts and transactions, linked identities, custom preferences and merge requests. Use when the agent must record or read a consent, look up a data subject's purposes, withdraw consent, or administer purposes and preference centres. Do NOT use for cookie banners (onetrust-cookie-consent) or privacy requests (onetrust-dsar-incident-response).
 
 Consent management stores what each data subject agreed to, for which purpose, through which collection point. A receipt is the proof of one consent transaction; a profile is the current standing of one subject.
 
@@ -38,6 +35,22 @@ Consent management stores what each data subject agreed to, for which purpose, t
 ## Safety
 - A withdrawal takes effect for downstream systems at once; confirm the identifier and purpose first.
 - Merging data subjects cannot be split again; ask first.
+
+## Steps
+
+1. Identify the target with `onetrust_get_purposes_using_get` and verify the response contains the id or name of exactly one record.
+2. Read the current state with `onetrust_get_data_subject_profile_v4` and verify the profile lists the purposes and their current standing.
+3. Describe the planned `onetrust_create_consent_receipt_using_post` call to the person and verify approval is explicit when the action is a withdrawal or a merge of data subjects.
+4. Apply the change with `onetrust_create_consent_receipt_using_post` and verify the response returns a receipt id.
+5. Read the record back with `onetrust_find_receipt_using_get` and verify the changed field holds the new value before you report.
+
+## Failure recovery
+
+| Failure | Cause | Recovery |
+|---|---|---|
+| 401 or 403 response | `ONETRUST_TOKEN` or the client id and secret pair is missing or expired, or `ONETRUST_URL` points at the wrong tenant | Set `ONETRUST_TOKEN` (or `ONETRUST_CLIENT_ID` with `ONETRUST_CLIENT_SECRET`) and `ONETRUST_URL` or `ONETRUST_REGION` in the environment, restart the server, and repeat the first read call |
+| Data subject not found | The identifier does not match any profile | Search with `onetrust_search_data_subjects_post_using_post` using the email or the identifier type and correct the value |
+| Merge or withdrawal applied to the wrong subject | The identifier or purpose was not confirmed first | Read the profile with `onetrust_get_data_subject_profile_v4`, confirm identifier and purpose with the person, and reissue the call |
 
 ## Tools (100)
 

@@ -2,12 +2,7 @@
 name: onetrust-cookie-consent
 skill_type: skill
 description: >-
-  Cookie and consent-banner operations on OneTrust: scan domains and mobile apps, read and
-  categorize discovered cookies, manage geolocation rule groups, templates and branding,
-  publish consent scripts, and read consent-management-platform vendors and interfaces.
-  Use when the agent must launch or check a scan, categorize cookies in bulk, or publish a
-  banner script. Do NOT use for consent receipts and preferences (onetrust-consent-
-  preferences) or assessments (onetrust-privacy-assessments).
+  Cookie and consent-banner operations on OneTrust: scan domains and mobile apps, read and categorize discovered cookies, manage geolocation rule groups, templates and branding, publish consent scripts, and read consent-management-platform vendors and interfaces. Use when the agent must launch or check a scan, categorize cookies in bulk, or publish a banner script.
 license: MIT
 tags: [onetrust, cookies, consent, cmp, scanning, privacy, mcp]
 metadata:
@@ -15,6 +10,8 @@ metadata:
   version: '1.0.0'
 ---
 # OneTrust Cookie Consent
+
+Scope: Cookie and consent-banner operations on OneTrust: scan domains and mobile apps, read and categorize discovered cookies, manage geolocation rule groups, templates and branding, publish consent scripts, and read consent-management-platform vendors and interfaces. Use when the agent must launch or check a scan, categorize cookies in bulk, or publish a banner script. Do NOT use for consent receipts and preferences (onetrust-consent- preferences) or assessments (onetrust-privacy-assessments).
 
 A cookie programme scans each site or app, categorizes what it finds, and publishes a consent script that enforces those categories. Scans run asynchronously, so results are read only after the scan status reports completion.
 
@@ -38,6 +35,22 @@ A cookie programme scans each site or app, categorizes what it finds, and publis
 ## Safety
 - Publishing a script changes a live banner on a production site; ask first and name the site.
 - Bulk delete of cookies and domain deletion are not reversible from this connector.
+
+## Steps
+
+1. Identify the target with `onetrust_get_applications` and verify the response contains the id or name of exactly one record.
+2. Read the current state with `onetrust_get_domain_scans` and verify the latest scan lists a status field.
+3. Describe the planned `onetrust_recategorize_cookies_by_scan` call to the person and verify approval is explicit when the action is a banner publish, cookie delete or domain delete.
+4. Apply the change with `onetrust_recategorize_cookies_by_scan` and verify the response reports success for the cookie ids you listed.
+5. Read the record back with `onetrust_get_categorized_cookies` and verify the changed field holds the new value before you report.
+
+## Failure recovery
+
+| Failure | Cause | Recovery |
+|---|---|---|
+| 401 or 403 response | `ONETRUST_TOKEN` or the client id and secret pair is missing or expired, or `ONETRUST_URL` points at the wrong tenant | Set `ONETRUST_TOKEN` (or `ONETRUST_CLIENT_ID` with `ONETRUST_CLIENT_SECRET`) and `ONETRUST_URL` or `ONETRUST_REGION` in the environment, restart the server, and repeat the first read call |
+| Scan results empty | The scan has not completed yet | Poll `onetrust_check_scans_status` until the scan reports completion, then read `onetrust_get_scan_result_summary` |
+| Publish or delete refused or unintended | Script publishing or `onetrust_bulk_delete_cookies` was called without approval | Stop, name the site and the cookies to the person, and call the tool only after explicit approval |
 
 ## Tools (58)
 
