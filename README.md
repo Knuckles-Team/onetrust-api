@@ -1,4 +1,5 @@
-# OneTrust Api - A2A | AG-UI | MCP
+# OneTrust Api
+## MCP
 
 ![PyPI - Version](https://img.shields.io/pypi/v/onetrust-api)
 ![MCP Server](https://badge.mcpx.dev?type=server 'MCP Server')
@@ -8,12 +9,10 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/Knuckles-Team/onetrust-api)
 ![PyPI - License](https://img.shields.io/pypi/l/onetrust-api)
 ![GitHub](https://img.shields.io/github/license/Knuckles-Team/onetrust-api)
-
 ![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/Knuckles-Team/onetrust-api)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/Knuckles-Team/onetrust-api)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/Knuckles-Team/onetrust-api)
 ![GitHub issues](https://img.shields.io/github/issues/Knuckles-Team/onetrust-api)
-
 ![GitHub top language](https://img.shields.io/github/languages/top/Knuckles-Team/onetrust-api)
 ![GitHub language count](https://img.shields.io/github/languages/count/Knuckles-Team/onetrust-api)
 ![GitHub repo size](https://img.shields.io/github/repo-size/Knuckles-Team/onetrust-api)
@@ -21,7 +20,11 @@
 ![PyPI - Wheel](https://img.shields.io/pypi/wheel/onetrust-api)
 ![PyPI - Implementation](https://img.shields.io/pypi/implementation/onetrust-api)
 
-*Version: 1.3.4*
+> **Documentation** — Installation, deployment, and usage across the API, CLI, MCP,
+> and A2A agent interfaces are maintained in the
+> [official documentation](https://knuckles-team.github.io/onetrust-api/).
+
+---
 
 ## Overview
 
@@ -52,6 +55,8 @@ lock-step.
   privacy-portal host, and on-prem worker nodes are resolved per-operation.
 - **Resilient** — honours `429` `Retry-After`, retries transient `5xx`, and
   handles both OneTrust pagination styles (offset and cursor).
+
+---
 
 ## MCP
 
@@ -445,6 +450,8 @@ does not emit an unauthenticated non-loopback listener.
 _Auto-generated from the code-read env surface (package vars) — do not edit._
 <!-- MCP-CONFIG-EXAMPLES:END -->
 
+---
+
 ## A2A Agent
 
 ### Run A2A Server
@@ -453,6 +460,8 @@ export ONETRUST_URL="https://acme.my.onetrust.com"
 export ONETRUST_TOKEN="your_token"
 onetrust-agent --provider openai --model-id gpt-4o --api-key sk-...
 ```
+
+---
 
 ## Docker
 
@@ -498,54 +507,7 @@ services:
       - 8000:8000
 ```
 
-## Installation
-
-Pick the extra that matches what the operator want to run:
-
-| Extra | Installs | Use when |
-|-------|----------|----------|
-| `onetrust-api[mcp]` | Connector-focused MCP server (`scion-sdk[mcp]` — FastMCP/FastAPI + `medulla`) | The operator only run the **MCP server** (smallest install / image) |
-| `onetrust-api[agent]` | Agent runtime (`scion-sdk[agent-runtime,logfire]` — model orchestration + `medulla`) | The operator run the **integrated agent** |
-| `onetrust-api[all]` | Everything (`mcp` + `agent`) | Development / both surfaces |
-
-```bash
-# Connector-focused MCP server (includes the shared graph engine)
-uv pip install "onetrust-api[mcp]"
-
-# Agent runtime (adds model orchestration to the shared graph engine)
-uv pip install "onetrust-api[agent]"
-
-# Everything (development)
-uv pip install "onetrust-api[all]"      # or: python -m pip install "onetrust-api[all]"
-```
-
-### Container images (`:mcp` vs `:agent`)
-
-One multi-stage `docker/Dockerfile` builds two right-sized images, selected by `--target`:
-
-| Image tag | Build target | Contents | Entrypoint |
-|-----------|--------------|----------|------------|
-| `example/onetrust-api:mcp` | `--target mcp` | `onetrust-api[mcp]` — **connector-focused**, includes `medulla`; no model-orchestration stack | `onetrust-mcp` |
-| `example/onetrust-api@sha256:<digest>` | `--target agent` (default) | `onetrust-api[agent]` — **agent runtime**, model orchestration + `medulla` | `onetrust-agent` |
-
-```bash
-docker build --target mcp   -t example/onetrust-api:mcp    docker/   # connector-focused MCP server
-docker build --target agent -t example/onetrust-api:agent-local docker/   # agent runtime
-```
-
-`docker/mcp.compose.yml` runs the connector-focused `:mcp` server; `docker/agent.compose.yml` runs the
-agent (`immutable agent digest`) with a co-located `:mcp` sidecar.
-
-### Knowledge-graph database (`medulla`)
-
-Both `[mcp]` and `[agent]` carry the **medulla** engine through the required
-Meristem core dependency (`medulla`). The `[mcp]` extra keeps
-the server connector-focused; `[agent]` also enables model orchestration. Local
-deployments can use the bundled engine. For production or shared state, run
-**medulla as a dedicated database service** and configure the runtime to use it.
-Deployment recipes (single-node + Raft HA), connection configuration, and architecture
-diagrams are documented in the
-[medulla deployment guide](https://knuckles-team.github.io/medulla/deployment/).
+---
 
 ## Environment Variables
 
@@ -597,6 +559,59 @@ lists above to narrow the surface.
 |----------|-------------|---------|
 | `MCP_URL` | URL of the MCP server the agent connects to | `http://localhost:8000/mcp` |
 
+---
+
+## Installation
+
+Pick the extra that matches what the operator want to run:
+
+| Extra | Installs | Use when |
+|-------|----------|----------|
+| `onetrust-api[mcp]` | Connector-focused MCP server (`scion-sdk[mcp]` — FastMCP/FastAPI + `medulla`) | The operator only run the **MCP server** (smallest install / image) |
+| `onetrust-api[agent]` | Agent runtime (`scion-sdk[agent-runtime,logfire]` — model orchestration + `medulla`) | The operator run the **integrated agent** |
+| `onetrust-api[all]` | Everything (`mcp` + `agent`) | Development / both surfaces |
+
+```bash
+# Connector-focused MCP server (includes the shared graph engine)
+uv pip install "onetrust-api[mcp]"
+
+# Agent runtime (adds model orchestration to the shared graph engine)
+uv pip install "onetrust-api[agent]"
+
+# Everything (development)
+uv pip install "onetrust-api[all]"      # or: python -m pip install "onetrust-api[all]"
+```
+
+### Container images (`:mcp` vs `:agent`)
+
+One multi-stage `docker/Dockerfile` builds two right-sized images, selected by `--target`:
+
+| Image tag | Build target | Contents | Entrypoint |
+|-----------|--------------|----------|------------|
+| `example/onetrust-api:mcp` | `--target mcp` | `onetrust-api[mcp]` — **connector-focused**, includes `medulla`; no model-orchestration stack | `onetrust-mcp` |
+| `example/onetrust-api@sha256:<digest>` | `--target agent` (default) | `onetrust-api[agent]` — **agent runtime**, model orchestration + `medulla` | `onetrust-agent` |
+
+```bash
+docker build --target mcp   -t example/onetrust-api:mcp    docker/   # connector-focused MCP server
+docker build --target agent -t example/onetrust-api:agent-local docker/   # agent runtime
+```
+
+`docker/mcp.compose.yml` runs the connector-focused `:mcp` server; `docker/agent.compose.yml` runs the
+agent (`immutable agent digest`) with a co-located `:mcp` sidecar.
+
+### Knowledge-graph database (`medulla`)
+
+Both `[mcp]` and `[agent]` carry the **medulla** engine through the required
+Meristem core dependency (`medulla`). The `[mcp]` extra keeps
+the server connector-focused; `[agent]` also enables model orchestration. Local
+deployments can use the bundled engine. For production or shared state, run
+**medulla as a dedicated database service** and configure the runtime to use it.
+Deployment recipes (single-node + Raft HA), connection configuration, and architecture
+diagrams are documented in the
+[medulla deployment guide](https://knuckles-team.github.io/medulla/deployment/).
+
+---
+
 ## Documentation
 
 The complete documentation is published as the
@@ -610,6 +625,8 @@ the source of truth for installation, usage, and deployment.
 | [Usage (API / CLI / MCP)](https://knuckles-team.github.io/onetrust-api/usage/) | the MCP tools, the `Api` client, the CLI |
 | [Deployment](https://knuckles-team.github.io/onetrust-api/deployment/) | run the MCP and agent servers, Compose, env config |
 
+---
+
 ## Repository Owners
 
 <img width="100%" height="180em" src="https://github-readme-stats.vercel.app/api?username=example&show_icons=true&hide_border=true&&count_private=true&include_all_commits=true" />
@@ -617,6 +634,15 @@ the source of truth for installation, usage, and deployment.
 ![GitHub followers](https://img.shields.io/github/followers/example)
 ![GitHub User's stars](https://img.shields.io/github/stars/example)
 
+---
+
+## Contribute
+
+Contributions are welcome! Please ensure code quality by running local checks before submitting pull requests:
+- Format code using `ruff format .`
+- Lint code using `ruff check .`
+- Validate type-safety with `mypy .`
+- Run test suites using `pytest`
 
 <!-- BEGIN scion-sdk-deployment (generated; do not edit between markers) -->
 
