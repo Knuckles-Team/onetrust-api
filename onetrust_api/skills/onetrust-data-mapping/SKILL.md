@@ -2,12 +2,7 @@
 name: onetrust-data-mapping
 skill_type: skill
 description: >-
-  Maintain the OneTrust data map: inventories of assets, vendors, legal entities and
-  processing activities, their relations and hierarchy, the data categories, elements and
-  subjects, the glossary and data catalog, and data-discovery scans with their workers.
-  Use when the agent must enumerate or edit inventory records, link them, classify
-  personal data, or run a discovery scan. Do NOT use for assessments over those records
-  (onetrust-privacy-assessments) or cookie scans (onetrust-cookie-consent).
+  Maintain the OneTrust data map: inventories of assets, vendors, legal entities and processing activities, their relations and hierarchy, the data categories, elements and subjects, the glossary and data catalog, and data-discovery scans with their workers. Use when the agent must enumerate or edit inventory records, link them, classify personal data, or run a discovery scan.
 license: MIT
 tags: [onetrust, data-mapping, inventory, data-catalog, discovery, privacy, mcp]
 metadata:
@@ -15,6 +10,8 @@ metadata:
   version: '1.0.0'
 ---
 # OneTrust Data Mapping
+
+Scope: Maintain the OneTrust data map: inventories of assets, vendors, legal entities and processing activities, their relations and hierarchy, the data categories, elements and subjects, the glossary and data catalog, and data-discovery scans with their workers. Use when the agent must enumerate or edit inventory records, link them, classify personal data, or run a discovery scan. Do NOT use for assessments over those records (onetrust-privacy-assessments) or cookie scans (onetrust-cookie-consent).
 
 The data map answers where personal data lives and how it flows. Inventory records are typed by schema (asset, vendor, legal entity, processing activity), related to each other, and classified by data category, element and subject. Data-discovery scans find personal data in connected systems and feed the same map.
 
@@ -39,6 +36,22 @@ The data map answers where personal data lives and how it flows. Inventory recor
 ## Safety
 - Deleting an inventory record, category, element or subject removes it from every linked assessment view; ask first.
 - Discovery credentials hold secrets by reference only; never echo them.
+
+## Steps
+
+1. Identify the target with `onetrust_get_list_of_inventories_using_get` and verify the response contains the id or name of exactly one record.
+2. Read the current state with `onetrust_get_inventory_by_id_using_get` and verify the record lists its schema name and field values.
+3. Describe the planned `onetrust_update_inventory_using_put` call to the person and verify approval is explicit when the action is a delete of an inventory record, category, element or subject.
+4. Apply the change with `onetrust_update_inventory_using_put` and verify the response echoes the updated record id.
+5. Read the record back with `onetrust_get_inventory_relations_by_id_using_get` and verify the changed field holds the new value before you report.
+
+## Failure recovery
+
+| Failure | Cause | Recovery |
+|---|---|---|
+| 401 or 403 response | `ONETRUST_TOKEN` or the client id and secret pair is missing or expired, or `ONETRUST_URL` points at the wrong tenant | Set `ONETRUST_TOKEN` (or `ONETRUST_CLIENT_ID` with `ONETRUST_CLIENT_SECRET`) and `ONETRUST_URL` or `ONETRUST_REGION` in the environment, restart the server, and repeat the first read call |
+| Unknown schema or field name | The schema name or field was guessed | Call `onetrust_get_all_schemas_using_get` and `onetrust_get_schema_details_using_field_name` and use the exact names returned |
+| Discovery job never finishes | The job is queued or the data source credential is wrong | Poll `onetrust_get_job_by_id_using_get`, and if it stays queued call `onetrust_get_credential_by_id` to confirm the credential reference |
 
 ## Tools (113)
 

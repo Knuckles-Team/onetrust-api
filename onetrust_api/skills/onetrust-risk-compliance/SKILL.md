@@ -2,12 +2,7 @@
 name: onetrust-risk-compliance
 skill_type: skill
 description: >-
-  Risk, vendor and compliance operations on OneTrust: IT risks, controls and treatments,
-  third-party contracts and engagements, audits, workpapers and scopes, issues and their
-  links, and compliance-automation frameworks. Use when the agent must register or review
-  a risk, assess a vendor engagement, run an audit step, or raise and track an issue. Do
-  NOT use for privacy assessments (onetrust-privacy-assessments) or data-subject requests
-  (onetrust-dsar-incident-response).
+  Risk, vendor and compliance operations on OneTrust: IT risks, controls and treatments, third-party contracts and engagements, audits, workpapers and scopes, issues and their links, and compliance-automation frameworks. Use when the agent must register or review a risk, assess a vendor engagement, run an audit step, or raise and track an issue.
 license: MIT
 tags: [onetrust, risk, tprm, audit, issues, compliance, mcp]
 metadata:
@@ -15,6 +10,8 @@ metadata:
   version: '1.0.0'
 ---
 # OneTrust Risk and Compliance
+
+Scope: Risk, vendor and compliance operations on OneTrust: IT risks, controls and treatments, third-party contracts and engagements, audits, workpapers and scopes, issues and their links, and compliance-automation frameworks. Use when the agent must register or review a risk, assess a vendor engagement, run an audit step, or raise and track an issue. Do NOT use for privacy assessments (onetrust-privacy-assessments) or data-subject requests (onetrust-dsar-incident-response).
 
 Risk and compliance records tie controls, vendors, audits and issues together. Risks carry controls and treatments, vendor engagements carry contracts and status, audits carry scopes and workpapers, and issues link to any of them.
 
@@ -37,6 +34,22 @@ Risk and compliance records tie controls, vendors, audits and issues together. R
 
 ## Safety
 - Removing a vendor contract or engagement, deleting a risk or audit scope is not recoverable; ask first.
+
+## Steps
+
+1. Identify the target with `onetrust_get_risk_page_view_using_post` and verify the response contains the id or name of exactly one record.
+2. Read the current state with `onetrust_get_risk_using_get` and verify the risk lists its stage, controls and owners.
+3. Describe the planned `onetrust_update_risk_using_patch` call to the person and verify approval is explicit when the action is the delete of a risk, audit scope, vendor contract or engagement.
+4. Apply the change with `onetrust_update_risk_using_patch` and verify the response echoes the updated risk.
+5. Read the record back with `onetrust_get_risk_using_get` and verify the changed field holds the new value before you report.
+
+## Failure recovery
+
+| Failure | Cause | Recovery |
+|---|---|---|
+| 401 or 403 response | `ONETRUST_TOKEN` or the client id and secret pair is missing or expired, or `ONETRUST_URL` points at the wrong tenant | Set `ONETRUST_TOKEN` (or `ONETRUST_CLIENT_ID` with `ONETRUST_CLIENT_SECRET`) and `ONETRUST_URL` or `ONETRUST_REGION` in the environment, restart the server, and repeat the first read call |
+| Field name rejected | The attribute name was guessed | Read `onetrust_get_attributes_by_schema_name_using_get` or `onetrust_get_engagement_schema_using_get` and use the exact names |
+| Record not found | The id is wrong | Search with `onetrust_find_all_issues_by_filter_using_post` or `onetrust_get_risk_page_view_using_post` and use the id returned |
 
 ## Tools (94)
 

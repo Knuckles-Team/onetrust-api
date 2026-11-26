@@ -2,12 +2,7 @@
 name: onetrust-dsar-incident-response
 skill_type: skill
 description: >-
-  Handle privacy requests and incidents on OneTrust: search and read data-subject
-  requests, verify the requester, run sub-tasks and discovery updates, move requests
-  through stages with resolutions, issue deletion certificates, and log, search, stage and
-  link privacy incidents to inventory. Use when the agent must work a request to closure
-  or record and progress a breach or incident. Do NOT use for consent receipts (onetrust-
-  consent-preferences) or assessments (onetrust-privacy-assessments).
+  Handle privacy requests and incidents on OneTrust: search and read data-subject requests, verify the requester, run sub-tasks and discovery updates, move requests through stages with resolutions, issue deletion certificates, and log, search, stage and link privacy incidents to inventory. Use when the agent must work a request to closure or record and progress a breach or incident.
 license: MIT
 tags: [onetrust, dsar, incidents, privacy-requests, breach, privacy, mcp]
 metadata:
@@ -15,6 +10,8 @@ metadata:
   version: '1.0.0'
 ---
 # OneTrust Data-Subject Requests and Incidents
+
+Scope: Handle privacy requests and incidents on OneTrust: search and read data-subject requests, verify the requester, run sub-tasks and discovery updates, move requests through stages with resolutions, issue deletion certificates, and log, search, stage and link privacy incidents to inventory. Use when the agent must work a request to closure or record and progress a breach or incident. Do NOT use for consent receipts (onetrust- consent-preferences) or assessments (onetrust-privacy-assessments).
 
 A data-subject request moves through verification, data discovery by sub-task, a decision and a closing resolution inside a legal deadline. A privacy incident follows a staged workflow and is linked to the inventory records it affects.
 
@@ -38,6 +35,22 @@ A data-subject request moves through verification, data discovery by sub-task, a
 ## Safety
 - Bulk delete of requests and stage moves that close a request are final; ask first.
 - Do not share results summaries with anyone but the verified requester.
+
+## Steps
+
+1. Identify the target with `onetrust_search_for_request_using_post` and verify the response contains the id or name of exactly one record.
+2. Read the current state with `onetrust_get_request_by_id_using_get` and verify the requester verification status and current stage are shown.
+3. Describe the planned `onetrust_move_status_by_request_ref_id_using_put` call to the person and verify approval is explicit when the action is a stage move that closes a request or a bulk delete.
+4. Apply the change with `onetrust_move_status_by_request_ref_id_using_put` and verify the response shows the new stage.
+5. Read the record back with `onetrust_get_request_history_by_id_using_get` and verify the changed field holds the new value before you report.
+
+## Failure recovery
+
+| Failure | Cause | Recovery |
+|---|---|---|
+| 401 or 403 response | `ONETRUST_TOKEN` or the client id and secret pair is missing or expired, or `ONETRUST_URL` points at the wrong tenant | Set `ONETRUST_TOKEN` (or `ONETRUST_CLIENT_ID` with `ONETRUST_CLIENT_SECRET`) and `ONETRUST_URL` or `ONETRUST_REGION` in the environment, restart the server, and repeat the first read call |
+| Request not found | The reference id is wrong or belongs to another organisation | Run `onetrust_search_for_request_using_post` with the requester email and use the reference id it returns |
+| Stage move rejected | The resolution is missing or does not match the outcome | Create one with `onetrust_add_new_resolution_using_post`, then repeat the stage move with that resolution |
 
 ## Tools (46)
 

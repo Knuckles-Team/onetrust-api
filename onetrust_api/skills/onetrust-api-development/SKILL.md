@@ -70,6 +70,23 @@ secrets, spec, tests-fast, and dependency-readiness checks to
 `Knuckles-Team/pipelines` at `rev: main`. Do not replace those shared hooks
 with local copies or bypass a failing check.
 
+## Steps
+
+1. Find the owning spec row with `git grep -n "<term>" -- specs` and verify the row id before editing any code.
+2. Set up the pinned environment with `uv sync --locked --all-extras` and verify the command exits with status 0.
+3. Make the change in the owning module, regenerating clients with `uv run python scripts/generate_from_openapi.py` when specs changed, and verify `git diff --stat` shows only intended paths.
+4. Run `uv run --all-extras pytest tests/test_onetrust_coverage.py -q` and verify every spec operation maps to a client method and an MCP action.
+5. Run `uvx pre-commit run --all-files` and verify every hook reports Passed.
+6. Commit with the `Spec:` trailer in the final paragraph and verify `git log -1` shows it adjacent to the agent trailer.
+
+## Failure recovery
+
+| Failure | Cause | Recovery |
+|---|---|---|
+| Coverage test fails | A spec operation has no client method or manifest entry after a refresh | Rerun `uv run python scripts/generate_from_openapi.py`, then `uvx ruff format .`, and rerun the coverage test |
+| `uv sync --locked` fails | `uv.lock` is out of step with `pyproject.toml` | Run `uv lock`, inspect the lock diff, and commit the lock file with the change |
+| Pre-commit hook fails on the shared gate | The change broke a connector-standard, secrets or spec check | Read the hook output, fix the reported file, and rerun `uvx pre-commit run --all-files` without bypassing the hook |
+
 ## Connector-specific checks
 
 - Refresh flow: replace the specs, run the generator, format, then run
